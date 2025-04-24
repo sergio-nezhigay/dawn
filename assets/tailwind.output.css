@@ -193,6 +193,9 @@
   .block {
     display: block;
   }
+  .contents {
+    display: contents;
+  }
   .grid {
     display: grid;
   }
