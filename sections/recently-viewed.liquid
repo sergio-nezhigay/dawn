@@ -2,7 +2,7 @@
   <h2>
     {{ section.settings.heading }}
   </h2>
-  <ul class="recently-viewed-grid">
+  <ul class="recently-viewed-grid flex gap-4 bg-red-500">
     <!-- Recently viewed products will appear here -->
   </ul>
 </div>
@@ -52,7 +52,7 @@
     const recentlyViewedHtml = [];
     productData.map((item) => {
       recentlyViewedHtml.unshift(`
-    <li>
+    <li class="bg-blue-200">
       <a href="${item.productUrl}">
 		<img src='${item.productImg}' loading="lazy" alt="${item.productImageAltText}"/>
       </a>
