@@ -16,7 +16,6 @@ class RecentlyViewedProducts extends HTMLElement {
   }
 
   renderRecentlyViewed() {
-    console.log('renderRecentlyViewed');
     const currentProductTitle = this.dataset.productTitle;
     const productData = JSON.parse(localStorage.getItem('recentlyViewedProduct')) || [];
     const recentlyViewedHtml = [];
@@ -26,21 +25,40 @@ class RecentlyViewedProducts extends HTMLElement {
       .reverse()
       .forEach((item) => {
         recentlyViewedHtml.push(`
-          <li class="bg-blue-200">
-            <a href="${item.productUrl}">
-              <img src='${item.productImg}' loading="lazy" alt="${item.productImageAltText}"/>
+          <li class="grid__item">
+            <a href="${item.productUrl}" class="product-card-wrapper card-wrapper underline-links-hover">
+                <div class="">
+                      <div class="">
+                        <img src="${item.productImg}" loading="lazy" alt="${item.productImageAltText}" class="" />
+                      </div>
+
+                      <div class="card__content !p-0">
+                        <div class="card__information !px-0">
+                            <h3 class="card__heading h5">
+                                ${item.productTitle}
+                            </h3>
+                            <div class="card-information">
+                                <div class="price">
+                                    <span class="price-item price-item--regular">${item.productPrice}
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                      </div>
+
+
+                </div>
             </a>
-            <h3>${item.productTitle}</h3>
-            <p>${item.productPrice}</p>
           </li>
         `);
       });
 
     if (recentlyViewedHtml.length > 0) {
       this.innerHTML = `
-        <div id="recently-viewed-section">
-          <h2>Recently Viewed Products new with Class</h2>
-          <ul class="recently-viewed-grid flex gap-4 bg-red-500">
+        <div id="recently-viewed-section" class="related-products page-width section-{{ section.id }}-padding isolate{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+          <h2 class="related-products__heading h2">Recently viewed</h2>
+          <ul class="grid product-grid grid--2-col-tablet-down grid--4-col-desktop" role="list">
             ${recentlyViewedHtml.join('')}
           </ul>
         </div>
