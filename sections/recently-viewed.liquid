@@ -1,7 +1,5 @@
-<div>
-  <h2>
-    {{ section.settings.heading }}
-  </h2>
+<div id="recently-viewed-section" style="display:none">
+  <h2>Recently Viewed Products</h2>
   <ul class="recently-viewed-grid flex gap-4 bg-red-500">
     <!-- Recently viewed products will appear here -->
   </ul>
@@ -16,75 +14,59 @@
       productUrl: '{{ product.url }}',
       productImageAltText: '{{ product.featured_media.alt | escape }}',
     };
-    const productList = [];
-    let jsonResp, jsonRespArr, jsonRespArrStr;
-    const numberOfProducts = 8;
-    productList.push(productData);
-    const currProductPageTitle = productData.productTitle;
-    const productDataString = JSON.stringify(productList);
+    const numberOfProducts = 6;
+    let products = [];
     const localData = localStorage.getItem('recentlyViewedProduct');
-
-    if (localData === null) {
-      localStorage.setItem('recentlyViewedProduct', productDataString);
-    } else if (localData) {
-      const oldProductData = localStorage.getItem('recentlyViewedProduct');
-      const countProductData = (oldProductData.match(/productTitle/g) || []).length;
-      const sameProduct = oldProductData.includes(currProductPageTitle);
-      if (countProductData < numberOfProducts && sameProduct == false) {
-        jsonResp = JSON.parse(oldProductData);
-        jsonRespArr = jsonResp.concat(productList);
-        jsonRespArrStr = JSON.stringify(jsonRespArr);
-        localStorage.setItem('recentlyViewedProduct', jsonRespArrStr);
-      } else if (countProductData >= numberOfProducts && sameProduct == false) {
-        jsonResp = JSON.parse(oldProductData);
-        jsonResp.shift();
-        jsonRespArr = jsonResp.concat(productList);
-        jsonRespArr = JSON.stringify(jsonRespArr);
-        localStorage.setItem('recentlyViewedProduct', jsonRespArr);
+    if (localData) {
+      try {
+        products = JSON.parse(localData) || [];
+      } catch (e) {
+        products = [];
       }
     }
+
+    products = products.filter((item) => item.productTitle !== productData.productTitle);
+
+    products.push(productData);
+
+    if (products.length > numberOfProducts) {
+      products = products.slice(products.length - numberOfProducts);
+    }
+    localStorage.setItem('recentlyViewedProduct', JSON.stringify(products));
   }
 
-  setRecentlyViewedProducts();
-  const localViewed = localStorage.recentlyViewedProduct;
   function getRecentlyViewedProducts() {
     const productData = JSON.parse(localStorage.getItem('recentlyViewedProduct'));
     const recentlyViewedHtml = [];
-    productData.map((item) => {
-      recentlyViewedHtml.unshift(`
-    <li class="bg-blue-200">
-      <a href="${item.productUrl}">
-		<img src='${item.productImg}' loading="lazy" alt="${item.productImageAltText}"/>
-      </a>
-       <h3>${item.productTitle}</h3>
-       <p>${item.productPrice}</p>
-    </li>
-   `);
-    });
-    const newProductData = `${recentlyViewedHtml.join('')}`;
-    const fullContent = document.getElementsByClassName('recently-viewed-grid');
-    fullContent[0].innerHTML = newProductData;
+
+    const currentProductTitle = '{{ product.title | escape }}';
+    if (productData && productData.length > 0) {
+      productData
+        .filter((item) => item.productTitle !== currentProductTitle)
+        .map((item) => {
+          recentlyViewedHtml.unshift(`
+      <li class="bg-blue-200">
+        <a href="${item.productUrl}">
+          <img src='${item.productImg}' loading="lazy" alt="${item.productImageAltText}"/>
+        </a>
+         <h3>${item.productTitle}</h3>
+         <p>${item.productPrice}</p>
+      </li>
+     `);
+        });
+      const newProductData = `${recentlyViewedHtml.join('')}`;
+      const fullContent = document.getElementsByClassName('recently-viewed-grid');
+      fullContent[0].innerHTML = newProductData;
+      document.getElementById('recently-viewed-section').style.display = recentlyViewedHtml.length > 0 ? '' : 'none';
+    } else {
+      document.getElementById('recently-viewed-section').style.display = 'none';
+    }
   }
 
   document.addEventListener('DOMContentLoaded', function (event) {
+    if ({{ product.title | json }}) {
+        setRecentlyViewedProducts();
+      }
     getRecentlyViewedProducts();
   });
 </script>
-
-{% schema %}
-{
-  "name": "Recently Viewed",
-  "settings": [
-    {
-      "type": "header",
-      "content": "Heading"
-    },
-    {
-      "type": "text",
-      "id": "heading",
-      "default": "Recently Viewed",
-      "label": "Text"
-    }
-  ]
-}
-{% endschema %}
