@@ -1,72 +1,44 @@
-<div id="recently-viewed-section" style="display:none">
-  <h2>Recently Viewed Products</h2>
-  <ul class="recently-viewed-grid flex gap-4 bg-red-500">
-    <!-- Recently viewed products will appear here -->
-  </ul>
-</div>
+{%- comment -%}
+  This section is responsible for:
+  - Rendering the <recently-viewed-products> custom element, which will display the recently viewed products.
+  - Injecting a script that saves the current product's data to localStorage, so it can be accessed by the custom element.
+  Connected files:
+  - assets/recently-viewed.js: Defines the custom element and renders the product list from localStorage.
+  - templates/product.json: Registers this section for use on product pages.
+{%- endcomment -%}
+
+<recently-viewed-products data-product-title="{{ product.title | escape }}"></recently-viewed-products>
 
 <script>
-  function setRecentlyViewedProducts() {
-    const productData = {
-      productTitle: '{{ product.title }}',
-      productImg: '{{ product.featured_media | image_url: width: 450 }}',
-      productPrice: '{{ product.price | money }}',
-      productUrl: '{{ product.url }}',
-      productImageAltText: '{{ product.featured_media.alt | escape }}',
-    };
-    const numberOfProducts = 6;
-    let products = [];
-    const localData = localStorage.getItem('recentlyViewedProduct');
-    if (localData) {
-      try {
-        products = JSON.parse(localData) || [];
-      } catch (e) {
-        products = [];
-      }
-    }
-
-    products = products.filter((item) => item.productTitle !== productData.productTitle);
-
-    products.push(productData);
-
-    if (products.length > numberOfProducts) {
-      products = products.slice(products.length - numberOfProducts);
-    }
-    localStorage.setItem('recentlyViewedProduct', JSON.stringify(products));
-  }
-
-  function getRecentlyViewedProducts() {
-    const productData = JSON.parse(localStorage.getItem('recentlyViewedProduct'));
-    const recentlyViewedHtml = [];
-
-    const currentProductTitle = '{{ product.title | escape }}';
-    if (productData && productData.length > 0) {
-      productData
-        .filter((item) => item.productTitle !== currentProductTitle)
-        .map((item) => {
-          recentlyViewedHtml.unshift(`
-      <li class="bg-blue-200">
-        <a href="${item.productUrl}">
-          <img src='${item.productImg}' loading="lazy" alt="${item.productImageAltText}"/>
-        </a>
-         <h3>${item.productTitle}</h3>
-         <p>${item.productPrice}</p>
-      </li>
-     `);
-        });
-      const newProductData = `${recentlyViewedHtml.join('')}`;
-      const fullContent = document.getElementsByClassName('recently-viewed-grid');
-      fullContent[0].innerHTML = newProductData;
-      document.getElementById('recently-viewed-section').style.display = recentlyViewedHtml.length > 0 ? '' : 'none';
-    } else {
-      document.getElementById('recently-viewed-section').style.display = 'none';
-    }
-  }
-
   document.addEventListener('DOMContentLoaded', function (event) {
-    if ({{ product.title | json }}) {
-        setRecentlyViewedProducts();
+    function setRecentlyViewedProducts() {
+      const productData = {
+        productTitle: '{{ product.title }}',
+        productImg: '{{ product.featured_media | image_url: width: 450 }}',
+        productPrice: '{{ product.price | money }}',
+        productUrl: '{{ product.url }}',
+        productImageAltText: '{{ product.featured_media.alt | escape }}',
+      };
+      const numberOfProducts = 6;
+      let products = [];
+      const localData = localStorage.getItem('recentlyViewedProduct');
+      if (localData) {
+        try {
+          products = JSON.parse(localData) || [];
+        } catch (e) {
+          products = [];
+        }
       }
-    getRecentlyViewedProducts();
+
+      products = products.filter((item) => item.productTitle !== productData.productTitle);
+
+      products.push(productData);
+
+      if (products.length > numberOfProducts) {
+        products = products.slice(products.length - numberOfProducts);
+      }
+      localStorage.setItem('recentlyViewedProduct', JSON.stringify(products));
+    }
+    setRecentlyViewedProducts();
   });
 </script>

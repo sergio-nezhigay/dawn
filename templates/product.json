@@ -253,6 +253,8 @@
     "image-with-text",
     "multicolumn",
     "related-products",
+    // The "recently-viewed" section is included here so that the recently viewed products feature
+    // appears on product pages. This connects the section and its logic to the product template.
     "recently-viewed"
   ]
 }
