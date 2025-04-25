@@ -205,12 +205,18 @@
         "padding_top": 36,
         "padding_bottom": 28
       }
-    }
+    },
+    "recently-viewed": {
+        "type": "recently-viewed",
+        "settings": {
+        }
+      }
   },
   "order": [
     "main",
     "image-with-text",
     "multicolumn",
-    "related-products"
+    "related-products",
+    "recently-viewed"
   ]
 }
