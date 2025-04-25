@@ -16,6 +16,7 @@ class RecentlyViewedProducts extends HTMLElement {
   }
 
   renderRecentlyViewed() {
+    console.log('renderRecentlyViewed');
     const currentProductTitle = this.dataset.productTitle;
     const productData = JSON.parse(localStorage.getItem('recentlyViewedProduct')) || [];
     const recentlyViewedHtml = [];
