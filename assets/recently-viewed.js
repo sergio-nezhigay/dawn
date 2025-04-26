@@ -4,15 +4,7 @@
 
 class RecentlyViewedProducts extends HTMLElement {
   connectedCallback() {
-    this.observer = new IntersectionObserver(
-      (entries, observer) => {
-        if (!entries[0].isIntersecting) return;
-        observer.unobserve(this);
-        this.renderRecentlyViewed();
-      },
-      { rootMargin: '0px 0px 400px 0px' }
-    );
-    this.observer.observe(this);
+    this.renderRecentlyViewed();
   }
 
   renderRecentlyViewed() {
@@ -27,9 +19,9 @@ class RecentlyViewedProducts extends HTMLElement {
         recentlyViewedHtml.push(`
           <li class="grid__item">
             <a href="${item.productUrl}" class="product-card-wrapper card-wrapper underline-links-hover">
-                <div class="">
-                      <div class="">
-                        <img src="${item.productImg}" loading="lazy" alt="${item.productImageAltText}" class="" />
+                <div>
+                      <div style="filter: brightness(0.5);">
+                        <img src="${item.productImg}" loading="lazy" alt="${item.productImageAltText}" />
                       </div>
 
                       <div class="card__content !p-0">
@@ -43,11 +35,8 @@ class RecentlyViewedProducts extends HTMLElement {
                                     </span>
                                 </div>
                             </div>
-
                         </div>
                       </div>
-
-
                 </div>
             </a>
           </li>
@@ -56,8 +45,8 @@ class RecentlyViewedProducts extends HTMLElement {
 
     if (recentlyViewedHtml.length > 0) {
       this.innerHTML = `
-        <div id="recently-viewed-section" class="related-products page-width section-{{ section.id }}-padding isolate{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-          <h2 class="related-products__heading h2">Recently viewed</h2>
+        <div>
+          <h2 class="related-products__heading h2">Recently viewed2</h2>
           <ul class="grid product-grid grid--2-col-tablet-down grid--4-col-desktop" role="list">
             ${recentlyViewedHtml.join('')}
           </ul>
