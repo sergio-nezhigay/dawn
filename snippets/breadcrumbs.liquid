@@ -1,0 +1,92 @@
+{% unless template == 'index' or template == 'cart' or template == 'list-collections' or template == '404' %}
+  {% assign t = template | split: '.' | first %}
+
+  <nav class="breadcrumbs" role="navigation" aria-label="breadcrumbs">
+    <ol class="flex items-center" itemscope itemtype="https://schema.org/BreadcrumbList">
+      <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a href="/" itemprop="item">
+          <span itemprop="name">Home</span>
+        </a>
+        <meta itemprop="position" content="1">
+      </li>
+
+      {% case t %}
+        {% when 'page' %}
+          <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <a href="{{ page.url }}" itemprop="item" aria-current="page">
+              <span itemprop="name">{{ page.title }}</span>
+            </a>
+            <meta itemprop="position" content="2">
+          </li>
+
+        {% when 'product' %}
+          {% if collection.url %}
+            <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+              <a href="{{ collection.url }}" itemprop="item">
+                <span itemprop="name">{{ collection.title }}</span>
+              </a>
+              <meta itemprop="position" content="2">
+            </li>
+          {% elsif product.collections.first %}
+            <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+              <a href="{{ product.collections.first.url }}" itemprop="item">
+                <span itemprop="name">{{ product.collections.first.title }}</span>
+              </a>
+              <meta itemprop="position" content="2">
+            </li>
+          {% endif %}
+
+          <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <span itemprop="item" aria-current="page">
+              <span itemprop="name">{{ product.title }}</span>
+            </span>
+            <meta itemprop="position" content="3">
+          </li>
+
+        {% when 'collection' and collection.handle %}
+          {% if current_tags %}
+            <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+              <a href="{{ collection.url }}" itemprop="item">
+                <span itemprop="name">{{ collection.title }}</span>
+              </a>
+              <meta itemprop="position" content="2">
+            </li>
+            <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+              {% capture tag_url %}{{ collection.url }}/{{ current_tags | join: "+"}}{% endcapture %}
+              <a href="{{ tag_url }}" itemprop="item" aria-current="page">
+                <span itemprop="name">{{ current_tags | join: ' + ' }}</span>
+              </a>
+              <meta itemprop="position" content="3">
+            </li>
+          {% else %}
+            <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+              <a href="{{ collection.url }}" itemprop="item" aria-current="page">
+                <span itemprop="name">{{ collection.title }}</span>
+              </a>
+              <meta itemprop="position" content="2">
+            </li>
+          {% endif %}
+
+        {% else %}
+          <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <a href="{{ request.path }}" itemprop="item" aria-current="page">
+              <span itemprop="name">{{ page_title }}</span>
+            </a>
+            <meta itemprop="position" content="2">
+          </li>
+      {% endcase %}
+    </ol>
+  </nav>
+
+  <style>
+    .breadcrumb-item:not(:last-child)::after {
+      content: '/';
+      margin: 0 0.5rem;
+      display: inline-block;
+    }
+    .breadcrumb-item {
+      display: inline-flex;
+      align-items: center;
+    }
+  </style>
+{% endunless %}
