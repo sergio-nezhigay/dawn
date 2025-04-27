@@ -32,17 +32,6 @@
     },
     "1745735879d1246315": {
       "type": "apps",
-      "blocks": {
-        "judge_me_reviews_featured_carousel_Fnm6FW": {
-          "type": "shopify://apps/judge-me-reviews/blocks/featured_carousel/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {
-            "maxwidth": 1080
-          }
-        }
-      },
-      "block_order": [
-        "judge_me_reviews_featured_carousel_Fnm6FW"
-      ],
       "settings": {
         "include_margins": true
       }
