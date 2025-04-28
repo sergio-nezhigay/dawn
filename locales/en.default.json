@@ -177,7 +177,16 @@
       "taxes_included": "Taxes included.",
       "duties_included": "Duties included.",
       "duties_and_taxes_included": "Duties and taxes included.",
-      "shipping_policy_html": "<a href=\"{{ link }}\">Shipping</a> calculated at checkout."
+      "shipping_policy_html": "<a href=\"{{ link }}\">Shipping</a> calculated at checkout.",
+      "features": {
+        "warranty": "Warranty",
+        "months": "months",
+        "return_exchange": "Return or exchange within 14 days",
+        "delivery": "Delivery",
+        "delivery_info": "Nova Poshta to branch/locker or courier to your address",
+        "payment": "Payment",
+        "payment_info": "Pay on delivery or prepayment"
+      }
     },
     "modal": {
       "label": "Media gallery"

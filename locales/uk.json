@@ -1,0 +1,22 @@
+{
+  "general": {
+    "password_page": {
+      "login_form_heading": "Вхід до магазину за допомогою пароля:",
+      "login_password_button": "Увійти за"
+    }
+  },
+  "products": {
+    "product": {
+      "duties_and_taxes_included": "Мита та податки включено.",
+      "features": {
+        "warranty": "Гарантія",
+        "months": "місяців",
+        "return_exchange": "Повернення або обмін протягом 14 днів.",
+        "delivery": "Доставка",
+        "delivery_info": "Нова Пошта у відділення/поштомат або кур'єр до вашої адреси",
+        "payment": "Оплата",
+        "payment_info": "При отриманні або передоплата"
+      }
+    }
+  }
+}

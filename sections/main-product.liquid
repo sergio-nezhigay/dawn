@@ -192,6 +192,7 @@
                     {%- endif -%}
                   {%- endif -%}
                 </p>
+
               {%- when 'description' -%}
                 {%- if product.description != blank -%}
                   <div class="product__description rte quick-add-hidden" {{ block.shopify_attributes }}>
@@ -475,6 +476,7 @@
                   section_id: section.id,
                   show_pickup_availability: true
                 -%}
+                {% render 'product-features' %}
               {%- when 'rating' -%}
                 {%- if product.metafields.reviews.rating.value != blank -%}
                   <div class="rating-wrapper">
