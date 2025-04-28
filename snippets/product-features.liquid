@@ -1,0 +1,35 @@
+<div class="space-y-4">
+  {% assign warranty_months = product.metafields.custom.warranty %}
+  {% if warranty_months %}
+    <div class="flex items-start justify-start gap-5 ">
+      <span class="svg-wrapper shrink-0">
+        {{- 'icon-shield-check.svg' | inline_asset_content -}}
+      </span>
+      <span class="font-semibold">{{ 'products.product.features.warranty' | t }}:</span
+      ><span class="text-gray-500 ">
+        {{ warranty_months }}
+        {{ 'products.product.features.months' | t }}. {{ 'products.product.features.return_exchange' | t }}
+      </span>
+    </div>
+  {% endif %}
+
+  <div class="flex items-start justify-start gap-5 ">
+    <span class="svg-wrapper shrink-0">
+      {{- 'icon-truck.svg' | inline_asset_content -}}
+    </span>
+    <span class="font-semibold">{{ 'products.product.features.delivery' | t }}:</span
+    ><span class="text-gray-500 ">
+      {{ 'products.product.features.delivery_info' | t }}
+    </span>
+  </div>
+
+  <div class="flex items-start justify-start gap-5 ">
+    <span class="svg-wrapper shrink-0">
+      {{- 'icon-credit-card.svg' | inline_asset_content -}}
+    </span>
+    <span class="font-semibold">{{ 'products.product.features.payment' | t }}:</span
+    ><span class="text-gray-500 ">
+      {{ 'products.product.features.payment_info' | t }}
+    </span>
+  </div>
+</div>

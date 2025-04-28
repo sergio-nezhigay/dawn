@@ -179,7 +179,16 @@
       "product_variants": "Варианты товара",
       "taxes_included": "Налоги включены.",
       "duties_included": "Пошлины включены.",
-      "duties_and_taxes_included": "Пошлины и налоги включены."
+      "duties_and_taxes_included": "Пошлины и налоги включены.",
+      "features": {
+        "warranty": "Гарантия",
+        "months": "месяцев",
+        "return_exchange": "Возврат или обмен в течение 14 дней.",
+        "delivery": "Доставка",
+        "delivery_info": "Новая Почта в отделение/почтомат или курьером до вашего адреса",
+        "payment": "Оплата",
+        "payment_info": "При получении или предоплата"
+      }
     },
     "modal": {
       "label": "Галерея мультимедиа"
