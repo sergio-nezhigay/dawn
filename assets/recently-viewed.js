@@ -20,7 +20,7 @@ class RecentlyViewedProducts extends HTMLElement {
           <li class="grid__item">
             <a href="${item.productUrl}" class="product-card-wrapper card-wrapper underline-links-hover">
                 <div>
-                      <div style="filter: brightness(0.5);">
+                      <div>
                         <img src="${item.productImg}" loading="lazy" alt="${item.productImageAltText}" />
                       </div>
 
@@ -47,7 +47,7 @@ class RecentlyViewedProducts extends HTMLElement {
       this.innerHTML = `
         <div>
           <h2 class="related-products__heading h2">Recently viewed2</h2>
-          <ul class="grid product-grid grid--2-col-tablet-down grid--4-col-desktop" role="list">
+          <ul class="grid product-grid grid--2-col-tablet-down grid--6-col-desktop" role="list">
             ${recentlyViewedHtml.join('')}
           </ul>
         </div>
