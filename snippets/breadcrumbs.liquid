@@ -1,11 +1,18 @@
 {% unless template == 'index' or template == 'cart' or template == 'list-collections' or template == '404' %}
   {% assign t = template | split: '.' | first %}
 
-  <nav class="breadcrumbs" role="navigation" aria-label="breadcrumbs">
+  <nav
+    class="breadcrumbs mb-4 scrollbar-hide overflow-x-auto whitespace-nowrap"
+    role="navigation"
+    aria-label="breadcrumbs"
+  >
     <ol class="flex items-center" itemscope itemtype="https://schema.org/BreadcrumbList">
-      <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-        <a href="/" itemprop="item">
-          <span itemprop="name">Home</span>
+      <li class="breadcrumb-item block" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a href="/" itemprop="item" class="flex items-center">
+          <span itemprop="name" class="sr-only">Home</span>
+          <span class="svg-wrapper">
+            {{- 'icon-home.svg' | inline_asset_content -}}
+          </span>
         </a>
         <meta itemprop="position" content="1">
       </li>
