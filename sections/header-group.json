@@ -42,11 +42,11 @@
         "mobile_logo_position": "center",
         "menu": "main-menu",
         "menu_type_desktop": "dropdown",
-        "sticky_header_type": "on-scroll-up",
+        "sticky_header_type": "reduce-logo-size",
         "show_line_separator": true,
         "color_scheme": "scheme-1",
         "menu_color_scheme": "",
-        "enable_country_selector": true,
+        "enable_country_selector": false,
         "enable_language_selector": true,
         "enable_customer_avatar": true,
         "margin_bottom": 0,
@@ -56,15 +56,6 @@
     },
     "174573673163fee66f": {
       "type": "apps",
-      "blocks": {
-        "judge_me_reviews_verified_badge_fWj6xK": {
-          "type": "shopify://apps/judge-me-reviews/blocks/verified_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {}
-        }
-      },
-      "block_order": [
-        "judge_me_reviews_verified_badge_fWj6xK"
-      ],
       "settings": {
         "include_margins": true
       }
