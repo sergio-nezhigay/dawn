@@ -404,6 +404,7 @@
   .underline-links-hover:hover a {
     text-decoration: underline;
     text-underline-offset: 0.3rem;
+    color: rgba(var(--color-link), var(--alpha-link));
   }
 }
 

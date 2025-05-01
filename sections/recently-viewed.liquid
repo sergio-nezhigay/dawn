@@ -7,7 +7,10 @@
   - templates/product.json: Registers this section for use on product pages.
 {%- endcomment -%}
 <div class="related-products page-width section-{{ section.id }}-padding isolate scroll-trigger animate--slide-in">
-  <recently-viewed-products data-product-title="{{ product.title | escape }}"></recently-viewed-products>
+  <recently-viewed-products
+    data-product-title="{{ product.title | escape }}"
+    data-section-title="{{ 'sections.recently_viewed.title' | t }}"
+  ></recently-viewed-products>
 </div>
 
 <script>

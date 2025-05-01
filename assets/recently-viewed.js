@@ -11,34 +11,37 @@ class RecentlyViewedProducts extends HTMLElement {
     const currentProductTitle = this.dataset.productTitle;
     const productData = JSON.parse(localStorage.getItem('recentlyViewedProduct')) || [];
     const recentlyViewedHtml = [];
+    const title = this.dataset.sectionTitle || 'Recently viewed';
 
     productData
       .filter((item) => item.productTitle !== currentProductTitle)
       .reverse()
       .forEach((item) => {
         recentlyViewedHtml.push(`
-          <li class="grid__item">
-            <a href="${item.productUrl}" class="product-card-wrapper card-wrapper underline-links-hover">
-                <div>
-                      <div>
-                        <img src="${item.productImg}" loading="lazy" alt="${item.productImageAltText}" />
-                      </div>
+          <li class="grid__item group">
+            <div class="card-wrapper product-card-wrapper underline-links-hover">
+                <a href="${item.productUrl}" class="full-unstyled-link" >
+                                <div>
+                                    <div class="overflow-hidden aspect-square flex items-center">
+                                        <img src="${item.productImg}" loading="lazy" alt="${item.productImageAltText}" class="transition-transform duration-300 ease-in-out group-hover:scale-103" />
+                                    </div>
 
-                      <div class="card__content !p-0">
-                        <div class="card__information !px-0">
-                            <h3 class="card__heading h5">
-                                ${item.productTitle}
-                            </h3>
-                            <div class="card-information">
-                                <div class="price">
-                                    <span class="price-item price-item--regular">${item.productPrice}
-                                    </span>
+                                    <div class="card__content !p-0">
+                                        <div class="card__information !px-0">
+                                            <h3 class="card__heading h5">
+                                                ${item.productTitle}
+                                            </h3>
+                                            <div class="card-information">
+                                                <div class="price">
+                                                    <span class="price-item price-item--regular">${item.productPrice} ₴
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                      </div>
-                </div>
-            </a>
+                            </a>
+            </div>
           </li>
         `);
       });
@@ -46,7 +49,7 @@ class RecentlyViewedProducts extends HTMLElement {
     if (recentlyViewedHtml.length > 0) {
       this.innerHTML = `
         <div>
-          <h2 class="related-products__heading h2">Recently viewed2</h2>
+          <h2 class="related-products__heading inline-richtext h2">${title}</h2>
           <ul class="grid product-grid grid--2-col-tablet-down grid--6-col-desktop" role="list">
             ${recentlyViewedHtml.join('')}
           </ul>
