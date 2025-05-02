@@ -1,4 +1,4 @@
-<section class="bg-gray-50 py-12">
+<section class="bg-gray-50 py-12" itemscope itemtype="http://schema.org/LocalBusiness">
   <ul class="page-width grid grid-cols-1 gap-8 px-4 mb-8 max-w-7xl">
     <li class="flex items-start space-x-4 w-full">
       <div class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center">
@@ -7,8 +7,10 @@
         </span>
       </div>
       <div class="flex flex-col">
-        <span class="text-gray-600 ">Phone</span>
-        <a href="tel:+380993815288" class="text-gray-900 hover:text-blue-600 transition-colors"> (099) 381-5288 </a>
+        <span class="text-gray-600">Phone</span>
+        <a href="tel:+380993815288" class="text-gray-900 hover:text-blue-600 transition-colors" itemprop="telephone">
+          (099) 381-5288
+        </a>
       </div>
     </li>
 
@@ -32,7 +34,11 @@
       </div>
       <div class="flex flex-col">
         <span class="text-gray-600">Email</span>
-        <a href="mailto:info@informatica.com.ua" class="text-gray-900 hover:text-blue-600 transition-colors">
+        <a
+          href="mailto:info@informatica.com.ua"
+          class="text-gray-900 hover:text-blue-600 transition-colors"
+          itemprop="email"
+        >
           info@informatica.com.ua
         </a>
       </div>
@@ -44,9 +50,12 @@
           {{- 'icon-map-pin.svg' | inline_asset_content -}}
         </span>
       </div>
-      <div class="flex flex-col">
+      <div class="flex flex-col" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
         <span class="text-gray-600">Address</span>
-        <span class="text-gray-900">36 Schuseva St, Kyiv, Ukraine</span>
+        <span class="text-gray-900">
+          <span itemprop="streetAddress">36 Schuseva St</span>, <span itemprop="addressLocality">Kyiv</span>,
+          <span itemprop="addressCountry">Ukraine</span>
+        </span>
       </div>
     </li>
   </ul>
