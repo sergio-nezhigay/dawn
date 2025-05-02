@@ -26,8 +26,8 @@
             <meta itemprop="position" content="2">
           </li>
 
-        {% when 'product' %}
-          {% if collection.url %}
+        {% when 'product' -%}
+          {% if collection.url -%}
             <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
               <a href="{{ collection.url }}" itemprop="item">
                 <span itemprop="name">{{ collection.title }}</span>
@@ -36,7 +36,7 @@
             </li>
           {% elsif product.collections.first %}
             <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-              <a href="{{ product.collections.first.url }}" itemprop="item">
+              <a href="{{ product.collections.first.url }}" itemprop="item" class="hover:underline">
                 <span itemprop="name">{{ product.collections.first.title }}</span>
               </a>
               <meta itemprop="position" content="2">
@@ -67,9 +67,9 @@
             </li>
           {% else %}
             <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-              <a href="{{ collection.url }}" itemprop="item" aria-current="page">
+              <span itemprop="item" aria-current="page">
                 <span itemprop="name">{{ collection.title }}</span>
-              </a>
+              </span>
               <meta itemprop="position" content="2">
             </li>
           {% endif %}
@@ -92,7 +92,7 @@
       display: inline-block;
     }
     .breadcrumb-item {
-      display: inline-flex;
+      display: flex;
       align-items: center;
     }
   </style>

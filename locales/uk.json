@@ -345,7 +345,15 @@
       "taxes_at_checkout_shipping_at_checkout_without_policy": "Податки, знижки та вартість доставки розраховуються при оформленні замовлення."
     },
     "footer": {
-      "payment": "Способи оплати"
+      "payment": "Способи оплати",
+      "phone_label": "Телефон",
+      "working_hours_label": "Графік роботи",
+      "working_hours_value": "Пн-Пт 9:00–18:00",
+      "email_label": "Електронна пошта",
+      "address_label": "Адреса",
+      "address_street": "вул. Щусєва, 36",
+      "address_city": "Київ",
+      "address_country": "Україна"
     },
     "featured_blog": {
       "view_all": "Переглянути все",

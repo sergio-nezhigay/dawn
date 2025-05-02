@@ -345,7 +345,15 @@
       "taxes_at_checkout_shipping_at_checkout_without_policy": "Налоги, скидки и стоимость доставки рассчитываются при оформлении заказа."
     },
     "footer": {
-      "payment": "Способы оплаты"
+      "payment": "Способы оплаты",
+      "phone_label": "Телефон",
+      "working_hours_label": "График работы",
+      "email_label": "Электронная почта",
+      "address_label": "Адрес",
+      "address_street": "ул. Щусева, 36",
+      "address_city": "Киев",
+      "address_country": "Украина",
+      "working_hours_value": "Пн-Пт 9:00–18:00"
     },
     "featured_blog": {
       "view_all": "Посмотреть все",
