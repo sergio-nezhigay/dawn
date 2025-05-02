@@ -264,6 +264,14 @@
   .aspect-square {
     aspect-ratio: 1 / 1;
   }
+  .\!size-10 {
+    width: calc(var(--spacing) * 10) !important;
+    height: calc(var(--spacing) * 10) !important;
+  }
+  .\!size-20 {
+    width: calc(var(--spacing) * 20) !important;
+    height: calc(var(--spacing) * 20) !important;
+  }
   .size-6 {
     width: calc(var(--spacing) * 6);
     height: calc(var(--spacing) * 6);
