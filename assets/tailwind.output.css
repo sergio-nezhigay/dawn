@@ -268,6 +268,14 @@
     width: calc(var(--spacing) * 10) !important;
     height: calc(var(--spacing) * 10) !important;
   }
+  .\!size-12 {
+    width: calc(var(--spacing) * 12) !important;
+    height: calc(var(--spacing) * 12) !important;
+  }
+  .\!size-16 {
+    width: calc(var(--spacing) * 16) !important;
+    height: calc(var(--spacing) * 16) !important;
+  }
   .\!size-20 {
     width: calc(var(--spacing) * 20) !important;
     height: calc(var(--spacing) * 20) !important;
