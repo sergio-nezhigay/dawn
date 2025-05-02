@@ -345,7 +345,8 @@
       "taxes_at_checkout_shipping_at_checkout_without_policy": "Податки, знижки та вартість доставки розраховуються при оформленні замовлення."
     },
     "footer": {
-      "payment": "Способи оплати"
+      "payment": "Способи оплати",
+      "phone_label": "Телефон"
     },
     "featured_blog": {
       "view_all": "Переглянути все",
