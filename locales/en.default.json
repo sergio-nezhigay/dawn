@@ -333,7 +333,15 @@
       }
     },
     "footer": {
-      "payment": "Payment methods"
+      "payment": "Payment methods",
+      "phone_label": "Phone",
+      "working_hours_label": "Working hours",
+      "email_label": "Email",
+      "address_label": "Address",
+      "address_street": "36 Schuseva St",
+      "address_city": "Kyiv",
+      "address_country": "Ukraine",
+      "working_hours_value": "Mon-Fri 9:00–18:00"
     },
     "featured_blog": {
       "view_all": "View all",
