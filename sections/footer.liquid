@@ -2,7 +2,9 @@
   <ul class="grid list-none grid-cols-1 gap-4 p-0">
     <li class="grid grid-cols-[50px_1fr] items-center whitespace-pre py-2">
       <div class="flex size-8 items-center justify-center">
-        {% render 'icon-phone' %}
+        <span class="svg-wrapper">
+          {{- 'icon-caret.svg' | inline_asset_content -}}
+        </span>
       </div>
       <div class="font-narrow">
         Телефон
@@ -12,7 +14,9 @@
 
     <li class="grid grid-cols-[50px_1fr] items-center whitespace-pre py-2">
       <div class="flex size-8 items-center justify-center">
-        {% render 'icon-clock' %}
+        <span class="svg-wrapper">
+          {{- 'icon-caret.svg' | inline_asset_content -}}
+        </span>
       </div>
       <div class="font-narrow">
         Графік роботи
@@ -22,7 +26,9 @@
 
     <li class="grid grid-cols-[50px_1fr] items-center whitespace-pre py-2">
       <div class="flex size-8 items-center justify-center">
-        {% render 'icon-mail' %}
+        <span class="svg-wrapper">
+          {{- 'icon-caret.svg' | inline_asset_content -}}
+        </span>
       </div>
       <div class="font-narrow">
         Email
@@ -32,7 +38,9 @@
 
     <li class="grid grid-cols-[50px_1fr] items-center whitespace-pre py-2">
       <div class="flex size-8 items-center justify-center">
-        {% render 'icon-map-pin' %}
+        <span class="svg-wrapper">
+          {{- 'icon-caret.svg' | inline_asset_content -}}
+        </span>
       </div>
       <div class="font-narrow">
         Адреса
