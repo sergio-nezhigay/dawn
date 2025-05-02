@@ -333,7 +333,8 @@
       }
     },
     "footer": {
-      "payment": "Payment methods"
+      "payment": "Payment methods",
+      "phone_label": "Phone"
     },
     "featured_blog": {
       "view_all": "View all",
