@@ -1,57 +1,57 @@
 <section class=" min-h-[25rem] w-full items-start overflow-hidden bg-gray-900 py-8 text-white/70 border-t border-white/10">
-  <ul class="page-width grid list-none grid-cols-1 gap-4 p-0">
-    <li>
-      <div>
+  <ul class="page-width grid list-none grid-cols-1 gap-8 p-0 md:grid-cols-4 md:gap-6">
+    <li class="flex items-start gap-4 rounded-lg bg-gray-800/50 p-4 transition hover:bg-gray-800">
+      <div class="mt-1 flex-shrink-0 text-gray-400">
         <span>
           {{- 'icon-phone.svg' | inline_asset_content -}}
         </span>
       </div>
       <div>
-        Phone
-        <a href="tel:+380993815288"> (099) 381-5288 </a>
+        <h3 class="font-semibold text-white">Phone</h3>
+        <a href="tel:+380993815288" class="block text-sm hover:text-white"> (099) 381-5288 </a>
       </div>
     </li>
 
-    <li>
-      <div>
+    <li class="flex items-start gap-4 rounded-lg bg-gray-800/50 p-4 transition hover:bg-gray-800">
+      <div class="mt-1 flex-shrink-0 text-gray-400">
         <span>
           {{- 'icon-clock.svg' | inline_asset_content -}}
         </span>
       </div>
       <div>
-        Working hours
-        <span>Mon-Fri 9:00–18:00</span>
+        <h3 class="font-semibold text-white">Working hours</h3>
+        <span class="block text-sm">Mon-Fri 9:00–18:00</span>
       </div>
     </li>
 
-    <li>
-      <div>
+    <li class="flex items-start gap-4 rounded-lg bg-gray-800/50 p-4 transition hover:bg-gray-800">
+      <div class="mt-1 flex-shrink-0 text-gray-400">
         <span>
           {{- 'icon-email.svg' | inline_asset_content -}}
         </span>
       </div>
       <div>
-        Email
-        <a href="mailto:info@informatica.com.ua"> info@informatica.com.ua </a>
+        <h3 class="font-semibold text-white">Email</h3>
+        <a href="mailto:info@informatica.com.ua" class="block text-sm hover:text-white"> info@informatica.com.ua </a>
       </div>
     </li>
 
-    <li>
-      <div>
+    <li class="flex items-start gap-4 rounded-lg bg-gray-800/50 p-4 transition hover:bg-gray-800">
+      <div class="mt-1 flex-shrink-0 text-gray-400">
         <span>
           {{- 'icon-map-pin.svg' | inline_asset_content -}}
         </span>
       </div>
       <div>
-        Address
-        <span>1 Example St, Kyiv, Ukraine</span>
+        <h3 class="font-semibold text-white">Address</h3>
+        <span class="block text-sm">1 Example St, Kyiv, Ukraine</span>
       </div>
     </li>
   </ul>
 
-  <p class="page-width mt-4 text-center text-sm text-gray-400 font-narrow">
-    © 2025 Informatica. Developed by
-    <a href="https://serhii.vercel.app/" class="text-gray-300 underline"> serhii.vercel.app </a>
+  <p class="page-width mt-8 text-center text-sm text-gray-400 font-narrow">
+    © {{ 'now' | date: '%Y' }} Informatica. Developed by
+    <a href="https://serhii.vercel.app/" class="text-gray-300 underline hover:text-white"> serhii.vercel.app </a>
   </p>
 </section>
 
