@@ -13,7 +13,7 @@
     aria-controls="{{ localPosition }}List"
     aria-describedby="{{ localPosition }}Label"
   >
-    <span>{{ localization.language.endonym_name | capitalize }}</span>
+    <span class="uppercase">{{ localization.language.iso_code }}</span>
     {{ 'icon-caret.svg' | inline_asset_content }}
   </button>
   <div class="disclosure__list-wrapper language-selector" hidden>
@@ -21,7 +21,7 @@
       {%- for language in localization.available_languages -%}
         <li class="disclosure__item" tabindex="-1">
           <a
-            class="link link--text disclosure__link caption-large focus-inset"
+            class="link link--text disclosure__link caption-large focus-inset items-center content-center"
             href="#"
             hreflang="{{ language.iso_code }}"
             lang="{{ language.iso_code }}"
@@ -37,9 +37,7 @@
             >
               {{- 'icon-checkmark.svg' | inline_asset_content -}}
             </span>
-            <span>
-              {{ language.endonym_name | capitalize }}
-            </span>
+            <span> {{ language.endonym_name | capitalize }} </span>
           </a>
         </li>
       {%- endfor -%}
