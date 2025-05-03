@@ -279,7 +279,15 @@
             {% render block %}
         {%- endcase -%}
       {%- endfor -%}
-
+      <a
+        href="tel:+38(099)381-5288"
+        class="header__icon link focus-inset header__icon--phone"
+        aria-label="Call store"
+      >
+        <span class="svg-wrapper">
+          {{ 'icon-phone.svg' | inline_asset_content }}
+        </span>
+      </a>
       <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link focus-inset" id="cart-icon-bubble">
         {% if cart == empty %}
           <span class="svg-wrapper">{{ 'icon-cart-empty.svg' | inline_asset_content }}</span>

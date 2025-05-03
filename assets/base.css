@@ -3637,3 +3637,9 @@ h4 + p {
   align-items: center;
   justify-content: space-between;
 }
+
+@media (min-width: 768px) {
+  .header__icon--phone {
+    display: none !important;
+  }
+}
