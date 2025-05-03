@@ -68,7 +68,7 @@
   padding-left: 1rem;
   text-align: left;
   min-height: calc(4rem + var(--inputs-border-width) * 2);
-  min-width: calc(7rem + var(--inputs-border-width) * 2);
+  /*min-width: calc(7rem + var(--inputs-border-width) * 2);*/
 }
 
 .disclosure__button.localization-form__select {

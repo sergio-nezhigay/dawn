@@ -1,20 +1,22 @@
-<section class="bg-gray-50 py-12" itemscope itemtype="http://schema.org/LocalBusiness">
+<section class="bg-[#145374] text-white/90 py-12" itemscope itemtype="http://schema.org/LocalBusiness">
   <ul class="page-width block gap-8 px-4 mb-8 space-y-6 max-w-7xl">
     <li class="flex space-x-4">
       <div class="flex-shrink-0 size-12">
-        <span class="svg-wrapper">
+        <span class="svg-wrapper hover:scale-105">
           {{- 'icon-phone.svg' | inline_asset_content -}}
         </span>
       </div>
       <div class="flex flex-col">
         <span class="">{{ 'sections.footer.phone_label' | t }}</span>
-        <a href="tel:+380993815288" class=" hover:underline" itemprop="telephone"> (099) 381-5288 </a>
+        <a href="tel:+380993815288" class="hover:underline underline-offset-4 " itemprop="telephone">
+          (099) 381-5288
+        </a>
       </div>
     </li>
 
     <li class="flex space-x-4">
       <div class="flex-shrink-0 size-12">
-        <span class="svg-wrapper">
+        <span class="svg-wrapper hover:scale-105">
           {{- 'icon-clock.svg' | inline_asset_content -}}
         </span>
       </div>
@@ -26,7 +28,7 @@
 
     <li class="flex space-x-4">
       <div class="flex-shrink-0 size-12">
-        <span class="svg-wrapper">
+        <span class="svg-wrapper hover:scale-105">
           {{- 'icon-email.svg' | inline_asset_content -}}
         </span>
       </div>
@@ -34,7 +36,7 @@
         <span>{{ 'sections.footer.email_label' | t }}</span>
         <a
           href="mailto:info@informatica.com.ua"
-          class="hover:underline"
+          class="hover:underline underline-offset-4 "
           itemprop="email"
         >
           info@informatica.com.ua
@@ -44,7 +46,7 @@
 
     <li class="flex space-x-4">
       <div class="flex-shrink-0 size-12">
-        <span class="svg-wrapper">
+        <span class="svg-wrapper hover:scale-105">
           {{- 'icon-map-pin.svg' | inline_asset_content -}}
         </span>
       </div>
@@ -59,11 +61,9 @@
     </li>
   </ul>
 
-  <p class="text-center border-t border-gray-200 pt-8">
+  <p class="text-center border-t border-white/20 pt-8">
     © 2025 Informatica. By
-    <a href="https://serhii.vercel.app/" class="text-blue-600 hover:text-blue-800 transition-colors">
-      serhii.vercel.app
-    </a>
+    <a href="https://serhii.vercel.app/" class="hover:underline underline-offset-4 "> serhii.vercel.app </a>
   </p>
 </section>
 
