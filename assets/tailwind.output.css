@@ -247,6 +247,9 @@
   .hidden {
     display: none;
   }
+  .inline-flex {
+    display: inline-flex;
+  }
   .table {
     display: table;
   }
@@ -578,6 +581,16 @@
   .max-md\:hidden {
     @media (width < 48rem) {
       display: none;
+    }
+  }
+  .md\:hidden {
+    @media (width >= 48rem) {
+      display: none;
+    }
+  }
+  .md\:inline-flex {
+    @media (width >= 48rem) {
+      display: inline-flex;
     }
   }
   .xl\:text-lg {
