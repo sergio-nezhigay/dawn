@@ -143,22 +143,21 @@
         class="text-white hover:underline underline-offset-4 w-fit opacity-85"
         >(099) 381-5288</a
       >
-      {% comment %}
-        <nav>
-          <ul class="flex gap-8">
-            {% for link in linklists['secondary-menu'].links %}
-              <li>
-                <a
-                  class="text-white hover:underline underline-offset-4 w-fit opacity-85"
-                  href="{{ link.url }}"
-                >
-                  {{- link.title -}}
-                </a>
-              </li>
-            {% endfor %}
-          </ul>
-        </nav>
-      {% endcomment %}
+
+      <nav>
+        <ul class="flex gap-8">
+          {% for link in linklists['secondary-menu'].links %}
+            <li>
+              <a
+                class="text-white hover:underline underline-offset-4 w-fit opacity-85"
+                href="{{ link.url }}"
+              >
+                {{- link.title -}}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </nav>
     </div>
   </header>
 
