@@ -981,7 +981,12 @@
         "collapse_order_summary_short": "Сховати",
         "total_already_paid_label": "Платний",
         "unit_price": {
-          "accessible_separator": "пер"
+          "accessible_separator": "пер",
+          "per_item": {
+            "single": "%{price} кожен",
+            "one": "%{price} за %{count} товар",
+            "other": "%{price} за %{count} товарів"
+          }
         },
         "group_title_label": "Частина \"%{group_title}\"",
         "discount_has_been_applied": "Знижку застосовано",
@@ -1569,7 +1574,8 @@
           "title": "Спеціальне підтвердження оплати на місці"
         },
         "markets_pro_disclaimer_privacy_policy_title": "Політика конфіденційності відомого продавця",
-        "expired_payment_method": "Термін дії вибраного способу оплати закінчився"
+        "expired_payment_method": "Термін дії вибраного способу оплати закінчився",
+        "payment_method_incompatible_with_payment_terms": "Спосіб оплати несумісний з умовами оплати."
       },
       "billing": {
         "edit": "Редагувати",
@@ -1970,7 +1976,8 @@
         "expired_buyer_action": "Час очікування способу оплати минув. Спробуйте ще раз.",
         "invalid_expiry_date": "Введіть дійсний термін придатності",
         "expired_card": "Термін дії вашої картки закінчився. Використовуйте інший спосіб оплати.",
-        "test_mode_live_card": "Цей магазин не приймає реальні замовлення або реальні платежі."
+        "test_mode_live_card": "Цей магазин не приймає реальні замовлення або реальні платежі.",
+        "name_mismatch": "Будь ласка, перевірте дані вашої картки. Ім'я на вашій картці та платіжна адреса не збігаються."
       },
       "post_purchase": {
         "escape_action": "Переглянути підтвердження замовлення ›",
@@ -2273,7 +2280,8 @@
           "due_after_order_reviewed_html": "Сплачується після розгляду замовлення",
           "payment_method_saved_company_location": "Зберегти картку для цього місця",
           "review_title_free_order": "Перегляньте та завершіть своє замовлення",
-          "pick_up_in_store_shipping_method_html": "Самовивіз у магазині · %{location_name}"
+          "pick_up_in_store_shipping_method_html": "Самовивіз у магазині · %{location_name}",
+          "company_location": "Розташування компанії"
         },
         "block_title": "Перегляньте свою інформацію",
         "review_title": "Огляд і оплата",
@@ -2674,7 +2682,8 @@
         },
         "external": {
           "instructions": "Підтвердьте платіж у своєму додатку, щоб завершити цю покупку"
-        }
+        },
+        "open_app_text": "Відкрийте застосунок {{paymentMethod}}"
       },
       "address_management": {
         "confirm_address_deletion": "Ви впевнені, що хочете видалити адресу {{address}} ?"
@@ -2690,6 +2699,26 @@
         "errors": {
           "not_solved": "Заповніть CAPTCHA, щоб продовжити"
         }
+      },
+      "units": {
+        "milligram": "мг",
+        "kilogram": "кг",
+        "milliliter": "мл",
+        "centiliter": "кл",
+        "cubic_meter": "м³",
+        "millimeter": "мм",
+        "centimeter": "см",
+        "square_meter": "м²",
+        "ounce": "унція",
+        "pound": "фунт",
+        "fluid_ounce": "рідких унцій",
+        "pint": "пт",
+        "gallon": "дівчина",
+        "inch": "в",
+        "foot": "футів",
+        "yard": "ярдів",
+        "square_foot": "фут²",
+        "item": "елемент"
       }
     },
     "pagination": {
@@ -3477,7 +3506,9 @@
       },
       "login_card": {
         "link_expired": "Термін дії посилання закінчився",
-        "log_in": "авторизуватися"
+        "log_in": "авторизуватися",
+        "resend_link_with_login": "надіслати нове посилання",
+        "resend_link_without_login": "Надіслати нове посилання"
       },
       "summary_totals_title_accessibility_label": "Сума замовлення",
       "unit_price": "{{price}} /шт",
@@ -3503,7 +3534,8 @@
       "taxes_included": "Включаючи {{amount}} податків",
       "log_in_to_a_different_account": "Увійдіть в інший обліковий запис",
       "order_details_skeleton_accessibility_label": "Увійдіть, щоб переглянути всі деталі замовлення.",
-      "login_to_view_all_order_details": "Увійдіть, щоб переглянути всі деталі замовлення."
+      "login_to_view_all_order_details": "Увійдіть, щоб переглянути всі деталі замовлення.",
+      "link_sent": "Посилання надіслано"
     },
     "addresses": {
       "add_button_text": "додати",
@@ -4010,7 +4042,11 @@
       "orders_link_label": "Замовлення",
       "search": "Пошук",
       "shop_logo_accessibility_label": "Логотип {{shopName}}",
-      "navigation_accessibility_message": "Ви перейшли до {{sectionName}}"
+      "navigation_accessibility_message": "Ви перейшли до {{sectionName}}",
+      "location_switcher_toast_message": "Місцезнаходження змінено на {{locationName}}",
+      "switch_location": "Змінити місцезнаходження",
+      "view_details": "Переглянути деталі",
+      "company_location": "Розташування компанії"
     },
     "errors": {
       "banner_title": {
@@ -4046,6 +4082,10 @@
       },
       "logout_everywhere": {
         "description": "Щось пішло не так під час виходу. Будь ласка спробуйте ще раз."
+      },
+      "resend_link": {
+        "too_many_requests": "Забагато запитів. Спробуйте пізніше.",
+        "generic": "Невдалий запит"
       }
     },
     "date": {
