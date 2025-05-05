@@ -87,10 +87,10 @@
     "collection_list_paa7de": {
       "type": "collection-list",
       "blocks": {
-        "featured_collection_bqjTWA": {
+        "featured_collection_H7gLQX": {
           "type": "featured_collection",
           "settings": {
-            "collection": "lamps"
+            "collection": "ssd"
           }
         },
         "featured_collection_PPH3fn": {
@@ -99,22 +99,16 @@
             "collection": "pamyat"
           }
         },
-        "featured_collection_WFWA7q": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "mice"
-          }
-        },
-        "featured_collection_H7gLQX": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "ssd"
-          }
-        },
         "featured_collection_tJBahA": {
           "type": "featured_collection",
           "settings": {
             "collection": "keyboards"
+          }
+        },
+        "featured_collection_WFWA7q": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "mice"
           }
         },
         "featured_collection_K9xRdg": {
@@ -131,11 +125,10 @@
         }
       },
       "block_order": [
-        "featured_collection_bqjTWA",
-        "featured_collection_PPH3fn",
-        "featured_collection_WFWA7q",
         "featured_collection_H7gLQX",
+        "featured_collection_PPH3fn",
         "featured_collection_tJBahA",
+        "featured_collection_WFWA7q",
         "featured_collection_K9xRdg",
         "featured_collection_KTqkJW"
       ],
