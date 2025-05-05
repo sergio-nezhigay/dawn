@@ -16,9 +16,9 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/Screenshot_283.jpg",
-            "image_overlay_opacity": 0,
+            "image_overlay_opacity": 30,
             "heading": "Навушники JBL T110",
-            "heading_size": "h1",
+            "heading_size": "hxl",
             "subheading": "Чистий бас, управління кнопками, плоский кабель, вбудований мікрофон",
             "button_label": "Детальніше",
             "link": "/products/naushniki-jbl-t110-black-jblt110blk",
