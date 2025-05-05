@@ -2797,8 +2797,9 @@ details[open] > .header__submenu {
   text-decoration: none;
   color: rgba(var(--color-foreground), 0.9);
   letter-spacing: 0.05rem;
+  text-transform: uppercase;
   font-stretch: condensed;
-  font-size: 1.5rem;
+  font-size: 1.7rem;
 }
 
 .header__condensed {
@@ -3641,12 +3642,4 @@ h4 + p {
   .header__icon--phone {
     display: none !important;
   }
-}
-
-.facet-filters__sort option[value='manual'],
-.facet-filters__sort option[value='title-ascending'],
-.facet-filters__sort option[value='title-descending'],
-.facet-filters__sort option[value='created-ascending'],
-.facet-filters__sort option[value='created-descending'] {
-  display: none;
 }
