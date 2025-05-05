@@ -2797,14 +2797,12 @@ details[open] > .header__submenu {
   text-decoration: none;
   color: rgba(var(--color-foreground), 0.9);
   letter-spacing: 0.05rem;
-  text-transform: uppercase;
   font-stretch: condensed;
-  font-size: 1.7rem;
+  font-size: 1.6rem;
 }
 
 .header__condensed {
   letter-spacing: 0.05rem;
-  text-transform: uppercase;
   font-stretch: condensed;
   font-size: 1.7rem;
   opacity: 0.85;
@@ -3642,4 +3640,18 @@ h4 + p {
   .header__icon--phone {
     display: none !important;
   }
+}
+
+.shopify-policy__title {
+  padding-bottom: 32px;
+}
+
+.shopify-policy__container {
+  max-width: 700px;
+  padding: 32px;
+}
+
+.shopify-policy__container h3,
+.shopify-policy__container h2 {
+  padding: 12px;
 }

@@ -2429,10 +2429,10 @@
       },
       "shop_policies": {
         "purchase_options_policy": "Політика варіантів купівлі",
-        "refund_policy": "Політика відшкодування",
+        "refund_policy": "Гарантія і повернення",
         "terms_of_sale": "Умови продажу",
         "terms_of_service": "Умови використання",
-        "shipping_policy": "Політика доставки",
+        "shipping_policy": "Способи доставки та оплати замовлень",
         "privacy_policy": "Політика конфіденційності",
         "cookie_preferences": "Налаштування файлів cookie",
         "legal_notice": "Юридичне повідомлення"

@@ -16,9 +16,9 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/Screenshot_283.jpg",
-            "image_overlay_opacity": 0,
+            "image_overlay_opacity": 20,
             "heading": "Навушники JBL T110",
-            "heading_size": "h1",
+            "heading_size": "hxl",
             "subheading": "Чистий бас, управління кнопками, плоский кабель, вбудований мікрофон",
             "button_label": "Детальніше",
             "link": "/products/naushniki-jbl-t110-black-jblt110blk",
@@ -33,145 +33,144 @@
         "slide_4bGM9A": {
           "type": "slide",
           "settings": {
-            "image_overlay_opacity": 0,
-            "heading": "Image slide",
-            "heading_size": "h1",
-            "subheading": "Tell your brand's story through images",
-            "button_label": "Button label",
-            "link": "",
+            "image": "shopify://shop_images/digitus-4-port-usb-2-0-hub-da-70216.jpg",
+            "image_overlay_opacity": 20,
+            "heading": "USB HUB 4-port Digitus",
+            "heading_size": "hxl",
+            "subheading": "Компактний дизайн, легке підключення",
+            "button_label": "Детальніше",
+            "link": "/products/hub-usb-4-port-digitus-usb-20-passivnyy-belyy-da-70216",
             "button_style_secondary": false,
-            "show_text_box": true,
+            "show_text_box": false,
             "box_align": "middle-center",
             "text_alignment": "center",
             "text_alignment_mobile": "center",
             "color_scheme": ""
           }
+        },
+        "slide_EranBV": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/4241211.jpg",
+            "image_overlay_opacity": 30,
+            "heading": "Накопичувач SSD 480GB Kingston",
+            "heading_size": "hxl",
+            "subheading": "Швидкість та надійність від Kingston",
+            "button_label": "Детальніше",
+            "link": "/products/nakopitel-ssd-25-480gb-kingston-sa400s37480g",
+            "button_style_secondary": false,
+            "show_text_box": false,
+            "box_align": "middle-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": "scheme-1"
+          }
         }
       },
       "block_order": [
         "slide_ibAVeN",
-        "slide_4bGM9A"
+        "slide_4bGM9A",
+        "slide_EranBV"
       ],
       "name": "t:sections.slideshow.presets.name",
       "settings": {
         "layout": "full_bleed",
         "slide_height": "small",
         "slider_visual": "dots",
-        "auto_rotate": false,
-        "change_slides_speed": 5,
+        "auto_rotate": true,
+        "change_slides_speed": 7,
         "image_behavior": "ambient",
-        "show_text_below": true,
+        "show_text_below": false,
         "accessibility_info": "Slideshow about our brand"
       }
     },
-    "rich_text": {
-      "type": "rich-text",
+    "collection_list_paa7de": {
+      "type": "collection-list",
       "blocks": {
-        "heading": {
-          "type": "heading",
+        "featured_collection_H7gLQX": {
+          "type": "featured_collection",
           "settings": {
-            "heading": "Talk about your brand",
-            "heading_size": "h1"
+            "collection": "ssd"
           }
         },
-        "text": {
-          "type": "text",
+        "featured_collection_PPH3fn": {
+          "type": "featured_collection",
           "settings": {
-            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>"
+            "collection": "pamyat"
+          }
+        },
+        "featured_collection_tJBahA": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "keyboards"
+          }
+        },
+        "featured_collection_WFWA7q": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "mice"
+          }
+        },
+        "featured_collection_K9xRdg": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "light-strings"
+          }
+        },
+        "featured_collection_KTqkJW": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "perehonhik_com_usb"
           }
         }
       },
       "block_order": [
-        "heading",
-        "text"
+        "featured_collection_H7gLQX",
+        "featured_collection_PPH3fn",
+        "featured_collection_tJBahA",
+        "featured_collection_WFWA7q",
+        "featured_collection_K9xRdg",
+        "featured_collection_KTqkJW"
       ],
+      "name": "t:sections.collection-list.presets.name",
       "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "color_scheme": "scheme-1",
-        "full_width": true,
-        "padding_top": 40,
-        "padding_bottom": 0
+        "title": "Популярні групи товарів",
+        "heading_size": "h2",
+        "image_ratio": "square",
+        "columns_desktop": 6,
+        "color_scheme": "",
+        "show_view_all": false,
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
       }
     },
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
-        "collection": "all",
-        "products_to_show": 8,
-        "title": "Featured products",
+        "collection": "популярні-товари",
+        "products_to_show": 6,
+        "title": "Популярні товари",
         "heading_size": "h2",
         "description": "",
         "show_description": false,
         "description_style": "body",
-        "columns_desktop": 4,
-        "enable_desktop_slider": false,
+        "columns_desktop": 6,
+        "enable_desktop_slider": true,
         "full_width": false,
         "show_view_all": false,
         "view_all_style": "solid",
         "color_scheme": "scheme-1",
-        "image_ratio": "adapt",
+        "image_ratio": "square",
         "image_shape": "default",
         "show_secondary_image": true,
         "show_vendor": false,
         "show_rating": false,
         "quick_add": "none",
         "columns_mobile": "2",
-        "swipe_on_mobile": false,
+        "swipe_on_mobile": true,
         "padding_top": 28,
-        "padding_bottom": 36
-      }
-    },
-    "collage": {
-      "type": "collage",
-      "blocks": {
-        "collection-0": {
-          "type": "collection",
-          "settings": {
-            "collection": ""
-          }
-        },
-        "product": {
-          "type": "product",
-          "settings": {
-            "product": "",
-            "second_image": false
-          }
-        },
-        "collection-1": {
-          "type": "collection",
-          "settings": {
-            "collection": ""
-          }
-        }
-      },
-      "block_order": [
-        "collection-0",
-        "product",
-        "collection-1"
-      ],
-      "settings": {
-        "heading": "Multimedia collage",
-        "heading_size": "h2",
-        "desktop_layout": "left",
-        "mobile_layout": "collage",
-        "card_styles": "product-card-wrapper",
-        "color_scheme": "scheme-1",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
-    "video": {
-      "type": "video",
-      "settings": {
-        "heading": "",
-        "heading_size": "h1",
-        "enable_video_looping": false,
-        "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
-        "description": "",
-        "full_width": false,
-        "color_scheme": "scheme-1",
-        "padding_top": 36,
         "padding_bottom": 36
       }
     },
@@ -211,6 +210,7 @@
         "column2",
         "column3"
       ],
+      "disabled": true,
       "settings": {
         "title": "",
         "heading_size": "h1",
@@ -227,14 +227,30 @@
         "padding_top": 36,
         "padding_bottom": 36
       }
+    },
+    "174643254122ccb34f": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_featured_carousel_W8LLen": {
+          "type": "shopify://apps/judge-me-reviews/blocks/featured_carousel/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "maxwidth": 1500
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_featured_carousel_W8LLen"
+      ],
+      "settings": {
+        "include_margins": true
+      }
     }
   },
   "order": [
     "slideshow_tDPaNk",
-    "rich_text",
+    "collection_list_paa7de",
     "featured_collection",
-    "collage",
-    "video",
-    "multicolumn"
+    "multicolumn",
+    "174643254122ccb34f"
   ]
 }
