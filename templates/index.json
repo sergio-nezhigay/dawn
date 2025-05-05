@@ -149,9 +149,9 @@
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
-        "collection": "koncentratory-usb",
+        "collection": "популярні-товари",
         "products_to_show": 6,
-        "title": "Featured products",
+        "title": "Популярні товари",
         "heading_size": "h2",
         "description": "",
         "show_description": false,
