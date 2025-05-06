@@ -34,7 +34,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/digitus-4-port-usb-2-0-hub-da-70216.jpg",
-            "image_overlay_opacity": 20,
+            "image_overlay_opacity": 0,
             "heading": "USB HUB 4-port Digitus",
             "heading_size": "hxl",
             "subheading": "Компактний дизайн, легке підключення",
@@ -52,7 +52,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/4241211.jpg",
-            "image_overlay_opacity": 30,
+            "image_overlay_opacity": 0,
             "heading": "Накопичувач SSD 480GB Kingston",
             "heading_size": "hxl",
             "subheading": "Швидкість та надійність від Kingston",
