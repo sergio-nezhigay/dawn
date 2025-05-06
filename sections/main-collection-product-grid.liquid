@@ -53,6 +53,9 @@
               </h2>
               <div class="select">
                 {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+                {%- assign hidden_sort_options = 'manual,created-ascending,created-descending,title-ascending,title-descending'
+                  | split: ','
+                -%}
                 <select
                   name="sort_by"
                   class="facet-filters__sort select__select caption-large"
@@ -60,14 +63,16 @@
                   aria-describedby="a11y-refresh-page-message"
                 >
                   {%- for option in collection.sort_options -%}
-                    <option
-                      value="{{ option.value | escape }}"
-                      {% if option.value == sort_by %}
-                        selected="selected"
-                      {% endif %}
-                    >
-                      {{ option.name | escape }}
-                    </option>
+                    {%- unless hidden_sort_options contains option.value -%}
+                      <option
+                        value="{{ option.value | escape }}"
+                        {% if option.value == sort_by %}
+                          selected="selected"
+                        {% endif %}
+                      >
+                        {{ option.name | escape }}
+                      </option>
+                    {%- endunless -%}
                   {%- endfor -%}
                 </select>
                 <span class="svg-wrapper">
