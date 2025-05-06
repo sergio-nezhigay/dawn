@@ -204,14 +204,14 @@
       ],
       "name": "t:sections.collage.presets.name",
       "settings": {
-        "heading": "Multimedia collage",
+        "heading": "",
         "heading_size": "h1",
         "desktop_layout": "left",
         "mobile_layout": "column",
         "card_styles": "product-card-wrapper",
         "color_scheme": "",
-        "padding_top": 36,
-        "padding_bottom": 36
+        "padding_top": 0,
+        "padding_bottom": 16
       }
     },
     "174643254122ccb34f": {
