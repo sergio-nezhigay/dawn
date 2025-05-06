@@ -244,6 +244,12 @@
       "settings": {
         "include_margins": true
       }
+    },
+    "1746538109d1e943e8": {
+      "type": "apps",
+      "settings": {
+        "include_margins": true
+      }
     }
   },
   "order": [
@@ -251,6 +257,7 @@
     "collection_list_paa7de",
     "featured_collection",
     "multicolumn",
-    "174643254122ccb34f"
+    "174643254122ccb34f",
+    "1746538109d1e943e8"
   ]
 }
