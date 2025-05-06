@@ -29,6 +29,12 @@
             "text_style": "subtitle"
           }
         },
+        "sku_T9zB3W": {
+          "type": "sku",
+          "settings": {
+            "text_style": "body"
+          }
+        },
         "price": {
           "type": "price",
           "settings": {}
@@ -54,6 +60,12 @@
           "settings": {
             "show_dynamic_checkout": false,
             "show_gift_card_recipient": false
+          }
+        },
+        "cart_attribute_Jamw79": {
+          "type": "cart_attribute",
+          "settings": {
+            "label": "Would you like to personalize this gift?"
           }
         },
         "description": {
@@ -84,11 +96,13 @@
       "block_order": [
         "title",
         "caption",
+        "sku_T9zB3W",
         "price",
         "judge_me_reviews_preview_badge_DhpJYN",
         "variant_picker",
         "quantity_selector",
         "buy_buttons",
+        "cart_attribute_Jamw79",
         "description",
         "share",
         "complementary_WLq9ME"
