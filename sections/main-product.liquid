@@ -196,8 +196,8 @@
                   role="status"
                   {{ block.shopify_attributes }}
                 >
-                  <span class="visually-hidden">{{ 'products.product.sku' | t }}:</span>
-                  {{- product.selected_or_first_available_variant.sku -}}
+                  <span>{{ 'products.product.sku' | t }}:</span>
+                  {{ product.selected_or_first_available_variant.sku | split: '^' | first }}
                 </p>
               {%- when 'custom_liquid' -%}
                 {{ block.settings.custom_liquid }}
@@ -745,7 +745,6 @@
         document.querySelector('.product-form__submit').addEventListener('click', function () {
           const productEl = document.querySelector('.product');
           const metaDelta = productEl.dataset.delta;
-          console.log('delta', JSON.stringify(metaDelta, null, 2));
 
           if (!!metaDelta) {
             addCartAttribute('delta', metaDelta);
