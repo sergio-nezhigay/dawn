@@ -37,6 +37,12 @@
         padding-bottom: {{ section.settings.padding_bottom }}px;
       }
     }
+    #cart_attribute input {
+      height: 47px;
+      text-align: center;
+      font-size: 14px;
+      margin-top: 7px;
+    }
   {%- endstyle -%}
 
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
@@ -432,6 +438,15 @@
                     </volume-pricing>
                   {%- endif -%}
                 </div>
+              {%- when 'cart_attribute' -%}
+                {% comment %}{% if product.tags contains 'text-box' %}{% endcomment %}
+                <div id="cart_attribute">
+                  <label for="cart_attribute">
+                    {{ block.settings.label }}
+                    <input type="text" id="cart_attribute" placeholder="Recipient's Name">
+                  </label>
+                </div>
+                {% comment %}{% endif %}{% endcomment %}
               {%- when 'popup' -%}
                 <modal-opener
                   class="product-popup-modal__opener quick-add-hidden"
@@ -715,6 +730,39 @@
     <script type="application/ld+json">
       {{ product | structured_data }}
     </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        function addCartAttribute(attributeKey, attributeValue) {
+          fetch('/cart/update.js', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+            },
+            body: JSON.stringify({
+              attributes: {
+                [attributeKey]: attributeValue,
+              },
+            }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log('Cart item properties updated:', data);
+            })
+            .catch((error) => {
+              console.error('Error:', error);
+            });
+        }
+
+        document.querySelector('.product-form__submit').addEventListener('click', function () {
+          // target input for value
+          const value = document.querySelector('#cart_attribute input').value;
+          if (!!value) {
+            addCartAttribute('Gift-To', value);
+          }
+        });
+      });
+    </script>
   </div>
   <script src="{{ 'product-price-update.js' | asset_url }}" defer="defer"></script>
 </product-info>
@@ -727,6 +775,19 @@
   "blocks": [
     {
       "type": "@app"
+    },
+    {
+      "type": "cart_attribute",
+      "name": "Cart attribute",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "default": "Would you like to personalize this gift?",
+          "label": "Verbage for the text box label"
+        }
+      ]
     },
     {
       "type": "text",
