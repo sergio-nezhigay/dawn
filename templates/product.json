@@ -62,12 +62,6 @@
             "show_gift_card_recipient": false
           }
         },
-        "cart_attribute_Jamw79": {
-          "type": "cart_attribute",
-          "settings": {
-            "label": "Would you like to personalize this gift?"
-          }
-        },
         "description": {
           "type": "description",
           "settings": {}
@@ -102,7 +96,6 @@
         "variant_picker",
         "quantity_selector",
         "buy_buttons",
-        "cart_attribute_Jamw79",
         "description",
         "share",
         "complementary_WLq9ME"
