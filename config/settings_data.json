@@ -11,9 +11,9 @@
   "current": {
     "logo": "shopify://shop_images/informatica-white.webp",
     "logo_width": 220,
-    "type_header_font": "assistant_n4",
+    "type_header_font": "sans-serif",
     "heading_scale": 100,
-    "type_body_font": "assistant_n4",
+    "type_body_font": "sans-serif",
     "body_scale": 100,
     "page_width": 1600,
     "spacing_sections": 0,
@@ -121,7 +121,7 @@
     "cart_type": "drawer",
     "show_vendor": false,
     "show_cart_note": true,
-    "cart_drawer_collection": "",
+    "cart_drawer_collection": "популярні-товари",
     "sections": {
       "main-password-header": {
         "type": "main-password-header",
