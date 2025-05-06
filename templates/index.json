@@ -179,7 +179,9 @@
       "blocks": {
         "image_88yJ77": {
           "type": "image",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/getting-business-finances-in-order.jpg"
+          }
         },
         "product_A6fjpG": {
           "type": "product",
