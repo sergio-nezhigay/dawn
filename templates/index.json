@@ -84,6 +84,96 @@
         "accessibility_info": "Slideshow about our brand"
       }
     },
+    "multicolumn_46zNpJ": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_nN6qkY": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/ugreen.webp",
+            "title": "",
+            "text": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_jjrQjU": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/kingston.webp",
+            "title": "",
+            "text": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_wYk4jQ": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/logitech-logo-png_seeklogo-611389.png",
+            "title": "",
+            "text": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_GrpzpU": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/Hynix-Logo.svg",
+            "title": "",
+            "text": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_aqTpVe": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/samsung.webp",
+            "title": "",
+            "text": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_r6Dh9R": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/crucial8485.webp",
+            "title": "",
+            "text": "",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_nN6qkY",
+        "column_jjrQjU",
+        "column_wYk4jQ",
+        "column_GrpzpU",
+        "column_aqTpVe",
+        "column_r6Dh9R"
+      ],
+      "name": "t:sections.multicolumn.presets.name",
+      "settings": {
+        "title": "",
+        "heading_size": "h1",
+        "image_width": "full",
+        "image_ratio": "adapt",
+        "button_label": "",
+        "button_link": "",
+        "columns_desktop": 6,
+        "column_alignment": "center",
+        "background_style": "none",
+        "color_scheme": "",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 16,
+        "padding_bottom": 0
+      }
+    },
     "collection_list_paa7de": {
       "type": "collection-list",
       "blocks": {
@@ -234,6 +324,7 @@
   },
   "order": [
     "slideshow_tDPaNk",
+    "multicolumn_46zNpJ",
     "collection_list_paa7de",
     "collage_m8gWx7",
     "featured_collection",
