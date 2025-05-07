@@ -1385,6 +1385,12 @@ shopify-accelerated-checkout-cart {
   position: relative;
 }
 
+@media (min-width: 768px) {
+  .share-button {
+    display: none;
+  }
+}
+
 .share-button details {
   width: fit-content;
 }
