@@ -134,7 +134,7 @@
       ],
       "name": "t:sections.collection-list.presets.name",
       "settings": {
-        "title": "Популярні групи товарів",
+        "title": "",
         "heading_size": "h2",
         "image_ratio": "square",
         "columns_desktop": 6,
@@ -146,41 +146,13 @@
         "padding_bottom": 36
       }
     },
-    "featured_collection": {
-      "type": "featured-collection",
-      "settings": {
-        "collection": "популярні-товари",
-        "products_to_show": 6,
-        "title": "Популярні товари",
-        "heading_size": "h2",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "columns_desktop": 6,
-        "enable_desktop_slider": true,
-        "full_width": false,
-        "show_view_all": false,
-        "view_all_style": "solid",
-        "color_scheme": "scheme-1",
-        "image_ratio": "square",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "quick_add": "none",
-        "columns_mobile": "2",
-        "swipe_on_mobile": true,
-        "padding_top": 28,
-        "padding_bottom": 36
-      }
-    },
     "collage_m8gWx7": {
       "type": "collage",
       "blocks": {
         "image_88yJ77": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/getting-business-finances-in-order.jpg"
+            "image": "shopify://shop_images/Generated_Image_May_07_2025_-_9_44AM.jpg"
           }
         },
         "product_A6fjpG": {
@@ -214,6 +186,34 @@
         "padding_bottom": 16
       }
     },
+    "featured_collection": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "популярні-товари",
+        "products_to_show": 6,
+        "title": "Популярні товари",
+        "heading_size": "h2",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 6,
+        "enable_desktop_slider": true,
+        "full_width": false,
+        "show_view_all": false,
+        "view_all_style": "solid",
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "none",
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "padding_top": 28,
+        "padding_bottom": 36
+      }
+    },
     "174643254122ccb34f": {
       "type": "apps",
       "blocks": {
@@ -235,8 +235,8 @@
   "order": [
     "slideshow_tDPaNk",
     "collection_list_paa7de",
-    "featured_collection",
     "collage_m8gWx7",
+    "featured_collection",
     "174643254122ccb34f"
   ]
 }
