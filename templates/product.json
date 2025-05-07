@@ -22,17 +22,18 @@
           "type": "title",
           "settings": {}
         },
-        "caption": {
-          "type": "text",
-          "settings": {
-            "text": "{{ product.metafields.descriptors.subtitle.value }}",
-            "text_style": "subtitle"
-          }
-        },
         "sku_T9zB3W": {
           "type": "sku",
           "settings": {
             "text_style": "body"
+          }
+        },
+        "inventory_UzTnRe": {
+          "type": "inventory",
+          "settings": {
+            "text_style": "body",
+            "inventory_threshold": 1,
+            "show_inventory_quantity": false
           }
         },
         "price": {
@@ -50,10 +51,11 @@
             "swatch_shape": "circle"
           }
         },
-        "quantity_selector": {
-          "type": "quantity_selector",
-          "disabled": true,
-          "settings": {}
+        "share": {
+          "type": "share",
+          "settings": {
+            "share_label": "Поділитись"
+          }
         },
         "buy_buttons": {
           "type": "buy_buttons",
@@ -65,13 +67,6 @@
         "description": {
           "type": "description",
           "settings": {}
-        },
-        "share": {
-          "type": "share",
-          "disabled": true,
-          "settings": {
-            "share_label": "Share"
-          }
         },
         "complementary_WLq9ME": {
           "type": "complementary",
@@ -89,15 +84,14 @@
       },
       "block_order": [
         "title",
-        "caption",
         "sku_T9zB3W",
+        "inventory_UzTnRe",
         "price",
         "judge_me_reviews_preview_badge_DhpJYN",
         "variant_picker",
-        "quantity_selector",
+        "share",
         "buy_buttons",
         "description",
-        "share",
         "complementary_WLq9ME"
       ],
       "settings": {
