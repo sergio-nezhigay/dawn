@@ -88,7 +88,12 @@
               {%- elsif product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
                 {{ 'products.product.sold_out' | t }}
               {%- else -%}
-                {{ 'products.product.add_to_cart' | t }}
+                <span class="flex align-center justify-center gap-4"
+                  ><span class="svg-wrapper">
+                    {{- 'icon-cart-shopping.svg' | inline_asset_content -}}
+                  </span>
+                  {{ 'products.product.buy' | t -}}
+                </span>
               {%- endif -%}
             </span>
             {%- render 'loading-spinner' -%}
