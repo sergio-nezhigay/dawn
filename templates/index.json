@@ -87,16 +87,6 @@
     "multicolumn_46zNpJ": {
       "type": "multicolumn",
       "blocks": {
-        "column_nN6qkY": {
-          "type": "column",
-          "settings": {
-            "image": "shopify://shop_images/ugreen.webp",
-            "title": "",
-            "text": "",
-            "link_label": "",
-            "link": ""
-          }
-        },
         "column_jjrQjU": {
           "type": "column",
           "settings": {
@@ -117,10 +107,20 @@
             "link": ""
           }
         },
+        "column_nN6qkY": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/ugreen.webp",
+            "title": "",
+            "text": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
         "column_GrpzpU": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/Hynix-Logo.svg",
+            "image": "shopify://shop_images/282685.webp",
             "title": "",
             "text": "",
             "link_label": "",
@@ -149,9 +149,9 @@
         }
       },
       "block_order": [
-        "column_nN6qkY",
         "column_jjrQjU",
         "column_wYk4jQ",
+        "column_nN6qkY",
         "column_GrpzpU",
         "column_aqTpVe",
         "column_r6Dh9R"
