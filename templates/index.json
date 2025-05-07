@@ -16,7 +16,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/Screenshot_283.jpg",
-            "image_overlay_opacity": 20,
+            "image_overlay_opacity": 0,
             "heading": "Навушники JBL T110",
             "heading_size": "hxl",
             "subheading": "Чистий бас, управління кнопками, плоский кабель, вбудований мікрофон",
@@ -34,7 +34,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/digitus-4-port-usb-2-0-hub-da-70216.jpg",
-            "image_overlay_opacity": 20,
+            "image_overlay_opacity": 0,
             "heading": "USB HUB 4-port Digitus",
             "heading_size": "hxl",
             "subheading": "Компактний дизайн, легке підключення",
@@ -52,7 +52,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/4241211.jpg",
-            "image_overlay_opacity": 30,
+            "image_overlay_opacity": 0,
             "heading": "Накопичувач SSD 480GB Kingston",
             "heading_size": "hxl",
             "subheading": "Швидкість та надійність від Kingston",
@@ -78,7 +78,7 @@
         "slide_height": "small",
         "slider_visual": "dots",
         "auto_rotate": true,
-        "change_slides_speed": 7,
+        "change_slides_speed": 9,
         "image_behavior": "ambient",
         "show_text_below": false,
         "accessibility_info": "Slideshow about our brand"
@@ -134,7 +134,7 @@
       ],
       "name": "t:sections.collection-list.presets.name",
       "settings": {
-        "title": "Популярні групи товарів",
+        "title": "Популярні категорії",
         "heading_size": "h2",
         "image_ratio": "square",
         "columns_desktop": 6,
@@ -142,8 +142,139 @@
         "show_view_all": false,
         "columns_mobile": "1",
         "swipe_on_mobile": false,
-        "padding_top": 36,
-        "padding_bottom": 36
+        "padding_top": 16,
+        "padding_bottom": 0
+      }
+    },
+    "multicolumn_46zNpJ": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_jjrQjU": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/kingston.webp",
+            "title": "",
+            "text": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_wYk4jQ": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/logitech-logo-png_seeklogo-611389.png",
+            "title": "",
+            "text": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_nN6qkY": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/ugreen.webp",
+            "title": "",
+            "text": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_GrpzpU": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/282685.webp",
+            "title": "",
+            "text": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_aqTpVe": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/samsung.webp",
+            "title": "",
+            "text": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_r6Dh9R": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/crucial8485.webp",
+            "title": "",
+            "text": "",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_jjrQjU",
+        "column_wYk4jQ",
+        "column_nN6qkY",
+        "column_GrpzpU",
+        "column_aqTpVe",
+        "column_r6Dh9R"
+      ],
+      "name": "t:sections.multicolumn.presets.name",
+      "settings": {
+        "title": "Популярні бренди",
+        "heading_size": "h2",
+        "image_width": "full",
+        "image_ratio": "adapt",
+        "button_label": "",
+        "button_link": "",
+        "columns_desktop": 6,
+        "column_alignment": "center",
+        "background_style": "none",
+        "color_scheme": "",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 16,
+        "padding_bottom": 0
+      }
+    },
+    "collage_m8gWx7": {
+      "type": "collage",
+      "blocks": {
+        "image_88yJ77": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_May_7_2025_09_46_47_AM.png"
+          }
+        },
+        "product_A6fjpG": {
+          "type": "product",
+          "settings": {
+            "product": "p-dstavka-do-noutbuka-officepro-ls610",
+            "second_image": true
+          }
+        },
+        "collection_8NP7LV": {
+          "type": "collection",
+          "settings": {
+            "collection": "other_accs"
+          }
+        }
+      },
+      "block_order": [
+        "image_88yJ77",
+        "product_A6fjpG",
+        "collection_8NP7LV"
+      ],
+      "disabled": true,
+      "name": "t:sections.collage.presets.name",
+      "settings": {
+        "heading": "",
+        "heading_size": "h1",
+        "desktop_layout": "left",
+        "mobile_layout": "collage",
+        "card_styles": "product-card-wrapper",
+        "color_scheme": "",
+        "padding_top": 0,
+        "padding_bottom": 16
       }
     },
     "featured_collection": {
@@ -170,62 +301,8 @@
         "quick_add": "none",
         "columns_mobile": "2",
         "swipe_on_mobile": true,
-        "padding_top": 28,
-        "padding_bottom": 36
-      }
-    },
-    "multicolumn": {
-      "type": "multicolumn",
-      "blocks": {
-        "column1": {
-          "type": "column",
-          "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "column2": {
-          "type": "column",
-          "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "column3": {
-          "type": "column",
-          "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
-            "link_label": "",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "column1",
-        "column2",
-        "column3"
-      ],
-      "disabled": true,
-      "settings": {
-        "title": "",
-        "heading_size": "h1",
-        "image_width": "third",
-        "image_ratio": "adapt",
-        "button_label": "",
-        "button_link": "",
-        "columns_desktop": 3,
-        "column_alignment": "center",
-        "background_style": "none",
-        "color_scheme": "scheme-1",
-        "columns_mobile": "1",
-        "swipe_on_mobile": false,
-        "padding_top": 36,
-        "padding_bottom": 36
+        "padding_top": 24,
+        "padding_bottom": 0
       }
     },
     "174643254122ccb34f": {
@@ -249,8 +326,9 @@
   "order": [
     "slideshow_tDPaNk",
     "collection_list_paa7de",
+    "multicolumn_46zNpJ",
+    "collage_m8gWx7",
     "featured_collection",
-    "multicolumn",
     "174643254122ccb34f"
   ]
 }
