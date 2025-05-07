@@ -224,7 +224,7 @@
       ],
       "name": "t:sections.collection-list.presets.name",
       "settings": {
-        "title": "",
+        "title": "Популярні категорії",
         "heading_size": "h2",
         "image_ratio": "square",
         "columns_desktop": 6,
