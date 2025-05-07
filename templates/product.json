@@ -24,6 +24,7 @@
         },
         "sku_T9zB3W": {
           "type": "sku",
+          "disabled": true,
           "settings": {
             "text_style": "body"
           }
