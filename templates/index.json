@@ -158,8 +158,8 @@
       ],
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
-        "title": "",
-        "heading_size": "h1",
+        "title": "Популярні бренди",
+        "heading_size": "h2",
         "image_width": "full",
         "image_ratio": "adapt",
         "button_label": "",
