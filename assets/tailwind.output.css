@@ -366,11 +366,23 @@
   .\!p-0 {
     padding: calc(var(--spacing) * 0) !important;
   }
+  .p-10 {
+    padding: calc(var(--spacing) * 10);
+  }
+  .p-\[10px\] {
+    padding: 10px;
+  }
   .\!px-0 {
     padding-inline: calc(var(--spacing) * 0) !important;
   }
   .px-4 {
     padding-inline: calc(var(--spacing) * 4);
+  }
+  .py-5 {
+    padding-block: calc(var(--spacing) * 5);
+  }
+  .py-6 {
+    padding-block: calc(var(--spacing) * 6);
   }
   .py-8 {
     padding-block: calc(var(--spacing) * 8);
@@ -383,6 +395,12 @@
   }
   .pt-8 {
     padding-top: calc(var(--spacing) * 8);
+  }
+  .pt-10 {
+    padding-top: calc(var(--spacing) * 10);
+  }
+  .pt-20 {
+    padding-top: calc(var(--spacing) * 20);
   }
   .pb-8 {
     padding-bottom: calc(var(--spacing) * 8);

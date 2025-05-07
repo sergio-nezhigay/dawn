@@ -18,9 +18,9 @@ class RecentlyViewedProducts extends HTMLElement {
       .reverse()
       .forEach((item) => {
         recentlyViewedHtml.push(`
-          <li class="grid__item group">
-            <div class="card-wrapper product-card-wrapper underline-links-hover">
-                <a href="${item.productUrl}" class="full-unstyled-link" >
+          <li class="grid__item group animate--hover-3d-lift">
+            <div class="card-wrapper product-card-wrapper underline-links-hover ">
+                <a href="${item.productUrl}" class="full-unstyled-link card--card p-[10px]" >
                                 <div>
                                     <div class="overflow-hidden aspect-square flex items-center">
                                         <img src="${item.productImg}" loading="lazy" alt="${item.productImageAltText}" class="transition-transform duration-300 ease-in-out group-hover:scale-103" />
@@ -48,7 +48,7 @@ class RecentlyViewedProducts extends HTMLElement {
 
     if (recentlyViewedHtml.length > 0) {
       this.innerHTML = `
-        <div>
+        <div class="pt-20">
           <h2 class="related-products__heading inline-richtext h2">${title}</h2>
           <ul class="grid product-grid grid--2-col-tablet-down grid--6-col-desktop" role="list">
             ${recentlyViewedHtml.join('')}
