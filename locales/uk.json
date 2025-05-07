@@ -118,6 +118,7 @@
   "products": {
     "product": {
       "add_to_cart": "Додати в кошик",
+      "buy": "Купити",
       "description": "Опис",
       "on_sale": "Розпродаж",
       "share": "Поділитися цим продуктом",
