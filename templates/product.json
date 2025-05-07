@@ -51,17 +51,17 @@
             "swatch_shape": "circle"
           }
         },
+        "share": {
+          "type": "share",
+          "settings": {
+            "share_label": "Поділитись"
+          }
+        },
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
             "show_dynamic_checkout": false,
             "show_gift_card_recipient": false
-          }
-        },
-        "share": {
-          "type": "share",
-          "settings": {
-            "share_label": "Поділитись"
           }
         },
         "description": {
@@ -89,8 +89,8 @@
         "price",
         "judge_me_reviews_preview_badge_DhpJYN",
         "variant_picker",
-        "buy_buttons",
         "share",
+        "buy_buttons",
         "description",
         "complementary_WLq9ME"
       ],
