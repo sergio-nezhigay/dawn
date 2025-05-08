@@ -471,7 +471,7 @@
       "city": "Місто",
       "country": "Країна/регіон",
       "province": "Область",
-      "zip": "Поштовий індекс",
+      "zip": "Поштовий індекс (можна 12345)",
       "phone": "Телефон",
       "set_default": "Задати як адресу за замовчуванням",
       "add": "Додати адресу",
@@ -884,8 +884,8 @@
         "prefecture_placeholder": "Префектура",
         "governorate_label": "Губернаторство",
         "governorate_placeholder": "Губернаторство",
-        "postal_code_label": "Поштовий індекс",
-        "postal_code_placeholder": "Поштовий індекс",
+        "postal_code_label": "Поштовий індекс (можна 12345)",
+        "postal_code_placeholder": "Поштовий індекс (можна 12345)",
         "country_label": "Країна/регіон",
         "optional_block_label": "Блокувати (необов'язково)",
         "optional_phone_label": "Телефон (необов'язково)",
@@ -913,8 +913,8 @@
         "province_placeholder": "Провінція",
         "zip_code_label": "ЗІП код",
         "zip_code_placeholder": "ЗІП код",
-        "postcode_label": "Поштовий індекс",
-        "postcode_placeholder": "Поштовий індекс",
+        "postcode_label": "Поштовий індекс (можна 12345)",
+        "postcode_placeholder": "Поштовий індекс (можна 12345)",
         "pincode_label": "PIN-код",
         "pincode_placeholder": "PIN-код",
         "neighborhood_label": "Околиці",
@@ -932,18 +932,18 @@
         "region_placeholder": "Регіон",
         "phone_label": "Телефон",
         "phone_placeholder": "Телефон",
-        "address_title": "Адреса",
+        "address_title": "Відділення Нової пошти або адреса для доставки кур'єром",
         "contact_method_title": "контакт",
         "company_label": "Компанія",
-        "address1_label": "Адреса",
+        "address1_label": "Відділення Нової пошти або адреса для доставки кур'єром",
         "commune_label": "Комуна",
         "emirate_label": "Емірат",
         "emirate_placeholder": "Емірат",
         "optional_street_number_label": "Номер будівлі (необов'язково)",
         "different_shipping_address_label": "Відправити на іншу адресу",
         "phone_tooltip": "У випадку, якщо нам знадобиться зв’язатися з вами щодо вашого замовлення",
-        "email_or_phone_label": "Електронна пошта або номер мобільного телефону",
-        "email_or_phone_placeholder": "Електронна пошта або номер мобільного телефону",
+        "email_or_phone_label": "Номер телефону",
+        "email_or_phone_placeholder": "Номер телефону",
         "optional_company_attention_label": "Компанія/Увага (необов'язково)",
         "shipping_used_as_billing_notice": "Це також буде використано як вашу платіжну адресу для цього замовлення.",
         "new_address_label": "Використовуйте нову адресу",
@@ -953,7 +953,7 @@
         "civic_number_warning": "Додайте номер будинку, якщо він є"
       },
       "delivery_options": {
-        "free_total_label": "безкоштовно",
+        "free_total_label": "По тарифах перевізника",
         "ship": "Корабель",
         "pick_up_in_two_hours": "Зазвичай готовий через 2 години",
         "pick_up_in_four_hours": "Зазвичай готовий через 4 години",
@@ -974,8 +974,8 @@
       },
       "order_summary": {
         "tip_label": "Порада",
-        "free_total_label": "безкоштовно",
-        "free_shipping_total_label": "безкоштовно",
+        "free_total_label": "По тарифах перевізника",
+        "free_shipping_total_label": "По тарифах перевізника",
         "paid_label": "Платний",
         "cost_table_item_column_header": "Пункт",
         "expand_order_summary_short": "Показати",
@@ -1156,7 +1156,7 @@
         "total_updated_label_with_price": "Оновлена ​​загальна ціна: %{totalPrice}"
       },
       "shipping": {
-        "free_rate_label": "безкоштовно",
+        "free_rate_label": "По тарифах перевізника",
         "edit": "Редагувати",
         "address_form": {
           "save": "зберегти",
@@ -1593,7 +1593,7 @@
         "address_confirm": "Ви впевнені, що хочете видалити цю адресу зі свого облікового запису?"
       },
       "payment_summary": {
-        "free_label": "безкоштовно",
+        "free_label": "По тарифах перевізника",
         "gift_card_current_balance_notice": "Поточний баланс %{amount}",
         "billing_address_title": "Платіжна адреса",
         "express_payment_gateway_label": "Експрес",
@@ -1695,7 +1695,7 @@
         "title": "Пункт самовивозу",
         "location_is_currently_closed": "ЗАЧИНЕНО",
         "search_button": "Пошук",
-        "address_label": "Адреса",
+        "address_label": "Відділення Нової пошти або адреса для доставки кур'єром",
         "no_business_hours": "Немає годин роботи",
         "no_pickup_points_near_you": "Поруч із вибраною адресою не знайдено місць отримання",
         "waiting_on_pickup_point_location_notice": "Пошук місць посадки..."
@@ -1717,7 +1717,7 @@
           "description": "Натомість виберіть магазин або %{ship_to_address_link}."
         },
         "could_not_resolve_address": "Не вдалося знайти вашу адресу. Спробуйте ще раз або використайте іншу адресу",
-        "location_address_search_label": "Адреса",
+        "location_address_search_label": "Відділення Нової пошти або адреса для доставки кур'єром",
         "cancel": "Скасувати",
         "reveal_more_label": {
           "one": "Показати ще %{count} розташування",
@@ -2733,7 +2733,7 @@
       "first_name": "ім'я",
       "last_name": "прізвище",
       "password": "пароль",
-      "signature": "Адреса",
+      "signature": "Відділення Нової пошти або адреса для доставки кур'єром",
       "email": "електронною поштою"
     },
     "notices": {
@@ -2947,13 +2947,13 @@
       "powered_by_shopify": "На основі Shopify"
     },
     "addresses": {
-      "postal_code": "Поштовий індекс",
+      "postal_code": "Поштовий індекс (можна 12345)",
       "prefecture": "Префектура",
       "governorate": "Губернаторство",
       "confirm": "Ви впевнені, що бажаєте видалити цю адресу?",
       "state_and_territory": "Держава/територія",
       "zip_code": "ЗІП код",
-      "postcode": "Поштовий індекс",
+      "postcode": "Поштовий індекс (можна 12345)",
       "pincode": "PIN-код",
       "province": "Провінція",
       "emirate": "Емірат",
@@ -3392,7 +3392,7 @@
         "gift_card_payment_details": "закінчується на {{lastDigits}} - {{formattedTransactionAmount}}"
       },
       "shipping": {
-        "free": "безкоштовно",
+        "free": "По тарифах перевізника",
         "subscription": "Доставка за підпискою",
         "free_shipping_discount": "Безкоштовна доставка",
         "method": "Метод доставки",
