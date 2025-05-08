@@ -755,7 +755,30 @@
           })
             .then((response) => response.json())
             .then((data) => {
-              console.log('Cart item properties updated:', data);
+              console.log('Cart attributes updated:', data);
+            })
+            .catch((error) => {
+              console.error('Error:', error);
+            });
+        }
+
+        function addCartLineItemAttribute(lineItemId, attributeKey, attributeValue) {
+          fetch('/cart/change.js', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+            },
+            body: JSON.stringify({
+              id: lineItemId,
+              properties: {
+                [attributeKey]: attributeValue,
+              },
+            }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log('Cart line item properties updated:', data);
             })
             .catch((error) => {
               console.error('Error:', error);
@@ -768,6 +791,7 @@
 
           if (!!metaDelta) {
             addCartAttribute('delta', metaDelta);
+            addCartLineItemAttribute('delta', metaDelta);
           }
         });
       });
