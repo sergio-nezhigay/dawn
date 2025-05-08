@@ -102,6 +102,7 @@
             {{ form | payment_button }}
           {%- endif -%}
         </div>
+        <input type="hidden" name="properties[fixed_attribute]" value="fixed_value">
       {%- endform -%}
     </product-form>
   {%- else -%}
