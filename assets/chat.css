@@ -10,7 +10,7 @@
   height: 60px;
   font-size: 30px;
   cursor: pointer;
-  z-index: 1000;
+  z-index: 10;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
 }
@@ -28,7 +28,7 @@
   display: none;
   flex-direction: column;
   gap: 10px;
-  z-index: 1000;
+  z-index: 10;
   animation: fadeIn 0.3s ease-in-out;
 }
 
