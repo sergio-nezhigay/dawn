@@ -339,7 +339,7 @@
       "duties_and_taxes_included_shipping_at_checkout_with_policy_html": "Мита та податки включено. Знижки та <a href=\"{{ link }}\">вартість доставки</a> розраховуються при оформленні замовлення.",
       "duties_and_taxes_included_shipping_at_checkout_without_policy": "Мита та податки включено. Знижки та вартість доставки розраховуються при оформленні замовлення.",
       "taxes_included_shipping_at_checkout_with_policy_html": "Податки включено. Знижки та <a href=\"{{ link }}\">вартість доставки</a> розраховуються при оформленні замовлення.",
-      "taxes_included_shipping_at_checkout_without_policy": "Податки включено. Знижки та вартість доставки розраховуються при оформленні замовлення.",
+      "taxes_included_shipping_at_checkout_without_policy": "Доставка по тарифах Нової Пошти",
       "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_html": "Мита включено. Податки, знижки та <a href=\"{{ link }}\">вартість доставки</a> розраховуються при оформленні замовлення.",
       "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy": "Мита включено. Податки, знижки та вартість доставки розраховуються при оформленні замовлення.",
       "taxes_at_checkout_shipping_at_checkout_with_policy_html": "Податки, знижки та <a href=\"{{ link }}\">вартість доставки</a> розраховуються при оформленні замовлення.",
