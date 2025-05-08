@@ -48,7 +48,8 @@
       {%- endif -%}
     </div>
 
-    <form action="{{ routes.cart_url }}" class="cart__contents critical-hidden" method="post" id="cart">
+    {%- assign checkout_url = routes.cart_url | append: '?checkout[shipping_address][zip]=' | append: '12345' -%}
+    <form action="{{ checkout_url }}" class="cart__contents critical-hidden" method="post" id="cart">
       <div class="cart__items" id="main-cart-items" data-id="{{ section.id }}">
         <div class="js-contents">
           {%- if cart != empty -%}
