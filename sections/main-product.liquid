@@ -770,7 +770,7 @@
               Accept: 'application/json',
             },
             body: JSON.stringify({
-              id: lineItemId,
+              line: lineItemId,
               properties: {
                 [attributeKey]: attributeValue,
               },
@@ -791,7 +791,7 @@
 
           if (!!metaDelta) {
             addCartAttribute('delta', metaDelta);
-            addCartLineItemAttribute('delta', metaDelta);
+            addCartLineItemAttribute({{ product.selected_or_first_available_variant.id }}, 'delta', metaDelta);
           }
         });
       });
