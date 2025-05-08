@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log('Price updated');
           }
 
-          const productForm = document.querySelector('product-form');
+          const productForm = document.querySelector('[data-type="add-to-cart-form"]');
           if (productForm) {
             const input = document.createElement('input');
             input.type = 'hidden';
