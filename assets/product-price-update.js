@@ -84,19 +84,22 @@ document.addEventListener('DOMContentLoaded', function () {
           console.log(`Discounted price: ${discountedPrice}`);
 
           const priceElement = document.querySelector('[data-regular-price]');
+
           if (priceElement) {
+            const originalPrice = parseFloat(priceElement.textContent.replace(/[^\d.]/g, ''));
             priceElement.textContent = `₴${discountedPrice} грн`;
             console.log('Price updated');
-          }
 
-          const productForm = document.querySelector('[data-type="add-to-cart-form"]');
-          if (productForm) {
-            const input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = 'properties[discount-amount]';
-            input.value = discountedPrice;
-            productForm.appendChild(input);
-            console.log('Discount amount added to product form');
+            const productForm = document.querySelector('[data-type="add-to-cart-form"]');
+            if (productForm) {
+              const discountAmount = originalPrice - discountedPrice;
+              const input = document.createElement('input');
+              input.type = 'hidden';
+              input.name = 'properties[discount-amount]';
+              input.value = discountAmount;
+              productForm.appendChild(input);
+              console.log('Discount amount added to product form');
+            }
           }
         }
       } catch (jwtError) {
