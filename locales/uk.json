@@ -932,10 +932,10 @@
         "region_placeholder": "Регіон",
         "phone_label": "Телефон",
         "phone_placeholder": "Телефон",
-        "address_title": "Адреса",
+        "address_title": "Відділення Нової пошти або адреса для доставки кур'єром",
         "contact_method_title": "контакт",
         "company_label": "Компанія",
-        "address1_label": "Адреса",
+        "address1_label": "Відділення Нової пошти або адреса для доставки кур'єром",
         "commune_label": "Комуна",
         "emirate_label": "Емірат",
         "emirate_placeholder": "Емірат",
@@ -1695,7 +1695,7 @@
         "title": "Пункт самовивозу",
         "location_is_currently_closed": "ЗАЧИНЕНО",
         "search_button": "Пошук",
-        "address_label": "Адреса",
+        "address_label": "Відділення Нової пошти або адреса для доставки кур'єром",
         "no_business_hours": "Немає годин роботи",
         "no_pickup_points_near_you": "Поруч із вибраною адресою не знайдено місць отримання",
         "waiting_on_pickup_point_location_notice": "Пошук місць посадки..."
@@ -1717,7 +1717,7 @@
           "description": "Натомість виберіть магазин або %{ship_to_address_link}."
         },
         "could_not_resolve_address": "Не вдалося знайти вашу адресу. Спробуйте ще раз або використайте іншу адресу",
-        "location_address_search_label": "Адреса",
+        "location_address_search_label": "Відділення Нової пошти або адреса для доставки кур'єром",
         "cancel": "Скасувати",
         "reveal_more_label": {
           "one": "Показати ще %{count} розташування",
@@ -2733,7 +2733,7 @@
       "first_name": "ім'я",
       "last_name": "прізвище",
       "password": "пароль",
-      "signature": "Адреса",
+      "signature": "Відділення Нової пошти або адреса для доставки кур'єром",
       "email": "електронною поштою"
     },
     "notices": {
