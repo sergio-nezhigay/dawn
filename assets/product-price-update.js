@@ -53,6 +53,15 @@ document.addEventListener('DOMContentLoaded', function () {
         if (priceElement) {
           priceElement.textContent = `₴${discountedPrice} грн`;
         }
+
+        const productForm = document.querySelector('product-form');
+        if (productForm) {
+          const input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = 'properties[discount-amount]';
+          input.value = discountedPrice;
+          productForm.appendChild(input);
+        }
       }
     }
   } catch (error) {
