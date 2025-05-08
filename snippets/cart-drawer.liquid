@@ -542,8 +542,7 @@
         <div class="cart__ctas" {{ block.shopify_attributes }}>
           <a
             class="cart__checkout-button button w-full"
-            href="https://informatica.com.ua/checkout?checkout[shipping_address][zip]=12345"
-            onclick="this.closest('cart-drawer').close()"
+            href="/checkout?checkout[shipping_address][zip]=12345"
           >
             {{- 'sections.cart.checkout' | t -}}
           </a>
