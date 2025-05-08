@@ -486,6 +486,7 @@
                   section_id: section.id,
                   show_pickup_availability: true
                 -%}
+                <input type="hidden" name="properties[fixed_attribute]" value="fixed_value">
                 {% render 'product-features' %}
               {%- when 'rating' -%}
                 {%- if product.metafields.reviews.rating.value != blank -%}
@@ -762,29 +763,6 @@
             });
         }
 
-        function addCartLineItemAttribute(lineItemId, attributeKey, attributeValue) {
-          fetch('/cart/change.js', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              Accept: 'application/json',
-            },
-            body: JSON.stringify({
-              line: lineItemId,
-              properties: {
-                [attributeKey]: attributeValue,
-              },
-            }),
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              console.log('Cart line item properties updated:', data);
-            })
-            .catch((error) => {
-              console.error('Error:', error);
-            });
-        }
-
         document.querySelector('.product-form__submit').addEventListener('click', function () {
           const productEl = document.querySelector('.product');
           const metaDelta = productEl.dataset.delta;
@@ -792,7 +770,6 @@
 
           if (!!metaDelta) {
             addCartAttribute('delta', metaDelta);
-            addCartLineItemAttribute({{ product.selected_or_first_available_variant.id }}, 'delta', metaDelta);
           }
         });
       });
