@@ -2353,6 +2353,12 @@ input[type='checkbox'] {
   background-color: rgb(var(--color-background));
 }
 
+.scrolled-past-header .scaleY-open {
+  transform: scaleY(0);
+  height: 0;
+  overflow: hidden;
+}
+
 .header-wrapper--border-bottom {
   border-bottom: 0.1rem solid rgba(var(--color-foreground), 0.08);
 }
@@ -2807,16 +2813,21 @@ details[open] > .header__submenu {
   font-size: 1.6rem;
 }
 
-.header__condensed {
+.condensed {
   letter-spacing: 0.05rem;
   font-stretch: condensed;
   font-size: 1.7rem;
-  opacity: 0.85;
-  transition: opacity var(--duration-short) ease;
 }
 
-.header__condensed:hover {
-  opacity: 1;
+.scaleY-open {
+  transform-origin: top;
+  transform: scaleY(1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.header__menu-item:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 -0.2rem rgb(var(--color-foreground));
 }
 
 .header__menu-item:hover {
