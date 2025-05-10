@@ -6,7 +6,7 @@
     role="navigation"
     aria-label="breadcrumbs"
   >
-    <ol class="flex items-center" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <ol class="flex items-center text-black/80 " itemscope itemtype="https://schema.org/BreadcrumbList">
       <li class="breadcrumb-item block" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
         <a href="/" itemprop="item" class="flex items-center">
           <span itemprop="name" class="sr-only">Home</span>
@@ -37,7 +37,7 @@
           {% elsif product.collections.first %}
             <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
               <a href="{{ product.collections.first.url }}" itemprop="item" class="hover:underline">
-                <span itemprop="name">{{ product.collections.first.title }}</span>
+                <span itemprop="name" class="font-medium">{{ product.collections.first.title }}</span>
               </a>
               <meta itemprop="position" content="2">
             </li>
