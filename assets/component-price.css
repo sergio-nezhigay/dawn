@@ -44,14 +44,14 @@
   letter-spacing: 0.13rem;
 }
 
-#ProductInfo-template--24511367446844__main .price--large {
-  font-size: 2.7rem;
+.price--large {
+  font-size: 2.5rem;
   font-weight: 600;
 }
 
 @media screen and (min-width: 750px) {
   .price--large {
-    font-size: 1.8rem;
+    font-size: 2.2rem;
   }
 }
 
