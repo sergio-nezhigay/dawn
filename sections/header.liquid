@@ -137,10 +137,10 @@
     endif
   -%}
   <header class="page-width max-md:hidden">
-    <div class="flex-between pt-4 scaleY-open">
+    <div class="flex-between pt-4 scaleY-open condensed">
       <a
         href="tel:+38(099)381-5288"
-        class="text-white hover:underline underline-offset-4 w-fit opacity-85"
+        class="text-white hover:underline hover:opacity-100 transition-opacity underline-offset-4 w-fit opacity-85 "
         >(099) 381-5288</a
       >
 
@@ -149,7 +149,7 @@
           {% for link in linklists['secondary-menu'].links %}
             <li>
               <a
-                class="text-white hover:underline underline-offset-4 w-fit opacity-85"
+                class="text-white hover:underline hover:opacity-100 transition-opacity underline-offset-4 w-fit opacity-85"
                 href="{{ link.url }}"
               >
                 {{- link.title -}}
