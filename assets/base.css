@@ -3672,3 +3672,29 @@ h4 + p {
 .shopify-policy__container h2 {
   padding: 12px;
 }
+
+.product__description ul {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+.product__description li {
+  list-style-type: square;
+  list-style-position: inside;
+}
+.product__description strong {
+  font-weight: 600;
+  opacity: 80;
+}
+.product__description h2 ~ h2 {
+  font-weight: 600;
+  font-size: 1.6rem;
+  opacity: 0.9;
+  padding: 8px;
+}
+.product__description h3 {
+  font-weight: 600;
+  font-size: 1.4rem;
+  opacity: 0.8;
+  padding: 4px;
+  font-style: italic;
+}
