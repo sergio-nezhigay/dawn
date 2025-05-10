@@ -87,6 +87,12 @@
     "collection_list_paa7de": {
       "type": "collection-list",
       "blocks": {
+        "featured_collection_qMndLJ": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "laptop-power-supply"
+          }
+        },
         "featured_collection_hp8zJR": {
           "type": "featured_collection",
           "settings": {
@@ -131,6 +137,7 @@
         }
       },
       "block_order": [
+        "featured_collection_qMndLJ",
         "featured_collection_hp8zJR",
         "featured_collection_H7gLQX",
         "featured_collection_PPH3fn",
