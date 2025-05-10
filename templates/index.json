@@ -146,6 +146,34 @@
         "padding_bottom": 0
       }
     },
+    "featured_collection": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "популярні-товари",
+        "products_to_show": 6,
+        "title": "Популярні товари",
+        "heading_size": "h2",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 6,
+        "enable_desktop_slider": true,
+        "full_width": false,
+        "show_view_all": false,
+        "view_all_style": "solid",
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "none",
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "padding_top": 24,
+        "padding_bottom": 0
+      }
+    },
     "multicolumn_46zNpJ": {
       "type": "multicolumn",
       "blocks": {
@@ -277,34 +305,6 @@
         "padding_bottom": 16
       }
     },
-    "featured_collection": {
-      "type": "featured-collection",
-      "settings": {
-        "collection": "популярні-товари",
-        "products_to_show": 6,
-        "title": "Популярні товари",
-        "heading_size": "h2",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "columns_desktop": 6,
-        "enable_desktop_slider": true,
-        "full_width": false,
-        "show_view_all": false,
-        "view_all_style": "solid",
-        "color_scheme": "scheme-1",
-        "image_ratio": "square",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "quick_add": "none",
-        "columns_mobile": "2",
-        "swipe_on_mobile": true,
-        "padding_top": 24,
-        "padding_bottom": 0
-      }
-    },
     "174643254122ccb34f": {
       "type": "apps",
       "blocks": {
@@ -326,9 +326,9 @@
   "order": [
     "slideshow_tDPaNk",
     "collection_list_paa7de",
+    "featured_collection",
     "multicolumn_46zNpJ",
     "collage_m8gWx7",
-    "featured_collection",
     "174643254122ccb34f"
   ]
 }
