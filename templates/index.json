@@ -150,7 +150,7 @@
       "type": "featured-collection",
       "settings": {
         "collection": "популярні-товари",
-        "products_to_show": 6,
+        "products_to_show": 12,
         "title": "Популярні товари",
         "heading_size": "h2",
         "description": "",
