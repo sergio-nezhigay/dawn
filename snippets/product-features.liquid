@@ -32,4 +32,12 @@
       {{ 'products.product.features.payment_info' | t }}
     </span>
   </div>
+  <div class="border-y border-slate-200 py-3 mt-10">
+    <a
+      href="/collections/{{ product.collections.first.handle }}"
+      class="opacity-85 hover:opacity-100 hover:underline"
+    >
+      {{ 'sections.featured_collection.view_all_products_in_category' | t }}
+    </a>
+  </div>
 </div>

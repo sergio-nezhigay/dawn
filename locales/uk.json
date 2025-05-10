@@ -363,7 +363,8 @@
     },
     "featured_collection": {
       "view_all": "Переглянути все",
-      "view_all_label": "Переглянути всі продукти в колекції \"{{ collection_name }}\""
+      "view_all_label": "Переглянути всі продукти в колекції \"{{ collection_name }}\"",
+      "view_all_products_in_category": "Переглянути всі продукти в категорії"
     },
     "collection_list": {
       "view_all": "Переглянути все"
