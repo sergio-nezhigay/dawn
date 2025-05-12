@@ -179,6 +179,7 @@
       "inventory_out_of_stock": "Немає в наявності",
       "inventory_out_of_stock_continue_selling": "В наявності",
       "sku": "Артикул",
+      "barcode_label": "Парт-номер",
       "volume_pricing": {
         "title": "Оптова ціна",
         "note": "Доступні оптові ціни",
