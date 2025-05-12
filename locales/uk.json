@@ -2023,7 +2023,7 @@
         "estimated_arrival": "Передбачувана дата поставки: ",
         "thank_you_title_payment": "Ваш платіж підтверджено",
         "in_transit_title": "Ваше замовлення вже в дорозі",
-        "contact_us_html": "Потрібна допомога? %{contact_link}",
+        "contact_us_html": "Потрібна допомога? <a href='%{contact_link}'>Зв'язатися з нами</a>",
         "marker": {
           "current": "Поточне місце відправлення",
           "shipping": "Адреса доставки"
