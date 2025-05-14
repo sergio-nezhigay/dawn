@@ -649,6 +649,9 @@
         "address_barangay_contains_html_tags": "Barangay не может содержать теги HTML.",
         "address_commune_contains_html_tags": "Commune не может содержать теги HTML.",
         "address_district_contains_html_tags": "Район не может содержать теги HTML."
+      },
+      "general": {
+        "complete_purchase_button_label": "Заказ подтверджаю"
       }
     }
   }
