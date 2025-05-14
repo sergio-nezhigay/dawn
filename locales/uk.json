@@ -822,7 +822,7 @@
           "in_range": "В діапазоні",
           "show_next_month": "Показати наступний місяць, {{month}} {{year}}"
         },
-        "complete_purchase_button_label": "Повне замовлення",
+        "complete_purchase_button_label": "Замовлення підтверджую",
         "back_to_cart": "Повернутися до кошика",
         "autocomplete_single_item": "Доступний 1 товар",
         "tooltip_accessibility_label": "Більше інформації",
