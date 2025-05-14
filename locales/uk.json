@@ -2257,7 +2257,8 @@
         "thank_you_title_payments_app_failed_pending_payment": "Ваш платіж не вдалося обробити",
         "gift_card_text_title": {
           "one": "Подарункову картку надіслали смс-повідомленням"
-        }
+        },
+        "contact_information_title": "Контакти"
       },
       "review": {
         "checkout_a_different_way": "Оформити замовлення іншим способом",
@@ -2436,7 +2437,8 @@
         "shipping_policy": "Способи доставки та оплати замовлень",
         "privacy_policy": "Політика конфіденційності",
         "cookie_preferences": "Налаштування файлів cookie",
-        "legal_notice": "Юридичне повідомлення"
+        "legal_notice": "Юридичне повідомлення",
+        "contact_information": "Контакти"
       },
       "online_store_chat": {
         "title": "Запитання? Спілкуйтеся з нами"
@@ -3536,7 +3538,8 @@
       "log_in_to_a_different_account": "Увійдіть в інший обліковий запис",
       "order_details_skeleton_accessibility_label": "Увійдіть, щоб переглянути всі деталі замовлення.",
       "login_to_view_all_order_details": "Увійдіть, щоб переглянути всі деталі замовлення.",
-      "link_sent": "Посилання надіслано"
+      "link_sent": "Посилання надіслано",
+      "contact_information": "Контакти"
     },
     "addresses": {
       "add_button_text": "додати",
@@ -4047,7 +4050,8 @@
       "location_switcher_toast_message": "Місцезнаходження змінено на {{locationName}}",
       "switch_location": "Змінити місцезнаходження",
       "view_details": "Переглянути деталі",
-      "company_location": "Розташування компанії"
+      "company_location": "Розташування компанії",
+      "contact_link": "Контакти"
     },
     "errors": {
       "banner_title": {
