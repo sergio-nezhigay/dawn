@@ -584,5 +584,75 @@
       "expanded": "Форма с данными получателя подарочной карты развернута",
       "collapsed": "Форма с данными получателя подарочной карты свернута"
     }
+  },
+  "shopify": {
+    "checkout": {
+      "contact": {
+        "area_label": "Площадь",
+        "optional_neighborhood_label": "Соседство (необязательно)",
+        "optional_block_label": "Блокировать (необязательно)",
+        "street_number_label": "Номер дома",
+        "optional_ward_label": "палата (необязательно)",
+        "optional_area_label": "Площадь (необязательно)",
+        "optional_barangay_label": "Барангай (необязательно)",
+        "optional_commune_label": "Коммуна (необязательно)",
+        "optional_district_label": "Район (необязательно)",
+        "neighborhood_label": "Окрестности",
+        "street_name_label": "ул",
+        "colony_label": "Колония",
+        "block_label": "Блокировать",
+        "commune_label": "Коммуна",
+        "optional_street_number_label": "Номер здания (необязательно)",
+        "optional_colony_label": "Колония (необязательно)"
+      },
+      "payment": {
+        "card_fields_unavailable_html": "Платежи кредитными и дебетовыми картами сейчас недоступны.<br> <a href=\"%{current_url}\">Обновите эту страницу</a> или попробуйте другой способ оплаты."
+      },
+      "field_errors": {
+        "address_street_number_blank": "Введите номер здания",
+        "address_street_name_contains_mathematical_symbols": "Улица не может содержать математические символы",
+        "address_street_number_contains_html_tags": "Номер дома не может содержать теги HTML.",
+        "address_colony_contains_mathematical_symbols": "Колония не может содержать математические символы",
+        "address_ward_contains_mathematical_symbols": "Уорд не может содержать математические символы",
+        "address_barangay_contains_mathematical_symbols": "Barangay не может содержать математические символы",
+        "address_commune_contains_mathematical_symbols": "Коммуна не может содержать математические символы",
+        "address_district_contains_mathematical_symbols": "Район не может содержать математические символы",
+        "address_colony_blank": "Введите колонию",
+        "address_block_blank": "Введите блок",
+        "address_area_blank": "Введите область",
+        "address_barangay_blank": "Введите баргангай",
+        "address_district_blank": "Введите район",
+        "address_commune_blank": "Войти в коммуну",
+        "split_quantity_per_delivery_line_not_allowed": "Несколько линий доставки ссылаются по крайней мере на одну товарную строку.",
+        "address_ward_blank": "Введите палату",
+        "address_ward_contains_emojis": "Уорд не может содержать эмодзи",
+        "address_street_number_contains_mathematical_symbols": "Номер дома не может содержать математические символы",
+        "address_neighborhood_contains_mathematical_symbols": "Окрестности не могут содержать математические символы",
+        "address_ward_too_long": "Уорд длинный (максимальное количество символов: {{count}} )",
+        "address_street_name_contains_emojis": "Улица не может содержать эмодзи",
+        "address_colony_contains_emojis": "Колония не может содержать эмодзи",
+        "address_commune_contains_emojis": "Commune не может содержать эмодзи",
+        "address_street_number_too_long": "Номер здания слишком длинный (максимальное количество символов: {{count}} )",
+        "address_neighborhood_too_long": "Окрестности слишком длинные (максимальное количество символов: {{count}} )",
+        "address_street_name_too_long": "Улица длинная (максимальное количество символов: {{count}} )",
+        "address_barangay_too_long": "Барангай длинный (максимальное количество символов: {{count}} )",
+        "address_colony_too_long": "Колония длинная (максимальное количество символов: {{count}} )",
+        "address_commune_too_long": "Коммуна длинная (максимальное количество символов: {{count}} )",
+        "address_district_too_long": "Район слишком длинный (максимальное количество символов: {{count}} )",
+        "split_cart_not_allowed": "Недействительный сеанс или функция не включена для данного магазина.",
+        "address_street_name_contains_html_tags": "Улица не может содержать теги HTML.",
+        "address_barangay_contains_emojis": "Barangay не может содержать эмодзи",
+        "address_colony_contains_html_tags": "Колония не может содержать теги HTML.",
+        "address_district_contains_emojis": "Район не может содержать эмодзи",
+        "address_ward_contains_html_tags": "Ward не может содержать теги HTML.",
+        "address_neighborhood_contains_emojis": "Район не может содержать эмодзи",
+        "address_barangay_contains_html_tags": "Barangay не может содержать теги HTML.",
+        "address_commune_contains_html_tags": "Commune не может содержать теги HTML.",
+        "address_district_contains_html_tags": "Район не может содержать теги HTML."
+      },
+      "general": {
+        "complete_purchase_button_label": "Заказ подтверджаю"
+      }
+    }
   }
 }

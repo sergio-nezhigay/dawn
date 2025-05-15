@@ -822,7 +822,7 @@
           "in_range": "В діапазоні",
           "show_next_month": "Показати наступний місяць, {{month}} {{year}}"
         },
-        "complete_purchase_button_label": "Повне замовлення",
+        "complete_purchase_button_label": "Замовлення підтверджую",
         "back_to_cart": "Повернутися до кошика",
         "autocomplete_single_item": "Доступний 1 товар",
         "tooltip_accessibility_label": "Більше інформації",
@@ -2257,7 +2257,8 @@
         "thank_you_title_payments_app_failed_pending_payment": "Ваш платіж не вдалося обробити",
         "gift_card_text_title": {
           "one": "Подарункову картку надіслали смс-повідомленням"
-        }
+        },
+        "contact_information_title": "Контакти"
       },
       "review": {
         "checkout_a_different_way": "Оформити замовлення іншим способом",
@@ -2436,7 +2437,8 @@
         "shipping_policy": "Способи доставки та оплати замовлень",
         "privacy_policy": "Політика конфіденційності",
         "cookie_preferences": "Налаштування файлів cookie",
-        "legal_notice": "Юридичне повідомлення"
+        "legal_notice": "Юридичне повідомлення",
+        "contact_information": "Контакти"
       },
       "online_store_chat": {
         "title": "Запитання? Спілкуйтеся з нами"
@@ -2569,7 +2571,7 @@
         "unsubscribe": {
           "description": "Ви більше не отримуватимете від нас нагадувань про кошик."
         },
-        "accept_marketing_checkbox_label": "Пишіть мені новини та пропозиції",
+        "accept_marketing_checkbox_label": "Отримувати SMS про замовлення — згоден",
         "accept_sms_checkbox_label": "Пишіть мені з новинами та пропозиціями",
         "pending_accept_marketing_checkbox_label": "Перевірте свою електронну пошту, щоб підтвердити підписку на новини та пропозиції"
       },
@@ -3526,7 +3528,7 @@
       "log_in": "авторизуватися",
       "card_ending_with": "закінчується на {{lastDigits}}",
       "marketing_checkmark_label": "Ви підписані на отримання електронною поштою новин і пропозицій",
-      "marketing_checkbox_label": "Пишіть мені новини та пропозиції",
+      "marketing_checkbox_label": "Отримувати SMS про замовлення — згоден",
       "request_return_failed": "Виникла проблема з обробкою вашого запиту. Будь ласка спробуйте ще раз.",
       "marketing_description": "Ви отримуватимете маркетингові електронні листи. Ви можете скасувати підписку в будь-який час.",
       "duties_and_taxes_included": "Усього входять мита та податки. Без додаткових оплат при доставці.",
@@ -3536,7 +3538,8 @@
       "log_in_to_a_different_account": "Увійдіть в інший обліковий запис",
       "order_details_skeleton_accessibility_label": "Увійдіть, щоб переглянути всі деталі замовлення.",
       "login_to_view_all_order_details": "Увійдіть, щоб переглянути всі деталі замовлення.",
-      "link_sent": "Посилання надіслано"
+      "link_sent": "Посилання надіслано",
+      "contact_information": "Контакти"
     },
     "addresses": {
       "add_button_text": "додати",
@@ -4047,7 +4050,8 @@
       "location_switcher_toast_message": "Місцезнаходження змінено на {{locationName}}",
       "switch_location": "Змінити місцезнаходження",
       "view_details": "Переглянути деталі",
-      "company_location": "Розташування компанії"
+      "company_location": "Розташування компанії",
+      "contact_link": "Контакти"
     },
     "errors": {
       "banner_title": {
