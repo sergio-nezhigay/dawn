@@ -204,6 +204,9 @@ details[open].menu-opening > .menu-drawer__submenu {
 .menu-drawer__utility-links:has(.menu-drawer__localization) .menu-drawer__account {
   margin: 0;
 }
+.menu-drawer__utility-links:has(.menu-drawer__localization) .svg-wrapper {
+  margin-right: 16px;
+}
 
 .menu-drawer__account account-icon > .svg-wrapper {
   height: 2rem;
