@@ -538,7 +538,7 @@ hr {
   height: 0.1rem;
   background-color: rgba(var(--color-foreground), 0.2);
   display: block;
-  margin: 5rem 0;
+  margin: 3rem 0;
 }
 
 @media screen and (min-width: 750px) {
@@ -3698,4 +3698,8 @@ h4 + p {
   opacity: 0.8;
   padding: 4px;
   font-style: italic;
+}
+
+#PBarNextFrameWrapper {
+  display: none;
 }

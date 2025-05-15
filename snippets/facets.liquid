@@ -733,14 +733,19 @@
                           aria-describedby="a11y-refresh-page-message"
                         >
                           {%- for option in results.sort_options -%}
-                            <option
-                              value="{{ option.value | escape }}"
-                              {% if option.value == sort_by %}
-                                selected="selected"
-                              {% endif %}
-                            >
-                              {{ option.name | escape }}
-                            </option>
+                            {%- assign hidden_sort_options_mobile = 'manual,created-ascending,created-descending,title-ascending,title-descending'
+                              | split: ','
+                            -%}
+                            {%- unless hidden_sort_options_mobile contains option.value -%}
+                              <option
+                                value="{{ option.value | escape }}"
+                                {% if option.value == sort_by %}
+                                  selected="selected"
+                                {% endif %}
+                              >
+                                {{ option.name | escape }}
+                              </option>
+                            {%- endunless -%}
                           {%- endfor -%}
                         </select>
                         <span class="svg-wrapper">
