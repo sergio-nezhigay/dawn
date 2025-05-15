@@ -653,6 +653,16 @@
       "general": {
         "complete_purchase_button_label": "Заказ подтверджаю"
       }
+    },
+    "collections": {
+        "sorting": {
+            "date_ascending": "Дата от старой к новой",
+            "date_descending": "Дата от новой к старой",
+            "price_ascending": "Цена от низкой к высокой",
+            "price_descending": "Цена от высокой к низкой",
+            "manual": "Рекомендуемые",
+            "best_selling": "Рекомендуемые"
+        }
     }
   }
 }
