@@ -44,9 +44,9 @@
           {% endif %}
 
           <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-            <span itemprop="item" aria-current="page">
+            <a itemprop="item" href="{{ product.url }}" aria-current="page" class="pointer-events-none cursor-default">
               <span itemprop="name">{{ product.title }}</span>
-            </span>
+            </a>
             <meta itemprop="position" content="3">
           </li>
 
@@ -67,9 +67,14 @@
             </li>
           {% else %}
             <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-              <span itemprop="item" aria-current="page">
+              <a
+                itemprop="item"
+                href="{{ collection.url }}"
+                aria-current="page"
+                class="pointer-events-none cursor-default"
+              >
                 <span itemprop="name">{{ collection.title }}</span>
-              </span>
+              </a>
               <meta itemprop="position" content="2">
             </li>
           {% endif %}
