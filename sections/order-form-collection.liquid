@@ -1,0 +1,86 @@
+{% comment %}
+  Order form section for bulk purchase
+{% endcomment %}
+
+<div class="max-w-screen-lg mx-auto px-4 py-8">
+  <h1 class="text-2xl font-bold mb-6">{{ collection.title }}</h1>
+  <form id="bulk-order-form">
+    <table class="w-full border-collapse border border-gray-200">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="p-2 text-left">Product</th>
+          <th class="p-2 text-left">Price</th>
+          <th class="p-2 text-left">Quantity</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for product in collection.products %}
+          {% assign first_variant = product.variants.first %}
+          <tr class="border-t">
+            <td class="p-2">{{ product.title }}</td>
+            <td class="p-2">{{ first_variant.price | money }}</td>
+            <td class="p-2">
+              <input
+                type="number"
+                name="items[][quantity]"
+                min="0"
+                value="0"
+                class="w-20 p-1 border rounded"
+              >
+              <input
+                type="hidden"
+                name="items[][id]"
+                value="{{ first_variant.id }}"
+              >
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="mt-6">
+      <button
+        type="submit"
+        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+      >
+        Add Selected to Cart
+      </button>
+    </div>
+  </form>
+</div>
+
+<script>
+  document.getElementById('bulk-order-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+    const items = [];
+
+    for (let pair of formData.entries()) {
+      if (pair[0].includes('[id]')) {
+        const id = pair[1];
+        const qtyName = pair[0].replace('[id]', '[quantity]');
+        const qty = formData.get(qtyName);
+        if (qty && parseInt(qty) > 0) {
+          items.push({ id: id, quantity: parseInt(qty) });
+        }
+      }
+    }
+
+    if (items.length === 0) {
+      alert('Please enter a quantity for at least one product.');
+      return;
+    }
+
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items }),
+    })
+      .then((res) => res.json())
+      .then(() => {
+        window.location.href = '/cart';
+      })
+      .catch((err) => alert('Something went wrong. Try again.'));
+  });
+</script>
