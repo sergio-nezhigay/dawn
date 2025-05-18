@@ -1,5 +1,5 @@
 {% comment %}
-  Order form section for bulk purchase
+  Order form section for bulk purchase — fixed version with index-based inputs
 {% endcomment %}
 
 <div class="max-w-screen-lg mx-auto px-4 py-8">
@@ -16,20 +16,21 @@
       <tbody>
         {% for product in collection.products %}
           {% assign first_variant = product.variants.first %}
+          {% assign index = forloop.index0 %}
           <tr class="border-t">
             <td class="p-2">{{ product.title }}</td>
             <td class="p-2">{{ first_variant.price | money }}</td>
             <td class="p-2">
               <input
                 type="number"
-                name="items[][quantity]"
+                name="items[{{ index }}][quantity]"
                 min="0"
                 value="0"
                 class="w-20 p-1 border rounded"
               >
               <input
                 type="hidden"
-                name="items[][id]"
+                name="items[{{ index }}][id]"
                 value="{{ first_variant.id }}"
               >
             </td>
@@ -56,16 +57,28 @@
     const formData = new FormData(e.target);
     const items = [];
 
-    for (let pair of formData.entries()) {
-      if (pair[0].includes('[id]')) {
-        const id = pair[1];
-        const qtyName = pair[0].replace('[id]', '[quantity]');
-        const qty = formData.get(qtyName);
-        if (qty && parseInt(qty) > 0) {
-          items.push({ id: id, quantity: parseInt(qty) });
-        }
+    const formEntries = [...formData.entries()];
+    const groupedItems = {};
+
+    formEntries.forEach(([key, value]) => {
+      const match = key.match(/^items\[(\d+)]\[(id|quantity)]$/);
+      if (match) {
+        const index = match[1];
+        const field = match[2];
+        if (!groupedItems[index]) groupedItems[index] = {};
+        groupedItems[index][field] = value;
       }
-    }
+    });
+
+    Object.values(groupedItems).forEach((item) => {
+      const quantity = parseInt(item.quantity);
+      if (quantity > 0) {
+        items.push({
+          id: item.id,
+          quantity: quantity,
+        });
+      }
+    });
 
     if (items.length === 0) {
       alert('Please enter a quantity for at least one product.');
@@ -81,6 +94,9 @@
       .then(() => {
         window.location.href = '/cart';
       })
-      .catch((err) => alert('Something went wrong. Try again.'));
+      .catch((err) => {
+        console.error(err);
+        alert('Something went wrong. Please try again.');
+      });
   });
 </script>
