@@ -3703,3 +3703,12 @@ h4 + p {
 #PBarNextFrameWrapper {
   display: none;
 }
+
+.card__content,
+.card__information {
+  padding: 6px !important;
+}
+
+.facets-vertical-sort {
+  margin-bottom: 8px;
+}
