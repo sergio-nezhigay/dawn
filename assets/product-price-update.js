@@ -44,12 +44,13 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   /**
-   * Verifies and decodes a JWT token (improved security)
-   * @param {string} token - The JWT token to decode
-   * @return {Object} The decoded header and payload
-   * @throws {Error} If token is invalid
+   * Verifies and decodes a JWT token with optional signature validation.
+   * @param {string} token - The JWT token to decode.
+   * @param {boolean} validateSignature - Whether to validate the signature.
+   * @return {Promise<Object|null>} The decoded header and payload, or null if invalid/error.
+   * @throws {Error} If token is invalid (structural or parsing errors).
    */
-  function decodeJWT(token) {
+  async function decodeJWT(token, validateSignature = true) {
     if (!token || typeof token !== 'string') {
       throw new Error('No token provided or invalid token type');
     }
@@ -78,7 +79,83 @@ document.addEventListener('DOMContentLoaded', function () {
       throw new Error(`Invalid token header: Expected ES256/JWT, got ${header.alg}/${header.typ}`);
     }
 
+    if (validateSignature) {
+      const publicKey = await importES256PublicKey(spkiPem);
+      if (!publicKey) {
+        throw new Error('Failed to import public key for validation.');
+      }
+      const dataToVerify = `${headerBase64}.${payloadBase64}`;
+      const isSignatureValid = await verifyESSignature(publicKey, dataToVerify, signatureBase64);
+      if (!isSignatureValid) {
+        throw new Error('JWT signature validation failed.');
+      }
+      console.log('JWT signature successfully validated.');
+    } else {
+      console.warn('JWT signature validation was skipped.');
+    }
+
     return { header, payload };
+  }
+
+  /**
+   * Decodes a base64URL string into a Uint8Array.
+   * @param {string} base64Url - The base64URL encoded string.
+   * @returns {Uint8Array|null} The decoded byte array or null on error.
+   */
+  function base64UrlToUint8Array(base64Url) {
+    if (!base64Url || typeof base64Url !== 'string') return null;
+    try {
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const paddedBase64 = base64 + '==='.slice(0, (4 - (base64.length % 4)) % 4);
+      const binaryString = atob(paddedBase64);
+      const len = binaryString.length;
+      const bytes = new Uint8Array(len);
+      for (let i = 0; i < len; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+      }
+      return bytes;
+    } catch (e) {
+      console.error('Failed to decode base64url string:', e);
+      return null;
+    }
+  }
+
+  const spkiPem = `
+-----BEGIN PUBLIC KEY-----
+MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAERUlUpxshr67EO66ZTX0Fpog0LEHc
+nUnlSsIrOfroxTLu2XnigBK/lfYRxzQWq9K6nqsSjjYeea0T12r+y3nvqg==
+-----END PUBLIC KEY-----
+`;
+
+  /**
+   * Imports an ES256 public key from PEM format.
+   * @param {string} pem - The PEM formatted public key.
+   * @returns {Promise<CryptoKey|null>} The CryptoKey object or null on error.
+   */
+  async function importES256PublicKey(pem) {
+    try {
+      const pemHeader = '-----BEGIN PUBLIC KEY-----';
+      const pemFooter = '-----END PUBLIC KEY-----';
+      const pemContents = pem.substring(pemHeader.length, pem.length - pemFooter.length - 1).replace(/\s+/g, '');
+      const binaryDer = base64UrlToUint8Array(pemContents.replace(/\+/g, '-').replace(/\//g, '_'));
+
+      if (!binaryDer) {
+        throw new Error('Failed to decode PEM content to binary DER.');
+      }
+      return await crypto.subtle.importKey(
+        'spki',
+        binaryDer,
+        {
+          name: 'ECDSA',
+          namedCurve: 'P-256',
+        },
+        true,
+        ['verify']
+      );
+    } catch (error) {
+      console.error('Error importing public key:', error);
+      return null;
+    }
   }
 
   /**
@@ -226,75 +303,80 @@ document.addEventListener('DOMContentLoaded', function () {
       return false;
     }
   }
-
-  try {
-    let pv2 = new URLSearchParams(window.location.search).get('pv2');
-    if (!pv2) {
-      pv2 = getCookie('pv2');
-    }
-    if (!pv2) {
-      return;
-    }
-
+  (async () => {
     try {
-      document.cookie = `pv2=${pv2}; path=/; max-age=${60 * 60 * 24 * 3}; SameSite=Lax`;
-    } catch (cookieError) {
-      console.error('Error setting cookie:', cookieError);
-    }
-
-    try {
-      const { payload } = decodeJWT(pv2);
-      const productInfoElement = document.querySelector('product-info');
-      if (!productInfoElement) {
-        throw new Error('Product info element not found');
+      let pv2 = new URLSearchParams(window.location.search).get('pv2');
+      if (!pv2) {
+        pv2 = getCookie('pv2');
       }
-
-      const productId = productInfoElement.getAttribute('data-product-id');
-      if (!productId) {
-        throw new Error('Product ID attribute not found');
-      }
-
-      if (!isTokenValid(payload, productId)) {
-        throw new Error('Token is invalid or expired');
-      }
-
-      if (payload.p === undefined || typeof Number(payload.p) !== 'number' || isNaN(Number(payload.p))) {
-        throw new Error('Invalid price information in token');
-      }
-
-      const discountedPrice = parseFloat(Number(payload.p).toFixed(2));
-
-      const priceEl = document.querySelector('.price-item--regular');
-      if (!priceEl) {
-        throw new Error('Original price element not found');
-      }
-
-      const originalPrice = extractPriceFromElement(priceEl);
-      if (originalPrice === null) {
-        throw new Error('Failed to parse original price');
-      }
-
-      if (discountedPrice >= originalPrice) {
-        console.warn('Discounted price is not lower than original price, not applying discount');
+      if (!pv2) {
         return;
       }
 
-      const priceUpdateSuccess = showSalePrice(discountedPrice, originalPrice);
-      if (!priceUpdateSuccess) {
-        throw new Error('Failed to update price display');
+      try {
+        document.cookie = `pv2=${pv2}; path=/; max-age=${60 * 60 * 24 * 3}; SameSite=Lax`;
+      } catch (cookieError) {
+        console.error('Error setting cookie:', cookieError);
       }
 
-      const productForm = document.querySelector('[data-type="add-to-cart-form"]');
-      if (productForm) {
-        const discountAmount = originalPrice - discountedPrice;
-        if (discountAmount > 0) {
-          addHiddenInput(productForm, 'properties[discount-amount]', discountAmount.toFixed(2));
+      try {
+        const decodedToken = await decodeJWT(pv2, false); // set to true if you want to validate the signature
+        if (!decodedToken) {
+          throw new Error('Token decoding or validation failed.');
         }
+        const { payload } = decodedToken;
+        const productInfoElement = document.querySelector('product-info');
+        if (!productInfoElement) {
+          throw new Error('Product info element not found');
+        }
+
+        const productId = productInfoElement.getAttribute('data-product-id');
+        if (!productId) {
+          throw new Error('Product ID attribute not found');
+        }
+
+        if (!isTokenValid(payload, productId)) {
+          throw new Error('Token is invalid or expired');
+        }
+
+        if (payload.p === undefined || typeof Number(payload.p) !== 'number' || isNaN(Number(payload.p))) {
+          throw new Error('Invalid price information in token');
+        }
+
+        const discountedPrice = parseFloat(Number(payload.p).toFixed(2));
+
+        const priceEl = document.querySelector('.price-item--regular');
+        if (!priceEl) {
+          throw new Error('Original price element not found');
+        }
+
+        const originalPrice = extractPriceFromElement(priceEl);
+        if (originalPrice === null) {
+          throw new Error('Failed to parse original price');
+        }
+
+        if (discountedPrice >= originalPrice) {
+          console.warn('Discounted price is not lower than original price, not applying discount');
+          return;
+        }
+
+        const priceUpdateSuccess = showSalePrice(discountedPrice, originalPrice);
+        if (!priceUpdateSuccess) {
+          throw new Error('Failed to update price display');
+        }
+
+        const productForm = document.querySelector('[data-type="add-to-cart-form"]');
+        if (productForm) {
+          const discountAmount = originalPrice - discountedPrice;
+          if (discountAmount > 0) {
+            addHiddenInput(productForm, 'properties[discount-amount]', discountAmount.toFixed(2));
+          }
+        }
+      } catch (tokenError) {
+        console.error('Error processing discount token:', tokenError.message);
       }
-    } catch (tokenError) {
-      console.error('Error processing discount token:', tokenError.message);
+    } catch (globalError) {
+      console.error('Critical error in discount code:', globalError);
     }
-  } catch (globalError) {
-    console.error('Critical error in discount code:', globalError);
-  }
+  })();
 });
