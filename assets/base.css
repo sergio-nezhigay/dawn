@@ -3713,12 +3713,14 @@ h4 + p {
   margin-bottom: 8px;
 }
 
-.product-media-container .product__media img {
-  object-fit: contain;
-}
-.product-media-container .product__media {
-  aspect-ratio: 1 / 1;
-}
-.image-magnify-full-size {
-  background-repeat: no-repeat;
+@media screen and (min-width: 1024px) {
+  .product-media-container .product__media img {
+    object-fit: contain;
+  }
+  .product-media-container .product__media {
+    aspect-ratio: 1 / 1;
+  }
+  .image-magnify-full-size {
+    background-repeat: no-repeat;
+  }
 }
