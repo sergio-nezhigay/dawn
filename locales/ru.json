@@ -655,14 +655,22 @@
       }
     },
     "collections": {
-        "sorting": {
-            "date_ascending": "Дата от старой к новой",
-            "date_descending": "Дата от новой к старой",
-            "price_ascending": "Цена от низкой к высокой",
-            "price_descending": "Цена от высокой к низкой",
-            "manual": "Рекомендуемые",
-            "best_selling": "Рекомендуемые"
-        }
+      "sorting": {
+        "date_ascending": "Дата от старой к новой",
+        "date_descending": "Дата от новой к старой",
+        "price_ascending": "Цена от низкой к высокой",
+        "price_descending": "Цена от высокой к низкой",
+        "manual": "Рекомендуемые",
+        "best_selling": "Рекомендуемые"
+      }
+    }
+  },
+  "customer_accounts": {
+    "order_details": {
+      "login_card": {
+        "resend_link_with_login": "отправить новую ссылку",
+        "resend_link_without_login": "Отправить новую ссылку"
+      }
     }
   }
 }
