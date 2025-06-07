@@ -330,12 +330,24 @@ nUnlSsIrOfroxTLu2XnigBK/lfYRxzQWq9K6nqsSjjYeea0T12r+y3nvqg==
           throw new Error('Product info element not found');
         }
 
-        const productId = productInfoElement.getAttribute('data-product-id');
-        if (!productId) {
+        const productIdRaw = productInfoElement.getAttribute('data-product-id');
+        if (!productIdRaw) {
           throw new Error('Product ID attribute not found');
         }
 
+        const productId = `gid://shopify/Product/${productIdRaw}`;
+
         if (!isTokenValid(payload, productId)) {
+          const currentTime = Math.floor(Date.now() / 1000);
+          console.warn('Token validation failed details:', {
+            payload,
+            productId,
+            currentTime,
+            exp: payload && payload.exp,
+            o: payload && payload.o,
+            expVsNow: payload && payload.exp ? payload.exp - currentTime : undefined,
+            oVsProductId: payload && payload.o ? String(payload.o) === String(productId) : undefined,
+          });
           throw new Error('Token is invalid or expired');
         }
 
