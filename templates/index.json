@@ -110,6 +110,9 @@
         "slide_ibAVeN",
         "slide_4bGM9A"
       ],
+      "custom_css": [
+        "@media (max-width: 640px) {.slideshow {height: 300px; } .banner__heading {font-size: 24px; }}"
+      ],
       "name": "t:sections.slideshow.presets.name",
       "settings": {
         "layout": "full_bleed",
