@@ -83,13 +83,32 @@
             "text_alignment_mobile": "center",
             "color_scheme": "scheme-1"
           }
+        },
+        "slide_e7xQpV": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/94e760164e7485fc671740b7b96d.webp",
+            "image_overlay_opacity": 20,
+            "heading": "Фонтан на сонячній батареї",
+            "heading_size": "hxl",
+            "subheading": "Живи з природою — фонтан, що працює від сонця. ☀️💧",
+            "button_label": "Детальніше",
+            "link": "/products/fontan-na-solnechnoy-bataree-16sm-s-nasadkami",
+            "button_style_secondary": false,
+            "show_text_box": false,
+            "box_align": "middle-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": "scheme-1"
+          }
         }
       },
       "block_order": [
         "slide_ibAVeN",
         "slide_4bGM9A",
         "slide_EranBV",
-        "slide_N7GGKg"
+        "slide_N7GGKg",
+        "slide_e7xQpV"
       ],
       "name": "t:sections.slideshow.presets.name",
       "settings": {
