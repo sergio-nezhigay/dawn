@@ -12,11 +12,47 @@
     "slideshow_tDPaNk": {
       "type": "slideshow",
       "blocks": {
+        "slide_EranBV": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/4241211.jpg",
+            "image_overlay_opacity": 0,
+            "heading": "Заміни старий жорсткий — відчуй різницю з SSD Kingston",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "Детальніше",
+            "link": "/products/nakopitel-ssd-25-480gb-kingston-sa400s37480g",
+            "button_style_secondary": false,
+            "show_text_box": false,
+            "box_align": "middle-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": "scheme-1"
+          }
+        },
+        "slide_4bGM9A": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/digitus-4-port-usb-2-0-hub-da-70216.jpg",
+            "image_overlay_opacity": 0,
+            "heading": "Незвичний вигляд — звична зручність. Хаб, що кидається в очі",
+            "heading_size": "h0",
+            "subheading": "",
+            "button_label": "Детальніше",
+            "link": "/products/hub-usb-4-port-digitus-usb-20-passivnyy-belyy-da-70216",
+            "button_style_secondary": false,
+            "show_text_box": false,
+            "box_align": "middle-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": ""
+          }
+        },
         "slide_e7xQpV": {
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/94e760164e7485fc671740b7b96d_1.webp",
-            "image_overlay_opacity": 30,
+            "image_overlay_opacity": 20,
             "heading": "Живи з природою — фонтан, що працює від сонця. ☀️💧",
             "heading_size": "h0",
             "subheading": "",
@@ -48,24 +84,6 @@
             "color_scheme": "scheme-1"
           }
         },
-        "slide_EranBV": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/4241211.jpg",
-            "image_overlay_opacity": 0,
-            "heading": "Заміни старий жорсткий — відчуй різницю з SSD Kingston",
-            "heading_size": "h1",
-            "subheading": "",
-            "button_label": "Детальніше",
-            "link": "/products/nakopitel-ssd-25-480gb-kingston-sa400s37480g",
-            "button_style_secondary": false,
-            "show_text_box": false,
-            "box_align": "middle-center",
-            "text_alignment": "center",
-            "text_alignment_mobile": "center",
-            "color_scheme": "scheme-1"
-          }
-        },
         "slide_ibAVeN": {
           "type": "slide",
           "settings": {
@@ -83,32 +101,14 @@
             "text_alignment_mobile": "center",
             "color_scheme": ""
           }
-        },
-        "slide_4bGM9A": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/digitus-4-port-usb-2-0-hub-da-70216.jpg",
-            "image_overlay_opacity": 0,
-            "heading": "Незвичний вигляд — звична зручність. Хаб, що кидається в очі",
-            "heading_size": "h0",
-            "subheading": "",
-            "button_label": "Детальніше",
-            "link": "/products/hub-usb-4-port-digitus-usb-20-passivnyy-belyy-da-70216",
-            "button_style_secondary": false,
-            "show_text_box": false,
-            "box_align": "middle-center",
-            "text_alignment": "center",
-            "text_alignment_mobile": "center",
-            "color_scheme": ""
-          }
         }
       },
       "block_order": [
+        "slide_EranBV",
+        "slide_4bGM9A",
         "slide_e7xQpV",
         "slide_N7GGKg",
-        "slide_EranBV",
-        "slide_ibAVeN",
-        "slide_4bGM9A"
+        "slide_ibAVeN"
       ],
       "custom_css": [
         ".slideshow {height: 450px;}",
