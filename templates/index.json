@@ -65,12 +65,31 @@
             "text_alignment_mobile": "center",
             "color_scheme": "scheme-1"
           }
+        },
+        "slide_N7GGKg": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/image_7.webp",
+            "image_overlay_opacity": 20,
+            "heading": "Флеш накопичувач Лисичка USB",
+            "heading_size": "hxl",
+            "subheading": "Милий дизайн. Надійне зберігання. Ваші файли завжди під лапкою! 🦊",
+            "button_label": "Детальніше",
+            "link": "/products/flesh-nakopitel-lisichka-64-gb-usb-2-0-kompaktnaya-fleshka-dlya-smartfona-64gb",
+            "button_style_secondary": false,
+            "show_text_box": false,
+            "box_align": "middle-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": "scheme-1"
+          }
         }
       },
       "block_order": [
         "slide_ibAVeN",
         "slide_4bGM9A",
-        "slide_EranBV"
+        "slide_EranBV",
+        "slide_N7GGKg"
       ],
       "name": "t:sections.slideshow.presets.name",
       "settings": {
