@@ -603,7 +603,8 @@
         "block_label": "Блокировать",
         "commune_label": "Коммуна",
         "optional_street_number_label": "Номер здания (необязательно)",
-        "optional_colony_label": "Колония (необязательно)"
+        "optional_colony_label": "Колония (необязательно)",
+        "optional_first_name_label": "Имя"
       },
       "payment": {
         "card_fields_unavailable_html": "Платежи кредитными и дебетовыми картами сейчас недоступны.<br> <a href=\"%{current_url}\">Обновите эту страницу</a> или попробуйте другой способ оплаты."
