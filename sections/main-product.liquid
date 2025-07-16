@@ -72,15 +72,25 @@
     >
   {%- endif -%}
 
+  {%- comment -%}
+    Use alternative product for main images if alternative_product_handle is set and valid.
+    Variant images always come from the original product.
+  {%- endcomment -%}
+  {% assign alt_handle = section.settings.alternative_product_handle | strip %}
+  {% if alt_handle != 'none' and alt_handle != blank and all_products[alt_handle] %}
+    {% assign display_product = all_products[alt_handle] %}
+  {% else %}
+    {% assign display_product = product %}
+  {% endif %}
   {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
   <div class="page-width">
     {% render 'breadcrumbs' %}
     <div
-      class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}"
-      data-delta="{{ product.metafields.custom.delta | escape }}"
+      class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if display_product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}"
+      data-delta="{{ display_product.metafields.custom.delta | escape }}"
     >
       <div class="grid__item product__media-wrapper">
-        {% render 'product-media-gallery', variant_images: variant_images %}
+        {% render 'product-media-gallery', variant_images: variant_images, product: display_product %}
       </div>
       <div class="product__info-wrapper grid__item{% if settings.page_width > 1400 and section.settings.media_size == "small" %} product__info-wrapper--extra-padding{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         <section
