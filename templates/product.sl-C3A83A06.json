@@ -30,7 +30,7 @@
           }
         },
         "judge_me_reviews_preview_badge_DhpJYN": {
-          "type": "shopify:\/\/apps\/judge-me-reviews\/blocks\/preview_badge\/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
           "settings": {}
         },
         "variant_picker": {
@@ -99,6 +99,7 @@
       "settings": {
         "enable_sticky_info": true,
         "color_scheme": "",
+        "alternative_product_handle": "promisloviy-usb-konverter-do-rs232-rs485-rs422-ttl-cdsent-e810-u15-ftdi",
         "media_size": "small",
         "constrain_to_viewport": true,
         "media_fit": "contain",
@@ -137,7 +138,7 @@
       "type": "apps",
       "blocks": {
         "judge_me_reviews_review_widget_drfRRB": {
-          "type": "shopify:\/\/apps\/judge-me-reviews\/blocks\/review_widget\/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
           "settings": {}
         }
       },
