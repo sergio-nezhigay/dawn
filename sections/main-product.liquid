@@ -102,7 +102,7 @@
                 </p>
               {%- when 'title' -%}
                 {% assign alt_handle = section.settings.alternative_product_handle | strip %}
-                {% if alt_handle != blank and all_products[alt_handle] %}
+                {% if alt_handle != 'none' and alt_handle != blank and all_products[alt_handle] %}
                   {% assign title_product = all_products[alt_handle] %}
                 {% else %}
                   {% assign title_product = product %}
