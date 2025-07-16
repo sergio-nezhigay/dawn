@@ -877,7 +877,7 @@
         "optional_neighborhood_label": "Сусідство (необов'язково)",
         "change_company_location_link_label": "Змінити місцезнаходження компанії",
         "ship_to_company": "Відправити до {{companyName}}",
-        "optional_first_name_label": "ім'я",
+        "optional_first_name_label": "ім'я (необов'язково)",
         "address2_label": "Квартира, люкс і т.д.",
         "optional_postal_code_label": "Поштовий індекс (необов'язково)",
         "title": "Інформація",
