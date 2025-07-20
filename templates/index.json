@@ -111,7 +111,7 @@
         "slide_ibAVeN"
       ],
       "custom_css": [
-        ".slider-mobile-gutter {background-color: red;}",
+        ".slider-mobile-gutter {background-image: linear-gradient(to bottom, red, white);}",
         ".slideshow {height: 450px;}",
         "@media (max-width: 768px) {.slideshow {height: 300px; } .banner__heading {font-size: 24px; }}"
       ],
