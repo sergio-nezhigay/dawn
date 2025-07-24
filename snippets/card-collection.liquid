@@ -31,7 +31,7 @@
   endif
 -%}
 
-<div class="11 card-wrapper animate-arrow {% if wrapper_class and wrapper_class != 'none' %}{{ wrapper_class }}{% else %}collection-card-wrapper{% endif %}">
+<div class="card-wrapper animate-arrow {% if wrapper_class and wrapper_class != 'none' %}{{ wrapper_class }}{% else %}collection-card-wrapper{% endif %}">
   <div
     class="
       card
@@ -81,12 +81,7 @@
           {{ placeholder_image | placeholder_svg_tag: 'placeholder-svg' }}
         </div>
       {%- else -%}
-        <div class="card__content">11
-          <!-- Start of Judge.me code -->
-<div style='{{ jm_style }}' class='jdgm-widget jdgm-preview-badge' data-id='{{ product.id }}' data-auto-install='false'>
-{{ product.metafields.judgeme.badge }}
-</div>22
-<!-- End of Judge.me code -->
+        <div class="card__content">
           <div class="card__information">
             <h3 class="card__heading">
               <a
