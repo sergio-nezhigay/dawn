@@ -394,7 +394,8 @@
     "custom_css": [
       ".jdgm-prev-badge__text {font-size: 12px;}",
       ".jdgm-widget {padding-left: 7px;}",
-      ".jdgm-write-rev-link {border-radius: 8px !important;}"
+      ".jdgm-write-rev-link {border-radius: 8px !important;}",
+      ".jdgm-carousel-title {text-align: left !important;}"
     ]
   }
 }
