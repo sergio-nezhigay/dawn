@@ -40,17 +40,7 @@
       assign ratio = 1
     endif
   -%}
-  99999999
-  <!-- Start of Judge.me code -->
-  <div
-    style="{{ jm_style }}"
-    class="jdgm-widget jdgm-preview-badge"
-    data-id="{{ product.id }}"
-    data-auto-install="false"
-  >
-    {{ product.metafields.judgeme.badge }}
-  </div>
-  <!-- End of Judge.me code -->
+
   <div class="card-wrapper product-card-wrapper underline-links-hover">
     <div
       class="
@@ -179,11 +169,6 @@
 
             <span class="caption-large light">{{ block.settings.description | escape }}</span>
 
-<!-- Start of Judge.me code -->
-  <div class='jdgm-widget jdgm-preview-badge'>
-    {{ card_product.metafields.judgeme.badge }}
-  </div>
-<!-- End of Judge.me code -->
             {%- if show_rating and card_product.metafields.reviews.rating.value != blank -%}
               {% liquid
                 assign rating_decimal = 0
