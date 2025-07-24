@@ -392,7 +392,8 @@
   },
   "platform_customizations": {
     "custom_css": [
-      ".jdgm-prev-badge__text {font-size: 12px;}"
+      ".jdgm-prev-badge__text {font-size: 12px;}",
+      ".jdgm-widget {padding-left: 4px;}"
     ]
   }
 }
