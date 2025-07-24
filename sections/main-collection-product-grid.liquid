@@ -38,6 +38,11 @@
 
 <div class="page-width">
   {% render 'breadcrumbs' %}
+  <!-- Start of Judge.me code -->
+  <div style='{{ jm_style }}' class='jdgm-widget jdgm-preview-badge' data-id='{{ collection.id }}' data-auto-install='false'>
+    {{ collection.metafields.judgeme.badge }}
+  </div>
+  <!-- End of Judge.me code -->
 </div>
 
 <div class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}">
