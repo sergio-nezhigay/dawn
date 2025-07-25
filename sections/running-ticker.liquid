@@ -10,8 +10,8 @@
     <div class="running-line__content">
       {% for block in section.blocks %}
         <div class="running-line__item" {{ block.shopify_attributes }}>
-          {% if block.settings.icon %}
-            <span class="running-line__icon">{{ block.settings.icon }}</span>
+          {% if block.settings.icon_svg != blank %}
+            <span class="running-line__icon">{{ block.settings.icon_svg }}</span>
           {% endif %}
           {% if block.settings.title %}
             <span class="running-line__title">{{ block.settings.title }}</span>
@@ -25,8 +25,8 @@
       {% comment %} Duplicate content for seamless loop {% endcomment %}
       {% for block in section.blocks %}
         <div class="running-line__item" aria-hidden="true">
-          {% if block.settings.icon %}
-            <span class="running-line__icon">{{ block.settings.icon }}</span>
+          {% if block.settings.icon_svg != blank %}
+            <span class="running-line__icon">{{ block.settings.icon_svg }}</span>
           {% endif %}
           {% if block.settings.title %}
             <span class="running-line__title">{{ block.settings.title }}</span>
@@ -75,6 +75,14 @@
     color: var(--icon-color);
     font-size: 16px;
     line-height: 1;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .running-line__icon svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
   }
 
   .running-line__title {
@@ -159,11 +167,11 @@
       "name": "Message",
       "settings": [
         {
-          "type": "text",
-          "id": "icon",
-          "label": "Icon",
-          "info": "Use emoji or icon font character",
-          "default": "✓"
+          "type": "html",
+          "id": "icon_svg",
+          "label": "Icon SVG",
+          "info": "Paste SVG code here",
+          "default": "<svg viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>"
         },
         {
           "type": "text",
@@ -187,7 +195,7 @@
         {
           "type": "message",
           "settings": {
-            "icon": "✓",
+            "icon_svg": "<svg viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>",
             "title": "HAPPY CUSTOMERS",
             "description": "Over 15000+ satisfied customers"
           }
@@ -195,7 +203,7 @@
         {
           "type": "message",
           "settings": {
-            "icon": "★",
+            "icon_svg": "<svg viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z' fill='currentColor'/></svg>",
             "title": "BEST PRICES",
             "description": "Denmark's cheapest GelGuns"
           }
@@ -203,7 +211,7 @@
         {
           "type": "message",
           "settings": {
-            "icon": "✈",
+            "icon_svg": "<svg viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M21 16v-2a4 4 0 00-4-4V8a6 6 0 10-12 0v2a4 4 0 00-4 4v2a2 2 0 002 2h1a2 2 0 002-2v-1h12v1a2 2 0 002 2h1a2 2 0 002-2z' fill='currentColor'/></svg>",
             "title": "FREE SHIPPING",
             "description": "On all orders over $99"
           }
@@ -211,7 +219,7 @@
         {
           "type": "message",
           "settings": {
-            "icon": "📍",
+            "icon_svg": "<svg viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z' fill='currentColor'/><circle cx='12' cy='10' r='3' fill='white'/></svg>",
             "title": "EU DELIVERY",
             "description": "We deliver across Europe"
           }
