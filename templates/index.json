@@ -9,10 +9,6 @@
  */
 {
   "sections": {
-    "running-ticker": {
-      "type": "running-ticker",
-      "settings": {}
-    },
     "slideshow_tDPaNk": {
       "type": "slideshow",
       "blocks": {
@@ -409,6 +405,51 @@
       ],
       "settings": {
         "include_margins": true
+      }
+    },
+    "running-ticker": {
+      "type": "running-ticker",
+      "blocks": {
+        "trust_item_qqBqaB": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "",
+            "title": "2",
+            "description": "a  qetaqe taqet"
+          }
+        },
+        "trust_item_Jr9tnV": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "",
+            "title": "test 1",
+            "description": "zsfdgsdfgh awsw gt"
+          }
+        }
+      },
+      "block_order": [
+        "trust_item_qqBqaB",
+        "trust_item_Jr9tnV"
+      ],
+      "settings": {
+        "custom_classes": "",
+        "max_width": "1200",
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20,
+        "padding_top_desktop": 25,
+        "padding_bottom_desktop": 25,
+        "background_color": "#334fb4",
+        "border_top_width": 6,
+        "border_top_color": "#ffffff",
+        "border_bottom_width": 6,
+        "border_bottom_color": "#e1e5e9",
+        "title_color": "#1a1a1a",
+        "title_size_mobile": 12,
+        "title_size_desktop": 14,
+        "description_color": "#666666",
+        "description_size_mobile": 11,
+        "description_size_desktop": 13,
+        "animation_speed": 30
       }
     }
   },
