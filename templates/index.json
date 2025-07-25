@@ -9,10 +9,6 @@
  */
 {
   "sections": {
-    "running-ticker": {
-      "type": "running-ticker",
-      "settings": {}
-    },
     "slideshow_tDPaNk": {
       "type": "slideshow",
       "blocks": {
@@ -410,6 +406,46 @@
       "settings": {
         "include_margins": true
       }
+    },
+    "running-ticker": {
+      "type": "running-ticker",
+      "settings": {
+        "animation_duration": 30,
+        "background_color": "#f5f5f5",
+        "text_color": "#333333",
+        "icon_color": "#666666"
+      }
+    },
+    "1753477147362160f4": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_4b746c0_GxigzH": {
+          "type": "ai_gen_block_4b746c0",
+          "settings": {
+            "message_1": "Free shipping on orders over $50",
+            "message_2": "New arrivals now available",
+            "message_3": "Limited time offer - 20% off",
+            "message_4": "",
+            "message_5": "",
+            "separator": "•",
+            "speed": 30,
+            "pause_on_hover": true,
+            "background_color": "#000000",
+            "text_color": "#ffffff",
+            "font_size": 16,
+            "font_size_mobile": 14,
+            "font_weight": "400",
+            "padding": 12,
+            "padding_mobile": 10,
+            "spacing": 40
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_4b746c0_GxigzH"
+      ],
+      "settings": {}
     }
   },
   "order": [
@@ -419,6 +455,7 @@
     "multicolumn_46zNpJ",
     "collage_m8gWx7",
     "174643254122ccb34f",
-    "running-ticker"
+    "running-ticker",
+    "1753477147362160f4"
   ]
 }
