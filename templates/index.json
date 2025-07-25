@@ -9,6 +9,10 @@
  */
 {
   "sections": {
+    "running-ticker": {
+      "type": "running-ticker",
+      "settings": {}
+    },
     "slideshow_tDPaNk": {
       "type": "slideshow",
       "blocks": {
@@ -414,6 +418,7 @@
     "featured_collection",
     "multicolumn_46zNpJ",
     "collage_m8gWx7",
-    "174643254122ccb34f"
+    "174643254122ccb34f",
+    "running-ticker"
   ]
 }
