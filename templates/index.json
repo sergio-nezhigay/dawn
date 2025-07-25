@@ -349,47 +349,6 @@
         "padding_bottom": 0
       }
     },
-    "collage_m8gWx7": {
-      "type": "collage",
-      "blocks": {
-        "image_88yJ77": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/ChatGPT_Image_May_7_2025_09_46_47_AM.png"
-          }
-        },
-        "product_A6fjpG": {
-          "type": "product",
-          "settings": {
-            "product": "p-dstavka-do-noutbuka-officepro-ls610",
-            "second_image": true
-          }
-        },
-        "collection_8NP7LV": {
-          "type": "collection",
-          "settings": {
-            "collection": "other_accs"
-          }
-        }
-      },
-      "block_order": [
-        "image_88yJ77",
-        "product_A6fjpG",
-        "collection_8NP7LV"
-      ],
-      "disabled": true,
-      "name": "t:sections.collage.presets.name",
-      "settings": {
-        "heading": "",
-        "heading_size": "h1",
-        "desktop_layout": "left",
-        "mobile_layout": "collage",
-        "card_styles": "product-card-wrapper",
-        "color_scheme": "",
-        "padding_top": 0,
-        "padding_bottom": 16
-      }
-    },
     "174643254122ccb34f": {
       "type": "apps",
       "blocks": {
@@ -406,46 +365,6 @@
       "settings": {
         "include_margins": true
       }
-    },
-    "running-ticker": {
-      "type": "running-ticker",
-      "settings": {
-        "animation_duration": 30,
-        "background_color": "#f5f5f5",
-        "text_color": "#333333",
-        "icon_color": "#666666"
-      }
-    },
-    "1753477147362160f4": {
-      "type": "_blocks",
-      "blocks": {
-        "ai_gen_block_4b746c0_GxigzH": {
-          "type": "ai_gen_block_4b746c0",
-          "settings": {
-            "message_1": "Free shipping on orders over $50",
-            "message_2": "New arrivals now available",
-            "message_3": "Limited time offer - 20% off",
-            "message_4": "",
-            "message_5": "",
-            "separator": "•",
-            "speed": 30,
-            "pause_on_hover": true,
-            "background_color": "#000000",
-            "text_color": "#ffffff",
-            "font_size": 16,
-            "font_size_mobile": 14,
-            "font_weight": "400",
-            "padding": 12,
-            "padding_mobile": 10,
-            "spacing": 40
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "ai_gen_block_4b746c0_GxigzH"
-      ],
-      "settings": {}
     }
   },
   "order": [
@@ -453,9 +372,6 @@
     "collection_list_paa7de",
     "featured_collection",
     "multicolumn_46zNpJ",
-    "collage_m8gWx7",
-    "174643254122ccb34f",
-    "running-ticker",
-    "1753477147362160f4"
+    "174643254122ccb34f"
   ]
 }
