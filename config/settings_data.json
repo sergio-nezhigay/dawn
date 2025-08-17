@@ -144,6 +144,15 @@
         "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
         "disabled": false,
         "settings": {}
+      },
+      "11540801135891226883": {
+        "type": "shopify://apps/shop-chat-agent/blocks/chat-interface/3b4e1bf2-3ed8-43ba-9492-d1670dda1f2e",
+        "disabled": false,
+        "settings": {
+          "chat_bubble_color": "#5046e4",
+          "welcome_message": "👋 Hi there! How can I help you today?",
+          "system_prompt": "standardAssistant"
+        }
       }
     },
     "color_schemes": {
