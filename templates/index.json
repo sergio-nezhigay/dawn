@@ -12,10 +12,22 @@
     "shop_by_category": {
       "type": "shop-by-category",
       "blocks": {
+        "category_Mw7kgJ": {
+          "type": "category",
+          "settings": {
+            "category_image": "shopify://shop_images/ChatGPT_Image_Aug_19_2025_09_38_35_AM.png",
+            "category_title": "Wedding Bands",
+            "category_description": "Elegant bands in gold, platinum, and more to celebrate your forever bond.",
+            "category_url": "shopify://collections/collection15",
+            "category_icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" stroke=\"currentColor\" viewbox=\"0 0 24 24\">\n  <circle cx=\"8\" cy=\"12\" r=\"5\" stroke-width=\"2\"></circle>\n  <circle cx=\"16\" cy=\"12\" r=\"5\" stroke-width=\"2\"></circle>\n</svg>",
+            "show_button": true,
+            "button_text": "Shop Now"
+          }
+        },
         "category_xRQFJG": {
           "type": "category",
           "settings": {
-            "category_image": "shopify://shop_images/AAUvwnj0ICORVuxs41ODOvnhvedArLiSV20df7r8XBjEUQ_s900-c-k-c0x00ffffff-no-rj.jpg",
+            "category_image": "shopify://shop_images/ChatGPT_Image_Aug_19_2025_09_38_35_AM.png",
             "category_title": "Engagement Rings",
             "category_description": "Timeless diamond and gemstone rings, perfect for the big “Yes!” moment.",
             "category_url": "shopify://collections/collection10",
@@ -26,6 +38,7 @@
         }
       },
       "block_order": [
+        "category_Mw7kgJ",
         "category_xRQFJG"
       ],
       "settings": {
