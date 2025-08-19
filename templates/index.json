@@ -78,7 +78,7 @@
         "subtitle_color": "#666666",
         "text_alignment": "center",
         "max_width": 1200,
-        "columns_mobile": 1,
+        "columns_mobile": 2,
         "columns_desktop": 4,
         "grid_gap": 24,
         "image_aspect_ratio": "1/1",
