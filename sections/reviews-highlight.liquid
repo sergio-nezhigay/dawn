@@ -104,7 +104,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px;
     margin-bottom: 20px;
   }
 
@@ -114,6 +113,12 @@
     width: 40px;
     height: 40px;
     flex-shrink: 0;
+    border: 2px solid #ffffff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .reviews-highlight-section__customer-image:not(:first-child) {
+    margin-left: -12px; /* Creates 30% overlap for 40px width */
   }
 
   .reviews-highlight-section__customer-image img {
@@ -177,12 +182,15 @@
 
     .reviews-highlight-section__customer-images {
       margin-bottom: 25px;
-      gap: 15px;
     }
 
     .reviews-highlight-section__customer-image {
       width: 50px;
       height: 50px;
+    }
+
+    .reviews-highlight-section__customer-image:not(:first-child) {
+      margin-left: -15px; /* Creates 30% overlap for 50px width */
     }
 
     .reviews-highlight-section__review {
@@ -204,6 +212,10 @@
     .reviews-highlight-section__customer-image {
       width: 60px;
       height: 60px;
+    }
+
+    .reviews-highlight-section__customer-image:not(:first-child) {
+      margin-left: -18px; /* Creates 30% overlap for 60px width */
     }
   }
 </style>
