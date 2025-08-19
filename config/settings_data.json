@@ -13,7 +13,7 @@
     "logo_width": 220,
     "favicon": "shopify://shop_images/favicon-i.png",
     "type_header_font": "sans-serif",
-    "heading_scale": 100,
+    "heading_scale": 110,
     "type_body_font": "sans-serif",
     "body_scale": 100,
     "page_width": 1600,
@@ -48,7 +48,7 @@
     "card_color_scheme": "scheme-1",
     "card_border_thickness": 0,
     "card_border_opacity": 10,
-    "card_corner_radius": 0,
+    "card_corner_radius": 8,
     "card_shadow_opacity": 5,
     "card_shadow_horizontal_offset": 0,
     "card_shadow_vertical_offset": 4,
@@ -59,7 +59,7 @@
     "collection_card_color_scheme": "scheme-2",
     "collection_card_border_thickness": 0,
     "collection_card_border_opacity": 10,
-    "collection_card_corner_radius": 0,
+    "collection_card_corner_radius": 8,
     "collection_card_shadow_opacity": 0,
     "collection_card_shadow_horizontal_offset": 0,
     "collection_card_shadow_vertical_offset": 4,
@@ -77,7 +77,7 @@
     "blog_card_shadow_blur": 5,
     "text_boxes_border_thickness": 0,
     "text_boxes_border_opacity": 10,
-    "text_boxes_radius": 0,
+    "text_boxes_radius": 8,
     "text_boxes_shadow_opacity": 10,
     "text_boxes_shadow_horizontal_offset": 0,
     "text_boxes_shadow_vertical_offset": 4,
@@ -389,5 +389,13 @@
         }
       }
     }
+  },
+  "platform_customizations": {
+    "custom_css": [
+      ".jdgm-prev-badge__text {font-size: 12px;}",
+      ".jdgm-widget {padding-left: 7px;}",
+      ".jdgm-write-rev-link {border-radius: 8px !important;}",
+      ".jdgm-carousel-title {text-align: left !important;}"
+    ]
   }
 }

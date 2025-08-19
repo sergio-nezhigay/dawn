@@ -111,6 +111,7 @@
         "slide_ibAVeN"
       ],
       "custom_css": [
+        ".slider-mobile-gutter {background-image: linear-gradient(to bottom, #265c94, white);}",
         ".slideshow {height: 450px;}",
         "@media (max-width: 768px) {.slideshow {height: 300px; } .banner__heading {font-size: 24px; }}"
       ],
@@ -341,52 +342,11 @@
         "columns_desktop": 6,
         "column_alignment": "center",
         "background_style": "none",
-        "color_scheme": "",
+        "color_scheme": "scheme-1",
         "columns_mobile": "2",
         "swipe_on_mobile": true,
-        "padding_top": 16,
-        "padding_bottom": 0
-      }
-    },
-    "collage_m8gWx7": {
-      "type": "collage",
-      "blocks": {
-        "image_88yJ77": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/ChatGPT_Image_May_7_2025_09_46_47_AM.png"
-          }
-        },
-        "product_A6fjpG": {
-          "type": "product",
-          "settings": {
-            "product": "p-dstavka-do-noutbuka-officepro-ls610",
-            "second_image": true
-          }
-        },
-        "collection_8NP7LV": {
-          "type": "collection",
-          "settings": {
-            "collection": "other_accs"
-          }
-        }
-      },
-      "block_order": [
-        "image_88yJ77",
-        "product_A6fjpG",
-        "collection_8NP7LV"
-      ],
-      "disabled": true,
-      "name": "t:sections.collage.presets.name",
-      "settings": {
-        "heading": "",
-        "heading_size": "h1",
-        "desktop_layout": "left",
-        "mobile_layout": "collage",
-        "card_styles": "product-card-wrapper",
-        "color_scheme": "",
         "padding_top": 0,
-        "padding_bottom": 16
+        "padding_bottom": 0
       }
     },
     "174643254122ccb34f": {
@@ -412,7 +372,6 @@
     "collection_list_paa7de",
     "featured_collection",
     "multicolumn_46zNpJ",
-    "collage_m8gWx7",
     "174643254122ccb34f"
   ]
 }
