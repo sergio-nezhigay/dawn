@@ -9,6 +9,29 @@
  */
 {
   "sections": {
+    "reviews_highlight": {
+      "type": "reviews-highlight",
+      "settings": {
+        "headline": "<p>Over 1M Rings Sold</p>",
+        "headline_size_mobile": 28,
+        "headline_size_desktop": 42,
+        "headline_color": "#1a1a1a",
+        "review_text": "Join the thousands of happy customers who found their perfect ring.",
+        "review_text_size_mobile": 16,
+        "review_text_size_desktop": 18,
+        "review_text_color": "#666666",
+        "button_text": "Shop Now",
+        "button_link": "shopify://collections/all",
+        "button_text_size_mobile": 16,
+        "button_text_size_desktop": 18,
+        "button_bg_color": "#ffcc00",
+        "button_text_color": "#1a1a1a",
+        "quote_icon_color": "#ffcc00",
+        "customer_image_1": "shopify://shop_images/ChatGPT_Image_Aug_19_2025_09_43_58_AM.png",
+        "customer_image_2": "shopify://shop_images/ChatGPT_Image_Aug_19_2025_09_41_04_AM.png",
+        "customer_image_3": "shopify://shop_images/ChatGPT_Image_Aug_19_2025_09_38_35_AM.png"
+      }
+    },
     "shop_by_category": {
       "type": "shop-by-category",
       "blocks": {
@@ -448,6 +471,7 @@
     }
   },
   "order": [
+    "reviews_highlight",
     "shop_by_category",
     "slideshow_tDPaNk",
     "collection_list_paa7de",
