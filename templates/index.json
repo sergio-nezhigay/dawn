@@ -9,6 +9,10 @@
  */
 {
   "sections": {
+    "shop_by_category": {
+        "type": "shop-by-category",
+        "settings":{}
+    },
     "slideshow_tDPaNk": {
       "type": "slideshow",
       "blocks": {
@@ -368,6 +372,7 @@
     }
   },
   "order": [
+    "shop_by_category",
     "slideshow_tDPaNk",
     "collection_list_paa7de",
     "featured_collection",
