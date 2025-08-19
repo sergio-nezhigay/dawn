@@ -1,0 +1,426 @@
+<div
+  id="section-{{ section.id }}"
+  class="reviews-highlight-section {{ section.settings.custom_classes }}"
+  style="--section-padding-top-mobile: {{ section.settings.padding_top_mobile }}px; --section-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px; --section-padding-top-desktop: {{ section.settings.padding_top_desktop }}px; --section-padding-bottom-desktop: {{ section.settings.padding_bottom_desktop }}px; --section-max-width: {{ section.settings.max_width }}px; --headline-color: {{ section.settings.headline_color }}; --headline-size-mobile: {{ section.settings.headline_size_mobile }}px; --headline-size-desktop: {{ section.settings.headline_size_desktop }}px; --review-text-color: {{ section.settings.review_text_color }}; --review-text-size-mobile: {{ section.settings.review_text_size_mobile }}px; --review-text-size-desktop: {{ section.settings.review_text_size_desktop }}px; --button-bg-color: {{ section.settings.button_bg_color }}; --button-text-color: {{ section.settings.button_text_color }}; --button-text-size-mobile: {{ section.settings.button_text_size_mobile }}px; --button-text-size-desktop: {{ section.settings.button_text_size_desktop }}px; --quote-icon-color: {{ section.settings.quote_icon_color }};"
+>
+  <div class="reviews-highlight-section__container">
+    {% if section.settings.headline != blank %}
+      <div class="reviews-highlight-section__headline">
+        {{ section.settings.headline }}
+      </div>
+    {% endif %}
+
+    {% if section.settings.customer_image_1 != blank
+      or section.settings.customer_image_2 != blank
+      or section.settings.customer_image_3 != blank
+    %}
+      <div class="reviews-highlight-section__customer-images">
+        {% if section.settings.customer_image_1 != blank %}
+          <div class="reviews-highlight-section__customer-image">
+            <img
+              src="{{ section.settings.customer_image_1 | image_url: width: 80, height: 80 }}"
+              alt="Customer"
+              width="80"
+              height="80"
+              loading="lazy"
+            >
+          </div>
+        {% endif %}
+        {% if section.settings.customer_image_2 != blank %}
+          <div class="reviews-highlight-section__customer-image">
+            <img
+              src="{{ section.settings.customer_image_2 | image_url: width: 80, height: 80 }}"
+              alt="Customer"
+              width="80"
+              height="80"
+              loading="lazy"
+            >
+          </div>
+        {% endif %}
+        {% if section.settings.customer_image_3 != blank %}
+          <div class="reviews-highlight-section__customer-image">
+            <img
+              src="{{ section.settings.customer_image_3 | image_url: width: 80, height: 80 }}"
+              alt="Customer"
+              width="80"
+              height="80"
+              loading="lazy"
+            >
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {% if section.settings.review_text != blank %}
+      <div class="reviews-highlight-section__review">
+        <div class="reviews-highlight-section__quote-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 21C3 17.4 5.4 15 9 15H11V10H6C4.9 10 4 9.1 4 8V4C4 2.9 4.9 2 6 2H11C12.1 2 13 2.9 13 4V12C13 18.1 8.1 23 2 23L3 21ZM14 21C14 17.4 16.4 15 20 15H22V10H17C15.9 10 15 9.1 15 8V4C15 2.9 15.9 2 17 2H22C23.1 2 24 2.9 24 4V12C24 18.1 19.1 23 13 23L14 21Z" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="reviews-highlight-section__review-text">
+          {{ section.settings.review_text }}
+        </div>
+      </div>
+    {% endif %}
+
+    {% if section.settings.button_text != blank and section.settings.button_link != blank %}
+      <div class="reviews-highlight-section__button">
+        <a href="{{ section.settings.button_link }}" class="reviews-highlight-section__btn">
+          {{ section.settings.button_text }}
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<style>
+  .reviews-highlight-section {
+    padding-top: var(--section-padding-top-mobile);
+    padding-bottom: var(--section-padding-bottom-mobile);
+    background: {{ section.settings.background_color }};
+    text-align: center;
+  }
+
+  .reviews-highlight-section__container {
+    max-width: var(--section-max-width);
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .reviews-highlight-section__headline {
+    color: var(--headline-color);
+    font-size: var(--headline-size-mobile);
+    line-height: 1.2;
+    margin-bottom: 20px;
+    font-weight: 400;
+  }
+
+  .reviews-highlight-section__headline em {
+    font-style: italic;
+  }
+
+  .reviews-highlight-section__customer-images {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .reviews-highlight-section__customer-image {
+    border-radius: 50%;
+    overflow: hidden;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+  }
+
+  .reviews-highlight-section__customer-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .reviews-highlight-section__review {
+    margin-bottom: 25px;
+  }
+
+  .reviews-highlight-section__quote-icon {
+    color: var(--quote-icon-color);
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .reviews-highlight-section__quote-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .reviews-highlight-section__review-text {
+    color: var(--review-text-color);
+    font-size: var(--review-text-size-mobile);
+    line-height: 1.4;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .reviews-highlight-section__btn {
+    display: inline-block;
+    background-color: var(--button-bg-color);
+    color: var(--button-text-color);
+    font-size: var(--button-text-size-mobile);
+    font-weight: 600;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 12px 24px;
+    border-radius: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .reviews-highlight-section__btn:hover {
+    opacity: 0.8;
+  }
+
+  @media (min-width: 768px) {
+    .reviews-highlight-section {
+      padding-top: var(--section-padding-top-desktop);
+      padding-bottom: var(--section-padding-bottom-desktop);
+    }
+
+    .reviews-highlight-section__headline {
+      font-size: var(--headline-size-desktop);
+      margin-bottom: 25px;
+    }
+
+    .reviews-highlight-section__customer-images {
+      margin-bottom: 25px;
+      gap: 15px;
+    }
+
+    .reviews-highlight-section__customer-image {
+      width: 50px;
+      height: 50px;
+    }
+
+    .reviews-highlight-section__review {
+      margin-bottom: 30px;
+    }
+
+    .reviews-highlight-section__review-text {
+      font-size: var(--review-text-size-desktop);
+      max-width: 500px;
+    }
+
+    .reviews-highlight-section__btn {
+      font-size: var(--button-text-size-desktop);
+      padding: 14px 28px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .reviews-highlight-section__customer-image {
+      width: 60px;
+      height: 60px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Reviews Highlight",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "headline",
+      "label": "Headline",
+      "default": "<p>Over 1M Rings <em>Sold</em></p>"
+    },
+    {
+      "type": "range",
+      "id": "headline_size_mobile",
+      "label": "Headline Size Mobile",
+      "min": 16,
+      "max": 48,
+      "step": 1,
+      "default": 28,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "headline_size_desktop",
+      "label": "Headline Size Desktop",
+      "min": 20,
+      "max": 60,
+      "step": 1,
+      "default": 36,
+      "unit": "px"
+    },
+    {
+      "type": "color",
+      "id": "headline_color",
+      "label": "Headline Color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Customer Images"
+    },
+    {
+      "type": "image_picker",
+      "id": "customer_image_1",
+      "label": "Customer Image 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "customer_image_2",
+      "label": "Customer Image 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "customer_image_3",
+      "label": "Customer Image 3"
+    },
+    {
+      "type": "header",
+      "content": "Review"
+    },
+    {
+      "type": "textarea",
+      "id": "review_text",
+      "label": "Review Text",
+      "default": "Love this ring! It's really comfortable and customer service was outstanding with helping me exchange it for the correct size!"
+    },
+    {
+      "type": "range",
+      "id": "review_text_size_mobile",
+      "label": "Review Text Size Mobile",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "review_text_size_desktop",
+      "label": "Review Text Size Desktop",
+      "min": 14,
+      "max": 28,
+      "step": 1,
+      "default": 18,
+      "unit": "px"
+    },
+    {
+      "type": "color",
+      "id": "review_text_color",
+      "label": "Review Text Color",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "id": "quote_icon_color",
+      "label": "Quote Icon Color",
+      "default": "#cccccc"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "READ ALL REVIEWS"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "range",
+      "id": "button_text_size_mobile",
+      "label": "Button Text Size Mobile",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "default": 14,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "button_text_size_desktop",
+      "label": "Button Text Size Desktop",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button Background Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "text",
+      "id": "max_width",
+      "label": "Max Width",
+      "default": "1200",
+      "info": "Maximum width in pixels"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 40,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 40,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "default": 60,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "default": 60,
+      "unit": "px"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "custom_classes",
+      "label": "Custom CSS Classes"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Reviews Highlight"
+    }
+  ]
+}
+{% endschema %}
