@@ -10,8 +10,56 @@
 {
   "sections": {
     "shop_by_category": {
-        "type": "shop-by-category",
-        "settings":{}
+      "type": "shop-by-category",
+      "blocks": {
+        "category_xRQFJG": {
+          "type": "category",
+          "settings": {
+            "category_image": "shopify://shop_images/AAUvwnj0ICORVuxs41ODOvnhvedArLiSV20df7r8XBjEUQ_s900-c-k-c0x00ffffff-no-rj.jpg",
+            "category_title": "Engagement Rings",
+            "category_description": "Timeless diamond and gemstone rings, perfect for the big “Yes!” moment.",
+            "category_url": "shopify://collections/collection10",
+            "category_icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" stroke=\"currentColor\" viewbox=\"0 0 24 24\">\n  <path stroke-width=\"2\" d=\"M12 2l3 5h-6l3-5zm0 7a7 7 0 100 14 7 7 0 000-14z\"></path>\n</svg>",
+            "show_button": true,
+            "button_text": "Shop Now"
+          }
+        }
+      },
+      "block_order": [
+        "category_xRQFJG"
+      ],
+      "settings": {
+        "title": "Shop by Category",
+        "title_size_mobile": 28,
+        "title_size_desktop": 42,
+        "title_color": "#1a1a1a",
+        "subtitle": "",
+        "subtitle_size_mobile": 16,
+        "subtitle_size_desktop": 18,
+        "subtitle_color": "#666666",
+        "text_alignment": "center",
+        "max_width": 1200,
+        "columns_mobile": 1,
+        "columns_desktop": 3,
+        "grid_gap": 24,
+        "image_aspect_ratio": "1/1",
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "section_background": "#ffffff",
+        "item_background": "#ffffff",
+        "border_radius": 12,
+        "hover_scale": 105,
+        "item_text_alignment": "center",
+        "item_title_size_mobile": 18,
+        "item_title_size_desktop": 22,
+        "item_title_color": "#1a1a1a",
+        "item_description_color": "#666666",
+        "icon_color": "#d4af37",
+        "button_color": "#d4af37",
+        "custom_classes": ""
+      }
     },
     "slideshow_tDPaNk": {
       "type": "slideshow",
@@ -19,7 +67,6 @@
         "slide_EranBV": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/4241211.jpg",
             "image_overlay_opacity": 0,
             "heading": "Заміни старий жорсткий — відчуй різницю з SSD Kingston",
             "heading_size": "h1",
@@ -37,7 +84,6 @@
         "slide_4bGM9A": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/digitus-4-port-usb-2-0-hub-da-70216.jpg",
             "image_overlay_opacity": 0,
             "heading": "Незвичний вигляд — звична зручність. Хаб, що кидається в очі",
             "heading_size": "h0",
@@ -55,7 +101,6 @@
         "slide_e7xQpV": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/94e760164e7485fc671740b7b96d_1.webp",
             "image_overlay_opacity": 20,
             "heading": "Живи з природою — фонтан, що працює від сонця. ☀️💧",
             "heading_size": "h0",
@@ -73,7 +118,6 @@
         "slide_N7GGKg": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/image_7.webp",
             "image_overlay_opacity": 20,
             "heading": "Милий дизайн. Надійне зберігання. Ваші файли завжди під лапкою! 🦊",
             "heading_size": "h1",
@@ -91,7 +135,6 @@
         "slide_ibAVeN": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/Screenshot_283.jpg",
             "image_overlay_opacity": 0,
             "heading": "Фірмовий звук JBL. Чисто, гучно, стильно",
             "heading_size": "h0",
@@ -269,7 +312,6 @@
         "column_jjrQjU": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/kingston.webp",
             "title": "",
             "text": "",
             "link_label": "",
@@ -279,7 +321,6 @@
         "column_wYk4jQ": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/logitech-logo-png_seeklogo-611389.png",
             "title": "",
             "text": "",
             "link_label": "",
@@ -289,7 +330,6 @@
         "column_nN6qkY": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/ugreen.webp",
             "title": "",
             "text": "",
             "link_label": "",
@@ -299,7 +339,6 @@
         "column_GrpzpU": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/282685.webp",
             "title": "",
             "text": "",
             "link_label": "",
@@ -309,7 +348,6 @@
         "column_aqTpVe": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/samsung.webp",
             "title": "",
             "text": "",
             "link_label": "",
@@ -319,7 +357,6 @@
         "column_r6Dh9R": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/crucial8485.webp",
             "title": "",
             "text": "",
             "link_label": "",
