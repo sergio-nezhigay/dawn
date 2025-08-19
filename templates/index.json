@@ -79,7 +79,7 @@
         "text_alignment": "center",
         "max_width": 1200,
         "columns_mobile": 1,
-        "columns_desktop": 3,
+        "columns_desktop": 4,
         "grid_gap": 24,
         "image_aspect_ratio": "1/1",
         "padding_top_mobile": 40,
