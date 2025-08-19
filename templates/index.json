@@ -11,14 +11,12 @@
   "sections": {
     "reviews_highlight": {
       "type": "reviews-highlight",
+      "disabled": true,
       "settings": {
         "headline": "<p>Over 1M Rings Sold</p>",
         "headline_size_mobile": 28,
         "headline_size_desktop": 42,
         "headline_color": "#1a1a1a",
-        "customer_image_1": "shopify://shop_images/man_1.png",
-        "customer_image_2": "shopify://shop_images/girl.png",
-        "customer_image_3": "shopify://shop_images/man.png",
         "review_text": "Love this ring! It's really comfortable and customer service was outstanding with helping me exchange it for the correct size!",
         "review_text_size_mobile": 16,
         "review_text_size_desktop": 18,
@@ -45,7 +43,6 @@
         "category_HJxwLk": {
           "type": "category",
           "settings": {
-            "category_image": "shopify://shop_images/ChatGPT_Image_Aug_19_2025_09_43_58_AM.png",
             "category_title": "Promise Rings",
             "category_description": "Symbolic rings to celebrate love, friendship, and commitment.",
             "category_url": "",
@@ -57,7 +54,6 @@
         "category_Mw7kgJ": {
           "type": "category",
           "settings": {
-            "category_image": "shopify://shop_images/ChatGPT_Image_Aug_19_2025_09_41_04_AM.png",
             "category_title": "Wedding Bands",
             "category_description": "Elegant bands in gold, platinum, and more to celebrate your forever bond.",
             "category_url": "shopify://collections/collection15",
@@ -69,7 +65,6 @@
         "category_xRQFJG": {
           "type": "category",
           "settings": {
-            "category_image": "shopify://shop_images/ChatGPT_Image_Aug_19_2025_09_38_35_AM.png",
             "category_title": "Engagement Rings",
             "category_description": "Timeless diamond and gemstone rings, perfect for the big “Yes!” moment.",
             "category_url": "shopify://collections/collection10",
@@ -81,7 +76,6 @@
         "category_fNB6zg": {
           "type": "category",
           "settings": {
-            "category_image": "shopify://shop_images/ChatGPT_Image_Aug_19_2025_09_47_08_AM.png",
             "category_title": "Fashion Rings",
             "category_description": "Trendy, everyday rings designed to express your unique style.",
             "category_url": "",
@@ -97,6 +91,7 @@
         "category_xRQFJG",
         "category_fNB6zg"
       ],
+      "disabled": true,
       "settings": {
         "title": "Discover by Style",
         "title_size_mobile": 28,
