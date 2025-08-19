@@ -12,10 +12,21 @@
     "shop_by_category": {
       "type": "shop-by-category",
       "blocks": {
+        "category_HJxwLk": {
+          "type": "category",
+          "settings": {
+            "category_title": "Promise Rings",
+            "category_description": "Symbolic rings to celebrate love, friendship, and commitment.",
+            "category_url": "",
+            "category_icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" stroke=\"currentColor\" viewbox=\"0 0 24 24\">\n  <path stroke-width=\"2\" d=\"M12 21c-4.97 0-9-4.03-9-9a9 9 0 1118 0c0 4.97-4.03 9-9 9z\"></path>\n</svg>",
+            "show_button": true,
+            "button_text": "Shop Now"
+          }
+        },
         "category_Mw7kgJ": {
           "type": "category",
           "settings": {
-            "category_image": "shopify://shop_images/ChatGPT_Image_Aug_19_2025_09_38_35_AM.png",
+            "category_image": "shopify://shop_images/ChatGPT_Image_Aug_19_2025_09_41_04_AM.png",
             "category_title": "Wedding Bands",
             "category_description": "Elegant bands in gold, platinum, and more to celebrate your forever bond.",
             "category_url": "shopify://collections/collection15",
@@ -38,6 +49,7 @@
         }
       },
       "block_order": [
+        "category_HJxwLk",
         "category_Mw7kgJ",
         "category_xRQFJG"
       ],
