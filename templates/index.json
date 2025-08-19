@@ -15,6 +15,7 @@
         "category_HJxwLk": {
           "type": "category",
           "settings": {
+            "category_image": "shopify://shop_images/AAUvwnj0ICORVuxs41ODOvnhvedArLiSV20df7r8XBjEUQ_s900-c-k-c0x00ffffff-no-rj_be22b218-58ad-4231-b85d-a65b54b30482.jpg",
             "category_title": "Promise Rings",
             "category_description": "Symbolic rings to celebrate love, friendship, and commitment.",
             "category_url": "",
@@ -46,12 +47,25 @@
             "show_button": true,
             "button_text": "Shop Now"
           }
+        },
+        "category_fNB6zg": {
+          "type": "category",
+          "settings": {
+            "category_image": "shopify://shop_images/AAUvwnj0ICORVuxs41ODOvnhvedArLiSV20df7r8XBjEUQ_s900-c-k-c0x00ffffff-no-rj_be22b218-58ad-4231-b85d-a65b54b30482.jpg",
+            "category_title": "Fashion Rings",
+            "category_description": "Trendy, everyday rings designed to express your unique style.",
+            "category_url": "",
+            "category_icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" stroke=\"currentColor\" viewbox=\"0 0 24 24\">\n  <rect x=\"4\" y=\"4\" width=\"16\" height=\"16\" rx=\"4\" stroke-width=\"2\"></rect>\n</svg>",
+            "show_button": true,
+            "button_text": "Shop Now"
+          }
         }
       },
       "block_order": [
         "category_HJxwLk",
         "category_Mw7kgJ",
-        "category_xRQFJG"
+        "category_xRQFJG",
+        "category_fNB6zg"
       ],
       "settings": {
         "title": "Shop by Category",
