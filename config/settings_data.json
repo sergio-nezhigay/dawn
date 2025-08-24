@@ -155,7 +155,7 @@
         "disabled": false,
         "settings": {
           "chat_bubble_color": "#5046e4",
-          "welcome_message": "👋 Hi there! How can I help you today?",
+          "welcome_message": "👋 Привіт! Чим можу тобі допомогти сьогодні?",
           "system_prompt": "standardAssistant"
         }
       }
