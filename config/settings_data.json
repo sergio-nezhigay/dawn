@@ -145,16 +145,10 @@
         "disabled": false,
         "settings": {}
       },
-      "1804893150726543839": {
-        "type": "shopify://apps/nova-multi-currency-converter/blocks/app-embed/a5be3c35-cbd0-46a1-ac3a-1ace57a9c1ce",
-        "disabled": true,
-        "settings": {}
-      },
       "11540801135891226883": {
         "type": "shopify://apps/shop-chat-agent/blocks/chat-interface/3b4e1bf2-3ed8-43ba-9492-d1670dda1f2e",
         "disabled": false,
         "settings": {
-          "chat_bubble_color": "#5046e4",
           "welcome_message": "👋 Привіт! Чим можу тобі допомогти сьогодні?",
           "system_prompt": "standardAssistant"
         }
