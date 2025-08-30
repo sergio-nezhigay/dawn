@@ -375,21 +375,8 @@
     {%- if settings.cart_type == 'drawer' -%}
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
-    <script src="{{ 'recently-viewed.js' | asset_url }}" defer></script>
-
-    <!-- Floating Chat Button -->
-    <button class="chat-toggle" id="chat-toggle">💬</button>
-    <div class="chat-options" id="chatOptions">
-      <a class="chat-option" href="viber://chat?number=+380507025777" target="_blank" rel="noopener">
-        <img src="{{ 'icon-viber.svg' | asset_url }}" width="30" height="30" alt="Viber" loading="lazy">
-        Viber
-      </a>
-      <a class="chat-option" href="https://t.me/NSergiy" target="_blank" rel="noopener">
-        <img src="{{ 'icon-telegram.svg' | asset_url }}" width="30" height="30" alt="Telegram Image" loading="lazy">
-        Telegram
-      </a>
-    </div>
-
-    <script src="{{ 'chat-toggle.js' | asset_url }}" defer></script>
+    {% if template contains 'product' %}
+      <script src="{{ 'recently-viewed.js' | asset_url }}" defer></script>
+    {% endif %}
   </body>
 </html>
