@@ -651,7 +651,15 @@
         "address_district_contains_html_tags": "Район не может содержать теги HTML."
       },
       "general": {
-        "complete_purchase_button_label": "Заказ подтверджаю"
+        "complete_purchase_button_label": "Заказ подтверджаю",
+        "errors": {
+          "payment": {
+            "market_manager_blocks_wallet_payments": "Метод оплаты не поддерживается менеджером маркета."
+          }
+        }
+      },
+      "thank_you": {
+        "location_title": "Местонахождение"
       }
     },
     "collections": {
@@ -671,6 +679,35 @@
         "resend_link_with_login": "отправить новую ссылку",
         "resend_link_without_login": "Отправить новую ссылку"
       }
+    },
+    "orders": {
+      "order_list": {
+        "payment_status": {
+          "table_view": {
+            "paid": "Платный",
+            "due_without_date": "должный",
+            "payment_not_due": "Еще не наступил срок",
+            "pay_to_confirm": "Оплатите для подтверждения",
+            "due_on_fulfillment": "Подлежит исполнению",
+            "due_today": "Срок выполнения сегодня",
+            "overdue": "Просроченная",
+            "due": "Термин {{date}}"
+          }
+        },
+        "table_view": "Показать вид таблицы",
+        "list_view": "Показать список",
+        "column_headers": {
+          "items": "Предметы"
+        }
+      }
+    },
+    "shop_policies": {
+      "refund_policy": "Политика возмещения",
+      "terms_of_sale": "Условия продаж",
+      "shipping_policy": "Политика доставки",
+      "privacy_policy": "Политика конфиденциальности",
+      "legal_notice": "Юридическое сообщение",
+      "terms_of_service": "Условия использования"
     }
   }
 }
