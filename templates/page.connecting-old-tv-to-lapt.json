@@ -257,7 +257,7 @@
             "warning_title": "",
             "warning_text": "",
             "requirements_title": "Що вам знадобиться:",
-            "requirements": "<ul style=\"margin-left: 20px; margin-bottom: 25px;\">\n\n<li>✅ Звичаний кабель <a href=\"/collections/hdmi_cable\" target=\"_blank\">HDMI</a> \n</li>\n</ul>",
+            "requirements": "<ul style=\"margin-left: 20px; margin-bottom: 25px;\">\n\n<li>✅ Звичайний кабель <a href=\"/collections/hdmi_cable\" target=\"_blank\">HDMI</a> \n</li>\n</ul>",
             "steps_title": "Покрокова інструкція:",
             "steps": "Під'єднайте HDMI-кабель до порту ноутбука і телевізора\nУвімкніть телевізор і виберіть джерело HDMI (Input/Source → HDMI 1/2)\nНатисніть Windows + P на ноутбуці\nОберіть режим: \"Дублювати\" (та сама картинка) або \"Розширити\" (два екрани)\nНалаштуйте роздільну здатність: Клік правою → Параметри дисплея → 1920x1080 для Full HD",
             "show_success_note": true,
