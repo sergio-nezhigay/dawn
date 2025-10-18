@@ -165,8 +165,8 @@
             "complexity_text": "",
             "label_note": "Примітка",
             "note_text": "SCART підтримує кращу якість ніж RCA, але гірше за VGA",
-            "button_text": "",
-            "button_link": ""
+            "button_text": "Перейти до інструкції →",
+            "button_link": "#scart"
           }
         },
         "visual_hdmi": {
@@ -321,12 +321,40 @@
             "info_title": "💡 Чорно-біле зображення?",
             "info_text": "Перемкніть PAL/NTSC на конвертері. Неправильний стандарт дає ч/б картинку. Для України та Європи використовуйте PAL."
           }
+        },
+        "method_wHk77a": {
+          "type": "method",
+          "settings": {
+            "section_id": "scart",
+            "method_title": "Метод 4: HDMI to SCART (для дуже старих ТВ)",
+            "card_title": "🎯 Найкращий варіант для телевізорів 1990+",
+            "label_advantages": "Переваги",
+            "advantages": "Якість краща за RCA",
+            "label_cost": "Вартість",
+            "cost": "340-500₴",
+            "label_important": "ВАЖЛИВО",
+            "important_note": "",
+            "show_warning": false,
+            "warning_title": "⚠️ Увага!",
+            "warning_text": "",
+            "requirements_title": "Що вам знадобиться:",
+            "requirements": "<ul style=\"margin-left: 20px; margin-bottom: 25px;\">\n\n<li>✅ Активний адаптер<a href=\"/collections/hdmi-scart\" target=\"_blank\">HDMI to SCART з USB-живленням</a> \n</li>\n</ul>",
+            "steps_title": "Покрокова інструкція:",
+            "steps": "Під'єднайте HDMI-кабель до конвертора\nУвімкніть телевізор і виберіть джерело SCART (Input/Source → SCART 1/2)\nНатисніть Windows + P на ноутбуці\nОберіть режим: \"Дублювати\" (та сама картинка) або \"Розширити\" (два екрани)",
+            "show_success_note": false,
+            "success_title": "✅ Готово!",
+            "success_text": "",
+            "show_info_note": false,
+            "info_title": "💡 Підказка:",
+            "info_text": ""
+          }
         }
       },
       "block_order": [
         "method_hdmi",
         "method_vga",
-        "method_rca"
+        "method_rca",
+        "method_wHk77a"
       ],
       "settings": {}
     },
