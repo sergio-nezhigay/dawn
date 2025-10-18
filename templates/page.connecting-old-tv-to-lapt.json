@@ -112,10 +112,18 @@
       "type": "tv-guide-faq",
       "settings": {
         "title": "❓ Часті питання (FAQ)"
+        "title": "❓ Часті питання (FAQ)"
       }
     }
   },
   "order": [
+    "tv_guide_hero",
+    "tv_guide_port_selector",
+    "tv_guide_methods",
+    "tv_guide_comparison",
+    "tv_guide_troubleshooting",
+    "tv_guide_products",
+    "tv_guide_faq"
     "tv_guide_hero",
     "tv_guide_port_selector",
     "tv_guide_methods",
