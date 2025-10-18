@@ -1,0 +1,286 @@
+<div class="page-width">
+  <div class="tv-guide-content">
+    <section id="ports" class="tv-guide-section">
+      <h2 class="tv-guide-section__title">{{ section.settings.title }}</h2>
+
+      {%- if section.settings.show_alert -%}
+        <div class="tv-guide-alert tv-guide-alert--info">
+          <strong>{{ section.settings.alert_title }}</strong> {{ section.settings.alert_text }}
+        </div>
+      {%- endif -%}
+
+      <div class="tv-guide-interactive-selector">
+        <h3>{{ section.settings.selector_title }}</h3>
+        <p>{{ section.settings.selector_description }}</p>
+
+        <div class="tv-guide-selector-buttons">
+          {%- for block in section.blocks -%}
+            {%- case block.type -%}
+              {%- when 'port_button' -%}
+                <button class="tv-guide-selector-btn" data-port="{{ block.settings.port_type }}">
+                  {{ block.settings.button_text }}
+                </button>
+            {%- endcase -%}
+          {%- endfor -%}
+        </div>
+
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'port_result' -%}
+              <div id="tv-guide-result-{{ block.settings.port_type }}" class="tv-guide-result-box">
+                <h4>{{ block.settings.result_title }}</h4>
+                <p><strong>{{ block.settings.label_required }}:</strong> {{ block.settings.required_text }}</p>
+                <p><strong>{{ block.settings.label_quality }}:</strong> {{ block.settings.quality_text }}</p>
+                {%- if block.settings.complexity_text != blank -%}
+                  <p><strong>{{ block.settings.label_complexity }}:</strong> {{ block.settings.complexity_text }}</p>
+                {%- endif -%}
+                {%- if block.settings.note_text != blank -%}
+                  <p><strong>{{ block.settings.label_note }}:</strong> {{ block.settings.note_text }}</p>
+                {%- endif -%}
+                {%- if block.settings.button_link != blank -%}
+                  <a href="{{ block.settings.button_link }}" class="tv-guide-product-btn">{{ block.settings.button_text }}</a>
+                {%- endif -%}
+              </div>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+
+      {%- if section.settings.show_port_visual -%}
+        <div class="tv-guide-port-visual">
+          {%- for block in section.blocks -%}
+            {%- case block.type -%}
+              {%- when 'port_visual' -%}
+                <div class="tv-guide-port-item">
+                  <div class="tv-guide-port-icon {{ block.settings.icon_class }}">
+                    {{ block.settings.port_name }}
+                  </div>
+                  <strong>{{ block.settings.port_full_name }}</strong>
+                  <p style="font-size: 0.9em; color: #666; margin-top: 10px;">
+                    {{ block.settings.years }}<br>
+                    {{ block.settings.signal_type }}<br>
+                    {{ block.settings.capabilities }}
+                  </p>
+                </div>
+            {%- endcase -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </section>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "TV Guide Port Selector",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Визначаємо порти вашого телевізора"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_alert",
+      "label": "Show Quick Answer Alert",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "alert_title",
+      "label": "Alert Title",
+      "default": "💡 Швидка відповідь:"
+    },
+    {
+      "type": "textarea",
+      "id": "alert_text",
+      "label": "Alert Text",
+      "default": "Старий телевізор можна підключити до ноутбука за 200-500₴. Потрібен лише правильний адаптер залежно від портів вашого ТВ: HDMI (найкраще), VGA (потрібен активний адаптер), або RCA/тюльпани (низька якість)."
+    },
+    {
+      "type": "text",
+      "id": "selector_title",
+      "label": "Selector Title",
+      "default": "Який порт має ваш телевізор?"
+    },
+    {
+      "type": "text",
+      "id": "selector_description",
+      "label": "Selector Description",
+      "default": "Оберіть тип роз'єму на задній панелі вашого телевізора:"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_port_visual",
+      "label": "Show Port Visual Grid",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "port_button",
+      "name": "Port Button",
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "HDMI"
+        },
+        {
+          "type": "text",
+          "id": "port_type",
+          "label": "Port Type ID",
+          "default": "hdmi",
+          "info": "Must match Port Result ID (lowercase, no spaces)"
+        }
+      ]
+    },
+    {
+      "type": "port_result",
+      "name": "Port Result Box",
+      "settings": [
+        {
+          "type": "text",
+          "id": "port_type",
+          "label": "Port Type ID",
+          "default": "hdmi",
+          "info": "Must match Port Button ID"
+        },
+        {
+          "type": "text",
+          "id": "result_title",
+          "label": "Result Title",
+          "default": "✅ Відмінно! HDMI — найкращий варіант"
+        },
+        {
+          "type": "text",
+          "id": "label_required",
+          "label": "Label: What's Required",
+          "default": "Що потрібно"
+        },
+        {
+          "type": "text",
+          "id": "required_text",
+          "label": "Required Items",
+          "default": "Звичайний HDMI кабель (100-300₴)"
+        },
+        {
+          "type": "text",
+          "id": "label_quality",
+          "label": "Label: Quality",
+          "default": "Якість"
+        },
+        {
+          "type": "text",
+          "id": "quality_text",
+          "label": "Quality Description",
+          "default": "⭐⭐⭐⭐⭐ Максимальна (Full HD/4K + звук)"
+        },
+        {
+          "type": "text",
+          "id": "label_complexity",
+          "label": "Label: Complexity",
+          "default": "Складність"
+        },
+        {
+          "type": "text",
+          "id": "complexity_text",
+          "label": "Complexity Description",
+          "default": "Дуже просто — просто підключіть кабель"
+        },
+        {
+          "type": "text",
+          "id": "label_note",
+          "label": "Label: Note",
+          "default": "Примітка"
+        },
+        {
+          "type": "textarea",
+          "id": "note_text",
+          "label": "Additional Note"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Перейти до інструкції →"
+        },
+        {
+          "type": "text",
+          "id": "button_link",
+          "label": "Button Link",
+          "default": "#hdmi"
+        }
+      ]
+    },
+    {
+      "type": "port_visual",
+      "name": "Port Visual Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "port_name",
+          "label": "Port Name (Short)",
+          "default": "HDMI"
+        },
+        {
+          "type": "text",
+          "id": "port_full_name",
+          "label": "Port Full Name",
+          "default": "HDMI"
+        },
+        {
+          "type": "select",
+          "id": "icon_class",
+          "label": "Icon Color",
+          "options": [
+            {
+              "value": "",
+              "label": "Purple (HDMI)"
+            },
+            {
+              "value": "tv-guide-port-icon--vga",
+              "label": "Orange (VGA)"
+            },
+            {
+              "value": "tv-guide-port-icon--rca",
+              "label": "Red (RCA)"
+            },
+            {
+              "value": "tv-guide-port-icon--scart",
+              "label": "Purple Dark (SCART)"
+            }
+          ],
+          "default": ""
+        },
+        {
+          "type": "text",
+          "id": "years",
+          "label": "Years Used",
+          "default": "2006-2025"
+        },
+        {
+          "type": "text",
+          "id": "signal_type",
+          "label": "Signal Type",
+          "default": "Цифровий"
+        },
+        {
+          "type": "text",
+          "id": "capabilities",
+          "label": "Capabilities",
+          "default": "Відео + Звук"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TV Guide Port Selector"
+    }
+  ]
+}
+{% endschema %}

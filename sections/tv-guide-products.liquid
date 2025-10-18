@@ -1,0 +1,186 @@
+<div class="page-width">
+  <div class="tv-guide-content">
+    <section id="products" class="tv-guide-section">
+      <h2 class="tv-guide-section__title">{{ section.settings.title }}</h2>
+
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'product' -%}
+            <div class="tv-guide-product-card">
+              <h3>{{ block.settings.product_title }}</h3>
+
+              {%- if block.settings.show_rating -%}
+                <div class="tv-guide-rating">
+                  {{ block.settings.rating }} ({{ block.settings.reviews_count }})
+                </div>
+              {%- endif -%}
+
+              {%- if block.settings.description != blank -%}
+                <p style="margin: 15px 0;">{{ block.settings.description }}</p>
+              {%- endif -%}
+
+              {%- if block.settings.feature_1 != blank -%}
+                <p><strong>{{ block.settings.feature_1_label }}:</strong> {{ block.settings.feature_1 }}</p>
+              {%- endif -%}
+
+              {%- if block.settings.feature_2 != blank -%}
+                <p><strong>{{ block.settings.feature_2_label }}:</strong> {{ block.settings.feature_2 }}</p>
+              {%- endif -%}
+
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
+                <span class="tv-guide-product-price">{{ block.settings.price }}</span>
+                {%- if block.settings.button_link != blank -%}
+                  <a href="{{ block.settings.button_link }}" class="tv-guide-product-btn" target="_blank">
+                    {{ block.settings.button_text }}
+                  </a>
+                {%- endif -%}
+              </div>
+            </div>
+
+          {%- when 'note' -%}
+            <div class="tv-guide-alert tv-guide-alert--{{ block.settings.note_type }}">
+              <strong>{{ block.settings.note_title }}</strong> {{ block.settings.note_text }}
+            </div>
+        {%- endcase -%}
+      {%- endfor -%}
+    </section>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "TV Guide Products",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "🛒 Рекомендовані товари"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "product_title",
+          "label": "Product Title",
+          "default": "Адаптер HDMI to VGA з аудіо"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_rating",
+          "label": "Show Rating",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "rating",
+          "label": "Rating Stars",
+          "default": "⭐⭐⭐⭐⭐"
+        },
+        {
+          "type": "text",
+          "id": "reviews_count",
+          "label": "Reviews Count",
+          "default": "35 відгуків"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Product Description",
+          "default": "Активний конвертер з USB-живленням та вбудованим аудіовиходом 3.5мм"
+        },
+        {
+          "type": "text",
+          "id": "feature_1_label",
+          "label": "Feature 1 Label",
+          "default": "Підтримка"
+        },
+        {
+          "type": "text",
+          "id": "feature_1",
+          "label": "Feature 1 Value",
+          "default": "До 1080p при 60 Гц"
+        },
+        {
+          "type": "text",
+          "id": "feature_2_label",
+          "label": "Feature 2 Label",
+          "default": "В комплекті"
+        },
+        {
+          "type": "text",
+          "id": "feature_2",
+          "label": "Feature 2 Value",
+          "default": "USB-кабель живлення, інструкція"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Price",
+          "default": "195₴"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Купити →"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        }
+      ]
+    },
+    {
+      "type": "note",
+      "name": "Info Note",
+      "settings": [
+        {
+          "type": "select",
+          "id": "note_type",
+          "label": "Note Type",
+          "options": [
+            {
+              "value": "info",
+              "label": "Info (Blue)"
+            },
+            {
+              "value": "warning",
+              "label": "Warning (Orange)"
+            },
+            {
+              "value": "success",
+              "label": "Success (Green)"
+            }
+          ],
+          "default": "success"
+        },
+        {
+          "type": "text",
+          "id": "note_title",
+          "label": "Note Title",
+          "default": "✅ Informatica.com.ua"
+        },
+        {
+          "type": "textarea",
+          "id": "note_text",
+          "label": "Note Text",
+          "default": "Українська компанія з офісом у Києві. Доставка по всій Україні, технічна підтримка українською, реальні відгуки покупців."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TV Guide Products"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,211 @@
+<div class="page-width">
+  <div class="tv-guide-content tv-guide-section">
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'method' -%}
+          <section id="{{ block.settings.section_id }}" class="tv-guide-section">
+            <h2 class="tv-guide-section__title">{{ block.settings.method_title }}</h2>
+
+            <div class="tv-guide-method-card">
+              <h3>{{ block.settings.card_title }}</h3>
+              <p><strong>{{ block.settings.label_advantages }}:</strong> {{ block.settings.advantages }}</p>
+              {%- if block.settings.cost != blank -%}
+                <p><strong>{{ block.settings.label_cost }}:</strong> {{ block.settings.cost }}</p>
+              {%- endif -%}
+              {%- if block.settings.important_note != blank -%}
+                <p><strong>{{ block.settings.label_important }}:</strong> {{ block.settings.important_note }}</p>
+              {%- endif -%}
+            </div>
+
+            {%- if block.settings.show_warning and block.settings.warning_text != blank -%}
+              <div class="tv-guide-alert tv-guide-alert--warning">
+                <strong>{{ block.settings.warning_title }}</strong> {{ block.settings.warning_text }}
+              </div>
+            {%- endif -%}
+
+            {%- if block.settings.requirements != blank -%}
+              <h3 class="tv-guide-section__subtitle">{{ block.settings.requirements_title }}</h3>
+              <div style="margin-left: 20px; margin-bottom: 25px;">
+                {{ block.settings.requirements }}
+              </div>
+            {%- endif -%}
+
+            {%- if block.settings.steps != blank -%}
+              <h3 class="tv-guide-section__subtitle">{{ block.settings.steps_title }}</h3>
+              <ol class="tv-guide-steps">
+                {%- assign step_lines = block.settings.steps | newline_to_br | split: '<br />' -%}
+                {%- for step in step_lines -%}
+                  {%- if step != blank -%}
+                    <li>{{ step }}</li>
+                  {%- endif -%}
+                {%- endfor -%}
+              </ol>
+            {%- endif -%}
+
+            {%- if block.settings.show_success_note and block.settings.success_text != blank -%}
+              <div class="tv-guide-alert tv-guide-alert--success">
+                <strong>{{ block.settings.success_title }}</strong> {{ block.settings.success_text }}
+              </div>
+            {%- endif -%}
+
+            {%- if block.settings.show_info_note and block.settings.info_text != blank -%}
+              <div class="tv-guide-alert tv-guide-alert--info">
+                <strong>{{ block.settings.info_title }}</strong> {{ block.settings.info_text }}
+              </div>
+            {%- endif -%}
+          </section>
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "TV Guide Methods",
+  "tag": "section",
+  "class": "section",
+  "blocks": [
+    {
+      "type": "method",
+      "name": "Connection Method",
+      "settings": [
+        {
+          "type": "text",
+          "id": "section_id",
+          "label": "Section ID",
+          "default": "hdmi",
+          "info": "Used for navigation links (e.g., #hdmi)"
+        },
+        {
+          "type": "text",
+          "id": "method_title",
+          "label": "Method Title",
+          "default": "Метод 1: Пряме HDMI-підключення"
+        },
+        {
+          "type": "text",
+          "id": "card_title",
+          "label": "Card Title",
+          "default": "🎯 Найкращий варіант для телевізорів 2006+"
+        },
+        {
+          "type": "text",
+          "id": "label_advantages",
+          "label": "Label: Advantages",
+          "default": "Переваги"
+        },
+        {
+          "type": "textarea",
+          "id": "advantages",
+          "label": "Advantages",
+          "default": "Найвища якість, передача звуку, максимальна простота"
+        },
+        {
+          "type": "text",
+          "id": "label_cost",
+          "label": "Label: Cost",
+          "default": "Вартість"
+        },
+        {
+          "type": "text",
+          "id": "cost",
+          "label": "Cost",
+          "default": "100-300₴ (тільки кабель)"
+        },
+        {
+          "type": "text",
+          "id": "label_important",
+          "label": "Label: Important",
+          "default": "ВАЖЛИВО"
+        },
+        {
+          "type": "textarea",
+          "id": "important_note",
+          "label": "Important Note"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_warning",
+          "label": "Show Warning Box",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "warning_title",
+          "label": "Warning Title",
+          "default": "⚠️ Увага!"
+        },
+        {
+          "type": "textarea",
+          "id": "warning_text",
+          "label": "Warning Text"
+        },
+        {
+          "type": "text",
+          "id": "requirements_title",
+          "label": "Requirements Title",
+          "default": "Що вам знадобиться:"
+        },
+        {
+          "type": "html",
+          "id": "requirements",
+          "label": "Requirements List (HTML)",
+          "info": "Use <ul><li> for bulleted list"
+        },
+        {
+          "type": "text",
+          "id": "steps_title",
+          "label": "Steps Title",
+          "default": "Покрокова інструкція:"
+        },
+        {
+          "type": "textarea",
+          "id": "steps",
+          "label": "Steps (one per line)",
+          "default": "Під'єднайте HDMI-кабель до порту ноутбука і телевізора\nУвімкніть телевізор і виберіть джерело HDMI (Input/Source → HDMI 1/2)\nНатисніть Windows + P на ноутбуці\nОберіть режим: \"Дублювати\" (та сама картинка) або \"Розширити\" (два екрани)",
+          "info": "Each line becomes a numbered step"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_success_note",
+          "label": "Show Success Note",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "success_title",
+          "label": "Success Note Title",
+          "default": "✅ Готово!"
+        },
+        {
+          "type": "textarea",
+          "id": "success_text",
+          "label": "Success Note Text"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_info_note",
+          "label": "Show Info Note",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "info_title",
+          "label": "Info Note Title",
+          "default": "💡 Підказка:"
+        },
+        {
+          "type": "textarea",
+          "id": "info_text",
+          "label": "Info Note Text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TV Guide Methods"
+    }
+  ]
+}
+{% endschema %}
