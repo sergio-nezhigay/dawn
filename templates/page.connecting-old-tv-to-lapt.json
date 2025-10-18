@@ -516,8 +516,8 @@
             "feature_2_label": "В комплекті",
             "feature_2": "USB-кабель живлення, інструкція",
             "price": "195₴",
-            "button_text": "Купити →",
-            "button_link": "https://informatica.com.ua/ru/products/perekhodnik-hdmi-to-vga-audio-35mm-usb-pitanie-mosunx-mmar"
+            "button_text": "Купити",
+            "button_link": "/products/perekhodnik-hdmi-to-vga-audio-35mm-usb-pitanie-mosunx-mmar"
           }
         },
         "product_2": {
@@ -533,8 +533,8 @@
             "feature_2_label": "В комплекті",
             "feature_2": "RCA кабелі, USB-живлення",
             "price": "209₴",
-            "button_text": "Купити →",
-            "button_link": "https://informatica.com.ua/ru/products/hdmi-v-av-rca-tulpan-usb-kabel-pitaniya-tishric-mjt257"
+            "button_text": "Купити",
+            "button_link": "/products/hdmi-v-av-rca-tulpan-usb-kabel-pitaniya-tishric-mjt257"
           }
         },
         "product_3": {
@@ -550,8 +550,8 @@
             "feature_2_label": "Довжина",
             "feature_2": "5 метрів (також є 1м, 2м, 3м, 10м)",
             "price": "від 150₴",
-            "button_text": "Дивитись всі →",
-            "button_link": "https://informatica.com.ua/ru/collections/hdmi_cable"
+            "button_text": "Дивитись всі",
+            "button_link": "/collections/hdmi_cable"
           }
         },
         "note_1": {
