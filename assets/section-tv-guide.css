@@ -379,11 +379,12 @@ ul li a:hover::before {
 }
 
 .tv-guide-comparison-table th {
-  background: linear-gradient(135deg, #1b6b8e 0%, #2a9dbf 100%);
+  background: linear-gradient(135deg, #155a73 0%, #1b6b8e 100%);
   color: white;
   padding: 15px;
   text-align: left;
   font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .tv-guide-comparison-table td {
@@ -474,7 +475,7 @@ ul li a:hover::before {
 }
 
 .tv-guide-product-btn {
-  background: linear-gradient(135deg, #1b6b8e 0%, #2a9dbf 100%);
+  background: linear-gradient(135deg, #155a73 0%, #1b6b8e 100%);
   color: white;
   padding: 15px 35px;
   border: none;
@@ -488,6 +489,7 @@ ul li a:hover::before {
   box-shadow: 0 4px 15px rgba(27, 107, 142, 0.3);
   position: relative;
   overflow: hidden;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .tv-guide-product-btn::before {
