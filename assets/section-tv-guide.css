@@ -76,10 +76,10 @@
 }
 
 .tv-guide-nav-item:hover {
-  background: #667eea;
+  background: #1B6B8E;
   color: white;
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 5px 15px rgba(27, 107, 142, 0.3);
 }
 
 /* Content Container */
