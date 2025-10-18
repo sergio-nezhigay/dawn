@@ -92,22 +92,22 @@ ol li a {
 }
 
 .tv-guide-steps a:hover,
-ul li a:hover,
-ol li a:hover {
+.tv-guide-section ul li a:hover,
+.tv-guide-section ol li a:hover {
   background: rgba(27, 107, 142, 0.1);
   border-bottom-color: #1b6b8e;
   transform: translateX(3px);
 }
 
 /* Checkmark list links (special styling) */
-ul li a::before {
+.tv-guide-section ul li a::before {
   content: '→';
   opacity: 0;
   transform: translateX(-5px);
   transition: all 0.3s ease;
 }
 
-ul li a:hover::before {
+.tv-guide-section ul li a:hover::before {
   opacity: 1;
   transform: translateX(0);
 }
