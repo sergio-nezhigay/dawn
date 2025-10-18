@@ -35,6 +35,7 @@
   letter-spacing: -1px;
   color: #fff;
   opacity: 0.95;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
 
 .tv-guide-hero__subtitle {
