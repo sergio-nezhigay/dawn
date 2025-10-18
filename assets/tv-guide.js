@@ -97,9 +97,20 @@ class TVGuide {
         const target = document.querySelector(href);
         if (target) {
           e.preventDefault();
-          target.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
+
+          // Get header height from CSS variable
+          const headerHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-height')) || 0;
+
+          // Add extra spacing for better visual separation
+          const offset = headerHeight + 20;
+
+          // Calculate target position
+          const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
+
+          // Smooth scroll to position
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
           });
         }
       });
