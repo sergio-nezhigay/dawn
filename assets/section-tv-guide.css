@@ -387,6 +387,16 @@ ul li a:hover::before {
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
+.tv-guide-comparison-table th a {
+  color: white !important;
+  border-bottom-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.tv-guide-comparison-table th a:hover {
+  color: #ffeb3b !important;
+  border-bottom-color: #ffeb3b !important;
+}
+
 .tv-guide-comparison-table td {
   padding: 15px;
   border-bottom: 1px solid #eee;
@@ -616,6 +626,21 @@ ul li a:hover::before {
 
 .tv-guide-conclusion-box li {
   margin-bottom: 12px;
+}
+
+/* Links in gradient backgrounds - override blue color */
+.tv-guide-conclusion-box a,
+.tv-guide-hero a {
+  color: white !important;
+  border-bottom-color: rgba(255, 255, 255, 0.5) !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.tv-guide-conclusion-box a:hover,
+.tv-guide-hero a:hover {
+  color: #ffeb3b !important;
+  border-bottom-color: #ffeb3b !important;
+  background: rgba(255, 255, 255, 0.1) !important;
 }
 
 /* Mobile Responsive */
