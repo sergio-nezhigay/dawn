@@ -425,8 +425,8 @@ ul li a:hover::before {
   position: absolute;
   left: 0;
   top: 0;
-  width: 40px;
-  height: 40px;
+  width: 28px;
+  height: 28px;
   background: linear-gradient(135deg, #155a73 0%, #1b6b8e 100%);
   color: white;
   border-radius: 50%;
