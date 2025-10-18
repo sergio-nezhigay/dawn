@@ -1,0 +1,181 @@
+<div class="page-width">
+  <div class="tv-guide-content">
+    <section id="troubleshooting" class="tv-guide-section">
+      <h2 class="tv-guide-section__title">{{ section.settings.title }}</h2>
+
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'problem' -%}
+            <h3 class="tv-guide-section__subtitle">{{ block.settings.problem_title }}</h3>
+
+            {%- if block.settings.show_alert and block.settings.alert_text != blank -%}
+              <div class="tv-guide-alert tv-guide-alert--{{ block.settings.alert_type }}">
+                <strong>{{ block.settings.alert_label }}</strong> {{ block.settings.alert_text }}
+              </div>
+            {%- endif -%}
+
+            {%- if block.settings.description != blank -%}
+              <p>{{ block.settings.description }}</p>
+            {%- endif -%}
+
+            {%- if block.settings.solution_type == 'steps' -%}
+              <ol class="tv-guide-steps">
+                {%- assign step_lines = block.settings.solution_steps | newline_to_br | split: '<br />' -%}
+                {%- for step in step_lines -%}
+                  {%- if step != blank -%}
+                    <li>{{ step }}</li>
+                  {%- endif -%}
+                {%- endfor -%}
+              </ol>
+            {%- elsif block.settings.solution_type == 'list' -%}
+              <p><strong>{{ block.settings.solution_title }}</strong></p>
+              <ul style="margin-left: 20px; margin-bottom: 20px;">
+                {%- assign list_items = block.settings.solution_list | newline_to_br | split: '<br />' -%}
+                {%- for item in list_items -%}
+                  {%- if item != blank -%}
+                    <li>{{ item }}</li>
+                  {%- endif -%}
+                {%- endfor -%}
+              </ul>
+            {%- elsif block.settings.solution_type == 'text' -%}
+              <p><strong>{{ block.settings.solution_title }}</strong></p>
+              <p>{{ block.settings.solution_text }}</p>
+            {%- endif -%}
+
+            {%- if block.settings.additional_solutions != blank -%}
+              <div style="margin-top: 15px;">
+                {{ block.settings.additional_solutions }}
+              </div>
+            {%- endif -%}
+        {%- endcase -%}
+      {%- endfor -%}
+    </section>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "TV Guide Troubleshooting",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Вирішення типових проблем"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "problem",
+      "name": "Problem & Solution",
+      "settings": [
+        {
+          "type": "text",
+          "id": "problem_title",
+          "label": "Problem Title",
+          "default": "🔴 Проблема: Опис проблеми"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_alert",
+          "label": "Show Alert Box",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "alert_type",
+          "label": "Alert Type",
+          "options": [
+            {
+              "value": "info",
+              "label": "Info (Blue)"
+            },
+            {
+              "value": "warning",
+              "label": "Warning (Orange)"
+            },
+            {
+              "value": "success",
+              "label": "Success (Green)"
+            }
+          ],
+          "default": "info"
+        },
+        {
+          "type": "text",
+          "id": "alert_label",
+          "label": "Alert Label",
+          "default": "Причина:"
+        },
+        {
+          "type": "textarea",
+          "id": "alert_text",
+          "label": "Alert Text"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Problem Description"
+        },
+        {
+          "type": "select",
+          "id": "solution_type",
+          "label": "Solution Type",
+          "options": [
+            {
+              "value": "steps",
+              "label": "Numbered Steps"
+            },
+            {
+              "value": "list",
+              "label": "Bulleted List"
+            },
+            {
+              "value": "text",
+              "label": "Plain Text"
+            }
+          ],
+          "default": "steps"
+        },
+        {
+          "type": "text",
+          "id": "solution_title",
+          "label": "Solution Title",
+          "default": "Рішення:"
+        },
+        {
+          "type": "textarea",
+          "id": "solution_steps",
+          "label": "Solution Steps (one per line)",
+          "info": "For numbered steps - each line becomes a step"
+        },
+        {
+          "type": "textarea",
+          "id": "solution_list",
+          "label": "Solution List (one per line)",
+          "info": "For bulleted list - each line becomes a bullet"
+        },
+        {
+          "type": "textarea",
+          "id": "solution_text",
+          "label": "Solution Text",
+          "info": "For plain text solution"
+        },
+        {
+          "type": "html",
+          "id": "additional_solutions",
+          "label": "Additional Solutions (HTML)",
+          "info": "Optional: Add multiple solutions with custom formatting"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TV Guide Troubleshooting"
+    }
+  ]
+}
+{% endschema %}
