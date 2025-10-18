@@ -410,6 +410,16 @@
             "cost": "1200-1500₴",
             "sound": "✅ Так"
           }
+        },
+        "comparison_row_p9aJUz": {
+          "type": "comparison_row",
+          "settings": {
+            "method": "HDMI to SCART",
+            "quality": "⭐⭐⭐⭐",
+            "complexity": "Дуже просто",
+            "cost": "340-500₴",
+            "sound": "✅ Так"
+          }
         }
       },
       "block_order": [
@@ -417,7 +427,8 @@
         "row_2",
         "row_3",
         "row_4",
-        "row_5"
+        "row_5",
+        "comparison_row_p9aJUz"
       ],
       "settings": {
         "title": "Порівняння методів підключення",
