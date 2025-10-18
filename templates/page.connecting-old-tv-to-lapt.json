@@ -11,12 +11,6 @@
   "sections": {
     "tv_guide_hero": {
       "type": "tv-guide-hero",
-      "settings": {
-        "title": "Як підключити старий телевізор до ноутбука",
-        "subtitle": "Повний технічний гайд 2025: від HDMI до RCA, з покроковими інструкціями та вирішенням проблем",
-        "show_quick_nav": true,
-        "quick_nav_title": "🚀 Швидка навігація"
-      },
       "blocks": {
         "nav_1": {
           "type": "nav_item",
@@ -68,7 +62,13 @@
         "nav_4",
         "nav_5",
         "nav_6"
-      ]
+      ],
+      "settings": {
+        "title": "Як підключити старий телевізор до ноутбука",
+        "subtitle": "Повний технічний гайд 2025: від HDMI до RCA, з покроковими інструкціями та вирішенням проблем",
+        "show_quick_nav": true,
+        "quick_nav_title": "🚀 Швидка навігація"
+      }
     },
     "tv_guide_port_selector": {
       "type": "tv-guide-port-selector",
@@ -83,7 +83,8 @@
       }
     },
     "tv_guide_methods": {
-      "type": "tv-guide-methods"
+      "type": "tv-guide-methods",
+      "settings": {}
     },
     "tv_guide_comparison": {
       "type": "tv-guide-comparison",
@@ -112,18 +113,10 @@
       "type": "tv-guide-faq",
       "settings": {
         "title": "❓ Часті питання (FAQ)"
-        "title": "❓ Часті питання (FAQ)"
       }
     }
   },
   "order": [
-    "tv_guide_hero",
-    "tv_guide_port_selector",
-    "tv_guide_methods",
-    "tv_guide_comparison",
-    "tv_guide_troubleshooting",
-    "tv_guide_products",
-    "tv_guide_faq"
     "tv_guide_hero",
     "tv_guide_port_selector",
     "tv_guide_methods",
