@@ -165,8 +165,8 @@
             "complexity_text": "",
             "label_note": "Примітка",
             "note_text": "SCART підтримує кращу якість ніж RCA, але гірше за VGA",
-            "button_text": "",
-            "button_link": ""
+            "button_text": "Перейти до інструкції →",
+            "button_link": "#scart"
           }
         },
         "visual_hdmi": {
