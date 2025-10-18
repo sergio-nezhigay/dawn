@@ -311,7 +311,7 @@
             "warning_title": "⚠️ Низька якість:",
             "warning_text": "Композитне відео підтримує максимум 480i/576i. Не підходить для роботи з текстом, тільки для перегляду відео.",
             "requirements_title": "",
-            "requirements": "",
+            "requirements": "<ul style=\"margin-left: 20px; margin-bottom: 25px;\">\n\n<li>✅ Активний адаптер<a href=\"/products/hdmi-v-av-rca-tulpan-usb-kabel-pitaniya-tishric-mjt257\" target=\"_blank\">HDMI to RCA з USB-живленням</a> \n</li>\n</ul>",
             "steps_title": "Покрокова інструкція:",
             "steps": "Під'єднайте HDMI-кабель від ноутбука до конвертера (Input)\nПідключіть живлення конвертера до USB або електромережі\nПід'єднайте RCA-кабелі: жовтий (відео), білий/червоний (аудіо)\n<strong>ВАЖЛИВО:</strong> Перевірте перемикач PAL/NTSC — для України виберіть PAL\nУвімкніть телевізор і виберіть джерело AV або Video\nНалаштуйте роздільну здатність на ноутбуці: 640x480 або 720x480",
             "show_success_note": false,
