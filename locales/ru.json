@@ -671,6 +671,9 @@
         "manual": "Рекомендуемые",
         "best_selling": "Рекомендуемые"
       }
+    },
+    "errors": {
+      "email_domain_invalid": "провайдер не поддерживается"
     }
   },
   "customer_accounts": {
@@ -699,6 +702,21 @@
         "column_headers": {
           "items": "Предметы"
         }
+      },
+      "order_status": {
+        "delivered_description_digital": {
+          "one": "Этот элемент завершен.",
+          "other": "Эти элементы завершены."
+        },
+        "preparing_for_shipping_description": "Эти предметы готовятся к отправке.",
+        "confirmed_description": "Мы получили ваш заказ.",
+        "on_its_way_description": "Этот груз уже в пути.",
+        "on_its_way_title": "Ваша отправка уже в пути",
+        "out_for_delivery_description": "Этот груз готов к доставке.",
+        "picked_up_description": "Эти вещи были собраны.",
+        "delivered_description": "Этот груз доставлен.",
+        "delivered_title": "Ваша отправка доставлена",
+        "out_for_delivery_title": "Ваша отправка готова к доставке"
       }
     },
     "shop_policies": {
