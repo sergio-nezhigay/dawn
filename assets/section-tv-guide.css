@@ -35,7 +35,9 @@
 }
 
 .tv-guide-content a[href*='products']:hover::after,
-.tv-guide-alert a[href*='products']:hover::after {
+.tv-guide-content a[href*='collection']:hover::after,
+.tv-guide-alert a[href*='products']:hover::after,
+.tv-guide-alert a[href*='collection']:hover::after {
   transform: translateX(4px);
 }
 
