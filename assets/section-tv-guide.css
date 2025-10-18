@@ -472,19 +472,77 @@ ul li a:hover::before {
 .tv-guide-product-btn {
   background: linear-gradient(135deg, #1b6b8e 0%, #2a9dbf 100%);
   color: white;
-  padding: 12px 30px;
+  padding: 15px 35px;
   border: none;
   border-radius: 8px;
   font-size: 1.1em;
+  font-weight: 700;
   cursor: pointer;
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
   text-decoration: none;
   display: inline-block;
+  box-shadow: 0 4px 15px rgba(27, 107, 142, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.tv-guide-product-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.tv-guide-product-btn:hover::before {
+  left: 100%;
 }
 
 .tv-guide-product-btn:hover {
-  transform: scale(1.05);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(27, 107, 142, 0.4);
   color: white;
+}
+
+.tv-guide-product-btn:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(27, 107, 142, 0.3);
+}
+
+/* CTA Link Style - button-like links */
+.tv-guide-cta-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+  color: white !important;
+  padding: 12px 25px;
+  border-radius: 8px;
+  font-weight: 700;
+  text-decoration: none !important;
+  border: none !important;
+  box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
+  transition: all 0.3s ease;
+  margin: 10px 5px;
+}
+
+.tv-guide-cta-link::after {
+  content: "→";
+  font-size: 1.3em;
+  transition: transform 0.3s ease;
+}
+
+.tv-guide-cta-link:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(255, 152, 0, 0.4);
+  background: linear-gradient(135deg, #fb8c00 0%, #ef6c00 100%);
+}
+
+.tv-guide-cta-link:hover::after {
+  transform: translateX(5px);
 }
 
 /* FAQ */
