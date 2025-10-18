@@ -9,15 +9,120 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "main-page",
+    "tv_guide_hero": {
+      "type": "tv-guide-hero",
+      "blocks": {
+        "nav_1": {
+          "type": "nav_item",
+          "settings": {
+            "text": "📺 Визначення портів",
+            "link": "#ports"
+          }
+        },
+        "nav_2": {
+          "type": "nav_item",
+          "settings": {
+            "text": "🔌 HDMI підключення",
+            "link": "#hdmi"
+          }
+        },
+        "nav_3": {
+          "type": "nav_item",
+          "settings": {
+            "text": "🔧 HDMI to VGA",
+            "link": "#vga"
+          }
+        },
+        "nav_4": {
+          "type": "nav_item",
+          "settings": {
+            "text": "📼 HDMI to RCA",
+            "link": "#rca"
+          }
+        },
+        "nav_5": {
+          "type": "nav_item",
+          "settings": {
+            "text": "🛠️ Вирішення проблем",
+            "link": "#troubleshooting"
+          }
+        },
+        "nav_6": {
+          "type": "nav_item",
+          "settings": {
+            "text": "🛒 Рекомендовані товари",
+            "link": "#products"
+          }
+        }
+      },
+      "block_order": [
+        "nav_1",
+        "nav_2",
+        "nav_3",
+        "nav_4",
+        "nav_5",
+        "nav_6"
+      ],
       "settings": {
-        "padding_top": 28,
-        "padding_bottom": 28
+        "title": "Як підключити старий телевізор до ноутбука",
+        "subtitle": "Повний технічний гайд 2025: від HDMI до RCA, з покроковими інструкціями та вирішенням проблем",
+        "show_quick_nav": true,
+        "quick_nav_title": "🚀 Швидка навігація"
+      }
+    },
+    "tv_guide_port_selector": {
+      "type": "tv-guide-port-selector",
+      "settings": {
+        "title": "Визначаємо порти вашого телевізора",
+        "show_alert": true,
+        "alert_title": "💡 Швидка відповідь:",
+        "alert_text": "Старий телевізор можна підключити до ноутбука за 200-500₴. Потрібен лише правильний адаптер залежно від портів вашого ТВ: HDMI (найкраще), VGA (потрібен активний адаптер), або RCA/тюльпани (низька якість).",
+        "selector_title": "Який порт має ваш телевізор?",
+        "selector_description": "Оберіть тип роз'єму на задній панелі вашого телевізора:",
+        "show_port_visual": true
+      }
+    },
+    "tv_guide_methods": {
+      "type": "tv-guide-methods",
+      "settings": {}
+    },
+    "tv_guide_comparison": {
+      "type": "tv-guide-comparison",
+      "settings": {
+        "title": "Порівняння методів підключення",
+        "header_method": "Метод",
+        "header_quality": "Якість",
+        "header_complexity": "Складність",
+        "header_cost": "Вартість",
+        "header_sound": "Звук"
+      }
+    },
+    "tv_guide_troubleshooting": {
+      "type": "tv-guide-troubleshooting",
+      "settings": {
+        "title": "Вирішення типових проблем"
+      }
+    },
+    "tv_guide_products": {
+      "type": "tv-guide-products",
+      "settings": {
+        "title": "🛒 Рекомендовані товари"
+      }
+    },
+    "tv_guide_faq": {
+      "type": "tv-guide-faq",
+      "settings": {
+        "title": "❓ Часті питання (FAQ)"
       }
     }
   },
   "order": [
-    "main"
+    "tv_guide_hero",
+    "tv_guide_port_selector",
+    "tv_guide_methods",
+    "tv_guide_comparison",
+    "tv_guide_troubleshooting",
+    "tv_guide_products",
+    "tv_guide_faq"
   ]
 }

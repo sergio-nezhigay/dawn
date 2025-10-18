@@ -1,0 +1,174 @@
+<div class="page-width">
+  <div class="tv-guide-content">
+    <section class="tv-guide-section">
+      <h2 class="tv-guide-section__title">{{ section.settings.title }}</h2>
+
+      <table class="tv-guide-comparison-table">
+        <thead>
+          <tr>
+            <th>{{ section.settings.header_method }}</th>
+            <th>{{ section.settings.header_quality }}</th>
+            <th>{{ section.settings.header_complexity }}</th>
+            <th>{{ section.settings.header_cost }}</th>
+            <th>{{ section.settings.header_sound }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%- for block in section.blocks -%}
+            {%- case block.type -%}
+              {%- when 'comparison_row' -%}
+                <tr>
+                  <td><strong>{{ block.settings.method }}</strong></td>
+                  <td>{{ block.settings.quality }}</td>
+                  <td>{{ block.settings.complexity }}</td>
+                  <td>{{ block.settings.cost }}</td>
+                  <td>{{ block.settings.sound }}</td>
+                </tr>
+            {%- endcase -%}
+          {%- endfor -%}
+        </tbody>
+      </table>
+    </section>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "TV Guide Comparison",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Порівняння методів підключення"
+    },
+    {
+      "type": "text",
+      "id": "header_method",
+      "label": "Table Header: Method",
+      "default": "Метод"
+    },
+    {
+      "type": "text",
+      "id": "header_quality",
+      "label": "Table Header: Quality",
+      "default": "Якість"
+    },
+    {
+      "type": "text",
+      "id": "header_complexity",
+      "label": "Table Header: Complexity",
+      "default": "Складність"
+    },
+    {
+      "type": "text",
+      "id": "header_cost",
+      "label": "Table Header: Cost",
+      "default": "Вартість"
+    },
+    {
+      "type": "text",
+      "id": "header_sound",
+      "label": "Table Header: Sound",
+      "default": "Звук"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "comparison_row",
+      "name": "Comparison Row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "method",
+          "label": "Method Name",
+          "default": "HDMI to HDMI"
+        },
+        {
+          "type": "text",
+          "id": "quality",
+          "label": "Quality Rating",
+          "default": "⭐⭐⭐⭐⭐"
+        },
+        {
+          "type": "text",
+          "id": "complexity",
+          "label": "Complexity",
+          "default": "Дуже просто"
+        },
+        {
+          "type": "text",
+          "id": "cost",
+          "label": "Cost",
+          "default": "100-300₴"
+        },
+        {
+          "type": "text",
+          "id": "sound",
+          "label": "Sound Support",
+          "default": "✅ Так"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TV Guide Comparison",
+      "blocks": [
+        {
+          "type": "comparison_row",
+          "settings": {
+            "method": "HDMI to HDMI",
+            "quality": "⭐⭐⭐⭐⭐",
+            "complexity": "Дуже просто",
+            "cost": "100-300₴",
+            "sound": "✅ Так"
+          }
+        },
+        {
+          "type": "comparison_row",
+          "settings": {
+            "method": "HDMI to VGA",
+            "quality": "⭐⭐⭐⭐",
+            "complexity": "Середня",
+            "cost": "300-500₴",
+            "sound": "❌ Окремий кабель"
+          }
+        },
+        {
+          "type": "comparison_row",
+          "settings": {
+            "method": "HDMI to RCA",
+            "quality": "⭐⭐",
+            "complexity": "Складніше",
+            "cost": "250-450₴",
+            "sound": "✅ Так"
+          }
+        },
+        {
+          "type": "comparison_row",
+          "settings": {
+            "method": "VGA to VGA",
+            "quality": "⭐⭐⭐⭐",
+            "complexity": "Просто",
+            "cost": "150-250₴",
+            "sound": "❌ Окремий кабель"
+          }
+        },
+        {
+          "type": "comparison_row",
+          "settings": {
+            "method": "Бездротове",
+            "quality": "⭐⭐⭐",
+            "complexity": "Середня",
+            "cost": "1200-1500₴",
+            "sound": "✅ Так"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,147 @@
+<div class="page-width">
+  <div class="tv-guide-content">
+    <section class="tv-guide-section">
+      <h2 class="tv-guide-section__title">{{ section.settings.title }}</h2>
+
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'faq_item' -%}
+            <div class="tv-guide-faq-item">
+              <div class="tv-guide-faq-question">
+                {{ block.settings.question }}
+                <span>+</span>
+              </div>
+              <div class="tv-guide-faq-answer">
+                {{ block.settings.answer }}
+              </div>
+            </div>
+
+          {%- when 'conclusion' -%}
+            <h2 class="tv-guide-section__title" style="margin-top: 60px;">{{ block.settings.conclusion_title }}</h2>
+
+            {%- if block.settings.conclusion_intro != blank -%}
+              <p style="font-size: 1.1em; line-height: 1.8;">
+                {{ block.settings.conclusion_intro }}
+              </p>
+            {%- endif -%}
+
+            {%- if block.settings.show_highlights -%}
+              <div class="tv-guide-conclusion-box">
+                <h3>{{ block.settings.highlights_title }}</h3>
+                <ul>
+                  {%- assign highlights = block.settings.highlights | newline_to_br | split: '<br />' -%}
+                  {%- for highlight in highlights -%}
+                    {%- if highlight != blank -%}
+                      <li>{{ highlight }}</li>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </ul>
+              </div>
+            {%- endif -%}
+
+            {%- if block.settings.show_final_note -%}
+              <div class="tv-guide-alert tv-guide-alert--success">
+                <strong>{{ block.settings.final_note_title }}</strong> {{ block.settings.final_note_text }}
+              </div>
+            {%- endif -%}
+        {%- endcase -%}
+      {%- endfor -%}
+    </section>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "TV Guide FAQ",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "❓ Часті питання (FAQ)"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Чи можна підключити ноутбук до кінескопного телевізора?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "Так, але потрібен HDMI to RCA конвертер, і якість буде дуже низькою (максимум 480i). Кінескопні ТВ не підтримують високу роздільну здатність."
+        }
+      ]
+    },
+    {
+      "type": "conclusion",
+      "name": "Conclusion Section",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "conclusion_title",
+          "label": "Conclusion Title",
+          "default": "✅ Висновок"
+        },
+        {
+          "type": "textarea",
+          "id": "conclusion_intro",
+          "label": "Conclusion Introduction",
+          "default": "Підключити старий телевізор до ноутбука в 2025 році цілком реально і доступно за ціною від 200 до 500 гривень. Ключ до успіху — правильно визначити порти на вашому телевізорі і обрати відповідний тип адаптера."
+        },
+        {
+          "type": "checkbox",
+          "id": "show_highlights",
+          "label": "Show Key Highlights Box",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "highlights_title",
+          "label": "Highlights Title",
+          "default": "🎯 Основні висновки:"
+        },
+        {
+          "type": "textarea",
+          "id": "highlights",
+          "label": "Key Highlights (one per line)",
+          "default": "✅ Для телевізорів з HDMI (2006+) — найпростіше без адаптерів\n✅ Для телевізорів з VGA (2000-2010) — активний HDMI to VGA з USB-живленням\n✅ Для телевізорів з RCA (до 2005) — конвертер, але низька якість\n✅ VGA і DVI не передають звук — окремий аудіо-кабель 3.5мм\n✅ Активні адаптери обов'язкові для HDMI → VGA/RCA\n✅ Оверскан вимикається в налаштуваннях ТВ"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_final_note",
+          "label": "Show Final Note",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "final_note_title",
+          "label": "Final Note Title",
+          "default": "🛒 Де купити?"
+        },
+        {
+          "type": "textarea",
+          "id": "final_note_text",
+          "label": "Final Note Text",
+          "default": "Всі адаптери доступні на Informatica.com.ua з доставкою по Україні. Перевірені бренди, реальні відгуки, технічна підтримка українською."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TV Guide FAQ"
+    }
+  ]
+}
+{% endschema %}
