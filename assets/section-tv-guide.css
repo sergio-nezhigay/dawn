@@ -417,7 +417,7 @@ ul li a:hover::before {
   top: 0;
   width: 40px;
   height: 40px;
-  background: linear-gradient(135deg, #1b6b8e 0%, #2a9dbf 100%);
+  background: linear-gradient(135deg, #155a73 0%, #1b6b8e 100%);
   color: white;
   border-radius: 50%;
   display: flex;
@@ -425,6 +425,7 @@ ul li a:hover::before {
   justify-content: center;
   font-weight: bold;
   font-size: 1.2em;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 /* Alert Boxes */
