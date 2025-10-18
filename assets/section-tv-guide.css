@@ -1,0 +1,458 @@
+/* TV Guide Landing Page Styles */
+
+/* Hero Section */
+.tv-guide-hero {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 80px 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.tv-guide-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><rect width="2" height="2" fill="white" opacity="0.1"/></svg>');
+  opacity: 0.3;
+}
+
+.tv-guide-hero__content {
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.tv-guide-hero__title {
+  font-size: 3em;
+  font-weight: 800;
+  margin-bottom: 20px;
+  letter-spacing: -1px;
+}
+
+.tv-guide-hero__subtitle {
+  font-size: 1.3em;
+  opacity: 0.95;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Quick Navigation */
+.tv-guide-quick-nav {
+  background: white;
+  padding: 30px;
+  margin: -40px auto 40px;
+  max-width: 1100px;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+.tv-guide-quick-nav__title {
+  margin-bottom: 20px;
+  color: #667eea;
+}
+
+.tv-guide-nav-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.tv-guide-nav-item {
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  text-decoration: none;
+  color: #333;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  display: block;
+}
+
+.tv-guide-nav-item:hover {
+  background: #667eea;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+/* Content Container */
+.tv-guide-content {
+  background: white;
+  padding: 60px 40px;
+  margin-bottom: 40px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.tv-guide-section {
+  margin-bottom: 60px;
+}
+
+.tv-guide-section__title {
+  font-size: 2.2em;
+  margin-bottom: 25px;
+  color: #1a1a1a;
+  font-weight: 700;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.tv-guide-section__title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  border-radius: 2px;
+}
+
+.tv-guide-section__subtitle {
+  font-size: 1.5em;
+  margin: 30px 0 15px;
+  color: #333;
+}
+
+/* Method Cards */
+.tv-guide-method-card {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 30px;
+  border-radius: 12px;
+  margin: 30px 0;
+  border-left: 5px solid #667eea;
+  transition: transform 0.3s ease;
+}
+
+.tv-guide-method-card:hover {
+  transform: translateX(5px);
+}
+
+/* Port Visual Grid */
+.tv-guide-port-visual {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
+  margin: 30px 0;
+}
+
+.tv-guide-port-item {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+}
+
+.tv-guide-port-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+.tv-guide-port-icon {
+  width: 80px;
+  height: 60px;
+  background: #667eea;
+  margin: 0 auto 15px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.tv-guide-port-icon--vga {
+  background: #ff9800;
+}
+
+.tv-guide-port-icon--rca {
+  background: #f44336;
+}
+
+.tv-guide-port-icon--scart {
+  background: #9c27b0;
+}
+
+/* Interactive Selector */
+.tv-guide-interactive-selector {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 30px;
+  border-radius: 12px;
+  margin: 30px 0;
+}
+
+.tv-guide-selector-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.tv-guide-selector-btn {
+  padding: 15px;
+  background: white;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  font-weight: 600;
+}
+
+.tv-guide-selector-btn:hover {
+  border-color: #667eea;
+  background: #f0f4ff;
+}
+
+.tv-guide-selector-btn.selected {
+  background: #667eea;
+  color: white;
+  border-color: #667eea;
+}
+
+.tv-guide-result-box {
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  margin-top: 20px;
+  display: none;
+}
+
+.tv-guide-result-box.show {
+  display: block;
+  animation: tvGuideSlideIn 0.5s ease;
+}
+
+@keyframes tvGuideSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Comparison Table */
+.tv-guide-comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 30px 0;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.tv-guide-comparison-table th {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 15px;
+  text-align: left;
+  font-weight: 600;
+}
+
+.tv-guide-comparison-table td {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.tv-guide-comparison-table tr:hover {
+  background: #f8f9fa;
+}
+
+/* Steps List */
+.tv-guide-steps {
+  counter-reset: step-counter;
+  list-style: none;
+  padding-left: 0;
+}
+
+.tv-guide-steps li {
+  counter-increment: step-counter;
+  position: relative;
+  padding-left: 60px;
+  margin-bottom: 30px;
+}
+
+.tv-guide-steps li::before {
+  content: counter(step-counter);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+/* Alert Boxes */
+.tv-guide-alert {
+  padding: 20px;
+  border-radius: 10px;
+  margin: 25px 0;
+  border-left: 5px solid;
+}
+
+.tv-guide-alert--info {
+  background: #e3f2fd;
+  border-color: #2196F3;
+  color: #0d47a1;
+}
+
+.tv-guide-alert--warning {
+  background: #fff3e0;
+  border-color: #ff9800;
+  color: #e65100;
+}
+
+.tv-guide-alert--success {
+  background: #e8f5e9;
+  border-color: #4caf50;
+  color: #1b5e20;
+}
+
+/* Product Cards */
+.tv-guide-product-card {
+  background: white;
+  border: 2px solid #eee;
+  border-radius: 12px;
+  padding: 25px;
+  margin: 20px 0;
+  transition: all 0.3s ease;
+}
+
+.tv-guide-product-card:hover {
+  border-color: #667eea;
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+}
+
+.tv-guide-product-price {
+  font-size: 2em;
+  color: #667eea;
+  font-weight: bold;
+}
+
+.tv-guide-product-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1em;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.tv-guide-product-btn:hover {
+  transform: scale(1.05);
+  color: white;
+}
+
+/* FAQ */
+.tv-guide-faq-item {
+  background: #f8f9fa;
+  padding: 20px;
+  margin: 15px 0;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tv-guide-faq-item:hover {
+  background: #e9ecef;
+}
+
+.tv-guide-faq-question {
+  font-weight: 600;
+  font-size: 1.1em;
+  color: #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tv-guide-faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  padding-top: 0;
+}
+
+.tv-guide-faq-item.active .tv-guide-faq-answer {
+  max-height: 500px;
+  padding-top: 15px;
+}
+
+/* Rating */
+.tv-guide-rating {
+  color: #ffc107;
+  font-size: 1.2em;
+}
+
+/* Conclusion Box */
+.tv-guide-conclusion-box {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 30px;
+  border-radius: 12px;
+  margin: 30px 0;
+}
+
+.tv-guide-conclusion-box h3 {
+  color: white;
+  margin-bottom: 20px;
+}
+
+.tv-guide-conclusion-box ul {
+  list-style: none;
+  padding: 0;
+}
+
+.tv-guide-conclusion-box li {
+  margin-bottom: 12px;
+}
+
+/* Mobile Responsive */
+@media screen and (max-width: 768px) {
+  .tv-guide-hero__title {
+    font-size: 2em;
+  }
+
+  .tv-guide-content {
+    padding: 30px 20px;
+  }
+
+  .tv-guide-comparison-table {
+    font-size: 0.9em;
+  }
+
+  .tv-guide-steps li {
+    padding-left: 50px;
+  }
+
+  .tv-guide-steps li::before {
+    width: 35px;
+    height: 35px;
+    font-size: 1em;
+  }
+}

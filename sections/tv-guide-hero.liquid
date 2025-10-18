@@ -1,0 +1,131 @@
+{{ 'section-tv-guide.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'tv-guide.js' | asset_url }}" defer="defer"></script>
+
+<div class="tv-guide-hero">
+  <div class="tv-guide-hero__content">
+    <h1 class="tv-guide-hero__title">{{ section.settings.title }}</h1>
+    <p class="tv-guide-hero__subtitle">{{ section.settings.subtitle }}</p>
+  </div>
+</div>
+
+<div class="page-width">
+  {%- if section.settings.show_quick_nav -%}
+    <div class="tv-guide-quick-nav">
+      <h3 class="tv-guide-quick-nav__title">{{ section.settings.quick_nav_title }}</h3>
+      <div class="tv-guide-nav-grid">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'nav_item' -%}
+              <a href="{{ block.settings.link }}" class="tv-guide-nav-item">
+                {{ block.settings.text }}
+              </a>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "TV Guide Hero",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Hero Title",
+      "default": "Як підключити старий телевізор до ноутбука"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Hero Subtitle",
+      "default": "Повний технічний гайд 2025: від HDMI до RCA, з покроковими інструкціями та вирішенням проблем"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quick_nav",
+      "label": "Show Quick Navigation",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "quick_nav_title",
+      "label": "Quick Navigation Title",
+      "default": "🚀 Швидка навігація"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "nav_item",
+      "name": "Navigation Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Link Text",
+          "default": "📺 Navigation Link"
+        },
+        {
+          "type": "text",
+          "id": "link",
+          "label": "Link URL",
+          "default": "#section",
+          "info": "Use # followed by section ID (e.g., #ports, #hdmi)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TV Guide Hero",
+      "blocks": [
+        {
+          "type": "nav_item",
+          "settings": {
+            "text": "📺 Визначення портів",
+            "link": "#ports"
+          }
+        },
+        {
+          "type": "nav_item",
+          "settings": {
+            "text": "🔌 HDMI підключення",
+            "link": "#hdmi"
+          }
+        },
+        {
+          "type": "nav_item",
+          "settings": {
+            "text": "🔧 HDMI to VGA",
+            "link": "#vga"
+          }
+        },
+        {
+          "type": "nav_item",
+          "settings": {
+            "text": "📼 HDMI to RCA",
+            "link": "#rca"
+          }
+        },
+        {
+          "type": "nav_item",
+          "settings": {
+            "text": "🛠️ Вирішення проблем",
+            "link": "#troubleshooting"
+          }
+        },
+        {
+          "type": "nav_item",
+          "settings": {
+            "text": "🛒 Рекомендовані товари",
+            "link": "#products"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
