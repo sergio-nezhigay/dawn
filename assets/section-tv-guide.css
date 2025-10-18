@@ -26,6 +26,7 @@
   margin: 0 auto;
   position: relative;
   z-index: 1;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .tv-guide-hero__title {
