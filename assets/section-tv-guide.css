@@ -369,14 +369,19 @@ ol li a {
 }
 
 /* Comparison Table */
+.tv-guide-table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 30px 0;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
 .tv-guide-comparison-table {
   width: 100%;
   border-collapse: collapse;
-  margin: 30px 0;
   background: white;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  position: relative;
 }
 
 .tv-guide-comparison-table th {
@@ -386,6 +391,7 @@ ol li a {
   text-align: left;
   font-weight: 600;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  white-space: nowrap;
 }
 
 .tv-guide-comparison-table th a {
@@ -401,10 +407,47 @@ ol li a {
 .tv-guide-comparison-table td {
   padding: 15px;
   border-bottom: 1px solid #eee;
+  white-space: nowrap;
 }
 
 .tv-guide-comparison-table tr:hover {
   background: #f8f9fa;
+}
+
+/* Sticky first column on mobile */
+@media screen and (max-width: 768px) {
+  .tv-guide-comparison-table th:first-child,
+  .tv-guide-comparison-table td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    background: inherit;
+  }
+
+  .tv-guide-comparison-table th:first-child {
+    background: linear-gradient(135deg, #155a73 0%, #1b6b8e 100%);
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .tv-guide-comparison-table td:first-child {
+    background: white;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+  }
+
+  .tv-guide-comparison-table tr:hover td:first-child {
+    background: #f8f9fa;
+  }
+
+  .tv-guide-comparison-table th:first-child::after,
+  .tv-guide-comparison-table td:first-child::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 1px;
+    background: rgba(0, 0, 0, 0.1);
+  }
 }
 
 /* Steps List */
