@@ -338,7 +338,7 @@
             "warning_title": "⚠️ Увага!",
             "warning_text": "",
             "requirements_title": "Що вам знадобиться:",
-            "requirements": "",
+            "requirements": "<ul style=\"margin-left: 20px; margin-bottom: 25px;\">\n\n<li>✅ Активний адаптер<a href=\"/collections/hdmi-scart\" target=\"_blank\">HDMI to SCART з USB-живленням</a> \n</li>\n</ul>",
             "steps_title": "Покрокова інструкція:",
             "steps": "Під'єднайте HDMI-кабель до конвертора\nУвімкніть телевізор і виберіть джерело SCART (Input/Source → SCART 1/2)\nНатисніть Windows + P на ноутбуці\nОберіть режим: \"Дублювати\" (та сама картинка) або \"Розширити\" (два екрани)",
             "show_success_note": false,
