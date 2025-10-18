@@ -3,7 +3,7 @@
 /* General Link Styles */
 .tv-guide-content a,
 .tv-guide-section a {
-  color: #1b6b8e;
+  /*color: #1b6b8e;*/
   text-decoration: none;
   font-weight: 600;
   border-bottom: 2px solid rgba(27, 107, 142, 0.3);
@@ -80,7 +80,7 @@ ol li a {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: #1b6b8e;
+  /*color: #1b6b8e;*/
   font-weight: 600;
   text-decoration: none;
   border-bottom: 2px solid rgba(27, 107, 142, 0.4);
@@ -122,7 +122,7 @@ ul li a:hover::before {
 
 /* Hero Section */
 .tv-guide-hero {
-  background: linear-gradient(135deg, #1b6b8e 0%, #2a9dbf 100%);
+  background: linear-gradient(135deg, #155a73 0%, #1b6b8e 100%);
   color: white;
   padding: 80px 20px;
   text-align: center;
@@ -234,12 +234,12 @@ ul li a:hover::before {
   left: 0;
   width: 60px;
   height: 4px;
-  background: linear-gradient(90deg, #1b6b8e, #2a9dbf);
+  background: linear-gradient(90deg, #155a73, #1b6b8e);
   border-radius: 2px;
 }
 
 .tv-guide-section__subtitle {
-  font-size: 1.5em;
+  font-size: 2em;
   margin: 30px 0 15px;
   color: #333;
 }
@@ -379,11 +379,22 @@ ul li a:hover::before {
 }
 
 .tv-guide-comparison-table th {
-  background: linear-gradient(135deg, #1b6b8e 0%, #2a9dbf 100%);
+  background: linear-gradient(135deg, #155a73 0%, #1b6b8e 100%);
   color: white;
   padding: 15px;
   text-align: left;
   font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.tv-guide-comparison-table th a {
+  color: white !important;
+  border-bottom-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.tv-guide-comparison-table th a:hover {
+  color: #ffeb3b !important;
+  border-bottom-color: #ffeb3b !important;
 }
 
 .tv-guide-comparison-table td {
@@ -414,9 +425,9 @@ ul li a:hover::before {
   position: absolute;
   left: 0;
   top: 0;
-  width: 40px;
-  height: 40px;
-  background: linear-gradient(135deg, #1b6b8e 0%, #2a9dbf 100%);
+  width: 28px;
+  height: 28px;
+  background: linear-gradient(135deg, #155a73 0%, #1b6b8e 100%);
   color: white;
   border-radius: 50%;
   display: flex;
@@ -424,6 +435,7 @@ ul li a:hover::before {
   justify-content: center;
   font-weight: bold;
   font-size: 1.2em;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 /* Alert Boxes */
@@ -474,7 +486,7 @@ ul li a:hover::before {
 }
 
 .tv-guide-product-btn {
-  background: linear-gradient(135deg, #1b6b8e 0%, #2a9dbf 100%);
+  background: linear-gradient(135deg, #155a73 0%, #1b6b8e 100%);
   color: white;
   padding: 15px 35px;
   border: none;
@@ -488,6 +500,7 @@ ul li a:hover::before {
   box-shadow: 0 4px 15px rgba(27, 107, 142, 0.3);
   position: relative;
   overflow: hidden;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .tv-guide-product-btn::before {
@@ -592,16 +605,18 @@ ul li a:hover::before {
 
 /* Conclusion Box */
 .tv-guide-conclusion-box {
-  background: linear-gradient(135deg, #1b6b8e 0%, #2a9dbf 100%);
+  background: linear-gradient(135deg, #155a73 0%, #1b6b8e 100%);
   color: white;
   padding: 30px;
   border-radius: 12px;
   margin: 30px 0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .tv-guide-conclusion-box h3 {
   color: white;
   margin-bottom: 20px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .tv-guide-conclusion-box ul {
@@ -611,6 +626,21 @@ ul li a:hover::before {
 
 .tv-guide-conclusion-box li {
   margin-bottom: 12px;
+}
+
+/* Links in gradient backgrounds - override blue color */
+.tv-guide-conclusion-box a,
+.tv-guide-hero a {
+  color: white !important;
+  border-bottom-color: rgba(255, 255, 255, 0.5) !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.tv-guide-conclusion-box a:hover,
+.tv-guide-hero a:hover {
+  color: #ffeb3b !important;
+  border-bottom-color: #ffeb3b !important;
+  background: rgba(255, 255, 255, 0.1) !important;
 }
 
 /* Mobile Responsive */
