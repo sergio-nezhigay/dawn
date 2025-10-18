@@ -24,16 +24,20 @@
 }
 
 /* Product Links - Add arrow indicator */
-.tv-guide-content a[href*="products"]::after,
-.tv-guide-alert a[href*="products"]::after {
-  content: " →";
+.tv-guide-content a[href*='products']::after,
+.tv-guide-content a[href*='collection']::after,
+.tv-guide-alert a[href*='products']::after,
+.tv-guide-alert a[href*='collection']::after {
+  content: ' →';
   display: inline-block;
   transition: transform 0.3s ease;
   margin-left: 4px;
 }
 
-.tv-guide-content a[href*="products"]:hover::after,
-.tv-guide-alert a[href*="products"]:hover::after {
+.tv-guide-content a[href*='products']:hover::after,
+.tv-guide-content a[href*='collection']:hover::after,
+.tv-guide-alert a[href*='products']:hover::after,
+.tv-guide-alert a[href*='collection']:hover::after {
   transform: translateX(4px);
 }
 
@@ -96,7 +100,7 @@ ol li a:hover {
 
 /* Checkmark list links (special styling) */
 ul li a::before {
-  content: "→";
+  content: '→';
   opacity: 0;
   transform: translateX(-5px);
   transition: all 0.3s ease;
@@ -530,7 +534,7 @@ ul li a:hover::before {
 }
 
 .tv-guide-cta-link::after {
-  content: "→";
+  content: '→';
   font-size: 1.3em;
   transition: transform 0.3s ease;
 }
