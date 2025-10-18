@@ -80,7 +80,7 @@ ol li a {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: #1b6b8e;
+  /*color: #1b6b8e;*/
   font-weight: 600;
   text-decoration: none;
   border-bottom: 2px solid rgba(27, 107, 142, 0.4);
