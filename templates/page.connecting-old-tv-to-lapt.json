@@ -284,7 +284,7 @@
             "warning_title": "⚠️ Пасивний адаптер НЕ працюватиме!",
             "warning_text": "HDMI (цифровий) і VGA (аналоговий) використовують різні типи сигналів. Потрібен активний адаптер з чіпом DAC і USB-живленням.",
             "requirements_title": "Що вам знадобиться:",
-            "requirements": "<ul style=\"margin-left: 20px; margin-bottom: 25px;\">\n\n<li>✅ Активний адаптер <a href=\"/products/perekhodnik-vga-to-hdmi-dopolnitelnoe-pitanie-audio-35mmkb\" target=\"_blank\">HDMI to VGA з USB-живленням</a>\n</li>\n\n<li>✅ Якщо не в комплекті, -<a href=\"/collections/cable_vga\" target=\"_blank\" rel=\"noopener\">Кабель VGA</a>\n</li>\n\n<li>✅ Аудіо-кабель 3.5 мм (mini-jack)</li>\n<li>✅ USB-кабель для живлення адаптера</li>\n</ul>",
+            "requirements": "<ul style=\"margin-left: 20px; margin-bottom: 25px;\">\n\n<li>✅ Активний адаптер<a href=\"/products/perekhodnik-vga-to-hdmi-dopolnitelnoe-pitanie-audio-35mmkb\" target=\"_blank\">HDMI to VGA з USB-живленням</a> \n</li>\n\n<li>✅ Якщо не в комплекті,<a href=\"/products/kabel-vga-vga-papa-papa-1-5m-c-ferritovym-fil-trom-720p-dlya-monitora\" target=\"_blank\" rel=\"noopener\">Кабель VGA</a>\n</li>\n\n<li>✅ Аудіо-кабель 3.5 мм (mini-jack)</li>\n<li>✅ USB-кабель для живлення адаптера</li>\n</ul>",
             "steps_title": "Покрокова інструкція:",
             "steps": "Під'єднайте HDMI-кабель від ноутбука до адаптера\n<strong>ВАЖЛИВО:</strong> Підключіть USB-живлення адаптера до USB-порту ноутбука\nПід'єднайте VGA-кабель від адаптера до телевізора\nПідключіть аудіо-кабель 3.5 мм від виходу навушників ноутбука до Audio In телевізора\nУвімкніть телевізор і виберіть джерело VGA або PC\nНатисніть Windows + P і оберіть режим відображення",
             "show_success_note": false,
