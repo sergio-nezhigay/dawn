@@ -1,5 +1,121 @@
 /* TV Guide Landing Page Styles */
 
+/* General Link Styles */
+.tv-guide-content a,
+.tv-guide-section a {
+  color: #1b6b8e;
+  text-decoration: none;
+  font-weight: 600;
+  border-bottom: 2px solid rgba(27, 107, 142, 0.3);
+  transition: all 0.3s ease;
+  padding-bottom: 2px;
+  position: relative;
+}
+
+.tv-guide-content a:hover,
+.tv-guide-section a:hover {
+  color: #2a9dbf;
+  border-bottom-color: #2a9dbf;
+  background: linear-gradient(to bottom, transparent 0%, rgba(42, 157, 191, 0.1) 100%);
+}
+
+.tv-guide-content a:active {
+  transform: translateY(1px);
+}
+
+/* Product Links - Add arrow indicator */
+.tv-guide-content a[href*="products"]::after,
+.tv-guide-alert a[href*="products"]::after {
+  content: " →";
+  display: inline-block;
+  transition: transform 0.3s ease;
+  margin-left: 4px;
+}
+
+.tv-guide-content a[href*="products"]:hover::after,
+.tv-guide-alert a[href*="products"]:hover::after {
+  transform: translateX(4px);
+}
+
+/* Links in Alert Boxes */
+.tv-guide-alert a {
+  color: inherit;
+  border-bottom: 2px solid currentColor;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  background: linear-gradient(to bottom, transparent 50%, rgba(255, 255, 255, 0.3) 50%);
+  background-size: 100% 200%;
+  background-position: top;
+  padding: 2px 4px;
+  margin: 0 -4px;
+  border-radius: 3px;
+}
+
+.tv-guide-alert a:hover {
+  background-position: bottom;
+  border-bottom-width: 3px;
+}
+
+.tv-guide-alert--info a {
+  color: #0d47a1;
+}
+
+.tv-guide-alert--warning a {
+  color: #e65100;
+}
+
+.tv-guide-alert--success a {
+  color: #1b5e20;
+}
+
+/* Links in Lists */
+.tv-guide-steps a,
+ul li a,
+ol li a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #1b6b8e;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 2px solid rgba(27, 107, 142, 0.4);
+  padding: 2px 6px;
+  margin: 0 -6px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.tv-guide-steps a:hover,
+ul li a:hover,
+ol li a:hover {
+  background: rgba(27, 107, 142, 0.1);
+  border-bottom-color: #1b6b8e;
+  transform: translateX(3px);
+}
+
+/* Checkmark list links (special styling) */
+ul li a::before {
+  content: "→";
+  opacity: 0;
+  transform: translateX(-5px);
+  transition: all 0.3s ease;
+}
+
+ul li a:hover::before {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Focus states for accessibility */
+.tv-guide-content a:focus,
+.tv-guide-section a:focus,
+.tv-guide-alert a:focus {
+  outline: 3px solid rgba(27, 107, 142, 0.4);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
 /* Hero Section */
 .tv-guide-hero {
   background: linear-gradient(135deg, #1b6b8e 0%, #2a9dbf 100%);
