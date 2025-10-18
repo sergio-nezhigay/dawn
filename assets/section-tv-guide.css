@@ -9,6 +9,7 @@
   border-bottom: 2px solid rgba(27, 107, 142, 0.3);
   transition: all 0.3s ease;
   padding-bottom: 2px;
+  margin-left: 12px;
   position: relative;
 }
 
