@@ -3,31 +3,33 @@
     <section class="tv-guide-section">
       <h2 class="tv-guide-section__title">{{ section.settings.title }}</h2>
 
-      <table class="tv-guide-comparison-table">
-        <thead>
-          <tr>
-            <th>{{ section.settings.header_method }}</th>
-            <th>{{ section.settings.header_quality }}</th>
-            <th>{{ section.settings.header_complexity }}</th>
-            <th>{{ section.settings.header_cost }}</th>
-            <th>{{ section.settings.header_sound }}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {%- for block in section.blocks -%}
-            {%- case block.type -%}
-              {%- when 'comparison_row' -%}
-                <tr>
-                  <td><strong>{{ block.settings.method }}</strong></td>
-                  <td>{{ block.settings.quality }}</td>
-                  <td>{{ block.settings.complexity }}</td>
-                  <td>{{ block.settings.cost }}</td>
-                  <td>{{ block.settings.sound }}</td>
-                </tr>
-            {%- endcase -%}
-          {%- endfor -%}
-        </tbody>
-      </table>
+      <div class="tv-guide-table-wrapper">
+        <table class="tv-guide-comparison-table">
+          <thead>
+            <tr>
+              <th>{{ section.settings.header_method }}</th>
+              <th>{{ section.settings.header_quality }}</th>
+              <th>{{ section.settings.header_complexity }}</th>
+              <th>{{ section.settings.header_cost }}</th>
+              <th>{{ section.settings.header_sound }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {%- for block in section.blocks -%}
+              {%- case block.type -%}
+                {%- when 'comparison_row' -%}
+                  <tr>
+                    <td><strong>{{ block.settings.method }}</strong></td>
+                    <td>{{ block.settings.quality }}</td>
+                    <td>{{ block.settings.complexity }}</td>
+                    <td>{{ block.settings.cost }}</td>
+                    <td>{{ block.settings.sound }}</td>
+                  </tr>
+              {%- endcase -%}
+            {%- endfor -%}
+          </tbody>
+        </table>
+      </div>
     </section>
   </div>
 </div>
