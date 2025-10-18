@@ -76,8 +76,8 @@
 
 /* Links in Lists */
 .tv-guide-steps a,
-ul li a,
-ol li a {
+.tv-guide-content ul li a,
+.tv-guide-content ol li a {
   display: inline-flex;
   align-items: center;
   gap: 6px;
