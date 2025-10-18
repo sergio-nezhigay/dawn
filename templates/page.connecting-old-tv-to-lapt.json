@@ -401,16 +401,6 @@
             "sound": "❌ Окремий кабель"
           }
         },
-        "row_5": {
-          "type": "comparison_row",
-          "settings": {
-            "method": "Бездротове",
-            "quality": "⭐⭐⭐",
-            "complexity": "Середня",
-            "cost": "1200-1500₴",
-            "sound": "✅ Так"
-          }
-        },
         "comparison_row_p9aJUz": {
           "type": "comparison_row",
           "settings": {
@@ -420,6 +410,16 @@
             "cost": "340-500₴",
             "sound": "✅ Так"
           }
+        },
+        "row_5": {
+          "type": "comparison_row",
+          "settings": {
+            "method": "Бездротове",
+            "quality": "⭐⭐⭐",
+            "complexity": "Середня",
+            "cost": "1200-1500₴",
+            "sound": "✅ Так"
+          }
         }
       },
       "block_order": [
@@ -427,8 +427,8 @@
         "row_2",
         "row_3",
         "row_4",
-        "row_5",
-        "comparison_row_p9aJUz"
+        "comparison_row_p9aJUz",
+        "row_5"
       ],
       "settings": {
         "title": "Порівняння методів підключення",
