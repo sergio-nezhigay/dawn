@@ -180,6 +180,7 @@
   border-radius: 16px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
   position: relative;
+  z-index: 1;
 }
 
 .tv-guide-quick-nav__title {
@@ -301,7 +302,7 @@
 }
 
 .tv-guide-port-icon--vga {
-  background: #2196F3;
+  background: #2196f3;
 }
 
 .tv-guide-port-icon--rca {
