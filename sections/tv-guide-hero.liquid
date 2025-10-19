@@ -1,7 +1,12 @@
 {{ 'section-tv-guide.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'tv-guide.js' | asset_url }}" defer="defer"></script>
 
-<div class="tv-guide-hero">
+<div class="tv-guide-hero" style="
+  {%- if section.settings.background_image != blank -%}
+    background-image: url('{{ section.settings.background_image | image_url: width: 2000 }}');
+  {%- endif -%}
+  --overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+">
   <div class="tv-guide-hero__content">
     <h1 class="tv-guide-hero__title">{{ section.settings.title }}</h1>
     <p class="tv-guide-hero__subtitle">{{ section.settings.subtitle }}</p>
@@ -43,6 +48,23 @@
       "id": "subtitle",
       "label": "Hero Subtitle",
       "default": "Повний технічний гайд 2025: від HDMI до RCA, з покроковими інструкціями та вирішенням проблем"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image",
+      "info": "Full-width background image for hero section"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Color Overlay Opacity",
+      "default": 70,
+      "info": "Controls the intensity of the color blend over the background image"
     },
     {
       "type": "checkbox",
