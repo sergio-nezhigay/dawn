@@ -4142,7 +4142,9 @@
         "payment_method_not_found_error": "Не вдалося знайти спосіб оплати",
         "payment_details_loading": "Завантаження інформації про спосіб оплати",
         "close_payment_modal_accessibility_label": "Закрити деталі способу оплати",
-        "default_checkbox_accessibility_label": "Встановити цей спосіб оплати за умовчанням"
+        "default_checkbox_accessibility_label": "Встановити цей спосіб оплати за умовчанням",
+        "checkout_card_banner": "Цей спосіб оплати можна використовувати лише для попередньо авторизованих платежів. Він не відображатиметься під час оформлення замовлення, якщо ви ввійшли в цей магазин. ",
+        "replace_payment_method_button": "Замінити"
       },
       "edit_payment_method": {
         "save_payment_method_button": "зберегти",
@@ -4167,7 +4169,8 @@
         "payment_method_added_confirmation": "Спосіб оплати додано",
         "title": "Додати спосіб оплати",
         "choose_from_list": "Виберіть зі списку",
-        "add_new_button": "Додати новий"
+        "add_new_button": "Додати новий",
+        "replace_mode_warning": "Видалення цього способу оплати вплине на підписки або попередні замовлення. Замініть його альтернативним способом оплати, щоб продовжувати отримувати майбутні замовлення."
       },
       "expired": "Термін дії цієї картки закінчився",
       "credit_or_debit_card_title": "Кредитна або дебетова картка",
@@ -4194,7 +4197,12 @@
         "name_on_card_label": "Ім'я на картці",
         "name_on_card_placeholder": "Ім'я на картці",
         "card_expiry_label": "Термін придатності (MM / YY)",
-        "card_expiry_placeholder": "Термін придатності (MM / YY)"
+        "card_expiry_placeholder": "Термін придатності (MM / YY)",
+        "unavailable": {
+          "text": "Оплата кредитними та дебетовими картками наразі недоступна.",
+          "link_text": "Оновіть цю сторінку",
+          "suffix": "або спробуйте ще раз пізніше."
+        }
       },
       "payment_delete": {
         "title": "Видалити спосіб оплати",
@@ -4228,7 +4236,10 @@
       "digital_wallet_title": "Цифровий гаманець",
       "pay_pal": {
         "loading_accessibility_message": "Завантаження PayPal",
-        "iframe_title_accessibility_label": "Додати спосіб оплати PayPal"
+        "iframe_title_accessibility_label": "Додати спосіб оплати PayPal",
+        "errors": {
+          "generic": "Виникла проблема з PayPal. Спробуйте ще раз або скористайтеся іншим способом оплати."
+        }
       },
       "add_payment_method_button": "Додати спосіб оплати",
       "google_pay": {
@@ -4251,7 +4262,10 @@
       "back_button_accessibility_label": "Назад до {{paymentMethodStepTitle}}",
       "update_payment_method": {
         "button_title": "оновлення",
-        "billing_address": "Платіжна адреса"
+        "billing_address": "Платіжна адреса",
+        "disclaimer": "Цей спосіб оплати буде збережено для майбутніх покупок і може бути використаний для будь-яких регулярних або відкладених покупок.",
+        "error_message": "Не вдалося оновити спосіб оплати",
+        "current": "Поточний"
       },
       "update_success": {
         "done_button": "Продовжити покупки"
@@ -4263,7 +4277,13 @@
       "bank_account": {
         "loading_accessibility_message": "Кнопка банківського рахунку завантажується",
         "iframe_title_accessibility_label": "Налаштування банківського рахунку",
-        "display_name": "Банківський рахунок"
+        "display_name": "Банківський рахунок",
+        "generic_error": "Не вдалося додати банківський рахунок. Спробуйте пізніше."
+      },
+      "card_update_consent_subscriptions": "Цей спосіб оплати буде збережено для майбутніх покупок і може бути використаний для будь-яких регулярних або відкладених покупок.",
+      "link_expired": {
+        "message": "Термін дії цього посилання для оновлення способу оплати закінчився.",
+        "return_home_button": "Повернутися на головну сторінку"
       }
     },
     "payment_method_brands": {
@@ -4337,7 +4357,8 @@
         "other": "Кластер із {{number}} маркерів"
       },
       "removeItem": "Видалити {{label}}",
-      "clear": "ясно"
+      "clear": "ясно",
+      "dropzoneDraggedOver": "Перетягніть файл для завантаження"
     },
     "navigation_and_structure": {
       "account_menu": {
@@ -4458,7 +4479,8 @@
         "remove_tooltip": "видалити",
         "move_up_tooltip": "Перейти на попередню позицію",
         "unselect": "Скасуйте вибір розширення під назвою {{extensionName}}",
-        "remove": "Видалити розширення"
+        "remove": "Видалити розширення",
+        "move_down": "Перемістити розширення на наступну позицію"
       }
     },
     "settings": {
@@ -4516,11 +4538,37 @@
     "subscriptions": {
       "update_payment_instrument": {
         "cancel": "Скасувати",
-        "save": "зберегти"
+        "save": "зберегти",
+        "loading": "Завантаження способів оплати",
+        "no_payment_methods_available": "Немає доступних способів оплати",
+        "select_new_payment_method": "Виберіть новий спосіб оплати",
+        "current_method": "Поточний",
+        "use_new_payment_method": "+ Використати новий спосіб оплати"
       },
       "subscription_contracts": {
-        "load_more": "Завантажити ще"
-      }
+        "load_more": "Завантажити ще",
+        "title": "Використовуйте спосіб оплати для повторюваних замовлень",
+        "more_items": {
+          "one": "ще {{count}} товар",
+          "other": "Ще {{count}} товарів"
+        },
+        "product_count": {
+          "one": "{{count}} товар",
+          "other": "{{count}} товарів"
+        },
+        "subscription_contracts_updated": "Оновлено {{succeeded}} з {{total}} підписок",
+        "product_details": "Деталі продукту"
+      },
+      "updating_contracts": {
+        "one": "Оновлення {{count}} договору підписки...",
+        "other": "Оновлення {{count}} контрактів на підписку..."
+      },
+      "contracts_updated": {
+        "one": "Успішно оновлено {{count}} контракт на підписку",
+        "other": "Успішно оновлено {{count}} контрактів на підписку"
+      },
+      "contracts_update_failed": "Не вдалося оновити деякі контракти на підписку",
+      "invalid_wallet_type_error": "Недійсний тип гаманця."
     },
     "sign_in": {
       "processing": "Обробка…",
@@ -4528,16 +4576,34 @@
         "heading": "Увійти",
         "input_field_label": "Електронна пошта",
         "button": "Продовжити",
-        "or": "або"
+        "or": "або",
+        "page_title": "Увійти - %{shop_name}",
+        "subheading": "Введіть свою електронну адресу, і ми надішлемо вам код підтвердження",
+        "subheading_with_sign_in_options": "Виберіть, як ви хочете ввійти"
       },
       "step_two": {
-        "button": "Надіслати"
+        "button": "Надіслати",
+        "page_title": "Введіть код - %{shop_name}",
+        "heading": "Введіть код",
+        "subheading": "Надіслано на %{email}",
+        "restart_link": "Увійти, використовуючи іншу електронну адресу",
+        "input_field_label": "6-значний код"
+      },
+      "brand_logo_alt_text": "Логотип %{shop_name}",
+      "error": {
+        "invalid": {
+          "invalid_email": "Введіть дійсну адресу електронної пошти",
+          "invalid_code": "Введіть правильний 6-значний код"
+        }
       }
     },
     "announcement_bar": {
       "expand_label": "Розгорнути панель оголошень",
       "collapse_label": "Згорнути панель оголошень",
       "close_label": "Закрити панель оголошень"
+    },
+    "editor": {
+      "link_new_tab_confirmation": "Це посилання не можна відкрити в редакторі. Воно відкриється в новому вікні ( {{resolved_to_link}} ). Натисніть кнопку «ОК», щоб продовжити."
     }
   }
 }
