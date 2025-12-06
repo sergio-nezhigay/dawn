@@ -2761,7 +2761,7 @@ details[open] > .header__icon--menu .icon-hamburger {
 }
 
 details[open] > .header__submenu {
-  animation: animateMenuOpen var(--duration-default) ease;
+  animation: animateMenuOpen var(--duration-medium) ease;
   animation-fill-mode: forwards;
   z-index: 1;
 }
@@ -2808,7 +2808,7 @@ details[open] > .header__submenu {
 }
 
 .header__menu-item {
-  padding: 1.2rem;
+  padding: 1.2rem 2rem;
   text-decoration: none;
   color: rgba(var(--color-foreground), 0.9);
   letter-spacing: 0.05rem;
@@ -2926,13 +2926,29 @@ details-disclosure > details {
 @keyframes animateMenuOpen {
   0% {
     opacity: 0;
-    transform: translateY(-1.5rem);
+    transform: translateY(-2rem) scale(0.98);
   }
 
   100% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
+}
+
+@keyframes animateMenuClose {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-2rem) scale(0.98);
+  }
+}
+
+details[open].menu-closing > .header__submenu {
+  animation: animateMenuClose var(--duration-medium) ease;
 }
 
 .overflow-hidden-mobile,

@@ -452,10 +452,21 @@
     const detailsElements = document.querySelectorAll('.header__inline-menu details');
     detailsElements.forEach((details) => {
       details.addEventListener('mouseenter', () => {
+        if (details.closeTimeout) {
+          clearTimeout(details.closeTimeout);
+          details.closeTimeout = null;
+        }
+        details.classList.remove('menu-closing');
         details.setAttribute('open', 'true');
       });
+
       details.addEventListener('mouseleave', () => {
-        details.removeAttribute('open');
+        details.classList.add('menu-closing');
+        details.closeTimeout = setTimeout(() => {
+          details.removeAttribute('open');
+          details.classList.remove('menu-closing');
+          details.closeTimeout = null;
+        }, 300); // 300ms matches --duration-medium
       });
     });
   });
