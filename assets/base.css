@@ -2761,7 +2761,7 @@ details[open] > .header__icon--menu .icon-hamburger {
 }
 
 details[open] > .header__submenu {
-  animation: animateMenuOpen var(--duration-medium) ease;
+  animation: animateMenuOpen 0.2s ease-out;
   animation-fill-mode: forwards;
   z-index: 1;
 }
@@ -2803,17 +2803,30 @@ details[open] > .header__submenu {
   }
 }
 
+.header__menu-row {
+  background-color: #ffffff;
+  border-bottom: 1px solid rgba(var(--color-foreground), 0.08);
+  width: 100%;
+}
+
+.header__inline-menu .list-menu {
+  column-gap: 0.25rem;
+}
+
 .header__menu {
   padding: 0 1rem;
 }
 
 .header__menu-item {
-  padding: 1.2rem 2rem;
+  padding: 0.75rem 1.25rem;
   text-decoration: none;
-  color: rgba(var(--color-foreground), 0.9);
+  color: #111827;
   letter-spacing: 0.05rem;
   font-stretch: condensed;
   font-size: 1.6rem;
+  font-weight: 700;
+  border-radius: 9999px;
+  transition: all 0.2s ease;
 }
 
 .condensed {
@@ -2834,122 +2847,84 @@ details[open] > .header__submenu {
   box-shadow: 0 0 0 -0.2rem rgb(var(--color-foreground));
 }
 
-.header__menu-item:hover {
-  color: rgb(var(--color-foreground));
+.header__menu-details {
+  position: relative;
+}
+
+.header__menu-item:hover,
+.header__menu-details:hover > .header__menu-item {
+  color: #0071dc;
+  background-color: #eff6ff;
+  text-decoration: none;
 }
 
 .header__menu-item span {
-  transition: text-decoration var(--duration-short) ease;
+  transition: none;
 }
 
-.header__menu-item:hover span {
-  text-decoration: underline;
-  text-underline-offset: 0.3rem;
+.header__menu-item:hover span,
+.header__menu-details:hover > .header__menu-item span {
+  text-decoration: none;
 }
 
-details[open] > .header__menu-item {
-  text-decoration: underline;
-}
-
-details[open]:hover > .header__menu-item {
-  text-decoration-thickness: 0.2rem;
-}
-
-details[open] > .header__menu-item .icon-caret {
+.header__menu-details:hover > .header__menu-item .icon-caret {
   transform: rotate(180deg);
 }
 
 .header__active-menu-item {
-  transition: text-decoration-thickness var(--duration-short) ease;
-  color: rgb(var(--color-foreground));
-  text-decoration: underline;
-  text-underline-offset: 0.3rem;
+  color: #0071dc;
+  text-decoration: none;
 }
 
 .header__menu-item:hover .header__active-menu-item {
-  text-decoration-thickness: 0.2rem;
+  text-decoration: none;
 }
 
 .header__submenu {
-  transition: opacity var(--duration-default) ease, transform var(--duration-default) ease;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  top: calc(100% - 5px);
+  /* Hidden state by default */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(0.5rem);
+  pointer-events: none;
+  display: block; /* Always strictly display: block but controlled via opacity/vis */
 }
 
-.global-settings-popup,
-.header__submenu.global-settings-popup {
-  border-radius: var(--popup-corner-radius);
-  border-color: rgba(var(--color-foreground), var(--popup-border-opacity));
-  border-style: solid;
-  border-width: var(--popup-border-width);
-  box-shadow: var(--popup-shadow-horizontal-offset) var(--popup-shadow-vertical-offset) var(--popup-shadow-blur-radius)
-    rgba(var(--color-shadow), var(--popup-shadow-opacity));
-  z-index: -1;
+.header__menu-details:hover > .header__submenu {
+  animation: animateMenuOpen 0.2s ease-out forwards;
+  pointer-events: auto;
+  visibility: visible;
+  /* Redundant with keyframes but good for fallback */
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.header__submenu.list-menu {
-  padding: 1rem 0;
-}
+/* We don't need animateMenuClose on hover leave because CSS transition handles the return naturally?
+   Actually, animations are usually strictly for entrance.
+   When hover is removed, the element returns to default state.
+   The default state has transition.
+   Let's ensure smooth exit.
+*/
 
-.header__submenu .header__submenu {
-  background-color: rgba(var(--color-foreground), 0.03);
-  padding: 1rem 0;
-  margin: 1rem 0;
-}
-
-.header__submenu .header__menu-item:after {
-  right: 2rem;
-}
-
-.header__submenu .header__menu-item {
-  justify-content: space-between;
-  padding: 0.8rem 2rem;
-}
-
-.header__submenu .header__menu-item:hover {
-  text-decoration-line: underline;
-}
-
-.header__menu-item .icon-caret {
-  right: 0.8rem;
-}
-
-.header__submenu .icon-caret {
-  flex-shrink: 0;
-  margin-left: 1rem;
-  position: static;
-}
-
-header-menu > details,
-details-disclosure > details {
-  position: relative;
+.header__submenu {
+  /* Exit transition */
+  transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
 }
 
 @keyframes animateMenuOpen {
   0% {
     opacity: 0;
-    transform: translateY(-2rem) scale(0.98);
+    transform: translateY(0.5rem);
   }
 
   100% {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
   }
 }
 
-@keyframes animateMenuClose {
-  0% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-
-  100% {
-    opacity: 0;
-    transform: translateY(-2rem) scale(0.98);
-  }
-}
-
-details[open].menu-closing > .header__submenu {
-  animation: animateMenuClose var(--duration-medium) ease;
-}
+/* Legacy details/summary cleanup if needed, but we replaced liquid */
 
 .overflow-hidden-mobile,
 .overflow-hidden-tablet,

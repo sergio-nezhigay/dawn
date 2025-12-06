@@ -256,12 +256,14 @@
     </div>
   </header>
 
-  <div class="page-width max-md:hidden">
-    {%- liquid
-      if section.settings.menu != blank
-        render 'header-dropdown-menu'
-      endif
-    %}
+  <div class="header__menu-row">
+    <div class="page-width max-md:hidden">
+      {%- liquid
+        if section.settings.menu != blank
+          render 'header-dropdown-menu'
+        endif
+      %}
+    </div>
   </div>
 </sticky-header>
 
@@ -447,28 +449,5 @@
 }
 {% endschema %}
 
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const detailsElements = document.querySelectorAll('.header__inline-menu details');
-    detailsElements.forEach((details) => {
-      details.addEventListener('mouseenter', () => {
-        if (details.closeTimeout) {
-          clearTimeout(details.closeTimeout);
-          details.closeTimeout = null;
-        }
-        details.classList.remove('menu-closing');
-        details.setAttribute('open', 'true');
-      });
 
-      details.addEventListener('mouseleave', () => {
-        details.classList.add('menu-closing');
-        details.closeTimeout = setTimeout(() => {
-          details.removeAttribute('open');
-          details.classList.remove('menu-closing');
-          details.closeTimeout = null;
-        }, 300); // 300ms matches --duration-medium
-      });
-    });
-  });
-</script>
 
