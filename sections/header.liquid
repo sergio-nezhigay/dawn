@@ -447,3 +447,17 @@
 }
 {% endschema %}
 
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const detailsElements = document.querySelectorAll('.header__inline-menu details');
+    detailsElements.forEach((details) => {
+      details.addEventListener('mouseenter', () => {
+        details.setAttribute('open', 'true');
+      });
+      details.addEventListener('mouseleave', () => {
+        details.removeAttribute('open');
+      });
+    });
+  });
+</script>
+
