@@ -74,6 +74,26 @@
       padding-top: 0.5rem;
     }
   }
+
+  .header__search-inline {
+    display: none;
+  }
+
+  @media screen and (min-width: 990px) {
+    .header__search-inline {
+      display: block;
+      width: 25rem;
+      max-width: 100%;
+    }
+
+    .header__icons .header__search {
+      display: none;
+    }
+
+    .header__search-inline .field__input {
+      padding-right: 4rem;
+    }
+  }
 </style>
 
 {%- style -%}
@@ -273,6 +293,7 @@
         {%- endif -%}
       </div>
       {% render 'header-search', input_id: 'Search-In-Modal' %}
+      {% render 'header-search-inline', input_id: 'Search-In-Modal-Inline' %}
 
       {%- for block in section.blocks -%}
         {%- case block.type -%}
