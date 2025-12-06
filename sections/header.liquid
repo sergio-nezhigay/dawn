@@ -74,7 +74,7 @@
   @media screen and (min-width: 990px) {
     .header__search-inline {
       display: block;
-      width: 25rem;
+      width: 100%;
       max-width: 100%;
     }
 
@@ -134,12 +134,6 @@
   -%}
   <header class="page-width max-md:hidden">
     <div class="flex-between pt-4 scaleY-open condensed">
-      <a
-        href="tel:+38(099)381-5288"
-        class="text-white hover:underline hover:opacity-100 transition-opacity underline-offset-4 w-fit opacity-85 "
-        >(099) 381-5288</a
-      >
-
       <nav>
         <ul class="flex gap-8">
           {% for link in linklists['secondary-menu'].links %}
@@ -154,6 +148,29 @@
           {% endfor %}
         </ul>
       </nav>
+
+      <div class="flex gap-4 items-center">
+        <a
+          href="tel:+38(099)381-5288"
+          class="text-white hover:underline hover:opacity-100 transition-opacity underline-offset-4 w-fit opacity-85 flex items-center gap-2"
+        >
+          {{- 'icon-phone.svg' | inline_asset_content -}}
+          (099) 381-5288</a
+        >
+
+        {%- if localization.available_languages.size > 1 -%}
+          <div class="desktop-localization-wrapper">
+             <localization-form data-prevent-hide>
+              {%- form 'localization', id: 'HeaderLanguageForm', class: 'localization-form' -%}
+                <div>
+                  <h2 class="visually-hidden" id="HeaderLanguageLabel">{{ 'localization.language_label' | t }}</h2>
+                  {%- render 'language-localization', localPosition: 'HeaderLanguage' -%}
+                </div>
+              {%- endform -%}
+            </localization-form>
+          </div>
+        {%- endif -%}
+      </div>
     </div>
   </header>
 
@@ -162,9 +179,6 @@
       if section.settings.menu != blank
         render 'header-drawer'
       endif
-
-      # Logo position 'middle-left' logic (removed other positions)
-      # No search here for middle-left
     -%}
 
     {%- if request.page_type == 'index' -%}
@@ -198,43 +212,18 @@
       </h1>
     {%- endif -%}
 
-    {%- liquid
-      if section.settings.menu != blank
-        render 'header-dropdown-menu'
-      endif
-    %}
+    <div class="flex-grow max-w-3xl px-8 max-md:hidden">
+       {% render 'header-search-inline', input_id: 'Search-In-Modal-Inline' %}
+    </div>
 
     <div class="header__icons{% if localization_forms %} header__icons--localization header-localization{% endif %}">
-      <div class="desktop-localization-wrapper">
-        {%- if localization.available_languages.size > 1 -%}
-          <localization-form class="small-hide medium-hide" data-prevent-hide>
-            {%- form 'localization', id: 'HeaderLanguageForm', class: 'localization-form' -%}
-              <div>
-                <h2 class="visually-hidden" id="HeaderLanguageLabel">{{ 'localization.language_label' | t }}</h2>
-                {%- render 'language-localization', localPosition: 'HeaderLanguage' -%}
-              </div>
-            {%- endform -%}
-          </localization-form>
-        {%- endif -%}
-      </div>
-      {% render 'header-search', input_id: 'Search-In-Modal' %}
-      {% render 'header-search-inline', input_id: 'Search-In-Modal-Inline' %}
-
       {%- for block in section.blocks -%}
         {%- case block.type -%}
           {%- when '@app' -%}
             {% render block %}
         {%- endcase -%}
       {%- endfor -%}
-      <a
-        href="tel:+38(099)381-5288"
-        class="header__icon link focus-inset header__icon--phone"
-        aria-label="Call store"
-      >
-        <span class="svg-wrapper">
-          {{ 'icon-phone.svg' | inline_asset_content }}
-        </span>
-      </a>
+
       <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link focus-inset" id="cart-icon-bubble">
         {% if cart == empty %}
           <span class="svg-wrapper">{{ 'icon-cart-empty.svg' | inline_asset_content }}</span>
@@ -253,6 +242,14 @@
       </a>
     </div>
   </header>
+
+  <div class="page-width max-md:hidden">
+    {%- liquid
+      if section.settings.menu != blank
+        render 'header-dropdown-menu'
+      endif
+    %}
+  </div>
 </sticky-header>
 
 {%- if settings.cart_type == 'notification' -%}
