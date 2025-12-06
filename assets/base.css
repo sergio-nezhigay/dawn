@@ -661,6 +661,11 @@ summary .icon-caret {
   height: 0.6rem;
   right: 1.5rem;
   top: calc(50% - 0.2rem);
+  transition: transform var(--duration-default) ease;
+}
+
+details[open] > summary .icon-caret {
+  transform: rotate(180deg);
 }
 
 summary::-webkit-details-marker {
