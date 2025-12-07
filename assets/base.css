@@ -2767,9 +2767,11 @@ details[open] > .header__submenu {
 }
 
 @media (prefers-reduced-motion) {
-  details[open] > .header__submenu {
+  details[open] > .header__submenu,
+  .header__menu-details:hover > .header__submenu {
     opacity: 1;
     transform: translateY(0);
+    animation: none;
   }
 }
 
@@ -2915,12 +2917,65 @@ details[open] > .header__submenu {
 @keyframes animateMenuOpen {
   0% {
     opacity: 0;
-    transform: translateY(0.5rem);
+    transform: translateY(8px);
   }
-
   100% {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* Desktop dropdown menu item styles - per specification */
+@media screen and (min-width: 990px) {
+  /* Override menu items INSIDE dropdowns only */
+  .header__submenu .header__menu-item {
+    font-size: 16px;
+    font-weight: 500;
+    color: #374151;
+    padding: 12px 24px;
+    border-radius: 0;
+    transition: all 0.2s ease, padding-left 0.2s ease;
+  }
+
+  /* Hover state with 4px slide-right effect */
+  .header__submenu .header__menu-item:hover {
+    color: #0071dc;
+    background-color: #eff6ff;
+    padding-left: 28px;
+  }
+
+  /* Active item styling */
+  .header__submenu .list-menu__item--active {
+    color: #0071dc;
+  }
+
+  /* Category title styling */
+  .header__submenu-title {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #6b7280;
+    padding: 8px 24px;
+    border-bottom: 1px solid #f3f4f6;
+    margin-bottom: 8px;
+    list-style: none;
+    pointer-events: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Nested dropdown positioning (second-level) */
+  .header__submenu .header__submenu {
+    left: 100%;
+    top: -16px;
+    margin-left: 8px;
+  }
+
+  /* Nested dropdown icon rotation */
+  .header__submenu .header__menu-item .icon-caret {
+    transform: rotate(-90deg);
   }
 }
 

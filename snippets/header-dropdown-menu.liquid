@@ -30,6 +30,10 @@
               role="list"
               tabindex="-1"
             >
+              {%- comment -%}Category title for first-level dropdown{%- endcomment -%}
+              <li class="header__submenu-title">
+                {{ link.title | escape }}
+              </li>
               {%- for childlink in link.links -%}
                 <li>
                   {%- if childlink.links == blank -%}
@@ -56,6 +60,10 @@
                         id="HeaderMenu-SubMenuList-{{ link.handle }}-{{ childlink.handle }}-{{ grandchildlink.handle }}"
                         class="header__submenu list-menu motion-reduce"
                       >
+                        {%- comment -%}Category title for second-level dropdown{%- endcomment -%}
+                        <li class="header__submenu-title">
+                          {{ childlink.title | escape }}
+                        </li>
                         {%- for grandchildlink in childlink.links -%}
                           <li>
                             <a
