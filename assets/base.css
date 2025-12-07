@@ -2811,6 +2811,20 @@ details[open] > .header__submenu {
   width: 100%;
 }
 
+.header__menu-row .page-width {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.header__menu-row .header__inline-menu {
+  margin-left: 0;
+}
+
 .header__inline-menu .list-menu {
   column-gap: 0.25rem;
 }
