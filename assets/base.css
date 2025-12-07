@@ -60,6 +60,27 @@
   line-height: 1;
 }
 
+/* Mobile: Smaller logo icon and text */
+@media screen and (max-width: 749px) {
+  .header-logo {
+    gap: 8px;
+  }
+
+  .header-logo__glow {
+    width: 32px;
+    height: 32px;
+  }
+
+  .header-logo__icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .header-logo__text {
+    font-size: 20px;
+  }
+}
+
 /* ========================================
    Header Search - Pill-shaped Input
    ======================================== */
@@ -179,6 +200,59 @@
   right: 0;
   border-radius: 12px;
   overflow: hidden;
+}
+
+/* ========================================
+   Header Mobile Search Button
+   ======================================== */
+
+.header__search--mobile {
+  display: block;
+}
+
+/* Hide on desktop */
+@media screen and (min-width: 750px) {
+  .header__search--mobile {
+    display: none;
+  }
+}
+
+.header-search-mobile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  list-style: none;
+}
+
+.header-search-mobile::-webkit-details-marker {
+  display: none;
+}
+
+.header-search-mobile:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.header-search-mobile:active {
+  transform: scale(0.95);
+}
+
+.header-search-mobile__icon {
+  color: #ffffff;
+  width: 24px;
+  height: 24px;
+  transition: transform 0.2s ease;
+}
+
+.header-search-mobile:hover .header-search-mobile__icon {
+  transform: scale(1.05);
 }
 
 /* ========================================
@@ -3046,6 +3120,13 @@ details[open] > .header__submenu {
   border-bottom: 1px solid #e5e7eb;
   width: 100%;
 }
+
+@media screen and (max-width: 749px) {
+  .header__menu-row {
+    display: none;
+  }
+}
+
 
 .header__menu-row .page-width {
   display: flex;
