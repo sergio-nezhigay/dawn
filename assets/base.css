@@ -60,6 +60,127 @@
   line-height: 1;
 }
 
+/* ========================================
+   Header Search - Pill-shaped Input
+   ======================================== */
+
+.header-search {
+  position: relative;
+  width: 100%;
+  max-width: 896px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border-radius: 50px;
+}
+
+.header-search__form {
+  position: relative;
+  width: 100%;
+}
+
+.header-search__input {
+  width: 100%;
+  height: 48px;
+  border-radius: 50px;
+  border: none;
+  padding-left: 24px;
+  padding-right: 100px; /* Space for reset + submit buttons */
+  font-size: 16px;
+  color: #111827;
+  background-color: #ffffff;
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+  outline: none;
+  transition: box-shadow 0.2s ease;
+}
+
+.header-search__input::placeholder {
+  color: #6b7280;
+}
+
+.header-search__input:focus {
+  box-shadow: 0 0 0 4px rgba(255, 194, 32, 0.5);
+}
+
+/* Remove Safari search decoration */
+.header-search__input::-webkit-search-decoration,
+.header-search__input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.header-search__button {
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  width: 40px;
+  height: 40px;
+  background-color: #ffc220;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #001e3c;
+  transition: transform 0.2s ease-out, background-color 0.2s ease;
+}
+
+.header-search__button svg {
+  width: 22px;
+  height: 22px;
+}
+
+.header-search__button:hover {
+  background-color: #ffe066;
+  transform: scale(1.05);
+}
+
+.header-search__button:active {
+  background-color: #ffcf4d;
+  transform: scale(0.90);
+}
+
+.header-search__reset {
+  position: absolute;
+  right: 52px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  transition: color 0.2s ease, transform 0.2s ease;
+  padding: 0;
+}
+
+.header-search__reset svg {
+  width: 18px;
+  height: 18px;
+}
+
+.header-search__reset:hover {
+  color: #111827;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.header-search__reset.hidden {
+  display: none;
+}
+
+/* Predictive search positioning */
+.header-search .predictive-search--header {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
 /* ======================================== */
 
 :root {

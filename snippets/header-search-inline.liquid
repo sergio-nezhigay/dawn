@@ -1,5 +1,5 @@
 {% comment %}
-  Renders a header search input. Should be used with 'header.liquid'
+  Renders a custom header search input with pill-shaped design.
 
   Accepts:
   - input_id: {String} Id for the search input element (required)
@@ -8,57 +8,55 @@
   {% render 'header-search-inline', input_id: 'My-Id'%}
 {% endcomment %}
 
-<div class="header__search-inline">
+<div class="header-search">
   {%- if settings.predictive_search_enabled -%}
-    <predictive-search class="search-modal__form" data-loading-text="{{ 'accessibility.loading' | t }}">
+    <predictive-search class="header-search__predictive" data-loading-text="{{ 'accessibility.loading' | t }}">
   {%- else -%}
-    <search-form class="search-modal__form">
+    <search-form class="header-search__form-wrapper">
   {%- endif -%}
-    <form action="{{ routes.search_url }}" method="get" role="search" class="search search-modal__form">
-      <div class="field">
-        <input
-          class="search__input field__input"
-          id="{{ input_id }}"
-          type="search"
-          name="q"
-          value="{{ search.terms | escape }}"
-          placeholder="{{ 'general.search.search' | t }}"
-          {%- if settings.predictive_search_enabled -%}
-            role="combobox"
-            aria-expanded="false"
-            aria-owns="predictive-search-results"
-            aria-controls="predictive-search-results"
-            aria-haspopup="listbox"
-            aria-autocomplete="list"
-            autocorrect="off"
-            autocomplete="off"
-            autocapitalize="off"
-            spellcheck="false"
-          {%- endif -%}
-        >
-        <label class="field__label" for="{{ input_id }}">{{ 'general.search.search' | t }}</label>
-        <input type="hidden" name="options[prefix]" value="last">
-        <button
-          type="reset"
-          class="reset__button field__button{% if search.terms == blank %} hidden{% endif %}"
-          aria-label="{{ 'general.search.reset' | t }}"
-        >
-          <span class="svg-wrapper">
-            {{- 'icon-reset.svg' | inline_asset_content -}}
-          </span>
-        </button>
-        <button class="search__button field__button" aria-label="{{ 'general.search.search' | t }}">
-          <span class="svg-wrapper">
-            {{- 'icon-search.svg' | inline_asset_content -}}
-          </span>
-        </button>
-      </div>
+    <form action="{{ routes.search_url }}" method="get" role="search" class="header-search__form">
+      <input
+        class="header-search__input"
+        id="{{ input_id }}"
+        type="search"
+        name="q"
+        value="{{ search.terms | escape }}"
+        placeholder="{{ 'general.search.search' | t }}"
+        {%- if settings.predictive_search_enabled -%}
+          role="combobox"
+          aria-expanded="false"
+          aria-owns="predictive-search-results"
+          aria-controls="predictive-search-results"
+          aria-haspopup="listbox"
+          aria-autocomplete="list"
+          autocorrect="off"
+          autocomplete="off"
+          autocapitalize="off"
+          spellcheck="false"
+        {%- endif -%}
+      >
+      <input type="hidden" name="options[prefix]" value="last">
+      <button
+        type="reset"
+        class="header-search__reset{% if search.terms == blank %} hidden{% endif %}"
+        aria-label="{{ 'general.search.reset' | t }}"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      <button type="submit" class="header-search__button" aria-label="{{ 'general.search.search' | t }}">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.3-4.3"></path>
+        </svg>
+      </button>
 
       {%- if settings.predictive_search_enabled -%}
         <div class="predictive-search predictive-search--header" tabindex="-1" data-predictive-search>
           {%- render 'loading-spinner', class: 'predictive-search__loading-state' -%}
         </div>
-
         <span class="predictive-search-status visually-hidden" role="status" aria-hidden="true"></span>
       {%- endif -%}
     </form>

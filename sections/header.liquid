@@ -67,12 +67,12 @@
     }
   }
 
-  .header__search-inline {
+  .header-search {
     display: none;
   }
 
   @media screen and (min-width: 990px) {
-    .header__search-inline {
+    .header-search {
       display: block;
       margin: 0 auto;
       width: 100%;
@@ -82,17 +82,14 @@
       display: none;
     }
 
-    .header__search-inline .field__input {
-      padding-right: 4rem;
-    }
-
     .header--middle-left {
       grid-template-areas: 'heading navigation icons';
       grid-template-columns: 1fr auto 1fr !important;
       column-gap: 2rem;
     }
     .header__heading,
-    .header__heading-link {
+    .header__heading-link,
+    .header-logo {
        justify-self: start;
     }
     .header__icons {
