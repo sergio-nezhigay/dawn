@@ -2110,11 +2110,7 @@ input[type='checkbox'] {
   border-bottom: 0.1rem solid rgba(var(--color-foreground), 0.08);
 }
 
-@media screen and (min-width: 990px) {
-  .utility-bar--bottom-border-social-only {
-    border-bottom: 0.1rem solid rgba(var(--color-foreground), 0.08);
-  }
-}
+
 
 .utility-bar__grid {
   display: grid;
@@ -2362,10 +2358,6 @@ input[type='checkbox'] {
   transform: scaleY(0);
   height: 0;
   overflow: hidden;
-}
-
-.header-wrapper--border-bottom {
-  border-bottom: 0.1rem solid rgba(var(--color-foreground), 0.08);
 }
 
 .header {
@@ -2807,7 +2799,7 @@ details[open] > .header__submenu {
 
 .header__menu-row {
   background-color: #ffffff;
-  border-bottom: 1px solid rgba(var(--color-foreground), 0.08);
+  border-bottom: 1px solid #e5e7eb;
   width: 100%;
 }
 
@@ -2842,7 +2834,18 @@ details[open] > .header__submenu {
   font-size: 1.6rem;
   font-weight: 700;
   border-radius: 9999px;
-  transition: all 0.2s ease;
+  white-space: nowrap;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Chevron icon styling for header menu */
+.header__menu-item .icon-caret {
+  width: 15px;
+  height: 15px;
+  margin-left: 8px;
+  color: #6b7280;
+  stroke-width: 3px;
+  transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
 }
 
 .condensed {
@@ -2884,6 +2887,7 @@ details[open] > .header__submenu {
 }
 
 .header__menu-details:hover > .header__menu-item .icon-caret {
+  color: #0071dc;
   transform: rotate(180deg);
 }
 
