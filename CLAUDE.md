@@ -25,7 +25,7 @@ npm run push
 npm run pull
 ```
 
-**Store Configuration:** All commands target `c2da09-15.myshopify.com` theme ID `177753686332`
+**Store Configuration:** All commands target `c2da09-15.myshopify.com`
 
 ### Linting and Validation
 ```bash
