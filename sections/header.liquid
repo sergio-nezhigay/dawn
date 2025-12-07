@@ -96,6 +96,17 @@
        justify-self: end;
     }
   }
+
+  .header-search-navigation {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  @media screen and (min-width: 1100px) {
+    .header-search-navigation {
+      width: 60rem;
+    }
+  }
 </style>
 
 {%- style -%}
@@ -216,7 +227,7 @@
       </h1>
     {%- endif -%}
 
-    <div class="max-md:hidden" style="grid-area: navigation; width: 60rem; max-width: 100%">
+    <div class="max-md:hidden header-search-navigation" style="grid-area: navigation;">
        {% render 'header-search-inline', input_id: 'Search-In-Modal-Inline' %}
     </div>
 
