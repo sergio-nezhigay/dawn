@@ -81,6 +81,69 @@
   }
 }
 
+/* Extra small mobile: Even smaller logo for screens < 466px */
+@media screen and (max-width: 466px) {
+  .header-logo {
+    gap: 6px;
+  }
+
+  .header-logo__glow {
+    width: 24px;
+    height: 24px;
+  }
+
+  .header-logo__icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .header-logo__text {
+    font-size: 16px;
+  }
+}
+
+/* Medium screens: Smaller logo for 990-1440px range */
+@media screen and (min-width: 990px) and (max-width: 1440px) {
+  .header-logo {
+    gap: 10px;
+  }
+
+  .header-logo__glow {
+    width: 40px;
+    height: 40px;
+  }
+
+  .header-logo__icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .header-logo__text {
+    font-size: 28px;
+  }
+}
+
+/* Extra small logo for 1100-1270px range (about 40% of default) */
+@media screen and (min-width: 1100px) and (max-width: 1270px) {
+  .header-logo {
+    gap: 6px;
+  }
+
+  .header-logo__glow {
+    width: 28px;
+    height: 28px;
+  }
+
+  .header-logo__icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .header-logo__text {
+    font-size: 22px;
+  }
+}
+
 /* ========================================
    Header Search - Pill-shaped Input
    ======================================== */
