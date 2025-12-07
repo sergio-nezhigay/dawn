@@ -228,6 +228,19 @@
         {%- endcase -%}
       {%- endfor -%}
 
+      {%- comment -%} Mobile Search Button {%- endcomment -%}
+      {% render 'header-search', input_id: 'Search-In-Modal' %}
+
+      {%- comment -%} Mobile Phone/Call Button {%- endcomment -%}
+      <a
+        href="tel:+38(099)381-5288"
+        class="header__icon header__icon--phone link focus-inset md:hidden"
+        aria-label="{{ 'accessibility.call_store' | t | default: 'Call store' }}"
+      >
+        <span class="svg-wrapper">
+          {{- 'icon-phone.svg' | inline_asset_content -}}
+        </span>
+      </a>
 
       <a href="{{ routes.cart_url }}" class="header-cart focus-inset" id="cart-icon-bubble">
         <svg class="header-cart__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
