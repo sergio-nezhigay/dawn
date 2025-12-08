@@ -14,18 +14,18 @@ This is a customized version of Shopify's Dawn theme - a HTML-first, JavaScript-
 ## Development Commands
 
 ### Theme Development
+
+**Primary Workflow:** Use local development server for testing:
 ```bash
-# Start local development server
+# Start local development server (USE THIS for testing)
 npm run dev
-
-# Push theme to Shopify store
-npm run push
-
-# Pull theme from Shopify store
-npm run pull
 ```
 
-**Store Configuration:** All commands target `c2da09-15.myshopify.com`
+This starts a local development server that syncs changes to your Shopify store in real-time. Always test changes locally with `npm run dev` before considering deployment.
+
+**Store Configuration:** Development server targets `c2da09-15.myshopify.com`
+
+**Avoid using push/pull commands** - prefer local development workflow with `npm run dev` for all changes and testing.
 
 ### Linting and Validation
 ```bash
@@ -118,7 +118,6 @@ This project uses **Tailwind CSS v4** for styling:
 
 ### Styling Approach
 
-**Mobile-First CSS:** Always write CSS with mobile-first approach, using min-width media queries.
 
 ## Code Standards
 
@@ -166,9 +165,8 @@ Theme settings are defined in `config/settings_schema.json` and accessed in Liqu
 - Page: `templates/cart.json` + `sections/main-cart-items.liquid`
 
 ### Styling Changes
-1. For Tailwind: Edit `assets/tailwind.input.css`, regenerate output
-2. For component styles: Edit respective `assets/component-*.css` file
-3. For theme-wide: Edit CSS custom properties in `layout/theme.liquid`
+1. For component styles: Edit respective `assets/component-*.css` file
+2. For theme-wide: Edit CSS custom properties in `layout/theme.liquid`
 
 ## MCP Servers
 
@@ -176,3 +174,4 @@ Shopify Dev MCP server can be added for enhanced development:
 ```bash
 claude mcp add shopify-dev -- npx -y @shopify/dev-mcp
 ```
+- remember to avoid adding using tailwind for new classes, since to tailwind style files are generated automatically
