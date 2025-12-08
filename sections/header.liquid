@@ -133,6 +133,17 @@
       padding-bottom: 12px;
     }
   }
+
+  /* Background color for 1st and 2nd header rows */
+  .header-wrapper .page-width.max-md\:hidden,
+  .header-wrapper .header {
+    background-color: #0071dc;
+  }
+
+  /* Keep 3rd row (menu row) white */
+  .header__menu-row {
+    background-color: #ffffff !important;
+  }
 {%- endstyle -%}
 
 <script src="{{ 'cart-notification.js' | asset_url }}" defer="defer"></script>
@@ -281,7 +292,7 @@
   </header>
 
   <div class="header__menu-row">
-    <div class="page-width max-md:hidden">
+    <div class="page-width">
       {%- liquid
         if section.settings.menu != blank
           render 'header-dropdown-menu'
