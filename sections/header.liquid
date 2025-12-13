@@ -183,9 +183,9 @@
       <nav>
         <ul class="flex gap-8">
           {% for link in linklists['secondary-menu'].links %}
-            <li>
+            <li
               <a
-                class="text-white hover:underline hover:opacity-100 transition-opacity underline-offset-4 w-fit opacity-85"
+                class="hover:underline cursor-pointer hover:text-white underline-offset-4 w-fit "
                 href="{{ link.url }}"
               >
                 {{- link.title -}}
