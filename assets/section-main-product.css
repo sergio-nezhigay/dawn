@@ -254,6 +254,13 @@ a.product__text {
   margin: 0;
 }
 
+.product__title h1 {
+  font-family: 'Chakra Petch', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
 .product__title > a {
   display: none;
 }
