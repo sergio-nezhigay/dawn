@@ -162,12 +162,6 @@ background-color: white;
   width: max-content;
 }
 
-Ensure full opacity for header localization dropdown
-.header-localization .disclosure__list-wrapper,
-.header-localization .localization-selector + .disclosure__list-wrapper {
-  opacity: 1 !important;
-}
-
 .country-selector__list {
   padding-bottom: 0.95rem;
   padding-top: 0;
