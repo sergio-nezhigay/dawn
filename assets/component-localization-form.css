@@ -158,8 +158,7 @@
 
 /* Header localization dropdown background */
 .header-localization .disclosure__list-wrapper {
-
-  z-index: 100;
+background-color: white;
 }
 
 .disclosure__list {
@@ -177,7 +176,7 @@
 
 /* Header localization list solid background */
 .header-localization .disclosure__list {
-  background-color: red;
+  /*background-color: red;*/
 }
 
 /* Ensure full opacity for header localization dropdown */
@@ -501,5 +500,5 @@
 }
 
 .language-selector .disclosure__list {
-  min-width: 200px;
+  min-width: 100px;
 }

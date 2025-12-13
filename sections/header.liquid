@@ -17,6 +17,11 @@
     width: 75%;
   }
 
+  .top-row {
+    position: relative;
+    z-index: 1;
+  }
+
   @media screen and (min-width: 990px) {
     header-drawer {
       display: none;
@@ -166,7 +171,7 @@
       assign localization_forms = true
     endif
   -%}
-  <header class="page-width max-md:hidden">
+  <header class="page-width max-md:hidden top-row">
     <div class="flex-between pt-4 scaleY-open condensed">
       <nav>
         <ul class="flex gap-8">
