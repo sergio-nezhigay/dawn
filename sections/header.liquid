@@ -1,15 +1,10 @@
-<link rel="stylesheet" href="{{ 'component-list-menu.css' | asset_url }}" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="{{ 'component-search.css' | asset_url }}" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="{{ 'component-menu-drawer.css' | asset_url }}" media="print" onload="this.media='all'">
-<link
-  rel="stylesheet"
-  href="{{ 'component-cart-notification.css' | asset_url }}"
-  media="print"
-  onload="this.media='all'"
->
+<link rel="stylesheet" href="{{ 'component-list-menu.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'component-search.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'component-menu-drawer.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'component-cart-notification.css' | asset_url }}">
 
 {%- if settings.predictive_search_enabled -%}
-  <link rel="stylesheet" href="{{ 'component-price.css' | asset_url }}" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="{{ 'component-price.css' | asset_url }}">
 {%- endif -%}
 
 <style>
@@ -134,15 +129,14 @@
     }
   }
 
-  /* Background color for 1st and 2nd header rows */
-  .header-wrapper .page-width.max-md\:hidden,
-  .header-wrapper .header {
-    background-color: #0071dc;
+  /* Set header background color */
+  .header-wrapper {
+    background: #0071dc;
   }
 
   /* Keep 3rd row (menu row) white */
   .header__menu-row {
-    background-color: #ffffff !important;
+    background-color: #ffffff;
   }
 {%- endstyle -%}
 
