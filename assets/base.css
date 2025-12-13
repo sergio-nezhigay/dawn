@@ -2078,6 +2078,7 @@ details[open] > .share-button__fallback {
   text-transform: uppercase;
 }
 
+
 .localization-form__option-text {
   font-size: 14px;
 }
@@ -2617,6 +2618,10 @@ input[type='checkbox'] {
   animation: animateMenuOpen var(--duration-default) ease;
 }
 
+.localization-selector.link:hover {
+  text-decoration: none !important;
+}
+
 .utility-bar .localization-wrapper .disclosure .localization-form__select,
 .utility-bar .localization-wrapper .disclosure__link {
   font-size: calc(var(--font-heading-scale) * 1.3rem);
@@ -2940,6 +2945,11 @@ input[type='checkbox'] {
   fill: rgb(var(--color-accent));
   width: 1.6rem;
   height: 1.6rem;
+  transition: transform 200ms ease;
+}
+
+.header__phone-link:hover svg {
+  transform: scale(1.1);
 }
 
 /* Header icons */
