@@ -123,6 +123,23 @@
   background-color: transparent;
 }
 
+/* Header localization trigger text colors */
+.header-localization .disclosure__button {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.header-localization .disclosure__button:hover {
+  color: rgba(255, 255, 255, 1);
+}
+
+.header-localization .disclosure__button .icon-caret {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.header-localization .disclosure__button:hover .icon-caret {
+  color: rgba(255, 255, 255, 1);
+}
+
 .disclosure__list-wrapper {
   border-width: var(--popup-border-width);
   border-style: solid;
@@ -139,6 +156,12 @@
   max-height: 27.5rem;
 }
 
+/* Header localization dropdown background */
+.header-localization .disclosure__list-wrapper {
+
+  z-index: 100;
+}
+
 .disclosure__list {
   position: relative;
   overflow-y: auto;
@@ -150,6 +173,17 @@
   max-width: 25.5rem;
   min-width: 12rem;
   width: max-content;
+}
+
+/* Header localization list solid background */
+.header-localization .disclosure__list {
+  background-color: red;
+}
+
+/* Ensure full opacity for header localization dropdown */
+.header-localization .disclosure__list-wrapper,
+.header-localization .localization-selector + .disclosure__list-wrapper {
+  opacity: 1 !important;
 }
 
 .country-selector__list {
@@ -320,6 +354,24 @@
 
 .disclosure__link:hover {
   color: rgb(var(--color-foreground));
+}
+
+/* Header localization option text colors */
+.header-localization .disclosure__link {
+  color: #1f2937;
+}
+
+.header-localization .disclosure__link:hover {
+  background-color: #f9fafb;
+  color: #1f2937;
+}
+
+.header-localization .disclosure__link[aria-current="true"] {
+  color: #0071dc;
+}
+
+.header-localization .disclosure__link[aria-current="true"] .icon-checkmark {
+  color: #0071dc;
 }
 
 .disclosure__link .icon-checkmark {
