@@ -20,6 +20,13 @@
   .top-row {
     position: relative;
     z-index: 1;
+    color: rgba(255, 255, 255, 0.9);
+    color: red;
+  }
+
+  .link--text {
+    color: inherit;
+    transition: color 0.2s ease-in-out;
   }
 
   @media screen and (min-width: 990px) {
@@ -191,7 +198,7 @@
       <div class="flex gap-4 items-center">
         <a
           href="tel:+38(099)381-5288"
-          class="text-white hover:opacity-100 transition-colors duration-200 w-fit opacity-85 flex items-center gap-2 tracking-wide font-bold text-sm"
+          class="header__phone-link"
         >
           {{- 'icon-phone.svg' | inline_asset_content -}}
           (099) 381-5288</a

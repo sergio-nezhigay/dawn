@@ -13,7 +13,7 @@
     aria-controls="{{ localPosition }}List"
     aria-describedby="{{ localPosition }}Label"
   >
-    <span class="condensed uppercase text-base">{{ localization.language.iso_code }}</span>
+    <span class="localization-form__trigger-text">{{ localization.language.iso_code }}</span>
     {{ 'icon-caret.svg' | inline_asset_content }}
   </button>
   <div class="disclosure__list-wrapper language-selector">
@@ -37,7 +37,7 @@
             >
               {{- 'icon-checkmark.svg' | inline_asset_content -}}
             </span>
-            <span> {{ language.endonym_name | capitalize }} </span>
+            <span class="localization-form__option-text{% if language.iso_code == localization.language.iso_code %} localization-form__option-text--active{% endif %}"> {{ language.endonym_name | capitalize }} </span>
           </a>
         </li>
       {%- endfor -%}

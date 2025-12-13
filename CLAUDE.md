@@ -174,4 +174,4 @@ Shopify Dev MCP server can be added for enhanced development:
 ```bash
 claude mcp add shopify-dev -- npx -y @shopify/dev-mcp
 ```
-- remember to avoid adding using tailwind for new classes, since to tailwind style files are generated automatically
+Do not use tailwind for styling, can only leave it in cases it already exists

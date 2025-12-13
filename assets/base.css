@@ -53,7 +53,7 @@
 .header-logo__icon {
   width: 48px;
   height: 48px;
-  color: #ffc220;
+  color: rgb(var(--color-accent));
   stroke-width: 2;
   transition: transform 300ms ease-out;
   position: relative;
@@ -207,7 +207,7 @@
   top: 4px;
   width: 40px;
   height: 40px;
-  background-color: #ffc220;
+  background-color: rgb(var(--color-accent));
   border-radius: 50%;
   border: none;
   cursor: pointer;
@@ -370,7 +370,7 @@
   position: absolute;
   top: 2px;
   right: 2px;
-  background-color: #ffc220;
+  background-color: rgb(var(--color-accent));
   color: #001e3c;
   font-family: sans-serif;
   font-size: 11px;
@@ -2071,6 +2071,21 @@ details[open] > .share-button__fallback {
   box-shadow: none;
 }
 
+/* Localization text styles */
+.localization-form__trigger-text {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.localization-form__option-text {
+  font-size: 14px;
+}
+
+.localization-form__option-text--active {
+  font-weight: 700;
+}
+
 .text-area,
 .select {
   display: flex;
@@ -2901,6 +2916,30 @@ input[type='checkbox'] {
     justify-self: center;
     text-align: center;
   }
+}
+
+/* Header phone link */
+.header__phone-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: fit-content;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.035em;
+  transition: color 200ms;
+  text-decoration: none;
+}
+
+.header__phone-link:hover {
+  color: white;
+}
+
+.header__phone-link svg {
+  color: rgb(var(--color-accent));
+  fill: rgb(var(--color-accent));
+  width: 1.6rem;
+  height: 1.6rem;
 }
 
 /* Header icons */
