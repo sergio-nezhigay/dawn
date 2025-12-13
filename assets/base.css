@@ -2081,11 +2081,12 @@ details[open] > .share-button__fallback {
 
 .localization-form__option-text {
   font-size: 14px;
-}
-
-.localization-form__option-text--active {
   font-weight: 700;
 }
+
+/*.localization-form__option-text--active {
+  font-weight: 700;
+}*/
 
 .text-area,
 .select {

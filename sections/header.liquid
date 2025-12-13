@@ -183,14 +183,16 @@
       <nav>
         <ul class="flex gap-8">
           {% for link in linklists['secondary-menu'].links %}
-            <li
-              <a
-                class="header__menu-link"
-                href="{{ link.url }}"
-              >
-                {{- link.title -}}
-              </a>
-            </li>
+            {% unless link.url contains 'blogs' %}
+              <li
+                <a
+                  class="header__menu-link"
+                  href="{{ link.url }}"
+                >
+                  {{- link.title -}}
+                </a>
+              </li>
+            {% endunless %}
           {% endfor %}
         </ul>
       </nav>
@@ -206,7 +208,7 @@
 
         {%- if localization.available_languages.size > 1 -%}
           <div class="desktop-localization-wrapper header-localization">
-             <localization-form data-prevent-hide>
+             <localization-form>
               {%- form 'localization', id: 'HeaderLanguageForm', class: 'localization-form' -%}
                 <div>
                   <h2 class="visually-hidden" id="HeaderLanguageLabel">{{ 'localization.language_label' | t }}</h2>
