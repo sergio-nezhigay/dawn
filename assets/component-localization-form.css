@@ -155,8 +155,6 @@ background-color: white;
   position: relative;
   overflow-y: auto;
   font-size: 1.4rem;
-  padding-bottom: 0.5rem;
-  padding-top: 0.5rem;
   scroll-padding: 0.5rem 0;
   max-height: 20.5rem;
   max-width: 25.5rem;
@@ -482,6 +480,10 @@ Ensure full opacity for header localization dropdown
 
 .menu-drawer__localization + .list-social {
   margin-top: 1rem;
+}
+
+.language-selector {
+    border-radius: 8px;
 }
 
 .language-selector .disclosure__list {
