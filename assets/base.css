@@ -3246,7 +3246,7 @@ details[open] > .header__submenu {
   letter-spacing: 0.03rem;
   font-stretch: condensed;
   font-size: 1.6rem;
-  opacity: 0.85;
+  /*opacity: 0.85;*/
 }
 
 .scaleY-open {
