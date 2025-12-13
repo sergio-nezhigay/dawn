@@ -21,7 +21,7 @@
     position: relative;
     z-index: 1;
     color: rgba(255, 255, 255, 0.9);
-    color: red;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   .link--text {
@@ -179,13 +179,13 @@
     endif
   -%}
   <header class="page-width max-md:hidden top-row">
-    <div class="flex-between pt-4 scaleY-open condensed">
+    <div class="flex-between scaleY-open condensed">
       <nav>
         <ul class="flex gap-8">
           {% for link in linklists['secondary-menu'].links %}
             <li
               <a
-                class="hover:underline cursor-pointer hover:text-white underline-offset-4 w-fit "
+                class="header__menu-link"
                 href="{{ link.url }}"
               >
                 {{- link.title -}}

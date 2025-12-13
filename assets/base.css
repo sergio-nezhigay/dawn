@@ -2923,6 +2923,22 @@ input[type='checkbox'] {
   }
 }
 
+/* Header menu link */
+.header__menu-link {
+  width: fit-content;
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: none;
+  /*text-underline-offset: 2px;*/
+  transition: color 200ms;
+  font-weight: 500;
+}
+
+.header__menu-link:hover {
+  text-decoration: underline;
+  color: white;
+}
+
 /* Header phone link */
 .header__phone-link {
   display: flex;
