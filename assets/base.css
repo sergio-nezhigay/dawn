@@ -1,5 +1,19 @@
-/* Google Font for Header Logo */
-@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@700&display=swap');
+/* Chakra Petch Font - Self-Hosted */
+@font-face {
+  font-family: 'Chakra Petch';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('chakra-petch-700.woff2') format('woff2');
+}
+
+/* Chakra Petch Utility Class - Reusable */
+.font-chakra {
+  font-family: 'Chakra Petch', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
 
 /* ========================================
    Header Logo - Custom Brand Block
@@ -51,12 +65,8 @@
 }
 
 .header-logo__text {
-  font-family: 'Chakra Petch', sans-serif;
-  font-weight: 700;
   font-size: clamp(28px, 4vw, 36px);
   color: #ffffff;
-  text-transform: uppercase;
-  letter-spacing: 0.025em;
   line-height: 1;
 }
 

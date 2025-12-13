@@ -4,7 +4,10 @@
       "Bash(dir:*)",
       "Bash(claude mcp add:*)",
       "Bash(npx tailwindcss:*)",
-      "Bash(shopify theme check:*)"
+      "Bash(shopify theme check:*)",
+      "WebFetch(domain:fonts.googleapis.com)",
+      "Bash(curl:*)",
+      "Bash(npm run dev:*)"
     ],
     "deny": [],
     "ask": []
