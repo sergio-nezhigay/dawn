@@ -21,6 +21,12 @@ if (!customElements.get('localization-form')) {
         this.addEventListener('focusout', this.closeSelector.bind(this));
         this.elements.button.addEventListener('click', this.openSelector.bind(this));
 
+        // Add hover functionality for desktop
+        if (this.mql.matches) {
+          this.addEventListener('mouseenter', this.onMouseEnter.bind(this));
+          this.addEventListener('mouseleave', this.onMouseLeave.bind(this));
+        }
+
         if (this.elements.search) {
           this.elements.search.addEventListener('keyup', this.filterCountries.bind(this));
           this.elements.search.addEventListener('focus', this.onSearchFocus.bind(this));
@@ -200,6 +206,28 @@ if (!customElements.get('localization-form')) {
         if (event.code.toUpperCase() === 'ENTER') {
           event.preventDefault();
         }
+      }
+
+      onMouseEnter() {
+        // Only apply hover behavior on desktop
+        if (!this.mql.matches) return;
+
+        // Open the panel if it's hidden
+        if (this.elements.panel.hasAttribute('hidden')) {
+          this.elements.button.setAttribute('aria-expanded', 'true');
+          this.elements.panel.removeAttribute('hidden');
+          if (this.hasAttribute('data-prevent-hide')) {
+            this.header.preventHide = true;
+          }
+        }
+      }
+
+      onMouseLeave() {
+        // Only apply hover behavior on desktop
+        if (!this.mql.matches) return;
+
+        // Close the panel
+        this.hidePanel();
       }
     }
   );

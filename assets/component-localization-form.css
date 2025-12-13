@@ -82,6 +82,7 @@
   height: 0.6rem;
   right: calc(var(--inputs-border-width) + 1.5rem);
   top: calc(50% - 0.2rem);
+  transition: transform 0.3s ease;
 }
 
 .localization-selector.link {
@@ -333,7 +334,8 @@
   opacity: 1;
 }
 
-.disclosure__button[aria-expanded='true'] .icon-caret {
+.disclosure__button[aria-expanded='true'] .icon-caret,
+.disclosure__button:hover .icon-caret {
   transform: rotate(180deg);
 }
 
