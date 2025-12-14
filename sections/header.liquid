@@ -10,7 +10,6 @@
 <style>
   header-drawer {
     justify-self: start;
-    margin-left: -1.2rem;
   }
 
   .scrolled-past-header .header__heading-logo-wrapper {
@@ -123,9 +122,12 @@
 
   @media screen and (max-width: 749px) {
     .header {
+      padding-top: 12px;
+      padding-bottom: 12px;
       padding-left: 1rem;
       padding-right: 1rem;
-      grid-template-columns: 1fr auto 1fr;
+      grid-template-columns: auto auto 1fr;
+      gap: 12px;
     }
   }
 

@@ -10,7 +10,8 @@
       "Bash(npm run dev:*)",
       "Bash(ls -la \"C:\\projects\\dawn\\assets\"\" | grep -E \"menu)",
       "Bash(drawer)",
-      "Bash(header \")"
+      "Bash(header \")",
+      "Bash(ls:*)"
     ],
     "deny": [],
     "ask": []
