@@ -3514,8 +3514,6 @@ details[open] > .header__submenu {
 }
 
 .gradient {
-  background: rgb(var(--color-background));
-  background: var(--gradient-background);
   background-attachment: fixed;
 }
 
