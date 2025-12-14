@@ -74,6 +74,7 @@ details[open].menu-opening > .menu-drawer__submenu {
 .menu-drawer__inner-container {
   position: relative;
   height: 100%;
+  background-color: #075A9E;
 }
 
 .menu-drawer__navigation-container {
@@ -86,12 +87,16 @@ details[open].menu-opening > .menu-drawer__submenu {
 
 .menu-drawer__navigation {
   padding: 3rem 0 1rem 0;
+  background-color: #0969C3;
+  height: fit-content;
 }
 
 .menu-drawer__inner-submenu {
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
+  background-color: #0969C3;
+
 }
 
 .js .menu-drawer__menu li {
@@ -101,7 +106,12 @@ details[open].menu-opening > .menu-drawer__submenu {
 .menu-drawer__menu-item {
   padding: 1.1rem 3rem;
   text-decoration: none;
-  font-size: 1.8rem;
+      color: #FFFFFF !important;
+   font-size: 1.8rem;
+}
+
+.menu-drawer__navigation .menu-drawer__menu-item {
+   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .menu-drawer summary.menu-drawer__menu-item {
@@ -171,7 +181,6 @@ details[open].menu-opening > .menu-drawer__submenu {
 
 .menu-drawer__utility-links {
   padding: 0;
-  background-color: rgba(var(--color-foreground), 0.03);
   position: relative;
 }
 
