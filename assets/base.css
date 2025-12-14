@@ -373,10 +373,11 @@
 }
 
 .header-cart:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.25);
+  cursor: pointer;
 }
-
 .header-cart:active {
+  background: rgba(255, 255, 255, 0.25);
   transform: scale(0.95);
 }
 
@@ -385,10 +386,6 @@
   width: 28px;
   height: 28px;
   transition: transform 0.2s ease;
-}
-
-.header-cart:hover .header-cart__icon {
-  transform: scale(1.05);
 }
 
 .header-cart__badge {
@@ -2024,7 +2021,6 @@ details[open] > .share-button__fallback {
 .customer select {
   -webkit-appearance: none;
   appearance: none;
-  background-color: rgb(var(--color-background));
   color: rgb(var(--color-foreground));
   font-family: var(--font-body-family);
   font-style: var(--font-body-style);
@@ -2525,7 +2521,7 @@ input[type='checkbox'] {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgb(var(--color-background));
+  background: #0071dc;
   z-index: 4;
   display: flex;
   justify-content: center;
@@ -3113,14 +3109,6 @@ input[type='checkbox'] {
     transform: none;
   }
 
-  .header-cart:hover {
-    background-color: transparent;
-  }
-
-  .header-cart:hover .header-cart__icon {
-    transform: none;
-  }
-
   .header__phone-link:hover svg {
     transform: none;
   }
@@ -3146,16 +3134,6 @@ input[type='checkbox'] {
   margin-right: -1.2rem;
 }
 
-.header__icon--menu[aria-expanded='true']::before {
-  content: '';
-  top: 100%;
-  left: 0;
-  height: calc(var(--viewport-height, 100vh) - (var(--header-bottom-position, 100%)));
-  width: 100%;
-  display: block;
-  position: absolute;
-  background: rgba(var(--color-foreground), 0.5);
-}
 
 .header__icon--account shop-user-avatar {
   --shop-avatar-size: 2.8rem;
