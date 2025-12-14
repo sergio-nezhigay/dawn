@@ -86,35 +86,19 @@
   }
 
   .header-logo__text {
-    font-size: 15px;
+    font-size: 19px;
     font-weight: bold;
     letter-spacing: 0.5px;
   }
 }
 
-/* Extra small mobile: Even smaller logo for screens < 466px */
-/* Commented out to maintain consistent 32px icon and 15px text per style guide */
-/*
 @media screen and (max-width: 466px) {
-  .header-logo {
-    gap: 6px;
-  }
-
-  .header-logo__glow {
-    width: 24px;
-    height: 24px;
-  }
-
-  .header-logo__icon {
-    width: 24px;
-    height: 24px;
-  }
-
   .header-logo__text {
-    font-size: 16px;
+    font-size: 15px;
   }
 }
-*/
+
+
 
 /* Medium screens: Smaller logo for 990-1440px range */
 @media screen and (min-width: 990px) and (max-width: 1440px) {
