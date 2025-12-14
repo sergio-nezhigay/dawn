@@ -2966,7 +2966,7 @@ input[type='checkbox'] {
 }
 
 .header__phone-link:hover svg {
-  transform: scale(1.1);
+  transform: scale(1.2);
 }
 
 /* Header icons */
@@ -3233,7 +3233,7 @@ details[open] > .header__submenu {
   margin-left: 0;
 }
 
-@media screen and (min-width: 990px) {
+@media screen and (min-width: 750px) {
   .header__inline-menu {
     display: block;
   }
@@ -3358,6 +3358,27 @@ details[open] > .header__submenu {
 
 .header__menu-item:hover .header__active-menu-item {
   text-decoration: none;
+}
+
+/* Compact design for tablet screens to prevent menu wrapping */
+@media screen and (min-width: 750px) and (max-width: 989px) {
+  .header__menu-item {
+    padding: 0.6rem 0.9rem;
+    font-size: 1.4rem;
+    letter-spacing: 0.03rem;
+  }
+
+  .header__menu-item .icon-caret {
+    width: 12px;
+    height: 12px;
+    margin-left: 6px;
+  }
+
+  .header__menu-row .page-width {
+    gap: 2px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+  }
 }
 
 .header__submenu {
