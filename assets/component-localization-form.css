@@ -52,6 +52,10 @@
 }
 
 @media screen and (max-width: 749px) {
+    .localization-form__select{
+        color: white !important;
+        font-size: 18px !important;
+    }
   .localization-form .button {
     word-break: break-all;
   }
