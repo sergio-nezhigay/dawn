@@ -22,7 +22,6 @@
 .header-logo {
   display: flex;
   align-items: center;
-  gap: 12px;
   text-decoration: none;
 }
 
@@ -87,11 +86,15 @@
   }
 
   .header-logo__text {
-    font-size: 20px;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
   }
 }
 
 /* Extra small mobile: Even smaller logo for screens < 466px */
+/* Commented out to maintain consistent 32px icon and 15px text per style guide */
+/*
 @media screen and (max-width: 466px) {
   .header-logo {
     gap: 6px;
@@ -111,6 +114,7 @@
     font-size: 16px;
   }
 }
+*/
 
 /* Medium screens: Smaller logo for 990-1440px range */
 @media screen and (min-width: 990px) and (max-width: 1440px) {
@@ -328,6 +332,27 @@
   transform: scale(1.05);
 }
 
+/* Mobile search button - style guide standardization */
+@media screen and (max-width: 749px) {
+  .header-search-mobile {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.15);
+    transition: all 0.2s ease;
+  }
+
+  .header-search-mobile:active {
+    transform: scale(0.95);
+    background-color: rgba(255, 255, 255, 0.25);
+  }
+
+  .header-search-mobile__icon {
+    width: 20px;
+    height: 20px;
+  }
+}
+
 /* ========================================
    Header Cart Icon
    ======================================== */
@@ -385,6 +410,33 @@
   padding: 0 4px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   line-height: 1;
+}
+
+/* Mobile cart button - style guide standardization */
+@media screen and (max-width: 749px) {
+  .header-cart {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.15);
+    transition: all 0.2s ease;
+  }
+
+  .header-cart:active {
+    transform: scale(0.95);
+    background-color: rgba(255, 255, 255, 0.25);
+  }
+
+  .header-cart__icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .header-cart__badge {
+    top: -4px;
+    right: -4px;
+    border-radius: 9px;
+  }
 }
 
 /* ======================================== */
@@ -2783,6 +2835,7 @@ input[type='checkbox'] {
   .header--has-app {
     grid-template-columns: auto 1fr auto;
   }
+
 }
 
 @media screen and (min-width: 990px) {
@@ -2972,9 +3025,9 @@ input[type='checkbox'] {
 /* Header icons */
 .header__icons {
   display: flex;
+  gap: 10px;
   grid-area: icons;
   justify-self: end;
-  padding-right: 0.8rem;
 }
 
 .header__icons .shopify-app-block {
@@ -3017,6 +3070,68 @@ input[type='checkbox'] {
   width: 2rem;
   fill: none;
   vertical-align: middle;
+}
+
+/* Mobile header icons - style guide standardization */
+@media screen and (max-width: 749px) {
+  /* Button containers: 40x40px with frosted glass background */
+  .header__icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.15);
+    transition: all 0.2s ease;
+  }
+
+  .header__icon:active {
+    transform: scale(0.95);
+    background-color: rgba(255, 255, 255, 0.25);
+  }
+
+  /* Icon sizes: 20px default */
+  .header__icon .icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Navigation icons are larger: 24px */
+  .header__icon--menu .icon-hamburger,
+  .header__icon--menu .icon-close {
+    width: 24px;
+    height: 24px;
+  }
+
+  /* Phone icon */
+  .header__icon--phone .icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Remove hover effects on mobile (temporary) */
+  .header__icon:hover .icon,
+  .modal__close-button:hover .icon {
+    transform: none;
+  }
+
+  .header-cart:hover {
+    background-color: transparent;
+  }
+
+  .header-cart:hover .header-cart__icon {
+    transform: none;
+  }
+
+  .header__phone-link:hover svg {
+    transform: none;
+  }
+}
+
+/* Desktop header icons maintain 32px size */
+@media screen and (min-width: 750px) {
+  .header__icon .icon {
+    height: 2rem;  /* 32px */
+    width: 2rem;   /* 32px */
+  }
 }
 
 .header__icon,
