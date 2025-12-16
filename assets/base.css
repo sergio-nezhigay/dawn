@@ -3510,6 +3510,23 @@ details[open] > .header__submenu {
     padding: 12px 24px;
     border-radius: 0;
     transition: all 0.2s ease, padding-left 0.2s ease;
+    position: relative;
+  }
+
+  .header__submenu .header__menu-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: #0066CC;
+    transform: scaleY(0);
+    transition: transform 0.15s;
+  }
+
+  .header__submenu .header__menu-item:hover::before {
+    transform: scaleY(1);
   }
 
   /* Hover state with 4px slide-right effect */
