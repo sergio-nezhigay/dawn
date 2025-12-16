@@ -118,6 +118,12 @@ predictive-search[loading] .predictive-search__loading-state {
     stroke: #0071dc;
     color: #0071dc;
     font-weight: 700;
+    background-color: #F8FBFF;
+}
+
+.predictive-search__search-for-button:hover .link--text {
+    /*background-color: red !important;*/
+    background-color: #EBF4FF !important;
 }
 
 predictive-search[loading] .predictive-search__search-for-button {
@@ -146,7 +152,8 @@ predictive-search[loading] .predictive-search__results-groups-wrapper ~ .predict
 .predictive-search__item[aria-selected='true'],
 .predictive-search__item:hover {
 
-  background-color: #f8f9fa;
+  background: linear-gradient(90deg, #F0F7FF 0%, #ffffff 100%);
+  /*background-color: #f8f9fa;*/
 }
 
 .predictive-search__search-for-button:hover .link--text {
@@ -158,6 +165,7 @@ predictive-search[loading] .predictive-search__results-groups-wrapper ~ .predict
 
 .predictive-search__item {
   display: flex;
+  align-items: center;
   padding: 1.2rem 2rem;
   text-align: left;
   text-decoration: none;
@@ -217,7 +225,7 @@ predictive-search[loading] .predictive-search__results-groups-wrapper ~ .predict
 }
 
 .predictive-search__item--term {
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 1.3rem 2rem;
   word-break: break-all;

@@ -255,7 +255,7 @@
       },
       "page": "Сторінка",
       "products": "Товари",
-      "search_for": "Пошук \"{{ terms }}\"",
+      "search_for": "Показати всі результати \"{{ terms }}\"",
       "results_with_count_and_term": {
         "one": "{{ count }} рез. за запитом «{{ terms }}»",
         "few": "{{ count }} рез. за запитом «{{ terms }}»",
