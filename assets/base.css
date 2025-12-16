@@ -256,10 +256,9 @@
 /* Predictive search positioning */
 .header-search .predictive-search--header {
   position: absolute;
-  top: calc(100% + 8px);
+  top: calc(100% + 4px);
   left: 0;
   right: 0;
-  border-radius: 12px;
   overflow: hidden;
 }
 
