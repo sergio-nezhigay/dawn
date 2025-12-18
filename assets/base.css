@@ -2797,12 +2797,6 @@ input[type='checkbox'] {
   background-color: rgb(var(--color-background));
 }
 
-.scrolled-past-header .scaleY-open {
-  transform: scaleY(0);
-  height: 0;
-  overflow: hidden;
-}
-
 .header {
   display: grid;
   grid-template-areas: 'left-icons heading icons';
@@ -3391,11 +3385,7 @@ details[open] > .header__submenu {
   /*opacity: 0.85;*/
 }
 
-.scaleY-open {
-  transform-origin: top;
-  transform: scaleY(1);
-  transition: transform 0.3s ease-in-out;
-}
+
 
 .header__menu-item:focus-visible {
   outline: none;
