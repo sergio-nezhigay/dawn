@@ -257,11 +257,7 @@
         }
       }
 
-      /* Grey background for product pages */
-      .template-product {
-        background-color: #f5f5f5 !important;
-      }
-
+      /* Product page background handled by template-product.css */
       .template-product product-info,
       .template-product .shopify-section {
         background-color: transparent !important;
@@ -270,6 +266,9 @@
     {% endstyle %}
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
+    {%- if request.page_type == 'product' -%}
+      {{ 'template-product.css' | asset_url | stylesheet_tag }}
+    {%- endif -%}
     <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
 
     {%- if settings.cart_type == 'drawer' -%}
