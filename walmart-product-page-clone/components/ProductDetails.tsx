@@ -32,7 +32,7 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
           </div>
         </div>
         <span className="text-gray-400 text-lg">|</span>
-        <a href="#reviews" className="underline decoration-gray-400 hover:text-[#0071dc] hover:decoration-[#0071dc] transition-all duration-200 font-medium text-gray-700 text-base">
+        <a href="#reviews" className="review__link">
           {product.reviewCount} відгуків
         </a>
       </div>
@@ -48,7 +48,7 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
             {product.currency}
           </span>
         </div>
-        
+
         {/* Credit/Installment Badge - High Contrast, Larger Text */}
         <div className="mt-4 flex items-center gap-3">
            <span className="bg-[#ffc220] text-[#001e3c] text-sm font-bold px-3 py-1.5 rounded-md uppercase tracking-wider">Супер ціна</span>
@@ -62,13 +62,13 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
       <div className="flex flex-col gap-3 mt-2">
         <div className="flex gap-4 h-14">
             {/* Primary Button: Lift on Hover, Squish on Click */}
-            <button className="flex-1 bg-[#ffc220] text-[#001e3c] font-bold rounded-full text-lg shadow-sm flex items-center justify-center gap-2 uppercase tracking-wide font-display 
-              hover:bg-[#ffe066] hover:-translate-y-0.5 hover:shadow-lg 
-              active:translate-y-0 active:scale-[0.98] active:shadow-sm 
+            <button className="flex-1 bg-[#ffc220] text-[#001e3c] font-bold rounded-full text-lg shadow-sm flex items-center justify-center gap-2 uppercase tracking-wide font-display
+              hover:bg-[#ffe066] hover:-translate-y-0.5 hover:shadow-lg
+              active:translate-y-0 active:scale-[0.98] active:shadow-sm
               transition-all duration-200 ease-out">
                Купити
             </button>
-            
+
             {/* Secondary Button: Border darken, Squish on Click */}
             <button className="w-14 h-14 border-2 border-gray-300 rounded-full text-gray-700 flex items-center justify-center
               hover:border-gray-500 hover:bg-gray-50 hover:text-gray-900
