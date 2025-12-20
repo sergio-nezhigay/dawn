@@ -256,6 +256,17 @@
           font-size: 1.6rem;
         }
       }
+
+      /* Grey background for product pages */
+      .template-product {
+        background-color: #f5f5f5 !important;
+      }
+
+      .template-product product-info,
+      .template-product .shopify-section {
+        background-color: transparent !important;
+        background-image: none !important;
+      }
     {% endstyle %}
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
@@ -303,7 +314,7 @@
     {{ 'chat.css' | asset_url | stylesheet_tag }}
   </head>
 
-  <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
+  <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %} template-{{ request.page_type }}">
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}
     </a>
