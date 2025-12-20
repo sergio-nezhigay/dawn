@@ -4353,3 +4353,17 @@ h4 + p {
     background-repeat: no-repeat;
   }
 }
+
+.review__link {
+  text-decoration-line: underline;
+  text-decoration-color: var(--color-gray-400);
+  color: var(--color-gray-700);
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 200ms ease;
+}
+
+.review__link:hover {
+  color: var(--color-blue-500);
+  text-decoration-color: var(--color-blue-500);
+}
