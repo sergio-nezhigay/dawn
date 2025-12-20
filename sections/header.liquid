@@ -178,6 +178,14 @@
   .header__menu-row {
     background-color: #ffffff;
   }
+
+  /* Add box shadow for desktop */
+  @media screen and (min-width: 990px) {
+    .header-wrapper {
+      box-shadow:   0 10px 15px -3px rgba(0, 0, 0, 0.1),
+                    0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    }
+  }
 {%- endstyle -%}
 
 <script src="{{ 'cart-notification.js' | asset_url }}" defer="defer"></script>
