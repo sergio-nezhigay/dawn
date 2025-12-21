@@ -244,6 +244,22 @@ nUnlSsIrOfroxTLu2XnigBK/lfYRxzQWq9K6nqsSjjYeea0T12r+y3nvqg==
       if (saleBlock) saleBlock.style.display = 'block';
       if (regularBlock) regularBlock.style.display = 'none';
 
+      // Show super price badge when applying discount
+      const superPriceBadge = document.querySelector('.badge-super-price');
+      if (superPriceBadge) {
+        superPriceBadge.style.display = 'inline-block';
+      } else {
+        // Create badge if it doesn't exist
+        const detailsSection = document.querySelector('.product-info-block__details');
+        if (detailsSection) {
+          const badge = document.createElement('span');
+          badge.className = 'badge-super-price';
+          badge.textContent = 'СУПЕР ЦІНА';
+          detailsSection.insertBefore(badge, detailsSection.firstChild);
+          console.log('Created super price badge');
+        }
+      }
+
       return true;
     } catch (error) {
       console.error('Error showing sale price:', error);

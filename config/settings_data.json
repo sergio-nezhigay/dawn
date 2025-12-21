@@ -405,7 +405,7 @@
   ".jdgm-widget { padding-left: 7px; }",
   ".jdgm-write-rev-link { border-radius: 8px !important; }",
   ".jdgm-carousel-title { text-align: left !important; }",
-  "#shopify-block-AM09yR3ZERjZFMzNuO__judge_me_reviews_preview_badge_DhpJYN { border-bottom: 1px solid #e5e7eb; padding-bottom: 24px; margin-bottom: 24px; }"
+  "#shopify-block-AM09yR3ZERjZFMzNuO__judge_me_reviews_preview_badge_DhpJYN { border-bottom: 1px solid #e5e7eb; padding-top: 6px; padding-bottom: 0px; margin-bottom: 29px; }"
 
     ]
   }
