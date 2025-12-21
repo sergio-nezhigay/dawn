@@ -80,7 +80,7 @@
 }
 
 /* ===============================================
-   Inventory Status (Middle Column)
+   Inventory Status (Right Column)
    =============================================== */
 
 .product-info-block__inventory {
@@ -94,6 +94,18 @@
   color: #166534;
   grid-column: 2;
   justify-self: start;
+}
+
+/* When no badge present, inventory is first child - span both columns */
+.product-info-block__inventory:first-child {
+  grid-column: 1 / -1;
+  justify-self: start;
+}
+
+/* Right-align inventory when badge is present */
+.badge-super-price ~ .product-info-block__inventory {
+  grid-column: 2;
+  justify-self: end;
 }
 
 .product-info-block__inventory .svg-wrapper,
@@ -124,7 +136,7 @@
   white-space: nowrap;
   text-align: right;
   flex: 0 0 auto;
-  align-self: center;
+  align-self: start;
 }
 
 .product-info-block__sku span {
