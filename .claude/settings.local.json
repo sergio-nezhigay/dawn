@@ -8,10 +8,12 @@
       "WebFetch(domain:fonts.googleapis.com)",
       "Bash(curl:*)",
       "Bash(npm run dev:*)",
-      "Bash(ls -la \"C:\\projects\\dawn\\assets\"\" | grep -E \"menu)",
       "Bash(drawer)",
-      "Bash(header \")",
-      "Bash(ls:*)"
+      "Bash(header)",
+      "Bash(ls:*)",
+      "Bash(find:*)",
+      "Bash(grep:*)",
+      "Bash(timeout /t 5 /nobreak)"
     ],
     "deny": [],
     "ask": []

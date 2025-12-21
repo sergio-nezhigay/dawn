@@ -12,6 +12,7 @@
   {{ 'section-main-product.css' | asset_url | stylesheet_tag }}
   {{ 'component-accordion.css' | asset_url | stylesheet_tag }}
   {{ 'component-price.css' | asset_url | stylesheet_tag }}
+  {{ 'component-product-info-block.css' | asset_url | stylesheet_tag }}
   {{ 'component-slider.css' | asset_url | stylesheet_tag }}
   {{ 'component-rating.css' | asset_url | stylesheet_tag }}
   {{ 'component-deferred-media.css' | asset_url | stylesheet_tag }}
@@ -110,98 +111,92 @@
                   </a>
                 </div>
               {%- when 'price' -%}
-                <div
-                  id="price-{{ section.id }}"
-                  role="status"
-                  {{ block.shopify_attributes }}
-                  class="flex justify-between"
-                >
-                  {%- render 'price',
-                    product: product,
-                    use_variant: true,
-                    show_badges: true,
-                    price_class: 'price--large'
-                  -%}
-                  {% liquid
-                    assign share_url = product.selected_variant.url | default: product.url | prepend: request.origin
-                    render 'share-button', block: block, share_link: share_url
-                  %}
-                </div>
-                {%- if product.quantity_price_breaks_configured? -%}
-                  <div class="volume-pricing-note" id="Volume-Note-{{ section.id }}">
-                    <span>{{ 'products.product.volume_pricing.note' | t }}</span>
-                  </div>
-                {%- endif -%}
+                <div class="product-info-block" {{ block.shopify_attributes }}>
+                  {%- comment -%} Row 1: Price + SKU (Horizontal) {%- endcomment -%}
+                  <div class="product-info-block__price-row">
+                    <div id="price-{{ section.id }}" role="status" class="product-info-block__price">
+                      {%- render 'price',
+                        product: product,
+                        use_variant: true,
+                        show_badges: false,
+                        price_class: 'price--large'
+                      -%}
+                    </div>
 
-                <div {{ block.shopify_attributes }}>
-                  {%- assign product_form_installment_id = 'product-form-installment-' | append: section.id -%}
-                  {%- form 'product', product, id: product_form_installment_id, class: 'installment caption-large' -%}
-                    <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-                    {{ form | payment_terms }}
-                  {%- endform -%}
-                </div>
-              {%- when 'inventory' -%}
-                <span class="flex justify-between">
-                  <p
-                    class="product__inventory{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}{% if product.selected_or_first_available_variant.inventory_management != 'shopify' %} visibility-hidden{% endif %}"
-                    {{ block.shopify_attributes }}
-                    id="Inventory-{{ section.id }}"
-                    role="status"
-                  >
-                    {%- if product.selected_or_first_available_variant.inventory_management == 'shopify' -%}
-                      {%- if product.selected_or_first_available_variant.inventory_quantity > 0 -%}
-                        {%- if product.selected_or_first_available_variant.inventory_quantity
-                            <= block.settings.inventory_threshold
-                        -%}
-                          <span class="svg-wrapper" style="color: rgb(238, 148, 65)">
-                            {{- 'icon-inventory-status.svg' | inline_asset_content -}}
-                          </span>
-                          {%- if block.settings.show_inventory_quantity -%}
-                            {{-
-                              'products.product.inventory_low_stock_show_count'
-                              | t: quantity: product.selected_or_first_available_variant.inventory_quantity
-                            -}}
-                          {%- else -%}
+                    {%- comment -%} SKU / Article Number (Right Side) {%- endcomment -%}
+                    <p
+                      class="product-info-block__sku{% if product.selected_or_first_available_variant.sku.size == 0 %} visibility-hidden{% endif %}"
+                      id="Sku-{{ section.id }}"
+                      role="status"
+                    >
+                      <span>{{ 'products.product.sku' | t }}:</span>
+                      {{ product.selected_or_first_available_variant.sku | split: '^' | first }}
+                    </p>
+                  </div>
+
+                  {%- comment -%} Row 2: Badge, Availability {%- endcomment -%}
+                  <div class="product-info-block__details">
+                    {%- comment -%} Super Price Badge (Conditional) {%- endcomment -%}
+                    {%- assign compare_price = product.selected_or_first_available_variant.compare_at_price -%}
+                    {%- assign current_price = product.selected_or_first_available_variant.price -%}
+                    {%- if compare_price > current_price -%}
+                      <span class="badge-super-price">СУПЕР ЦІНА</span>
+                    {%- endif -%}
+
+                    {%- comment -%} Inventory Status {%- endcomment -%}
+                    <p
+                      class="product-info-block__inventory{% if product.selected_or_first_available_variant.inventory_management != 'shopify' %} visibility-hidden{% endif %}"
+                      id="Inventory-{{ section.id }}"
+                      role="status"
+                    >
+                      {%- if product.selected_or_first_available_variant.inventory_management == 'shopify' -%}
+                        {%- if product.selected_or_first_available_variant.inventory_quantity > 0 -%}
+                          {%- if product.selected_or_first_available_variant.inventory_quantity <= 10 -%}
+                            <span class="svg-wrapper" style="color: rgb(238, 148, 65)">
+                              {{- 'icon-inventory-status.svg' | inline_asset_content -}}
+                            </span>
                             {{- 'products.product.inventory_low_stock' | t -}}
-                          {%- endif -%}
-                        {%- else -%}
-                          <span class="svg-wrapper" style="color: rgb(62, 214, 96)">
-                            {{- 'icon-inventory-status.svg' | inline_asset_content -}}
-                          </span>
-                          {%- if block.settings.show_inventory_quantity -%}
-                            {{-
-                              'products.product.inventory_in_stock_show_count'
-                              | t: quantity: product.selected_or_first_available_variant.inventory_quantity
-                            -}}
                           {%- else -%}
+                            <span class="svg-wrapper" style="color: #16a34a">
+                              {{- 'icon-inventory-status.svg' | inline_asset_content -}}
+                            </span>
                             {{- 'products.product.inventory_in_stock' | t -}}
                           {%- endif -%}
-                        {%- endif -%}
-                      {%- else -%}
-                        {%- if product.selected_or_first_available_variant.inventory_policy == 'continue' -%}
-                          <span class="svg-wrapper" style="color: rgb(62, 214, 96)">
-                            {{- 'icon-inventory-status.svg' | inline_asset_content -}}
-                          </span>
-                          {{- 'products.product.inventory_out_of_stock_continue_selling' | t -}}
                         {%- else -%}
-                          <span class="svg-wrapper" style="color: rgb(200, 200, 200)">
-                            {{- 'icon-inventory-status.svg' | inline_asset_content -}}
-                          </span>
-                          {{- 'products.product.inventory_out_of_stock' | t -}}
+                          {%- if product.selected_or_first_available_variant.inventory_policy == 'continue' -%}
+                            <span class="svg-wrapper" style="color: rgb(62, 214, 96)">
+                              {{- 'icon-inventory-status.svg' | inline_asset_content -}}
+                            </span>
+                            {{- 'products.product.inventory_out_of_stock_continue_selling' | t -}}
+                          {%- else -%}
+                            <span class="svg-wrapper" style="color: rgb(200, 200, 200)">
+                              {{- 'icon-inventory-status.svg' | inline_asset_content -}}
+                            </span>
+                            {{- 'products.product.inventory_out_of_stock' | t -}}
+                          {%- endif -%}
                         {%- endif -%}
                       {%- endif -%}
-                    {%- endif -%}
-                  </p>
-                  <p
-                    class="product__sku{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}{% if product.selected_or_first_available_variant.sku.size == 0 %} visibility-hidden{% endif %}"
-                    id="Sku-{{ section.id }}"
-                    role="status"
-                    {{ block.shopify_attributes }}
-                  >
-                    <span>{{ 'products.product.sku' | t }}:</span>
-                    {{ product.selected_or_first_available_variant.sku | split: '^' | first }}
-                  </p>
-                </span>
+                    </p>
+                  </div>
+
+                  {%- comment -%} Volume Pricing Note {%- endcomment -%}
+                  {%- if product.quantity_price_breaks_configured? -%}
+                    <div class="volume-pricing-note" id="Volume-Note-{{ section.id }}">
+                      <span>{{ 'products.product.volume_pricing.note' | t }}</span>
+                    </div>
+                  {%- endif -%}
+                </div>
+
+                {%- comment -%} Share Button (Moved Outside Unified Block) {%- endcomment -%}
+                {% liquid
+                  assign share_url = product.selected_variant.url | default: product.url | prepend: request.origin
+                  render 'share-button', block: block, share_link: share_url
+                %}
+              {%- when 'inventory' -%}
+                {%- comment -%}
+                  DEPRECATED: Inventory and SKU are now integrated into the 'price' block above
+                  This block is maintained for backward compatibility but should be removed from theme customizer
+                {%- endcomment -%}
 
               {%- when 'description' -%}
                 {%- if product.description != blank -%}

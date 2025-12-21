@@ -186,9 +186,74 @@ if (!customElements.get('product-info')) {
             }
           };
 
-          updateSourceFromDestination('price');
-          updateSourceFromDestination('Sku', ({ classList }) => classList.contains('hidden'));
-          updateSourceFromDestination('Inventory', ({ innerText }) => innerText === '');
+          // Check if using unified product info block
+          const unifiedBlock = this.querySelector('.product-info-block');
+
+          if (unifiedBlock) {
+            // Update unified block atomically
+            const sourceBlock = html.querySelector('.product-info-block');
+
+            if (sourceBlock) {
+              // Update price section
+              const destPrice = unifiedBlock.querySelector(`#price-${this.dataset.section}`);
+              const srcPrice = sourceBlock.querySelector(`#price-${this.sectionId}`);
+
+              if (destPrice && srcPrice) {
+                destPrice.innerHTML = srcPrice.innerHTML;
+              }
+
+              // Update super price badge
+              const destBadge = unifiedBlock.querySelector('.badge-super-price');
+              const srcBadge = sourceBlock.querySelector('.badge-super-price');
+
+              if (srcBadge) {
+                if (destBadge) {
+                  // Badge exists, keep it visible
+                  destBadge.style.display = 'inline-block';
+                } else {
+                  // Badge doesn't exist, create it
+                  const detailsSection = unifiedBlock.querySelector('.product-info-block__details');
+                  if (detailsSection) {
+                    const newBadge = srcBadge.cloneNode(true);
+                    detailsSection.insertBefore(newBadge, detailsSection.firstChild);
+                  }
+                }
+              } else if (destBadge) {
+                // No source badge, hide existing
+                destBadge.style.display = 'none';
+              }
+
+              // Update inventory
+              const destInventory = unifiedBlock.querySelector(`#Inventory-${this.dataset.section}`);
+              const srcInventory = sourceBlock.querySelector(`#Inventory-${this.sectionId}`);
+
+              if (destInventory && srcInventory) {
+                destInventory.innerHTML = srcInventory.innerHTML;
+                destInventory.classList.toggle('visibility-hidden',
+                  srcInventory.classList.contains('visibility-hidden') || srcInventory.innerText.trim() === ''
+                );
+              }
+
+              // Update SKU
+              const destSku = unifiedBlock.querySelector(`#Sku-${this.dataset.section}`);
+              const srcSku = sourceBlock.querySelector(`#Sku-${this.sectionId}`);
+
+              if (destSku && srcSku) {
+                destSku.innerHTML = srcSku.innerHTML;
+                destSku.classList.toggle('visibility-hidden',
+                  srcSku.classList.contains('visibility-hidden')
+                );
+              }
+
+              console.log('Updated unified product info block');
+            }
+          } else {
+            // Fallback to legacy separate updates
+            updateSourceFromDestination('price');
+            updateSourceFromDestination('Sku', ({ classList }) => classList.contains('hidden'));
+            updateSourceFromDestination('Inventory', ({ innerText }) => innerText === '');
+          }
+
           updateSourceFromDestination('Volume');
           updateSourceFromDestination('Price-Per-Item', ({ classList }) => classList.contains('hidden'));
 

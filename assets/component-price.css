@@ -69,6 +69,10 @@
   display: none;
 }
 
+.price__sale span {
+    margin-top: -19px;
+}
+
 .price--sold-out .price__badge-sold-out,
 .price--on-sale .price__badge-sale,
 .volume-pricing--sale-badge .price__badge-sale {
@@ -104,4 +108,26 @@
   margin-top: 0.2rem;
   text-transform: uppercase;
   color: rgba(var(--color-foreground), 0.7);
+}
+
+/* Price styling within product info block */
+.product-info-block__price .price {
+  display: block;
+}
+
+.product-info-block__price .price__container {
+  margin: 0;
+}
+
+.product-info-block__price .price--on-sale .price__sale {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Sale price indicator */
+.product-info-block__price .price-item--sale {
+  font-family: 'Chakra Petch', sans-serif;
+  color: #001e3c;
+  font-weight: 700;
 }
