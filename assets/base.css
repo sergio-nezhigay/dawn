@@ -1626,7 +1626,7 @@ button.shopify-payment-button__button--unbranded {
   --shadow-visible: var(--buttons-shadow-visible);
   --border-offset: var(--buttons-border-offset); /* reduce radius edge artifacts */
   --border-opacity: calc(1 - var(--buttons-border-opacity));
-  border-radius: var(--buttons-radius-outset);
+  border-radius: 50px;
   position: relative;
 }
 
@@ -1650,11 +1650,11 @@ button.shopify-payment-button__button--unbranded {
   font: inherit;
   font-size: 1.6rem;
   text-decoration: none;
-  color: rgb(var(--color-button-text));
+
   transition: box-shadow var(--duration-short) ease;
   -webkit-appearance: none;
   appearance: none;
-  background-color: rgba(var(--color-button), var(--alpha-button-background));
+
 }
 
 .button:before,
@@ -1668,9 +1668,9 @@ button.shopify-payment-button__button--unbranded {
   bottom: 0;
   left: 0;
   z-index: -1;
-  border-radius: var(--buttons-radius-outset);
-  box-shadow: var(--shadow-horizontal-offset) var(--shadow-vertical-offset) var(--shadow-blur-radius)
-    rgba(var(--color-shadow), var(--shadow-opacity));
+  border-radius: 50px;
+  /*box-shadow: var(--shadow-horizontal-offset) var(--shadow-vertical-offset) var(--shadow-blur-radius)
+    rgba(var(--color-shadow), var(--shadow-opacity));*/
 }
 
 .button:after,
@@ -1684,11 +1684,11 @@ button.shopify-payment-button__button--unbranded {
   bottom: var(--buttons-border-width);
   left: var(--buttons-border-width);
   z-index: 1;
-  border-radius: var(--buttons-radius);
-  box-shadow: 0 0 0 calc(var(--buttons-border-width) + var(--border-offset))
+  border-radius: 50px;
+  /*box-shadow: 0 0 0 calc(var(--buttons-border-width) + var(--border-offset))
       rgba(var(--color-button-text), var(--border-opacity)),
-    0 0 0 var(--buttons-border-width) rgba(var(--color-button), var(--alpha-button-background));
-  transition: box-shadow var(--duration-short) ease;
+    0 0 0 var(--buttons-border-width) rgba(var(--color-button), var(--alpha-button-background));*/
+  /*transition: box-shadow var(--duration-short) ease;*/
 }
 
 .button:not([disabled]):hover::after,
@@ -1696,9 +1696,9 @@ button.shopify-payment-button__button--unbranded {
 .customer button:hover::after,
 .shopify-payment-button__button--unbranded:hover::after {
   --border-offset: 1.3px;
-  box-shadow: 0 0 0 calc(var(--buttons-border-width) + var(--border-offset))
+  /*box-shadow: 0 0 0 calc(var(--buttons-border-width) + var(--border-offset))
       rgba(var(--color-button-text), var(--border-opacity)),
-    0 0 0 calc(var(--buttons-border-width) + 1px) rgba(var(--color-button), var(--alpha-button-background));
+    0 0 0 calc(var(--buttons-border-width) + 1px) rgba(var(--color-button), var(--alpha-button-background));*/
 }
 
 .button--secondary:after {
@@ -3996,7 +3996,7 @@ details[open] > .header__submenu {
   .animate--hover-3d-lift .card-wrapper .card--card,
   .animate--hover-3d-lift .card-wrapper .card--standard .card__inner,
   .animate--hover-3d-lift .button:not(.button--tertiary),
-  .animate--hover-3d-lift .shopify-challenge__button,
+  /*.animate--hover-3d-lift .shopify-challenge__button,*/
   .animate--hover-3d-lift .customer button,
   .animate--hover-3d-lift .shopify-payment-button__button,
   .animate--hover-3d-lift .deferred-media .deferred-media__poster-button {
@@ -4007,7 +4007,7 @@ details[open] > .header__submenu {
   .animate--hover-3d-lift .card-wrapper:hover .card--card,
   .animate--hover-3d-lift .card-wrapper:hover .card--standard .card__inner,
   .animate--hover-3d-lift .button:not(.button--tertiary):not([disabled]):hover,
-  .animate--hover-3d-lift .shopify-challenge__button:not([disabled]):hover,
+  /*.animate--hover-3d-lift .shopify-challenge__button:not([disabled]):hover,*/
   .animate--hover-3d-lift .customer button:not([disabled]):hover,
   .animate--hover-3d-lift .shopify-payment-button__button:hover,
   .animate--hover-3d-lift .deferred-media:hover .deferred-media__poster-button {
@@ -4112,7 +4112,7 @@ details[open] > .header__submenu {
   }
 
   .animate--hover-vertical-lift .button:not(.button--tertiary),
-  .animate--hover-vertical-lift .shopify-challenge__button,
+  /*.animate--hover-vertical-lift .shopify-challenge__button,*/
   .animate--hover-vertical-lift .customer button,
   .animate--hover-vertical-lift .shopify-payment-button__button {
     transition: transform var(--duration-default) var(--ease-out-slow);
@@ -4140,8 +4140,44 @@ details[open] > .header__submenu {
     transform: translateY(-0.25rem);
   }
 
+
+
+  #ProductSubmitButton-template--25645869433148__main {
+    background-color: #ffc220 !important;
+    height: 56px !important;
+    color: #001e3c !important;
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    line-height: 1 !important;
+    font-family: 'Chakra Petch', sans-serif !important;
+    letter-spacing: 0.05em !important;
+    border: none !important;
+    border-radius: 9999px !important;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+    transition: all 200ms ease-out !important;
+  }
+
+  #ProductSubmitButton-template--25645869433148__main:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+                0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+  }
+
+  #ProductSubmitButton-template--25645869433148__main:active {
+    transform: translateY(0) !important;
+  }
+
+  .buy-button-text {
+    align-items: center !important;
+  }
+
+  .text-inside {
+    transform: translateY(2px);
+  }
+
   .animate--hover-vertical-lift .button:not(.button--tertiary):not([disabled]):active,
-  .animate--hover-vertical-lift .shopify-challenge__button:not([disabled]):active,
+  /*.animate--hover-vertical-lift .shopify-challenge__button:not([disabled]):active,*/
   .animate--hover-vertical-lift .customer button:not([disabled]):active,
   .animate--hover-vertical-lift .shopify-payment-button__button:active {
     transform: translateY(0);
@@ -4366,4 +4402,44 @@ h4 + p {
 .review__link:hover {
   color: var(--color-blue-500);
   text-decoration-color: var(--color-blue-500);
+}
+
+.fulfillment-wrapper {
+    margin-top: 8px;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    overflow: hidden;
+    padding: 16px;
+
+
+}
+
+.svg-wrapper {
+    color: #4b5563;
+    margin-top: 4px;
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+}
+
+.warranty {
+    display: block;
+    font-weight: 700;
+    color: #001e3c;
+    font-size: 16px;
+    margin-bottom: 4px;
+}
+.fulfillment-title {
+    display: block;
+    font-weight: 700;
+    color: #001e3c;
+    font-size: 16px;
+    margin-bottom: 4px;
+}
+
+.fulfillment-description {
+    color: #374151;
+    font-size: 16px;
+    line-height: 1.75;
 }

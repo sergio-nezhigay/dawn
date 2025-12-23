@@ -1,12 +1,12 @@
-<div class="space-y-4">
+<div class="space-y-4 fulfillment-wrapper">
   {% assign warranty_months = product.metafields.custom.warranty %}
   {% if warranty_months %}
     <div class="flex items-start justify-start gap-5 ">
       <span class="svg-wrapper shrink-0">
         {{- 'icon-shield-check.svg' | inline_asset_content -}}
       </span>
-      <span class="font-semibold">{{ 'products.product.features.warranty' | t }}:</span
-      ><span class="opacity-90">
+      <span class="font-semibold fulfillment-title">{{ 'products.product.features.warranty' | t }}:</span
+      ><span class="opacity-90 fulfillment-description">
         {{ warranty_months }}
         {{ 'products.product.features.months' | t }}. {{ 'products.product.features.return_exchange' | t }}
       </span>
@@ -17,8 +17,8 @@
     <span class="svg-wrapper shrink-0">
       {{- 'icon-truck.svg' | inline_asset_content -}}
     </span>
-    <span class="font-semibold">{{ 'products.product.features.delivery' | t }}:</span
-    ><span class="opacity-90">
+    <span class="font-semibold fulfillment-title">{{ 'products.product.features.delivery' | t }}:</span
+    ><span class="opacity-90 fulfillment-description">
       {{ 'products.product.features.delivery_info' | t }}
     </span>
   </div>
@@ -27,17 +27,10 @@
     <span class="svg-wrapper shrink-0">
       {{- 'icon-credit-card.svg' | inline_asset_content -}}
     </span>
-    <span class="font-semibold">{{ 'products.product.features.payment' | t }}:</span
-    ><span class="opacity-90">
+    <span class="font-semibold fulfillment-title">{{ 'products.product.features.payment' | t }}:</span
+    ><span class="opacity-90 fulfillment-description">
       {{ 'products.product.features.payment_info' | t }}
     </span>
   </div>
-  <div class="border-y border-slate-200 py-3 mt-10">
-    <a
-      href="/collections/{{ product.collections.first.handle }}"
-      class="opacity-85 hover:opacity-100 hover:underline"
-    >
-      {{ 'sections.featured_collection.view_all_products_in_category' | t }}
-    </a>
-  </div>
+
 </div>
