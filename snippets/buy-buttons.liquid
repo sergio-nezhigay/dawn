@@ -88,11 +88,13 @@
               {%- elsif product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
                 {{ 'products.product.sold_out' | t }}
               {%- else -%}
-                <span class="flex align-center justify-center gap-4"
+                <span class="flex align-center justify-center gap-4 buy-button-text"
                   ><span class="svg-wrapper">
                     {{- 'icon-cart-shopping.svg' | inline_asset_content -}}
                   </span>
-                  {{ 'products.product.buy' | t -}}
+                  <span class="text-inside">
+                    {{ 'products.product.buy' | t -}}
+                  </span>
                 </span>
               {%- endif -%}
             </span>
