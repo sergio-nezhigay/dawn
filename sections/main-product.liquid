@@ -201,11 +201,12 @@
               {%- when 'description' -%}
                 {%- if product.description != blank -%}
                   <div class="product__description rte quick-add-hidden" {{ block.shopify_attributes }}>
-                    <h2 class="related-products__heading inline-richtext h3 !mb-6">
+                    <h2 class="description__headings">
                       {{ 'products.product.description' | t }}
                     </h2>
-
-                    {{ product.description }}
+                    <span class="description__text">
+                      {{ product.description }}
+                    </span>
                   </div>
                 {%- endif -%}
                 <div class="flex justify-between items-center">
