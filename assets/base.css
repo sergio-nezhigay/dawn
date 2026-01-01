@@ -4446,3 +4446,20 @@ h4 + p {
     font-family: 'Chakra Petch', sans-serif !important;
     transform: translateY(2px);
   }
+
+  .description__headings {
+    font-weight: 700;
+    color: #001e3c;
+    margin-bottom: 1.6rem;
+    text-transform: uppercase;
+    font-size: 1.6rem;
+    letter-spacing: 0.05em;
+    border-bottom: 0.1rem solid #e5e7eb;
+    padding-bottom: 0.8rem;
+  }
+
+  .description__text {
+    line-height: 1.5;
+    color: hsl(215, 28%, 17%);
+    margin-top: 0.8rem;
+  }
