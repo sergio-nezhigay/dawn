@@ -207,6 +207,16 @@
                     <div class="product__description-container" id="ProductDescription-{{ section.id }}">
                       <div class="description__text product__description-content">
                         {{ product.description }}
+                        <div class="flex justify-between items-center" style="margin-top: 2rem;">
+                          <span>
+                            {{- 'products.product.barcode_label' | t }}:<span class="uppercase">
+                              {{ product.selected_or_first_available_variant.barcode -}}
+                            </span>
+                          </span>
+                          <span class="opacity-30 border rounded-full p-1 text-base">
+                            {{ product.selected_or_first_available_variant.sku | split: '^' | last -}}
+                          </span>
+                        </div>
                       </div>
                       <button type="button" class="link product__description-toggle" aria-expanded="false" aria-controls="ProductDescription-{{ section.id }}">
                         Читати повністю
@@ -259,16 +269,7 @@
                     </script>
                   </div>
                 {%- endif -%}
-                <div class="flex justify-between items-center">
-                  <span>
-                    {{- 'products.product.barcode_label' | t }}:<span class="uppercase">
-                      {{ product.selected_or_first_available_variant.barcode -}}
-                    </span>
-                  </span>
-                  <span class="opacity-30 border rounded-full p-1 text-base">
-                    {{ product.selected_or_first_available_variant.sku | split: '^' | last -}}
-                  </span>
-                </div>
+
 
               {%- when 'sku' -%}
                 <p
