@@ -204,9 +204,59 @@
                     <h2 class="description__headings">
                       {{ 'products.product.description' | t }}
                     </h2>
-                    <span class="description__text">
-                      {{ product.description }}
-                    </span>
+                    <div class="product__description-container" id="ProductDescription-{{ section.id }}">
+                      <div class="description__text product__description-content">
+                        {{ product.description }}
+                      </div>
+                      <button type="button" class="link product__description-toggle" aria-expanded="false" aria-controls="ProductDescription-{{ section.id }}">
+                        Читати повністю
+                      </button>
+                    </div>
+
+                    <script>
+                      document.addEventListener('DOMContentLoaded', function() {
+                        const container = document.getElementById('ProductDescription-{{ section.id }}');
+                        if (!container) return;
+
+                        const toggleBtn = container.querySelector('.product__description-toggle');
+                        const content = container.querySelector('.product__description-content');
+
+                        toggleBtn.addEventListener('click', function() {
+                          const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+
+                          if (isExpanded) {
+                            // Collapse
+                            // 1. Set height to current scrollHeight to enable transition from a fixed value
+                            content.style.maxHeight = content.scrollHeight + 'px';
+
+                            // 2. Force reflow
+                            void content.offsetHeight;
+
+                            // 3. Transition to collapsed state
+                            content.style.maxHeight = '9.6rem';
+                            toggleBtn.setAttribute('aria-expanded', 'false');
+                            toggleBtn.textContent = 'Читати повністю';
+                            content.classList.remove('is-expanded');
+                          } else {
+                            // Expand
+                            content.style.maxHeight = content.scrollHeight + 'px';
+                            toggleBtn.setAttribute('aria-expanded', 'true');
+                            toggleBtn.textContent = 'Приховати';
+                            content.classList.add('is-expanded');
+
+                            // Optional: Remove max-height after transition to allow window resizing
+                            // However, strictly sticking to scrollHeight is safer for the reverse transition without extra logic.
+                            // But for responsiveness (window resize), 'none' is better.
+                            // Let's attach a one-time listener to clear it.
+                            content.addEventListener('transitionend', function() {
+                              if (content.classList.contains('is-expanded')) {
+                                content.style.maxHeight = 'none';
+                              }
+                            }, { once: true });
+                          }
+                        });
+                      });
+                    </script>
                   </div>
                 {%- endif -%}
                 <div class="flex justify-between items-center">
