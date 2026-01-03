@@ -655,6 +655,11 @@
   display: inline-block !important;
 }
 
+/* Hide if 0 reviews */
+.card__information .jdgm-prev-badge[data-number-of-reviews='0'] {
+  display: none !important;
+}
+
 .card__information .jdgm-prev-badge[data-number-of-reviews]::after {
   content: "(" attr(data-number-of-reviews) ")";
   margin-left: 0.4rem;
