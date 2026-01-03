@@ -20,7 +20,7 @@ class RecentlyViewedProducts extends HTMLElement {
         recentlyViewedHtml.push(`
           <li class="grid__item group">
             <div class="card-wrapper product-card-wrapper  ">
-                <a href="${item.productUrl}" class="card-walmart  full-unstyled-link card--card p-[10px]" >
+                <a href="${item.productUrl}" class="card-walmart  full-unstyled-link card--card" >
                                 <div>
                                     <div class="overflow-hidden aspect-square flex items-center">
                                         <img src="${item.productImg}" loading="lazy" alt="${item.productImageAltText}" class="transition-transform duration-300 ease-in-out group-hover:scale-103" />
