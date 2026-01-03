@@ -119,7 +119,6 @@
 
 .card--media .card__inner .card__content {
   position: relative;
-  padding: calc(var(--image-padding) + 1rem);
 }
 
 .card__content {
@@ -258,13 +257,6 @@
 
   .card-information quantity-popover volume-pricing {
     margin-top: 4.2rem;
-  }
-}
-
-@media screen and (min-width: 750px) {
-  .card__information {
-    padding-bottom: 1.7rem;
-    padding-top: 1.7rem;
   }
 }
 
@@ -461,17 +453,15 @@
 /* Ensure consistent vertical alignment of card elements across all cards */
 .card__information {
   display: grid;
-  grid-template-rows: minmax(2.4rem, auto) minmax(3em, auto) 1fr;
+  grid-template-rows: auto minmax(3em, auto) auto;
   min-height: 120px;
   gap: 0.5rem;
   position: relative;
-  padding-top: 4px;
-  padding-bottom: 4px;
 }
 
-/* Judge.me rating widget - appears first, above everything */
+/* Judge.me rating widget - appears last */
 .card__information > .jdgm-widget {
-  grid-row: 1;
+  grid-row: 3;
   min-height: 2.4rem;
 }
 
@@ -487,7 +477,8 @@
   display: grid;
   grid-template-rows: auto auto;
   gap: 0.5rem;
-  grid-row: 3;
+  gap: 0.5rem;
+  grid-row: 1;
   align-self: start;
 }
 
