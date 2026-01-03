@@ -1,29 +1,74 @@
-{%- comment -%}
-  This section is responsible for:
-  - Rendering the <recently-viewed-products> custom element, which will display the recently viewed products.
-  - Injecting a script that saves the current product's data to localStorage, so it can be accessed by the custom element.
-  Connected files:
-  - assets/recently-viewed.js: Defines the custom element and renders the product list from localStorage.
-  - templates/product.json: Registers this section for use on product pages.
-{%- endcomment -%}
-<div class="related-products page-width section-{{ section.id }}-padding isolate scroll-trigger animate--slide-in">
-  <recently-viewed-products
-    data-product-title="{{ product.title | escape }}"
-    data-section-title="{{ 'sections.recently_viewed.title' | t }}"
-  ></recently-viewed-products>
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'section-related-products.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="recently-viewed-section color-{{ section.settings.color_scheme }} gradient">
+  <div class="related-products page-width section-{{ section.id }}-padding isolate">
+    <recently-viewed-products
+      data-product-handle="{{ product.handle }}"
+      data-section-id="{{ section.id }}"
+    >
+      {%- if request.design_mode or search.performed -%}
+        <div class="recently-viewed-inner">
+          {%- if section.settings.heading != blank -%}
+            <h2 class="section-title inline-richtext {{ section.settings.heading_size }}">
+              {{ section.settings.heading | escape }}
+            </h2>
+          {%- endif -%}
+          <ul
+            class="grid product-grid grid--{{ section.settings.columns_desktop }}-col-desktop grid--{{ section.settings.columns_mobile }}-col-tablet-down"
+            role="list"
+          >
+            {%- if search.performed -%}
+              {%- for recently_viewed_product in search.results -%}
+                <li class="grid__item">
+                  {% render 'card-product',
+                    card_product: recently_viewed_product,
+                    media_aspect_ratio: section.settings.image_ratio,
+                    show_secondary_image: section.settings.show_secondary_image,
+                    show_vendor: section.settings.show_vendor,
+                    show_rating: section.settings.show_rating,
+                    section_id: section.id
+                  %}
+                </li>
+              {%- endfor -%}
+            {%- endif -%}
+          </ul>
+        </div>
+      {%- endif -%}
+    </recently-viewed-products>
+
+
+  </div>
 </div>
 
+{% if product %}
 <script>
   document.addEventListener('DOMContentLoaded', function (event) {
     function setRecentlyViewedProducts() {
       const productData = {
-        productTitle: '{{ product.title }}',
-        productImg: '{{ product.featured_media | image_url: width: 450 }}',
+        productHandle: '{{ product.handle }}',
+        productTitle: '{{ product.title | escape }}',
+        productImg: '{% if product.featured_media %}{{ product.featured_media | image_url: width: 533 }}{% endif %}',
         productPrice: '{{ product.price | money }}',
         productUrl: '{{ product.url }}',
         productImageAltText: '{{ product.featured_media.alt | escape }}',
       };
-      const numberOfProducts = 6;
+      const numberOfProducts = {{ section.settings.products_to_show | default: 6 }};
       let products = [];
       const localData = localStorage.getItem('recentlyViewedProduct');
       if (localData) {
@@ -34,8 +79,8 @@
         }
       }
 
-      products = products.filter((item) => item.productTitle !== productData.productTitle);
-
+      // Check if already in list and move to end (most recent)
+      products = products.filter((item) => item.productHandle !== productData.productHandle);
       products.push(productData);
 
       if (products.length > numberOfProducts) {
@@ -46,3 +91,152 @@
     setRecentlyViewedProducts();
   });
 </script>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Recently viewed products",
+  "tag": "section",
+  "class": "recently-viewed-section",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "default": "Нещодавно переглянуті",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "Small"
+        },
+        {
+          "value": "h1",
+          "label": "Medium"
+        },
+        {
+          "value": "h0",
+          "label": "Large"
+        }
+      ],
+      "default": "h1",
+      "label": "Heading size"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "default": 4,
+      "label": "Products to show"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 4,
+      "label": "Number of columns on desktop"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "default": "2",
+      "label": "Number of columns on mobile",
+      "options": [
+        {
+          "value": "1",
+          "label": "1 column"
+        },
+        {
+          "value": "2",
+          "label": "2 columns"
+        }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Product card"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "Adapt to image"
+        },
+        {
+          "value": "portrait",
+          "label": "Portrait"
+        },
+        {
+          "value": "square",
+          "label": "Square"
+        }
+      ],
+      "default": "square",
+      "label": "Image ratio"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_secondary_image",
+      "default": false,
+      "label": "Show secondary image on hover"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "default": false,
+      "label": "Show vendor"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "default": false,
+      "label": "Show product rating"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "Recently viewed products"
+    }
+  ]
+}
+{% endschema %}
+

@@ -1,61 +1,84 @@
 // Handles rendering recently viewed products from localStorage.
 // Used by: sections/recently-viewed.liquid, templates/product.json
-// 1. Liquid saves product to localStorage. 2. This renders list (excl. current).
+// 1. Storage of current product to localStorage is done in the liquid section.
+// 2. This custom element fetches the section HTML with handles from localStorage.
 
 class RecentlyViewedProducts extends HTMLElement {
   connectedCallback() {
-    this.renderRecentlyViewed();
+    // Small delay to allow the tracking script in liquid to update localStorage first
+    setTimeout(() => {
+      this.renderRecentlyViewed();
+    }, 100);
   }
 
   renderRecentlyViewed() {
-    const currentProductTitle = this.dataset.productTitle;
-    const productData = JSON.parse(localStorage.getItem('recentlyViewedProduct')) || [];
-    const recentlyViewedHtml = [];
-    const title = this.dataset.sectionTitle || 'Recently viewed';
+    const currentProductHandle = this.dataset.productHandle;
+    const localData = localStorage.getItem('recentlyViewedProduct');
+    let productData = [];
 
-    productData
-      .filter((item) => item.productTitle !== currentProductTitle)
-      .reverse()
-      .forEach((item) => {
-        recentlyViewedHtml.push(`
-          <li class="grid__item group">
-            <div class="card-wrapper product-card-wrapper  ">
-                <a href="${item.productUrl}" class="card-walmart  full-unstyled-link card--card" >
-                                <div>
-                                    <div class="overflow-hidden aspect-square flex items-center">
-                                        <img src="${item.productImg}" loading="lazy" alt="${item.productImageAltText}" class="transition-transform duration-300 ease-in-out group-hover:scale-103" />
-                                    </div>
-
-                                    <div class="card__content !p-0">
-                                        <div class="card__information !px-0">
-                                            <h3 class="product-title">
-                                                ${item.productTitle}
-                                            </h3>
-                                            <div class="card-information">
-                                                <div class="price">
-                                                    <span class="price-item price-item--regular">${item.productPrice} ₴
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-            </div>
-          </li>
-        `);
-      });
-
-    if (recentlyViewedHtml.length > 0) {
-      this.innerHTML = `
-        <div class="pt-20">
-          <h2 class="section-title inline-richtext h2">${title}</h2>
-          <ul class="grid product-grid grid--2-col-tablet-down grid--6-col-desktop" role="list">
-            ${recentlyViewedHtml.join('')}
-          </ul>
-        </div>
-      `;
+    if (localData) {
+      try {
+        productData = JSON.parse(localData) || [];
+      } catch (e) {
+        console.error('Recently Viewed: Failed to parse localStorage', e);
+        productData = [];
+      }
     }
+
+    // Filter out current product and get handles in chronological order (most recent first)
+    const sortedHandles = productData
+      .filter((item) => item.productHandle && item.productHandle !== currentProductHandle)
+      .reverse()
+      .map((item) => item.productHandle);
+
+    if (sortedHandles.length === 0) {
+      this.closest('.recently-viewed-section')?.style.setProperty('display', 'none');
+      console.log('Recently Viewed: No handles found to render.');
+      return;
+    }
+
+    const sectionId = this.dataset.sectionId;
+    const searchParams = new URLSearchParams();
+    searchParams.set('section_id', sectionId);
+    searchParams.set('type', 'product');
+    // Use exact handle search
+    searchParams.set('q', sortedHandles.map((h) => `handle:"${h}"`).join(' OR '));
+
+    const rootUrl = (window.Shopify && window.Shopify.routes && window.Shopify.routes.root) || '/';
+    console.log(`Recently Viewed: Fetching ${sortedHandles.length} products...`);
+
+    fetch(`${rootUrl.endsWith('/') ? rootUrl : rootUrl + '/'}search?${searchParams.toString()}`)
+      .then((response) => response.text())
+      .then((text) => {
+        const html = new DOMParser().parseFromString(text, 'text/html');
+        const sectionContent = html.querySelector('.recently-viewed-inner');
+
+        if (sectionContent && html.querySelector('.grid__item')) {
+          this.closest('.recently-viewed-section')?.style.removeProperty('display');
+          // Re-sort elements to match our chronological order if needed
+          const grid = sectionContent.querySelector('.grid');
+          if (grid && sortedHandles.length > 1) {
+             const items = Array.from(grid.querySelectorAll('.grid__item'));
+             // Sort items based on our sortedHandles array
+             items.sort((a, b) => {
+                const handleA = a.dataset.handle || a.querySelector('[data-handle]')?.dataset.handle || '';
+                const handleB = b.dataset.handle || b.querySelector('[data-handle]')?.dataset.handle || '';
+                const indexA = sortedHandles.indexOf(handleA);
+                const indexB = sortedHandles.indexOf(handleB);
+                return (indexA === -1 ? 999 : indexA) - (indexB === -1 ? 999 : indexB);
+             });
+             // Re-append in correct order
+             items.forEach(item => grid.appendChild(item));
+          }
+
+          this.innerHTML = sectionContent.innerHTML;
+        } else {
+          this.closest('.recently-viewed-section')?.style.setProperty('display', 'none');
+        }
+      })
+      .catch((e) => {
+        console.error('Recently Viewed: Fetch error', e);
+      });
   }
 }
 
