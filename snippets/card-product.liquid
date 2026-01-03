@@ -115,14 +115,11 @@
                 id="title-{{ section_id }}-{{ card_product.id }}"
               {% endif %}
             >
-              <a
-                href="{{ card_product.url }}"
-                id="StandardCardNoMediaLink-{{ section_id }}-{{ card_product.id }}"
+              <span
                 class="full-unstyled-link"
-                aria-labelledby="StandardCardNoMediaLink-{{ section_id }}-{{ card_product.id }} NoMediaStandardBadge-{{ section_id }}-{{ card_product.id }}"
               >
                 {{ card_product.title | escape }}
-              </a>
+              </span>
             </h3>
           </div>
           <div class="card__badge {{ settings.badge_position }}">
@@ -162,14 +159,11 @@
               id="title-{{ section_id }}-{{ card_product.id }}"
             {% endif %}
           >
-            <a
-              href="{{ card_product.url }}"
-              id="CardLink-{{ section_id }}-{{ card_product.id }}"
+            <span
               class="product-title full-unstyled-link"
-              aria-labelledby="CardLink-{{ section_id }}-{{ card_product.id }} Badge-{{ section_id }}-{{ card_product.id }}"
             >
               {{ card_product.title | escape }}
-            </a>
+            </span>
           </h3>
           <div class="card-information">
             {%- if show_vendor -%}
@@ -542,6 +536,9 @@
         </div>
       </div>
     </div>
+    <a href="{{ card_product.url }}" class="full-width-link">
+      <span class="visually-hidden">{{ card_product.title }}</span>
+    </a>
   </div>
 {%- else -%}
   {%- liquid

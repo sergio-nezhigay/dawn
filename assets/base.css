@@ -4522,7 +4522,7 @@ h4 + p {
     transform: translateY(0);
     transition: transform 300ms ease, box-shadow 300ms ease, border-color 300ms ease;
   }
-  .card-walmart:hover {
+  .card-wrapper:hover .card-walmart {
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
     0 8px 10px -6px rgba(0, 0, 0, 0.1);
     transform: translateY(-0.25rem);
@@ -4544,7 +4544,7 @@ h4 + p {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.card-walmart:hover .product-title {
+.card-wrapper:hover .card-walmart .product-title {
   color: #0071dc;
   text-decoration: none !important;
   border-bottom: none !important;
