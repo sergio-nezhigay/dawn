@@ -2,7 +2,14 @@
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
 {{ 'section-related-products.css' | asset_url | stylesheet_tag }}
 
+{% if section.settings.image_shape == 'blob' %}
+  {{ 'mask-blobs.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+
 {%- style -%}
+  .bg-transparent{
+    background-color: transparent !important;
+  }
   .section-{{ section.id }}-padding {
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
     padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
@@ -16,44 +23,48 @@
   }
 {%- endstyle -%}
 
-<div class="recently-viewed-section color-{{ section.settings.color_scheme }} gradient">
-  <div class="related-products page-width section-{{ section.id }}-padding isolate">
-    <recently-viewed-products
-      data-product-handle="{{ product.handle }}"
-      data-section-id="{{ section.id }}"
-    >
-      {%- if request.design_mode or search.performed -%}
-        <div class="recently-viewed-inner">
-          {%- if section.settings.heading != blank -%}
-            <h2 class="section-title inline-richtext {{ section.settings.heading_size }}">
-              {{ section.settings.heading | escape }}
-            </h2>
+<div class="recently-viewed-section color-{{ section.settings.color_scheme }} gradient bg-transparent">
+  <recently-viewed-products
+    class="related-products page-width section-{{ section.id }}-padding isolate{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+    data-product-handle="{{ product.handle }}"
+    data-section-id="{{ section.id }}"
+  >
+    {%- if request.design_mode or search.performed -%}
+      <div class="recently-viewed-inner">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="section-title inline-richtext {{ section.settings.heading_size }}">
+            {{ section.settings.heading | escape }}
+          </h2>
+        {%- endif -%}
+        <ul
+          class="grid product-grid grid--{{ section.settings.columns_desktop }}-col-desktop grid--{{ section.settings.columns_mobile }}-col-tablet-down"
+          role="list"
+        >
+          {%- if search.performed -%}
+            {% assign skip_card_product_styles = false %}
+            {%- for recently_viewed_product in search.results -%}
+              <li class="grid__item">
+                {% render 'card-product',
+                  card_product: recently_viewed_product,
+                  media_aspect_ratio: section.settings.image_ratio,
+                  image_shape: section.settings.image_shape,
+                  show_secondary_image: section.settings.show_secondary_image,
+                  show_vendor: section.settings.show_vendor,
+                  show_rating: section.settings.show_rating,
+                  section_id: section.id,
+                  skip_styles: skip_card_product_styles
+                %}
+              </li>
+              {%- assign skip_card_product_styles = true -%}
+            {%- endfor -%}
           {%- endif -%}
-          <ul
-            class="grid product-grid grid--{{ section.settings.columns_desktop }}-col-desktop grid--{{ section.settings.columns_mobile }}-col-tablet-down"
-            role="list"
-          >
-            {%- if search.performed -%}
-              {%- for recently_viewed_product in search.results -%}
-                <li class="grid__item">
-                  {% render 'card-product',
-                    card_product: recently_viewed_product,
-                    media_aspect_ratio: section.settings.image_ratio,
-                    show_secondary_image: section.settings.show_secondary_image,
-                    show_vendor: section.settings.show_vendor,
-                    show_rating: section.settings.show_rating,
-                    section_id: section.id
-                  %}
-                </li>
-              {%- endfor -%}
-            {%- endif -%}
-          </ul>
-        </div>
-      {%- endif -%}
-    </recently-viewed-products>
-
-
-  </div>
+        </ul>
+      </div>
+    {%- endif -%}
+  </recently-viewed-products>
+  {% if section.settings.image_shape == 'arch' %}
+    {{ 'mask-arch.svg' | inline_asset_content }}
+  {%- endif -%}
 </div>
 
 {% if product %}
@@ -120,6 +131,14 @@
         {
           "value": "h0",
           "label": "Large"
+        },
+        {
+          "value": "hxl",
+          "label": "Extra Large"
+        },
+        {
+          "value": "hxxl",
+          "label": "Extra Extra Large"
         }
       ],
       "default": "h1",
@@ -190,6 +209,46 @@
       "label": "Image ratio"
     },
     {
+      "type": "select",
+      "id": "image_shape",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "arch",
+          "label": "Arch"
+        },
+        {
+          "value": "blob",
+          "label": "Blob"
+        },
+        {
+          "value": "chevronleft",
+          "label": "Chevron left"
+        },
+        {
+          "value": "chevronright",
+          "label": "Chevron right"
+        },
+        {
+          "value": "diamond",
+          "label": "Diamond"
+        },
+        {
+          "value": "parallelogram",
+          "label": "Parallelogram"
+        },
+        {
+          "value": "round",
+          "label": "Round"
+        }
+      ],
+      "default": "default",
+      "label": "Image shape"
+    },
+    {
       "type": "checkbox",
       "id": "show_secondary_image",
       "default": false,
@@ -239,4 +298,5 @@
   ]
 }
 {% endschema %}
+
 
