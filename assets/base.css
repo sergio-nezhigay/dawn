@@ -4529,6 +4529,11 @@ h4 + p {
     border-color: #bfdbfe !important;
   }
 
+  .card-wrapper:active .card-walmart {
+    transform: scale(0.98);
+    transition-duration: 0.1s;
+  }
+
 .product-title {
   font-size: 14px;
   line-height: 1.375;
