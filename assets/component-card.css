@@ -297,9 +297,6 @@
   backface-visibility: hidden;
   -webkit-font-smoothing: subpixel-antialiased;
   transform: translateZ(0);
-  /* Fix for cut-off descenders */
-  padding-bottom: 0.4rem;
-  line-height: 1.4;
 }
 
 .card__heading:last-child {
@@ -461,15 +458,14 @@
 .card__information {
   display: grid;
   grid-template-rows: auto minmax(3em, auto) auto;
-  min-height: 120px;
-  gap: 0.5rem;
+  min-height: 100px;
   position: relative;
 }
 
 /* Judge.me rating widget - appears last */
 .card__information > .jdgm-widget {
   grid-row: 3;
-  min-height: 2.4rem;
+  min-height: 16px;
 }
 
 .card__heading {
@@ -477,6 +473,7 @@
   min-height: 3em; /* Reserve space for 2-3 lines of title */
   display: flex;
   align-items: flex-start;
+
 }
 
 .card-information {
@@ -527,7 +524,7 @@
 }
 
 .card-information > *:not(.visually-hidden:first-child) + *:not(.rating):not(.card__information-volume-pricing-note) {
-  margin-top: 0.7rem;
+  margin-top: 0;
 }
 
 .card-information .caption {
