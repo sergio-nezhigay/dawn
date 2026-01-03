@@ -26,13 +26,13 @@
 <div class="color-{{ section.settings.color_scheme }} gradient bg-transparent">
   <product-recommendations
     class="related-products page-width section-{{ section.id }}-padding isolate{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-    data-url="{{ routes.product_recommendations_url }}?limit={{ section.settings.products_to_show }}"
+    data-url="{{ routes.product_recommendations_url }}?limit={{ section.settings.products_to_show }}&intent={{ section.settings.recommendations_intent }}"
     data-section-id="{{ section.id }}"
     data-product-id="{{ product.id }}"
   >
     {% if recommendations.performed and recommendations.products_count > 0 %}
       <h2 class="section-title inline-richtext {{ section.settings.heading_size }}">
-        {{ 'sections.related-products.title' | t }}
+        {{ section.settings.heading }}
       </h2>
       <ul
         class="grid product-grid grid--{{ section.settings.columns_desktop }}-col-desktop grid--{{ section.settings.columns_mobile }}-col-tablet-down"
@@ -70,6 +70,28 @@
     {
       "type": "paragraph",
       "content": "t:sections.related-products.settings.paragraph__1.content"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "default": "You may also like",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "recommendations_intent",
+      "options": [
+        {
+          "value": "related",
+          "label": "Related products"
+        },
+        {
+          "value": "complementary",
+          "label": "Complementary products"
+        }
+      ],
+      "default": "related",
+      "label": "Recommendations intent"
     },
     {
       "type": "select",
@@ -246,6 +268,12 @@
       "unit": "px",
       "label": "t:sections.all.padding.padding_bottom",
       "default": 36
+    }
+
+  ],
+  "presets": [
+    {
+      "name": "t:sections.related-products.name"
     }
   ]
 }
