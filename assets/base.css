@@ -15,6 +15,19 @@
   letter-spacing: 0.025em;
 }
 
+
+.section-title {
+  font-size: 2.4rem !important;
+  font-weight: 700 !important;
+  color: #2e2f32 !important;
+  margin-bottom: 2.4rem !important;
+  font-family: 'Chakra Petch', sans-serif !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  padding-left: 0.4rem !important;
+  padding-right: 0.4rem !important;
+}
+
 /* ========================================
    Header Logo - Custom Brand Block
    ======================================== */
@@ -505,6 +518,11 @@
   max-width: var(--page-width);
   margin: 0 auto;
   padding: 0 1.5rem;
+}
+
+.page-width-narrow {
+  max-width: 1340px;
+  margin: 0 auto;
 }
 
 body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
@@ -4497,3 +4515,32 @@ h4 + p {
     text-decoration: none;
     color: #005bb5;
   }
+
+  .card-walmart {
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    background-color: white !important;
+    border: 1px solid #e5e7eb !important;
+
+  }
+
+.product-title {
+  font-size: 0.875rem;
+  line-height: 1.375;
+  color: #374151;
+  margin-bottom: 0.5rem;
+  height: 2.5em;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  transition-property: color;
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-walmart:hover .product-title {
+  color: #0071dc;
+  text-decoration: none !important;
+  border-bottom: none !important;
+}
