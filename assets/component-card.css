@@ -293,6 +293,13 @@
 .card__heading {
   margin-top: 0;
   margin-bottom: 0;
+  /* Fix for blurry text on hover */
+  backface-visibility: hidden;
+  -webkit-font-smoothing: subpixel-antialiased;
+  transform: translateZ(0);
+  /* Fix for cut-off descenders */
+  padding-bottom: 0.4rem;
+  line-height: 1.4;
 }
 
 .card__heading:last-child {
