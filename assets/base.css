@@ -4538,7 +4538,7 @@ h4 + p {
   font-size: 14px;
   line-height: 1.375;
   color: #374151;
-  margin-bottom: 0.5rem;
+  margin-top: 10px;
   height: 2.5em;
   overflow: hidden;
   display: -webkit-box;
@@ -4555,10 +4555,11 @@ h4 + p {
   border-bottom: none !important;
 }
 
-.card-wrapper .jdgm-prev-badge__text {
-    /*display: none;*/
-}
-
 .card-wrapper .jdgm-star {
     font-size: 10px;
 }
+
+.card-wrapper .jdgm-widget {
+    margin-top: -7px;
+}
+
