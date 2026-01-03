@@ -4079,6 +4079,7 @@ details[open] > .header__submenu {
     mix-blend-mode: color-dodge;
     pointer-events: none;
     z-index: 2;
+
   }
 
   .animate--hover-3d-lift
@@ -4356,11 +4357,6 @@ h4 + p {
   display: none;
 }
 
-.card__content,
-.card__information {
-  padding: 6px !important;
-}
-
 .facets-vertical-sort {
   margin-bottom: 8px;
 }
@@ -4517,11 +4513,20 @@ h4 + p {
   }
 
   .card-walmart {
+    padding: 14px !important;
     border-radius: 12px !important;
     overflow: hidden !important;
     background-color: white !important;
-    border: 1px solid #e5e7eb !important;
-
+    border: 1px solid !important;
+    border-color: #e5e7eb !important;
+    transform: translateY(0);
+    transition: transform 300ms ease, box-shadow 300ms ease, border-color 300ms ease;
+  }
+  .card-walmart:hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    transform: translateY(-0.25rem);
+    border-color: #bfdbfe !important;
   }
 
 .product-title {
@@ -4543,4 +4548,12 @@ h4 + p {
   color: #0071dc;
   text-decoration: none !important;
   border-bottom: none !important;
+}
+
+.card-wrapper .jdgm-prev-badge__text {
+    display: none;
+}
+
+.card-wrapper .jdgm-star {
+    font-size: 12px;
 }
