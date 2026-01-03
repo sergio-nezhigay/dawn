@@ -35,6 +35,17 @@
     assign money_price_max = price_max | money_with_currency
   endif
 
+  # Split price and currency
+  capture money_price
+    echo '<span class="price-amount">'
+    echo price | money_without_currency
+    echo '</span>'
+    echo '<span class="price-currency">'
+    echo cart.currency.symbol
+    echo '</span>'
+  endcapture
+
+
   if target == product and product.price_varies
     assign money_price = 'products.product.price.from_price_html' | t: price: money_price
   endif
