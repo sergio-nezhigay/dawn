@@ -465,8 +465,37 @@
   margin-top: 0.5rem;
 }
 
+/* Ensure consistent vertical alignment of card elements across all cards */
+.card__information {
+  display: grid;
+  grid-template-rows: minmax(2.4rem, auto) minmax(3em, auto) 1fr;
+  min-height: 120px;
+  gap: 0.5rem;
+  position: relative;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+/* Judge.me rating widget - appears first, above everything */
+.card__information > .jdgm-widget {
+  grid-row: 1;
+  min-height: 2.4rem;
+}
+
+.card__heading {
+  grid-row: 2;
+  min-height: 3em; /* Reserve space for 2-3 lines of title */
+  display: flex;
+  align-items: flex-start;
+}
+
 .card-information {
   width: 100%;
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: 0.5rem;
+  grid-row: 3;
+  align-self: start;
 }
 
 .card-information > * {
@@ -474,7 +503,15 @@
   color: rgb(var(--color-foreground));
 }
 
+/* Vendor and description */
+.card-information > .caption-with-letter-spacing,
+.card-information > .caption-large {
+  grid-row: 1;
+}
+
+/* Price should be in row 2 */
 .card-information > .price {
+  grid-row: 2;
   color: rgb(var(--color-foreground));
 }
 
@@ -482,9 +519,13 @@
   color: rgba(var(--color-foreground), 0.75);
 }
 
-.card-information > .rating {
-  margin-top: 0.4rem;
-}
+
+
+
+
+
+
+
 
 /* Specificity needed due to the changes below */
 .card-information
