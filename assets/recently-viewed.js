@@ -18,8 +18,8 @@ class RecentlyViewedProducts extends HTMLElement {
       .reverse()
       .forEach((item) => {
         recentlyViewedHtml.push(`
-          <li class="grid__item group animate--hover-3d-lift">
-            <div class="card-wrapper product-card-wrapper underline-links-hover ">
+          <li class="grid__item group">
+            <div class="card-wrapper product-card-wrapper  ">
                 <a href="${item.productUrl}" class="card-walmart  full-unstyled-link card--card p-[10px]" >
                                 <div>
                                     <div class="overflow-hidden aspect-square flex items-center">
