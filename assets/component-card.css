@@ -399,12 +399,6 @@
     transition: transform var(--duration-long) ease;
     transform: scale(1.03);
   }
-
-  .underline-links-hover:hover a {
-    text-decoration: underline;
-    text-underline-offset: 0.3rem;
-    color: rgba(var(--color-link), var(--alpha-link));
-  }
 }
 
 .card--standard.card--media .card__inner .card__information,
@@ -633,4 +627,21 @@
   .grid__item:nth-child(8n) .product-card-wrapper:hover .shape--blob {
     clip-path: polygon(var(--shape--blob-5));
   }
+}
+
+.full-width-link {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+}
+
+/* Ensure buttons and other interactive elements are above the link overlay */
+.card-wrapper .quick-add,
+.card-wrapper .card__information-volume-pricing-note--button,
+.card-wrapper .quantity {
+  z-index: 3;
+  position: relative;
 }
