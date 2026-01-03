@@ -115,7 +115,6 @@
 
 .card__inner {
   width: 100%;
-      outline: 1px solid red !important;
 }
 
 .card--media .card__inner .card__content {
@@ -645,3 +644,23 @@
   z-index: 3;
   position: relative;
 }
+
+/* Judge.me Customizations for Product Cards */
+.card__information .jdgm-prev-badge__text {
+  display: none !important;
+}
+
+/* Target the inner badge element which holds the data attribute and force visibility */
+.card__information .jdgm-prev-badge {
+  display: inline-block !important;
+}
+
+.card__information .jdgm-prev-badge[data-number-of-reviews]::after {
+  content: "(" attr(data-number-of-reviews) ")";
+  margin-left: 0.4rem;
+  font-size: 12px;
+  font-weight: 500;
+  color: #9ca3af;
+  display: inline-block;
+}
+

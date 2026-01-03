@@ -4556,7 +4556,7 @@ h4 + p {
 }
 
 .card-wrapper .jdgm-prev-badge__text {
-    display: none;
+    /*display: none;*/
 }
 
 .card-wrapper .jdgm-star {
