@@ -4607,10 +4607,24 @@ h4 + p {
     align-items: center !important;
     justify-content: center !important;
     font-weight: bold !important;
-    background-color: #ffc220 !important; /* Standardize background if needed */
-    color: white !important;
-    border-radius: 4px;
+    background-color: transparent !important; /* Secondary style */
+    color: #001e3c !important;
+    border: 2px solid #ffc220 !important; /* Brand yellow border */
+    border-radius: 8px !important;
     height: auto !important;
+    transition: all 0.2s ease !important;
+  }
+
+  .template-product .jdgm-write-rev-link:hover {
+    background-color: #ffc220 !important; /* Fills on hover */
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1) !important;
+  }
+
+  .template-product .jdgm-write-rev-link:active {
+    transform: translateY(0) scale(0.98) !important;
+    box-shadow: none !important;
+    transition-duration: 0.1s !important;
   }
 
   /* Specific stars cleanup if they reappear */
@@ -4632,5 +4646,59 @@ h4 + p {
     border-radius: 12px !important;
     overflow: hidden;
     box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05) !important;
+}
+
+/* --- Judge.me UI Overhaul --- */
+
+/* De-emphasize metadata and icons */
+.jdgm-rev__author,
+.jdgm-rev__author-name {
+    color: #2e2f32 !important; /* Neutral dark gray instead of Brand Yellow */
+    font-weight: 600 !important;
+    font-size: 1.5rem !important;
+}
+
+.jdgm-rev__icon {
+    background-color: #f3f4f6 !important; /* Light gray background for icon */
+    color: #9ca3af !important; /* Muted icon color */
+}
+
+/* Reposition Date closer to stars/author */
+.jdgm-rev__timestamp {
+    float: none !important;
+    display: inline-block !important;
+    margin-left: 1rem !important;
+    color: #6b7280 !important;
+    font-size: 1.2rem !important;
+    font-weight: 400 !important;
+}
+
+/* Review Item Hierarchy */
+.jdgm-rev {
+    border-bottom: 1px solid #f3f4f6 !important;
+    padding: 2.5rem 0 !important;
+}
+
+.jdgm-rev:last-child {
+    border-bottom: none !important;
+}
+
+.jdgm-rev__title {
+    display: block !important;
+    margin: 1.5rem 0 0.5rem 0 !important;
+    font-weight: 700 !important;
+    color: #001e3c !important;
+    font-size: 1.6rem !important;
+}
+
+.jdgm-rev__body {
+    color: #374151 !important;
+    line-height: 1.6 !important;
+    font-size: 1.5rem !important;
+}
+
+/* Ensure Stars stay yellow but are neatly spaced */
+.jdgm-rev__rating {
+    margin-bottom: 0.5rem !important;
 }
 
