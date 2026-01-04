@@ -4651,16 +4651,46 @@ h4 + p {
 /* --- Judge.me UI Overhaul --- */
 
 /* De-emphasize metadata and icons */
+/* Overall Reviewer Info Row Alignment */
+.jdgm-row-profile {
+    display: flex !important;
+    align-items: center !important;
+    gap: 1.5rem !important;
+}
+
+.jdgm-row-rating {
+    margin-bottom: 1.5rem !important;
+}
+
 .jdgm-rev__author,
 .jdgm-rev__author-name {
     color: #2e2f32 !important; /* Neutral dark gray instead of Brand Yellow */
     font-weight: 600 !important;
     font-size: 1.5rem !important;
+    margin: 0 !important; /* Remove any margins that break centering */
 }
 
 .jdgm-rev__icon {
-    background-color: #f3f4f6 !important; /* Light gray background for icon */
-    color: #9ca3af !important; /* Muted icon color */
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50% !important;
+    background-color: #f3f4f6 !important; /* gray-100 */
+    border: 1px solid #d1d5db !important; /* gray-300 */
+    color: #374151 !important; /* gray-700 */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-weight: 700 !important;
+    font-size: 1.4rem !important; /* text-sm approx */
+    overflow: hidden !important;
+    flex-shrink: 0 !important;
+    float: none !important; /* Disable Judge.me float to allow flex centering */
+}
+
+/* If Judge.me uses an SVG icon inside, make it fit or hide if initials are present */
+.jdgm-rev__icon:before {
+    color: #374151 !important; /* gray-700 */
+    font-size: 1.6rem !important;
 }
 
 /* Reposition Date closer to stars/author */
@@ -4685,10 +4715,14 @@ h4 + p {
 
 .jdgm-rev__title {
     display: block !important;
-    margin: 1.5rem 0 0.5rem 0 !important;
+    margin: 0 0 0.5rem 0 !important;
     font-weight: 700 !important;
     color: #001e3c !important;
     font-size: 1.6rem !important;
+}
+
+.jdgm-rev__header {
+    margin-bottom: 0 !important;
 }
 
 .jdgm-rev__body {
