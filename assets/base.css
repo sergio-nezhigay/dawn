@@ -4736,7 +4736,46 @@ h4 + p {
     margin-bottom: 2rem !important; /* mb-5 */
 }
 
-/* Ensure Stars stay yellow but are neatly spaced */
+/* Pagination Stylings */
+.jdgm-paginate {
+    border-top: 1px solid #f3f4f6 !important;
+    padding-top: 2.5rem !important;
+    margin-top: 1rem !important;
+}
+
+.jdgm-paginate__page {
+    color: #4b5563 !important; /* Gray-600 for inactive pages */
+    font-weight: 500 !important;
+    font-size: 1.5rem !important;
+    padding: 0.8rem 1.2rem !important;
+    transition: all 0.2s ease !important;
+    border-radius: 4px !important;
+}
+
+.jdgm-paginate__page:hover {
+    background-color: #f3f4f6 !important;
+    color: #001e3c !important; /* Brand Navy on hover */
+}
+
+.jdgm-paginate__page.jdgm-curt {
+    color: #001e3c !important; /* Brand Navy for current page */
+    background-color: #ffc220 !important; /* Brand Yellow background for active */
+    font-weight: 800 !important;
+}
+
+.jdgm-paginate__next,
+.jdgm-paginate__prev,
+.jdgm-paginate__last,
+.jdgm-paginate__first {
+    color: #4b5563 !important;
+    font-family: inherit !important;
+    padding: 0.8rem 1.2rem !important;
+}
+
+.jdgm-paginate__next:hover,
+.jdgm-paginate__prev:hover {
+    color: #001e3c !important;
+}
 .jdgm-rev__rating {
     margin-bottom: 0.5rem !important;
 }
