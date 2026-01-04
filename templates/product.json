@@ -187,7 +187,9 @@
         "judge_me_reviews_review_widget_drfRRB"
       ],
       "settings": {
-        "include_margins": true
+        "include_margins": true,
+        "padding_top": 36,
+        "padding_bottom": 36
       }
     }
   },
