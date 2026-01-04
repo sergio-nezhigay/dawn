@@ -16,6 +16,7 @@
 }
 
 
+
 .section-title,
 .jdgm-rev-widg__title {
   font-size: 2.4rem !important;
@@ -28,6 +29,24 @@
   padding-left: 0.4rem !important;
   padding-right: 0.4rem !important;
 }
+
+/* Section separator - subtle border between sections with page-width-narrow constraint */
+.section-separator {
+  position: relative;
+}
+
+.section-separator::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1340px;
+  height: 1px;
+  background-color: #e5e7eb;
+}
+
 
 /* ========================================
    Header Logo - Custom Brand Block
