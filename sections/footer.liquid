@@ -1,42 +1,41 @@
-<section class="bg-[#022333] text-white/90 py-8" itemscope itemtype="http://schema.org/LocalBusiness">
-  <ul class="page-width block gap-8 px-4 space-y-6 max-w-7xl">
-    <li class="flex space-x-4">
-      <div class="flex-shrink-0 size-12">
-        <span class="svg-wrapper hover:scale-105">
+<section class="footer-custom" itemscope itemtype="http://schema.org/LocalBusiness">
+  <ul class="footer-content page-width space-y-6">
+    <li class="footer-item">
+      <div class="footer-icon">
+        <span class="svg-wrapper">
           {{- 'icon-phone.svg' | inline_asset_content -}}
         </span>
       </div>
-      <div class="flex flex-col">
-        <span class="">{{ 'sections.footer.phone_label' | t }}</span>
-        <a href="tel:+380993815288" class="hover:underline underline-offset-4 " itemprop="telephone">
+      <div class="footer-text">
+        <span>{{ 'sections.footer.phone_label' | t }}</span>
+        <a href="tel:+380993815288" itemprop="telephone">
           (099) 381-5288
         </a>
       </div>
     </li>
 
-    <li class="flex space-x-4">
-      <div class="flex-shrink-0 size-12">
-        <span class="svg-wrapper hover:scale-105">
+    <li class="footer-item">
+      <div class="footer-icon">
+        <span class="svg-wrapper">
           {{- 'icon-clock.svg' | inline_asset_content -}}
         </span>
       </div>
-      <div class="flex flex-col">
+      <div class="footer-text">
         <span>{{ 'sections.footer.working_hours_label' | t }}</span>
         <span>{{ 'sections.footer.working_hours_value' | t }}</span>
       </div>
     </li>
 
-    <li class="flex space-x-4">
-      <div class="flex-shrink-0 size-12">
-        <span class="svg-wrapper hover:scale-105">
+    <li class="footer-item">
+      <div class="footer-icon">
+        <span class="svg-wrapper">
           {{- 'icon-email.svg' | inline_asset_content -}}
         </span>
       </div>
-      <div class="flex flex-col">
+      <div class="footer-text">
         <span>{{ 'sections.footer.email_label' | t }}</span>
         <a
           href="mailto:info@informatica.com.ua"
-          class="hover:underline underline-offset-4 "
           itemprop="email"
         >
           info@informatica.com.ua
@@ -44,13 +43,13 @@
       </div>
     </li>
 
-    <li class="flex space-x-4">
-      <div class="flex-shrink-0 size-12">
-        <span class="svg-wrapper hover:scale-105">
+    <li class="footer-item">
+      <div class="footer-icon">
+        <span class="svg-wrapper">
           {{- 'icon-map-pin.svg' | inline_asset_content -}}
         </span>
       </div>
-      <div class="flex flex-col" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+      <div class="footer-text" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
         <span>{{ 'sections.footer.address_label' | t }}</span>
         <span>
           <span itemprop="streetAddress">{{ 'sections.footer.address_street' | t }}</span>,
@@ -61,9 +60,9 @@
     </li>
   </ul>
 
-  <p class="text-center border-t border-white/20 pt-8 mt-8">
+  <p class="footer-copyright">
     © 2025 Informatica. By
-    <a href="https://serhii.vercel.app/" class="hover:underline underline-offset-4 "> serhii.vercel.app </a>
+    <a href="https://serhii.vercel.app/"> serhii.vercel.app </a>
   </p>
 </section>
 
