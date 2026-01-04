@@ -4660,13 +4660,15 @@ h4 + p {
 
 .jdgm-row-rating {
     margin-bottom: 1.5rem !important;
+    display: flex !important;
+    justify-content: space-between !important;
 }
 
 .jdgm-rev__author,
 .jdgm-rev__author-name {
-    color: #2e2f32 !important; /* Neutral dark gray instead of Brand Yellow */
-    font-weight: 600 !important;
-    font-size: 1.5rem !important;
+    color: #001e3c !important; /* Brand Navy */
+    font-weight: 700 !important; /* Bold */
+    font-size: 1.6rem !important; /* text-base */
     margin: 0 !important; /* Remove any margins that break centering */
 }
 
@@ -4698,9 +4700,9 @@ h4 + p {
     float: none !important;
     display: inline-block !important;
     margin-left: 1rem !important;
-    color: #6b7280 !important;
-    font-size: 1.2rem !important;
-    font-weight: 400 !important;
+    color: #4b5563 !important; /* gray-600 */
+    font-size: 1.6rem !important; /* text-base */
+    font-weight: 500 !important; /* font-medium */
 }
 
 /* Review Item Hierarchy */
@@ -4718,7 +4720,9 @@ h4 + p {
     margin: 0 0 0.5rem 0 !important;
     font-weight: 700 !important;
     color: #001e3c !important;
-    font-size: 1.6rem !important;
+    font-size: 1.8rem !important; /* text-lg */
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important; /* tracking-wide */
 }
 
 .jdgm-rev__header {
@@ -4726,9 +4730,10 @@ h4 + p {
 }
 
 .jdgm-rev__body {
-    color: #374151 !important;
-    line-height: 1.6 !important;
-    font-size: 1.5rem !important;
+    color: #1f2937 !important; /* gray-800 */
+    line-height: 1.625 !important; /* leading-relaxed */
+    font-size: 1.6rem !important; /* text-base */
+    margin-bottom: 2rem !important; /* mb-5 */
 }
 
 /* Ensure Stars stay yellow but are neatly spaced */
