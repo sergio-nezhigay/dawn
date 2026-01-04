@@ -13,7 +13,7 @@
   }
 {%- endstyle -%}
 
-<div class="section-separator section-{{ section.id }}-padding {% if section.settings.include_margins %}page-width{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+<div class="section-separator section-{{ section.id }}-padding {% if section.settings.include_margins %}page-width-narrow{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
   {%- for block in section.blocks -%}
     {% render block %}
   {%- endfor -%}
