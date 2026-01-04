@@ -16,7 +16,8 @@
 }
 
 
-.section-title {
+.section-title,
+.jdgm-rev-widg__title {
   font-size: 2.4rem !important;
   font-weight: 700 !important;
   color: #2e2f32 !important;
@@ -4561,5 +4562,75 @@ h4 + p {
 
 .card-wrapper .jdgm-widget {
     margin-top: -7px;
+}
+
+.template-product .jdgm-rev-widg__summary,
+.template-product .jdgm-histogram,
+.template-product .jdgm-row-actions {
+  display: none !important;
+}
+
+@media screen and (min-width: 750px) {
+  .template-product .jdgm-rev-widg__header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+    gap: 2rem;
+  }
+
+  .template-product .jdgm-rev-widg__title {
+    margin: 0 !important;
+    flex: 1 !important;
+  }
+
+  /* Force containers to auto-width to prevent squeezing the button */
+  .template-product .jdgm-widget-actions-wrapper,
+  .template-product .jdgm-row-stars {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    width: auto !important;
+    min-width: max-content !important;
+    flex: 0 0 auto !important;
+    margin: 0 !important;
+  }
+
+  .template-product .jdgm-write-rev-link {
+    width: auto !important;
+    min-width: max-content !important;
+    white-space: nowrap !important;
+    padding: 1.2rem 3rem !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-weight: bold !important;
+    background-color: #ffc220 !important; /* Standardize background if needed */
+    color: white !important;
+    border-radius: 4px;
+    height: auto !important;
+  }
+
+  /* Specific stars cleanup if they reappear */
+  .template-product .jdgm-rev-widg__header .jdgm-star {
+    display: none !important;
+  }
+
+  .jdgm-rev-widg__title {
+    text-align: left !important;
+  }
+}
+
+#judgeme_product_reviews {
+    max-width: 900px !important;
+    margin-right: auto !important;
+    margin-left: 0 !important;
+    background-color: #fff !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 12px !important;
+    overflow: hidden;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05) !important;
 }
 
