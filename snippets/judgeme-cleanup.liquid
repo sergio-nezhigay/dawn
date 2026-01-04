@@ -1,0 +1,57 @@
+<script>
+  (function() {
+    const hideRedundantReviews = () => {
+      const reviews = document.querySelectorAll('.jdgm-rev');
+      reviews.forEach(rev => {
+        const authorEl = rev.querySelector('.jdgm-rev__author');
+        const titleEl = rev.querySelector('.jdgm-rev__title');
+        const bodyEl = rev.querySelector('.jdgm-rev__body');
+
+        if (!authorEl) return;
+
+        const author = authorEl.innerText.trim().toLowerCase();
+
+        // Hide title if it matches author
+        if (titleEl) {
+          const title = titleEl.innerText.trim().toLowerCase();
+          if (title === author) {
+            titleEl.style.setProperty('display', 'none', 'important');
+          }
+        }
+
+        // Hide body if it matches author
+        if (bodyEl) {
+          const body = bodyEl.innerText.trim().toLowerCase();
+          if (body === author) {
+            bodyEl.style.setProperty('display', 'none', 'important');
+          }
+        }
+      });
+    };
+
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.addedNodes.length) {
+          hideRedundantReviews();
+        }
+      });
+    });
+
+    const init = () => {
+      const target = document.querySelector('#judgeme_product_reviews');
+      if (target) {
+        observer.observe(target, { childList: true, subtree: true });
+        hideRedundantReviews();
+      } else {
+        // Retry if the widget container isn't in the DOM yet
+        setTimeout(init, 500);
+      }
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+</script>
