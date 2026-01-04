@@ -214,7 +214,7 @@
       assign localization_forms = true
     endif
   -%}
-  <header class="page-width max-md:hidden top-row">
+  <header class="page-width-narrow max-md:hidden top-row">
     <div class="flex-between scaleY-open condensed">
       <nav>
         <ul class="flex gap-8">
@@ -258,7 +258,7 @@
     </div>
   </header>
 
-  <header class="header header--middle-left header--mobile-center page-width{% if section.settings.menu != blank %} header--has-menu{% endif %}{% if has_app_block %} header--has-app{% endif %}{% if social_links %} header--has-social{% endif %}{% if shop.customer_accounts_enabled %} header--has-account{% endif %}{% if localization_forms %} header--has-localizations{% endif %}">
+  <header class="header header--middle-left header--mobile-center page-width-narrow{% if section.settings.menu != blank %} header--has-menu{% endif %}{% if has_app_block %} header--has-app{% endif %}{% if social_links %} header--has-social{% endif %}{% if shop.customer_accounts_enabled %} header--has-account{% endif %}{% if localization_forms %} header--has-localizations{% endif %}">
     {%- liquid
       if section.settings.menu != blank
         render 'header-drawer'
@@ -336,7 +336,7 @@
   </header>
 
   <div class="header__menu-row">
-    <div class="page-width">
+    <div class="page-width-narrow">
       {%- liquid
         if section.settings.menu != blank
           render 'header-dropdown-menu'
