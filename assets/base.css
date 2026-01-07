@@ -4617,34 +4617,6 @@ h4 + p {
   display: none !important;
 }
 
-@media screen and (min-width: 750px) {
-  .template-product .jdgm-rev-widg__header {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    border-bottom: 1px solid #e5e7eb;
-    padding-bottom: 2rem;
-    margin-bottom: 2rem;
-    gap: 2rem;
-  }
-
-  .template-product .jdgm-rev-widg__title {
-    margin: 0 !important;
-    flex: 1 !important;
-  }
-
-  /* Force containers to auto-width to prevent squeezing the button */
-  .template-product .jdgm-widget-actions-wrapper,
-  .template-product .jdgm-row-stars {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: flex-end !important;
-    width: auto !important;
-    min-width: max-content !important;
-    flex: 0 0 auto !important;
-    margin: 0 !important;
-  }
-
   .template-product .jdgm-write-rev-link {
     width: auto !important;
     min-width: max-content !important;
@@ -4672,6 +4644,34 @@ h4 + p {
     transform: translateY(0) scale(0.98) !important;
     box-shadow: none !important;
     transition-duration: 0.1s !important;
+  }
+
+@media screen and (min-width: 750px) {
+  .template-product .jdgm-rev-widg__header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+    gap: 2rem;
+  }
+
+  .template-product .jdgm-rev-widg__title {
+    margin: 0 !important;
+    flex: 1 !important;
+  }
+
+  /* Force containers to auto-width to prevent squeezing the button */
+  .template-product .jdgm-widget-actions-wrapper,
+  .template-product .jdgm-row-stars {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    width: auto !important;
+    min-width: max-content !important;
+    flex: 0 0 auto !important;
+    margin: 0 !important;
   }
 
   /* Specific stars cleanup if they reappear */
