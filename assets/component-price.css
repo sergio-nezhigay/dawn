@@ -22,10 +22,14 @@
 .price .price-item {
   display: inline-block;
   font-family: 'Chakra Petch', sans-serif;
-  font-size: 20px;
+  font-size: 34px;
   font-weight: 700;
   margin: 0 1rem 0 0;
   color: #2e2f32;
+}
+
+.card-wrapper .price .price-item {
+    font-size: 20px;
 }
 
 .price .price-amount {
