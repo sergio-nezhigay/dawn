@@ -4586,7 +4586,7 @@ h4 + p {
   font-size: 14px;
   line-height: 1.375;
   color: #374151;
-  margin-top: 10px;
+  /*margin-top: 10px;*/
   height: 2.5em;
   overflow: hidden;
   display: -webkit-box;
