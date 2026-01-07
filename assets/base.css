@@ -30,6 +30,18 @@
   padding-right: 0.4rem !important;
 }
 
+.jdgm-review-widget--small  .jdgm-rev-widg {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+}
+
+@media screen and (max-width: 749px) {
+    .jdgm-review-widget--small  .jdgm-rev-widg {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+    }
+}
+
 /* Section separator - subtle border between sections with page-width-narrow constraint */
 .section-separator {
   position: relative;
@@ -1120,7 +1132,7 @@ h3 .icon-arrow,
   height: 24px;
 }
 
-.svg-wrapper > svg {
+.fulfillment-wrapper .svg-wrapper > svg {
   height: 100%;
   width: 100%;
 }
@@ -3092,8 +3104,7 @@ input[type='checkbox'] {
 }
 
 .header__icon .icon {
-  height: 2rem;
-  width: 2rem;
+
   fill: none;
   vertical-align: middle;
 }
@@ -3116,8 +3127,9 @@ input[type='checkbox'] {
 
   /* Icon sizes: 20px default */
   .header__icon .icon {
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
+    color: white;
   }
 
   /* Navigation icons are larger: 24px */
@@ -4435,8 +4447,8 @@ h4 + p {
 }
 
 .svg-wrapper {
-    color: #4b5563;
-    margin-top: 4px;
+    /*color: #4b5563;*/
+    /*margin-top: 4px;*/
     flex-shrink: 0;
     width: 24px;
     height: 24px;
