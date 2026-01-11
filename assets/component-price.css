@@ -32,6 +32,15 @@
     font-size: 20px;
 }
 
+.predictive-search__item-content .price .price-item,
+.predictive-search__item-content .price .price-amount {
+    font-size: 14px !important;
+}
+
+.predictive-search__item-content .price .price-currency  {
+    font-size: 12px !important;
+}
+
 .price .price-amount {
   color: #2e2f32;
 }
