@@ -3511,6 +3511,14 @@ details[open] > .header__submenu {
   transform: translateY(0.5rem);
   pointer-events: none;
   display: block; /* Always strictly display: block but controlled via opacity/vis */
+  /* Default left alignment */
+  left: 0;
+}
+
+/* Right-align dropdown for last 3 menu items to prevent viewport overflow */
+.list-menu--inline > li:nth-last-child(-n+3) .header__submenu {
+  left: auto;
+  right: 0;
 }
 
 .header__menu-details:hover > .header__submenu {
@@ -3608,6 +3616,14 @@ details[open] > .header__submenu {
     left: 100%;
     top: -16px;
     margin-left: 8px;
+  }
+
+  /* When parent dropdown is right-aligned (last 3 items), position nested dropdown to the left */
+  .list-menu--inline > li:nth-last-child(-n+3) .header__submenu .header__submenu {
+    left: auto;
+    right: 100%;
+    margin-left: 0;
+    margin-right: 8px;
   }
 
   /* Nested dropdown icon rotation */
@@ -5102,4 +5118,9 @@ input {
 
 .jdgm-row-media {
     display: none !important;
+}
+
+.jdgm-btn--solid {
+    background-color: #ffc220 !important;
+    color: #001e3c !important;
 }
