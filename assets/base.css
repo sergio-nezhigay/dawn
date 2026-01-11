@@ -5099,3 +5099,7 @@ h4 + p {
 input {
     border-radius: 6px;
 }
+
+.jdgm-row-media {
+    display: none !important;
+}
