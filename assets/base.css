@@ -4523,7 +4523,7 @@ h4 + p {
 
   .product__description-content {
     overflow: hidden;
-    max-height: 19.2rem;
+    max-height: 32rem;
     transition: max-height 0.3s ease-out;
   }
 
