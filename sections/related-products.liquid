@@ -23,7 +23,7 @@
   }
 {%- endstyle -%}
 
-<div class="color-{{ section.settings.color_scheme }} section-separator gradient bg-transparent">
+<div class="color-{{ section.settings.color_scheme }} gradient bg-transparent">
   <product-recommendations
     class="related-products page-width-narrow section-{{ section.id }}-padding isolate{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
     data-url="{{ routes.product_recommendations_url }}?limit={{ section.settings.products_to_show }}&intent={{ section.settings.recommendations_intent }}"
