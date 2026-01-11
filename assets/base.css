@@ -4646,32 +4646,60 @@ h4 + p {
     transition-duration: 0.1s !important;
   }
 
+  .jdgm-sort-dropdown-wrapper .jdgm-sort-dropdown, .jdgm-sort-dropdown-wrapper .jdgm-sort-dropdown-arrow {
+    color: #0071dc !important;
+    font-weight: 700 !important;
+  }
+
 @media screen and (min-width: 750px) {
-  .template-product .jdgm-rev-widg__header {
+  /* Parent widget container */
+  .jdgm-rev-widg {
     display: flex !important;
-    justify-content: space-between !important;
+    flex-direction: column !important;
+  }
+
+
+  .template-product .jdgm-rev-widg__header {
+    display: grid !important;
+    grid-template-columns: 1fr auto !important;
+    grid-template-areas:
+      "title stars"
+      "form form" !important;
     align-items: center !important;
     border-bottom: 1px solid #e5e7eb;
     padding-bottom: 2rem;
     margin-bottom: 2rem;
-    gap: 2rem;
+    gap: 1.5rem !important;
   }
 
   .template-product .jdgm-rev-widg__title {
+    grid-area: title !important;
     margin: 0 !important;
-    flex: 1 !important;
+    text-align: left !important;
   }
 
-  /* Force containers to auto-width to prevent squeezing the button */
-  .template-product .jdgm-widget-actions-wrapper,
   .template-product .jdgm-row-stars {
+    grid-area: stars !important;
     display: flex !important;
     align-items: center !important;
     justify-content: flex-end !important;
-    width: auto !important;
-    min-width: max-content !important;
-    flex: 0 0 auto !important;
     margin: 0 !important;
+    gap: 2rem;
+  }
+
+  /* Positioning the form wrapper as the second row in the grid */
+  .template-product .jdgm-form-wrapper {
+    grid-area: form !important;
+    width: 100% !important;
+    margin-top: 1rem !important;
+  }
+
+  /* Ensure the write/cancel link is aligned properly within stars row */
+  .template-product .jdgm-widget-actions-wrapper {
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
   }
 
   /* Specific stars cleanup if they reappear */
@@ -4679,8 +4707,9 @@ h4 + p {
     display: none !important;
   }
 
-  .jdgm-rev-widg__title {
-    text-align: left !important;
+  /* Remove duplicate cancel button */
+  .jdgm-rev-widg .jdgm-cancel-rev {
+    display: none !important;
   }
 }
 
