@@ -4671,7 +4671,7 @@ h4 + p {
   }
 
   .card-walmart {
-    padding: 14px !important;
+    padding:10px !important;
     border-radius: 12px !important;
     overflow: hidden !important;
     background-color: white !important;
@@ -4697,15 +4697,17 @@ h4 + p {
   line-height: 1.375;
   color: #374151;
   /*margin-top: 10px;*/
-  height: 2.5em;
+  height: 4em;
   overflow: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
   transition-property: color;
   transition-duration: 200ms;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+
 
 .card-wrapper:hover .card-walmart .product-title {
   color: #0071dc;
