@@ -4589,11 +4589,12 @@ h4 + p {
     padding: 0;
     margin: 0;
     background-color: #fff;
-    transition: all 200ms ease-out;
+    transition: transform 300ms ease, box-shadow 300ms ease, border-color 300ms ease, background-color 200ms ease;
     flex-shrink: 0;
     overflow: hidden;
     cursor: pointer;
     list-style: none; /* Remove summary marker */
+    transform: translateY(0);
   }
 
   .product-form__row .share-button__button::-webkit-details-marker {
@@ -4601,13 +4602,16 @@ h4 + p {
   }
 
   .product-form__row .share-button__button:hover {
-    background-color: #f3f4f6 !important;
-    border-color: #d1d5db !important;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
+    transform: translateY(-0.25rem);
+    border-color: #bfdbfe !important;
+    background-color: #fff !important;
   }
 
   .product-form__row .share-button__button:active {
-    background-color: #e5e7eb;
-    transform: scale(0.98);
+    background-color: #f3f4f6 !important;
+    transform: translateY(-0.25rem) scale(0.98);
+    transition-duration: 0.1s;
   }
 
   /* Fix icon centering */
