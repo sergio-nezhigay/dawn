@@ -23,7 +23,7 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     transition: max-height 0.3s ease-in-out, opacity 0.2s ease-in-out, padding 0.3s ease-in-out;
     max-height: 100px;
-    overflow: hidden;
+    overflow: visible;
   }
 
   .scrolled-past-header .top-row {
@@ -33,6 +33,7 @@
     padding-bottom: 0;
     border: none;
     pointer-events: none;
+    overflow: hidden;
   }
 
   .link--text {
@@ -221,7 +222,7 @@
         <ul class="flex gap-8">
           {% for link in linklists['secondary-menu'].links %}
             {% unless link.url contains 'blogs' %}
-              <li
+              <li>
                 <a
                   class="header__menu-link"
                   href="{{ link.url }}"
