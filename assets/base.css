@@ -215,7 +215,7 @@
 .header-search__input {
   width: 100%;
   height: 48px;
-  border-radius: 50px;
+  border-radius: 8px;
   border: none;
   padding-left: 24px;
   padding-right: 100px; /* Space for reset + submit buttons */
@@ -249,7 +249,7 @@
   width: 40px;
   height: 40px;
   background-color: rgb(var(--color-accent));
-  border-radius: 50%;
+  border-radius: 6px;
   border: none;
   cursor: pointer;
   display: flex;
@@ -1733,9 +1733,7 @@ button.shopify-payment-button__button--unbranded {
   bottom: 0;
   left: 0;
   z-index: -1;
-  border-radius: 50px;
-  /*box-shadow: var(--shadow-horizontal-offset) var(--shadow-vertical-offset) var(--shadow-blur-radius)
-    rgba(var(--color-shadow), var(--shadow-opacity));*/
+  border-radius: 8px;
 }
 
 .button:after,
@@ -1749,11 +1747,7 @@ button.shopify-payment-button__button--unbranded {
   bottom: var(--buttons-border-width);
   left: var(--buttons-border-width);
   z-index: 1;
-  border-radius: 50px;
-  /*box-shadow: 0 0 0 calc(var(--buttons-border-width) + var(--border-offset))
-      rgba(var(--color-button-text), var(--border-opacity)),
-    0 0 0 var(--buttons-border-width) rgba(var(--color-button), var(--alpha-button-background));*/
-  /*transition: box-shadow var(--duration-short) ease;*/
+  border-radius: 8px;
 }
 
 .button:not([disabled]):hover::after,
@@ -3429,7 +3423,7 @@ details[open] > .header__submenu {
   font-stretch: condensed;
   font-size: 1.6rem;
   font-weight: 700;
-  border-radius: 9999px;
+  border-radius: 8px;
   white-space: nowrap;
   transition: all 0.2s ease-in-out;
 }
@@ -4486,7 +4480,7 @@ h4 + p {
     font-family: 'Chakra Petch', sans-serif !important;
     letter-spacing: 0.05em !important;
     border: none !important;
-    border-radius: 9999px !important;
+    border-radius: 8px !important;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
     transition: all 200ms ease-out !important;
   }
@@ -4713,6 +4707,8 @@ h4 + p {
   }
 }
 
+
+
   /* Judge.me form focus styles */
   .jdgm-form input[type="text"]:focus,
   .jdgm-form input[type="text"]:focus-visible,
@@ -4724,6 +4720,12 @@ h4 + p {
   .jdgm-form textarea:focus-visible {
     outline: none !important;
     border-color: #bfdbfe !important;
+  }
+
+  .jdgm-form input,
+  .jdgm-form textarea,
+  .jdgm-picture-fieldset__box-wrapper {
+    border-radius: 6px !important;
   }
 
   .jdgm-widget:not(.jdgm-review-widget--small,.jdgm-review-widget--medium) .jdgm-row-stars {
@@ -4976,4 +4978,6 @@ h4 + p {
   color: #ffc220;
 }
 
-
+input {
+    border-radius: 6px;
+}
