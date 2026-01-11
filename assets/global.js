@@ -1166,6 +1166,12 @@ class ProductRecommendations extends HTMLElement {
 
         if (html.querySelector('.grid__item')) {
           this.classList.add('product-recommendations--loaded');
+        } else {
+          // Remove the entire section wrapper when there are no products
+          const section = this.closest('.shopify-section');
+          if (section) {
+            section.remove();
+          }
         }
       })
       .catch((e) => {
