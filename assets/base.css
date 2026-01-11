@@ -4595,6 +4595,11 @@ h4 + p {
     cursor: pointer;
     list-style: none; /* Remove summary marker */
     transform: translateY(0);
+    transform-origin: center center;
+  }
+
+  .product-form__row .share-button__button .share-button__label {
+    display: none !important;
   }
 
   .product-form__row .share-button__button::-webkit-details-marker {
@@ -4610,12 +4615,14 @@ h4 + p {
 
   .product-form__row .share-button__button:active {
     background-color: #f3f4f6 !important;
-    transform: translateY(-0.25rem) scale(0.98);
+    transform: translateY(0) scale(0.96) !important; /* Standard active press */
     transition-duration: 0.1s;
+    box-shadow: none !important;
   }
 
   /* Fix icon centering */
-  .product-form__row .share-button__button .svg-wrapper {
+  .product-form__row .share-button__button .svg-wrapper,
+  .product-form__row .share-button__button .icon-wrap {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -4626,7 +4633,8 @@ h4 + p {
     pointer-events: none;
   }
 
-  .product-form__row .share-button__button .svg-wrapper svg {
+  .product-form__row .share-button__button .svg-wrapper svg,
+  .product-form__row .share-button__button .icon-wrap svg {
     width: 2.4rem !important;
     height: 2.4rem !important;
     margin: 0 !important;
