@@ -227,6 +227,18 @@
                         const toggleBtn = container.querySelector('.product__description-toggle');
                         const content = container.querySelector('.product__description-content');
 
+                        // Check if content needs "read more" button
+                        const maxHeightPx = parseFloat(getComputedStyle(content).maxHeight);
+                        const contentHeight = content.scrollHeight;
+                        const threshold = 100; // Only show button if content is at least 100px taller
+
+                        if (contentHeight <= maxHeightPx + threshold) {
+                          // Content fits or is barely overflowing, hide the button
+                          toggleBtn.style.display = 'none';
+                          content.style.maxHeight = 'none';
+                          return;
+                        }
+
                         toggleBtn.addEventListener('click', function() {
                           const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
 
