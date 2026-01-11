@@ -187,11 +187,7 @@
                   {%- endif -%}
                 </div>
 
-                {%- comment -%} Share Button (Moved Outside Unified Block) {%- endcomment -%}
-                {% liquid
-                  assign share_url = product.selected_variant.url | default: product.url | prepend: request.origin
-                  render 'share-button', block: block, share_link: share_url
-                %}
+                {%- comment -%} Share Button removed from here - moved to buy_buttons row {%- endcomment -%}
               {%- when 'inventory' -%}
                 {%- comment -%}
                   DEPRECATED: Inventory and SKU are now integrated into the 'price' block above
@@ -533,21 +529,31 @@
                   </button>
                 </modal-opener>
               {%- when 'share' -%}
-                {% liquid
-                  assign share_url = product.selected_variant.url | default: product.url | prepend: request.origin
-                  render 'share-button', block: block, share_link: share_url
-                %}
+                {%- comment -%}
+                  Share button is now integrated into the buy_buttons row
+                {%- endcomment -%}
 
               {%- when 'variant_picker' -%}
                 {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
               {%- when 'buy_buttons' -%}
-                {%- render 'buy-buttons',
-                  block: block,
-                  product: product,
-                  product_form_id: product_form_id,
-                  section_id: section.id,
-                  show_pickup_availability: true
-                -%}
+                <div class="product-form__row">
+                  {%- render 'buy-buttons',
+                    block: block,
+                    product: product,
+                    product_form_id: product_form_id,
+                    section_id: section.id,
+                    show_pickup_availability: true
+                  -%}
+
+                  {%- liquid
+                    assign share_block = section.blocks | where: 'type', 'share' | first
+                    if share_block == nil
+                      assign share_block = block
+                    endif
+                    assign share_url = product.selected_variant.url | default: product.url | prepend: request.origin
+                    render 'share-button', block: share_block, share_link: share_url
+                  -%}
+                </div>
                 {% render 'product-features' %}
               {%- when 'rating' -%}
                 {%- if product.metafields.reviews.rating.value != blank -%}
