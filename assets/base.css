@@ -4713,6 +4713,23 @@ h4 + p {
   }
 }
 
+  /* Judge.me form focus styles */
+  .jdgm-form input[type="text"]:focus,
+  .jdgm-form input[type="text"]:focus-visible,
+  .jdgm-form input[type="email"]:focus,
+  .jdgm-form input[type="email"]:focus-visible,
+  .jdgm-form input[type="url"]:focus,
+  .jdgm-form input[type="url"]:focus-visible,
+  .jdgm-form textarea:focus,
+  .jdgm-form textarea:focus-visible {
+    outline: none !important;
+    border-color: #bfdbfe !important;
+  }
+
+  .jdgm-widget:not(.jdgm-review-widget--small,.jdgm-review-widget--medium) .jdgm-row-stars {
+    padding-bottom: 0 !important;
+  }
+
 #judgeme_product_reviews {
     max-width: 900px !important;
     margin-right: auto !important;
