@@ -1,0 +1,58 @@
+/* ========================================
+   Template: Shared Page Activity Background
+   Modern pixelated grid with ambient color blobs
+   Applies to: Product Page, Collection Page
+   ======================================== */
+
+/* Base background */
+.template-product,
+.template-collection {
+  background-color: #fafafa;
+  position: relative;
+}
+
+/* Grid pattern layer */
+.template-product::before,
+.template-collection::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+  background-size: 24px 24px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Ambient color blobs (blue top-right + yellow bottom-left) */
+.template-product::after,
+.template-collection::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  background:
+    radial-gradient(600px circle at top right, rgba(49, 35, 94, 0.08), transparent),
+    radial-gradient(700px circle at bottom left, rgba(251, 191, 36, 0.18), transparent);
+  filter: blur(128px);
+  mix-blend-mode: multiply;
+}
+
+/* Ensure content sits above background */
+.template-product > *,
+.template-collection > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Header priority */
+.template-product header,
+.template-collection header {
+  z-index: 10;
+}
