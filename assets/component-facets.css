@@ -1126,6 +1126,7 @@ input.mobile-facets__checkbox {
 @media screen and (min-width: 750px) {
   .facets-vertical {
     display: flex;
+    gap: 16px;
   }
 
   .facets-wrap-vertical {
@@ -1165,7 +1166,11 @@ input.mobile-facets__checkbox {
   }
 
   .facets-vertical .facets-wrapper {
-    padding-right: 3rem;
+    background-color: #ffffff;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    height: fit-content;
   }
 
   .facets-vertical .facets-wrapper--no-filters {
