@@ -256,17 +256,18 @@
         }
       }
 
-      /* Product page background handled by template-product.css */
+      /* Product and Collection page background handled by shared-backgrounds.css */
       .template-product product-info,
-      .template-product .shopify-section {
+      .template-product .shopify-section,
+      .template-collection .shopify-section {
         background-color: transparent !important;
         background-image: none !important;
       }
     {% endstyle %}
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
-    {%- if request.page_type == 'product' -%}
-      {{ 'template-product.css' | asset_url | stylesheet_tag }}
+    {%- if request.page_type == 'product' or request.page_type == 'collection' -%}
+      {{ 'shared-backgrounds.css' | asset_url | stylesheet_tag }}
     {%- endif -%}
     <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
 
