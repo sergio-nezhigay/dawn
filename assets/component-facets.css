@@ -33,6 +33,10 @@
     grid-template-columns: auto minmax(0, max-content);
     column-gap: 2rem;
   }
+  .overflow-hidden-mobile #shopify-block-Aei90bkNQTDZhTVdLS__11540801135891226883 {
+    position: relative !important;
+    z-index: -1 !important;
+  }
 }
 
 .facet-filters {
@@ -925,12 +929,13 @@ a.mobile-facets__clear {
   align-items: center;
   justify-content: center;
   min-height: 44px;
+  width: 100%;
 }
 
 a.mobile-facets__clear:hover {
   background-color: #fef2f2;
   border-color: #fecaca;
-  transform: translateY(-1px);
+  /*transform: translateY(-1px);*/
   box-shadow: 0 1px 3px 0 rgba(220, 38, 38, 0.1);
 }
 
@@ -1325,6 +1330,14 @@ input.mobile-facets__checkbox {
   font-weight: 500;
   border-radius: 8px;
   transition: all 0.2s ease;
+  background-color: rgba(var(--color-foreground), 0.05);
+  border: 1px solid rgba(var(--color-foreground), 0.1);
+  color: rgb(var(--color-foreground));
+  cursor: pointer;
+}
+
+.mobile-facets__footer button.button--primary:hover {
+  background-color: rgba(var(--color-foreground), 0.1);
 }
 
 .mobile-facets__footer button.button--primary:active {
@@ -1343,7 +1356,7 @@ input.mobile-facets__checkbox {
   align-items: center;
   padding: 1.6rem 2rem;
   background-color: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
+  /*border-bottom: 1px solid #e5e7eb;*/
 }
 
 .mobile-facets__sort label {
