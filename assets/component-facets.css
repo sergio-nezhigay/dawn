@@ -327,7 +327,7 @@
 /* Hover/focus state */
 .facets-layout-list .facets__label:hover .facet-checkbox__text-label,
 .facets-layout-list input:focus ~ .facet-checkbox__text-label {
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .facets-layout-grid > * {
@@ -450,11 +450,27 @@
   word-break: break-word;
 }
 
+.facet-checkbox__text {
+  flex-grow: 1;
+  color: #4d4d4d;
+}
+
+.facet-checkbox__count {
+  margin-left: 1rem;
+  color: #9ca3af;
+}
+
 /* Hover, active, and focus states */
 .facets__label:hover,
 .facets__label.active,
 .facets__label:has(:focus-visible) {
   color: rgba(var(--color-foreground), 1);
+}
+
+.facets__label:hover .facet-checkbox__text,
+.facets__label:hover .facet-checkbox__count,
+.facets__label:hover svg {
+  color: #0071dc;
 }
 
 /* Disabled state */
