@@ -691,23 +691,59 @@ button.facets__button {
   padding-left: 0.2rem;
   padding-right: 0.2rem;
   text-decoration: none;
+  transition: all 0.2s ease;
 }
 
 span.active-facets__button-inner {
-  /*color: rgb(var(--color-foreground));*/
-  box-shadow: 0 0 0 0.1rem rgb(var(--color-foreground));
-  border-radius: 2.6rem;
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
   font-size: 1rem;
   min-height: 0;
   min-width: 0;
-  padding: 0.25rem 1.25rem;
+  padding: 6px 12px;
   display: flex;
   align-items: center;
+  gap: 8px;
+  color: #374151;
+  font-weight: 500;
+  transition: all 0.2s ease;
 }
 
 span.active-facets__button-inner:before,
 span.active-facets__button-inner:after {
   display: none;
+}
+
+.active-facets__button:hover span.active-facets__button-inner {
+  background-color: #ffffff;
+  border-color: #bfdbfe;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
+}
+
+span.active-facets__button-inner .svg-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: transparent;
+  transition: background-color 0.2s ease;
+}
+
+.active-facets__button:hover span.active-facets__button-inner .svg-wrapper {
+  background-color: #dbeafe;
+}
+
+span.active-facets__button-inner .svg-wrapper svg {
+  width: 10px;
+  height: 10px;
+  color: #6b7280;
+}
+
+.active-facets__button:hover span.active-facets__button-inner .svg-wrapper svg {
+  color: #0071dc;
 }
 
 .active-facets__button-wrapper {
@@ -744,8 +780,19 @@ span.active-facets__button-inner:after {
   }
 
   span.active-facets__button-inner {
-    padding-bottom: 0.1rem;
-    padding-top: 0.1rem;
+    padding: 5px 10px;
+    gap: 6px;
+    font-size: 1.2rem;
+  }
+
+  span.active-facets__button-inner .svg-wrapper {
+    width: 12px;
+    height: 12px;
+  }
+
+  span.active-facets__button-inner .svg-wrapper svg {
+    width: 9px;
+    height: 9px;
   }
 
   .active-facets__button-wrapper {
@@ -754,16 +801,17 @@ span.active-facets__button-inner:after {
   }
 }
 
-.active-facets__button:hover .active-facets__button-inner {
-  box-shadow: 0 0 0 0.2rem rgb(var(--color-foreground));
-}
+/* Removed duplicate hover rule - now handled above */
 
 .active-facets__button--light .active-facets__button-inner {
-  box-shadow: 0 0 0 0.1rem rgba(var(--color-foreground), 0.2);
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
 }
 
 .active-facets__button--light:hover .active-facets__button-inner {
-  box-shadow: 0 0 0 0.2rem #bfdbfe;
+  background-color: #f9fafb;
+  border-color: #bfdbfe;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
 }
 
 a.active-facets__button:focus-visible {
@@ -794,20 +842,17 @@ a.active-facets__button.focused .active-facets__button-inner {
   outline: none;
 }
 
-.active-facets__button .svg-wrapper {
-  align-self: center;
-  flex-shrink: 0;
-  margin-left: 0.6rem;
-  margin-right: -0.2rem;
-  pointer-events: none;
-  width: 1.2rem;
-}
+/* SVG wrapper styles moved and updated above for better integration */
 
 @media all and (min-width: 990px) {
-  .active-facets__button .svg-wrapper {
-    margin-right: -0.4rem;
-    margin-top: 0.1rem;
-    width: 1.2rem;
+  span.active-facets__button-inner .svg-wrapper {
+    width: 16px;
+    height: 16px;
+  }
+
+  span.active-facets__button-inner .svg-wrapper svg {
+    width: 11px;
+    height: 11px;
   }
 }
 
