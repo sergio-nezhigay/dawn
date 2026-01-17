@@ -2210,7 +2210,14 @@ details[open] > .share-button__fallback {
   pointer-events: none;
   position: absolute;
   top: calc(50% - 0.2rem);
-  right: 0;
+  right: 0px;
+}
+
+@media screen and (max-width: 768px) {
+    .select .svg-wrapper,
+    .customer select + .svg-wrapper {
+        right: 16px;
+    }
 }
 
 .select__select,
