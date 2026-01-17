@@ -1520,6 +1520,28 @@ summary::-webkit-details-marker {
   }
 }
 
+/* Progressive column gradations for responsive grid */
+
+/* Small desktop: 3 columns for 4-5 column grids (990px - 1199px) */
+@media screen and (min-width: 990px) and (max-width: 1199px) {
+  .grid--5-col-desktop .grid__item,
+  .grid--4-col-desktop .grid__item {
+    width: calc(33.33% - var(--grid-desktop-horizontal-spacing) * 2 / 3);
+    max-width: calc(33.33% - var(--grid-desktop-horizontal-spacing) * 2 / 3);
+  }
+}
+
+/* Medium desktop: 4 columns for 5-6 column grids (1200px - 1399px) */
+@media screen and (min-width: 1200px) and (max-width: 1399px) {
+  .grid--6-col-desktop .grid__item,
+  .grid--5-col-desktop .grid__item {
+    width: calc(25% - var(--grid-desktop-horizontal-spacing) * 3 / 4);
+    max-width: calc(25% - var(--grid-desktop-horizontal-spacing) * 3 / 4);
+  }
+}
+
+/* Large desktop: Full columns at 1400px+ (base rules apply) */
+
 @media screen and (min-width: 990px) {
   .grid--1-col-desktop {
     flex: 0 0 100%;
