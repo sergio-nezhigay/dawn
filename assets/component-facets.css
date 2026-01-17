@@ -277,6 +277,38 @@ a.active-facets__button-remove:hover {
   color: #0071dc !important;
 }
 
+a.active-facets__button-remove {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  border-radius: 8px;
+  background-color: transparent;
+  border: 1px solid #e5e7eb;
+  color: #6b7280;
+  font-size: 1.4rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+a.active-facets__button-remove:hover {
+  background-color: #eff6ff;
+  border-color: #bfdbfe;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+a.active-facets__button-remove:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+a.active-facets__button-remove:focus-visible {
+  outline: 2px solid #bfdbfe;
+  outline-offset: 2px;
+}
+
 .facets__and-helptext {
   color: rgba(var(--color-foreground), 0.5);
   font-size: calc(var(--font-heading-scale) * 1.2rem);
@@ -791,6 +823,7 @@ a.active-facets__button.focused .active-facets__button-inner {
   display: flex;
   width: 100%;
   justify-content: space-between;
+  align-items: center;
 }
 
 .facets-vertical .active-facets-vertical-filter .active-facets__button-wrapper {
