@@ -47,9 +47,10 @@
 
 .facet-filters__label {
   display: block;
-  color: #9ca3af;
+  color: #6b7280;
   font-size: 1.4rem;
-  margin: 0 2rem 0 0;
+  font-weight: 500;
+  margin: 0 1.2rem 0 0;
 }
 
 .facet-filters__summary {
@@ -74,10 +75,14 @@
   display: flex;
   flex-grow: 1;
   justify-content: flex-end;
+  gap: 0.8rem;
 }
 
 .facet-filters__field .select {
   width: auto;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
 }
 
 .facet-filters__field .select:after,
@@ -89,16 +94,56 @@
 
 .facet-filters__field .select__select,
 .mobile-facets__sort .select__select {
-  border-radius: 0;
-  min-width: auto;
+  border-radius: 8px;
+  min-width: 200px;
   min-height: auto;
-  transition: none;
-  height: 16px;
-  border-radius: 4px;
+  transition: all 0.2s ease;
+  height: 40px;
+  padding: 8px 32px 8px 12px;
+  border: 1px solid #e5e7eb;
+  background-color: #ffffff;
+  font-size: 1.4rem;
+  color: #121212;
+  cursor: pointer;
+}
+
+.facet-filters__field .select__select:hover,
+.mobile-facets__sort .select__select:hover {
+  border-color: #bfdbfe;
+  box-shadow: 0 0 0 1px #bfdbfe;
+}
+
+.facet-filters__field .select__select:focus,
+.mobile-facets__sort .select__select:focus {
+  outline: none;
+  border-color: #bfdbfe;
+  box-shadow: 0 0 0 2px rgba(0, 113, 220, 0.2);
+}
+
+.facet-filters__field .select__select option {
+  padding: 8px 12px;
+  font-size: 1.4rem;
+  color: #121212;
+}
+
+.facet-filters__field .select__select option:hover {
+  background-color: #f3f4f6;
+}
+
+.facet-filters__field .select .icon-caret {
+  width: 12px;
+  height: 12px;
+  pointer-events: none;
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: transform 0.2s ease;
 }
 
 .select .icon-caret {
-  width: 10px;
+  width: 12px;
+  pointer-events: none;
 }
 
 .facet-filters button {
@@ -1131,9 +1176,10 @@ input.mobile-facets__checkbox {
 
 .product-count__text {
   font-size: 1.4rem;
+  font-weight: 500;
   line-height: calc(1 + 0.5 / var(--font-body-scale));
   margin: 0;
-  color: #9ca3af
+  color: #6b7280
 }
 
 #ProductCountDesktop.loading,
@@ -1218,6 +1264,8 @@ input.mobile-facets__checkbox {
   .product-count-vertical {
     margin-left: 3.5rem;
     position: relative;
+    display: flex;
+    align-items: center;
   }
 
   .facets-vertical .active-facets__button-wrapper {
