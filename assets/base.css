@@ -4480,7 +4480,7 @@ h4 + p {
     line-height: 1.75;
 }
 
-  #ProductSubmitButton-template--25645869433148__main {
+  button[id^="ProductSubmitButton-"] {
     background-color: #ffc220 !important;
     height: 56px !important;
     color: #001e3c !important;
@@ -4496,13 +4496,13 @@ h4 + p {
     transition: all 200ms ease-out !important;
   }
 
-  #ProductSubmitButton-template--25645869433148__main:hover {
+  button[id^="ProductSubmitButton-"]:hover {
     transform: translateY(-3px) !important;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
                 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
   }
 
-  #ProductSubmitButton-template--25645869433148__main:active {
+  button[id^="ProductSubmitButton-"]:active {
     transform: translateY(0) !important;
   }
 
