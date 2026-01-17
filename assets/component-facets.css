@@ -731,7 +731,7 @@ span.active-facets__button-inner:after {
 }
 
 .active-facets__button--light:hover .active-facets__button-inner {
-  box-shadow: 0 0 0 0.2rem #0071dc;
+  box-shadow: 0 0 0 0.2rem #bfdbfe;
 }
 
 a.active-facets__button:focus-visible {

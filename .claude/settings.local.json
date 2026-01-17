@@ -16,7 +16,8 @@
       "Bash(timeout /t 5 /nobreak)",
       "Bash(timeout /t 10 /nobreak)",
       "Bash(timeout 5 tail:*)",
-      "Bash(timeout 10 tail:*)"
+      "Bash(timeout 10 tail:*)",
+      "Bash(shopify theme dev:*)"
     ],
     "deny": [],
     "ask": []
