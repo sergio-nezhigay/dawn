@@ -47,7 +47,7 @@
 
 .facet-filters__label {
   display: block;
-  color: rgba(var(--color-foreground), 0.85);
+  color: #9ca3af;
   font-size: 1.4rem;
   margin: 0 2rem 0 0;
 }
@@ -93,6 +93,8 @@
   min-width: auto;
   min-height: auto;
   transition: none;
+  height: 16px;
+  border-radius: 4px;
 }
 
 .select .icon-caret {
@@ -179,7 +181,8 @@
 
 .facets__heading {
   display: block;
-  color: rgba(var(--color-foreground), 0.85);
+  color: inherit;
+  /*color: rgba(var(--color-foreground), 0.85);*/
   font-size: 1.4rem;
   margin: -1.5rem 2rem 0 0;
 }
@@ -193,7 +196,7 @@
 }
 
 .facets__summary {
-  color: rgba(var(--color-foreground), 0.75);
+  /*color: rgba(var(--color-foreground), 0.75);*/
   font-size: 1.4rem;
   padding: 0 1.75rem 0 0;
   margin-bottom: 1.5rem;
@@ -224,9 +227,9 @@
   transition: text-decoration var(--duration-short) ease;
 }
 
-.facets__summary:hover .facets__summary-label {
-  text-decoration: underline;
-  text-underline-offset: 0.3rem;
+.facets__summary:hover .facets__summary-label,
+a.active-facets__button-remove:hover {
+  color: #0071dc !important;
 }
 
 .facets__and-helptext {
@@ -442,7 +445,7 @@
 }
 
 .facet-checkbox {
-  padding: 1rem 2rem 1rem 0;
+  padding: 1rem 0;
   flex-grow: 1;
   position: relative;
   font-size: 1.4rem;
@@ -452,7 +455,7 @@
 
 .facet-checkbox__text {
   flex-grow: 1;
-  color: #4d4d4d;
+  /*color: #4d4d4d;*/
 }
 
 .facet-checkbox__count {
@@ -546,6 +549,14 @@
   visibility: visible;
 }
 
+.facet-checkbox > input[type='checkbox']:checked ~ svg {
+  background-color: #0071dc;
+}
+
+.facet-checkbox > input[type='checkbox']:checked ~ .svg-wrapper > .icon-checkmark path {
+  stroke: white;
+}
+
 @media screen and (forced-colors: active) {
   .facet-checkbox > svg {
     background-color: inherit;
@@ -606,7 +617,7 @@ button.facets__button {
 }
 
 span.active-facets__button-inner {
-  color: rgb(var(--color-foreground));
+  /*color: rgb(var(--color-foreground));*/
   box-shadow: 0 0 0 0.1rem rgb(var(--color-foreground));
   border-radius: 2.6rem;
   font-size: 1rem;
@@ -675,7 +686,7 @@ span.active-facets__button-inner:after {
 }
 
 .active-facets__button--light:hover .active-facets__button-inner {
-  box-shadow: 0 0 0 0.2rem rgba(var(--color-foreground), 0.4);
+  box-shadow: 0 0 0 0.2rem #0071dc;
 }
 
 a.active-facets__button:focus-visible {
@@ -1122,6 +1133,7 @@ input.mobile-facets__checkbox {
   font-size: 1.4rem;
   line-height: calc(1 + 0.5 / var(--font-body-scale));
   margin: 0;
+  color: #9ca3af
 }
 
 #ProductCountDesktop.loading,
@@ -1143,6 +1155,7 @@ input.mobile-facets__checkbox {
   .facets-vertical {
     display: flex;
     gap: 16px;
+    color: #121212;
   }
 
   .facets-wrap-vertical {
@@ -1183,7 +1196,7 @@ input.mobile-facets__checkbox {
 
   .facets-vertical .facets-wrapper {
     background-color: #ffffff;
-    padding: 12px;
+    padding: 24px;
     border-radius: 12px;
     border: 1px solid #e5e7eb;
     height: fit-content;

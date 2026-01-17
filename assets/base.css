@@ -2115,7 +2115,7 @@ details[open] > .share-button__fallback {
   font-style: var(--font-body-style);
   font-weight: var(--font-body-weight);
   font-size: 1.2rem;
-  color: rgba(var(--color-foreground), 0.75);
+  color: #121212;
 }
 
 .field:hover.field:after,
@@ -4411,7 +4411,7 @@ h4 + p {
 }
 
 .facets-vertical-sort {
-  margin-bottom: 8px;
+  margin-bottom: 16px;
 }
 
 @media screen and (min-width: 1024px) {
