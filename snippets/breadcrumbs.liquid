@@ -2,7 +2,7 @@
   {% assign t = template | split: '.' | first %}
 
   <nav
-    class="breadcrumbs mb-4 scrollbar-hide overflow-x-auto whitespace-nowrap"
+    class="breadcrumbs scrollbar-hide overflow-x-auto whitespace-nowrap{% if template.name == 'product' %} breadcrumbs-product{% endif %}"
     role="navigation"
     aria-label="breadcrumbs"
   >
@@ -94,6 +94,11 @@
     .breadcrumbs{
         padding: 10px 0;
 
+    }
+    @media screen and (min-width: 750px) {
+      .breadcrumbs-product {
+        margin-bottom: 8px;
+      }
     }
     .breadcrumb-item{
         color:#2e2f32!important;
