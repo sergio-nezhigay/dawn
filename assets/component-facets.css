@@ -6,7 +6,11 @@
 }
 
 .active-facets-mobile {
-  margin-bottom: 0.5rem;
+  margin: 1.2rem 0;
+  padding: 0 1.2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .mobile-facets__list {
@@ -753,9 +757,9 @@ span.active-facets__button-inner .svg-wrapper svg {
   padding-top: 1.5rem;
 }
 
-.active-facets__button-wrapper * {
+/*.active-facets__button-wrapper * {
   font-size: 1rem;
-}
+}*/
 
 @media screen and (min-width: 990px) {
   .active-facets__button {
@@ -770,34 +774,53 @@ span.active-facets__button-inner .svg-wrapper svg {
 
 @media screen and (max-width: 989px) {
   .active-facets {
-    margin: 0 -1.2rem -1.2rem;
+    margin: 1.2rem 0;
+    padding: 0;
+    gap: 8px;
+    align-items: center;
   }
 
-  .active-facets__button,
+  .active-facets__button {
+    margin: 0;
+    padding: 0;
+  }
+
   .active-facets__button-remove {
     margin: 0;
-    padding: 1.2rem;
+    padding: 0;
   }
 
   span.active-facets__button-inner {
-    padding: 5px 10px;
-    gap: 6px;
-    font-size: 1.2rem;
+    padding: 7px 12px;
+    gap: 8px;
+    font-size: 1.5rem;
+    min-height: 36px;
+    line-height: 1.4;
   }
 
   span.active-facets__button-inner .svg-wrapper {
-    width: 12px;
-    height: 12px;
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    min-height: 18px;
   }
 
   span.active-facets__button-inner .svg-wrapper svg {
-    width: 9px;
-    height: 9px;
+    width: 10px;
+    height: 10px;
   }
 
   .active-facets__button-wrapper {
     padding-top: 0;
-    margin-left: 1.2rem;
+    margin: 0;
+  }
+
+  a.active-facets__button-remove {
+    padding: 7px 14px;
+    font-size: 1.5rem;
+    min-height: 36px;
+    line-height: 1.4;
+    white-space: nowrap;
   }
 }
 
