@@ -757,10 +757,6 @@ span.active-facets__button-inner .svg-wrapper svg {
   padding-top: 1.5rem;
 }
 
-/*.active-facets__button-wrapper * {
-  font-size: 1rem;
-}*/
-
 @media screen and (min-width: 990px) {
   .active-facets__button {
     margin-right: 1.5rem;
@@ -915,6 +911,34 @@ a.active-facets__button.focused .active-facets__button-inner {
   justify-content: center;
 }
 
+a.mobile-facets__clear {
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #fee2e2;
+  background-color: #ffffff;
+  color: #dc2626;
+  font-weight: 500;
+  font-size: 1.5rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+}
+
+a.mobile-facets__clear:hover {
+  background-color: #fef2f2;
+  border-color: #fecaca;
+  transform: translateY(-1px);
+  box-shadow: 0 1px 3px 0 rgba(220, 38, 38, 0.1);
+}
+
+a.mobile-facets__clear:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px 0 rgba(220, 38, 38, 0.05);
+}
+
 .mobile-facets {
   position: fixed;
   top: 0;
@@ -988,15 +1012,18 @@ a.active-facets__button.focused .active-facets__button-inner {
 }
 
 .mobile-facets__heading {
-  font-size: calc(var(--font-heading-scale) * 1.4rem);
+  font-size: 1.8rem;
+  font-weight: 600;
   margin: 0;
+  color: #111827;
 }
 
 .mobile-facets__count {
-  color: rgba(var(--color-foreground), 0.7);
-  font-size: 1.3rem;
+  color: #6b7280;
+  font-size: 1.4rem;
   margin: 0;
   flex-grow: 1;
+  font-weight: 400;
 }
 
 .mobile-facets__open-wrapper {
@@ -1105,8 +1132,20 @@ details.menu-opening .mobile-facets__close .svg-wrapper {
   overflow-y: auto;
 }
 
+.mobile-facets__details {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.mobile-facets__details[open] > .mobile-facets__summary {
+  background-color: #f9fafb;
+}
+
 .mobile-facets__details[open] .icon-caret {
   transform: rotate(180deg);
+}
+
+.mobile-facets__details .icon-caret {
+  transition: transform 0.3s ease;
 }
 
 .mobile-facets__highlight {
@@ -1116,9 +1155,10 @@ details.menu-opening .mobile-facets__close .svg-wrapper {
   right: 0px;
   bottom: 0px;
   display: block;
-  background-color: rgba(var(--color-foreground), 0.04);
+  background-color: #eff6ff;
   opacity: 0;
   visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
 }
 
 .mobile-facets__checkbox:checked + .mobile-facets__highlight {
@@ -1127,7 +1167,10 @@ details.menu-opening .mobile-facets__close .svg-wrapper {
 }
 
 .mobile-facets__summary {
-  padding: 1.3rem 2.5rem;
+  padding: 1.6rem 2rem;
+  font-size: 1.6rem;
+  font-weight: 500;
+  line-height: 1.4;
 }
 
 .mobile-facets__summary .svg-wrapper {
@@ -1150,6 +1193,7 @@ details.menu-opening .mobile-facets__close .svg-wrapper {
   visibility: hidden;
   display: flex;
   flex-direction: column;
+  background-color: #fafafa;
 }
 
 .js details[open] > .mobile-facets__submenu {
@@ -1187,11 +1231,15 @@ input.mobile-facets__checkbox {
 }
 
 .mobile-facets__label {
-  padding: 1.5rem 2rem 1.5rem 2.5rem;
+  padding: 1.6rem 2rem 1.6rem 2.5rem;
   width: 100%;
   transition: background-color 0.2s ease;
   word-break: break-word;
   display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  line-height: 1.4;
+  min-height: 44px;
 }
 
 .mobile-facets__label > svg {
@@ -1207,18 +1255,49 @@ input.mobile-facets__checkbox {
   top: 1.9rem;
   left: 2.8rem;
   visibility: hidden;
-  width: 11px;
-  height: 9px;
+  width: 13px;
+  height: 11px;
+  transition: visibility 0.2s ease;
+  transform: translateY(2px);
 }
 
 .mobile-facets__label > input[type='checkbox']:checked ~ .icon-checkmark {
   visibility: visible;
 }
 
+.mobile-facets__label > input[type='checkbox']:checked ~ .icon-checkmark path {
+  stroke: #fff;
+  stroke-width: 2.5;
+}
+
+.mobile-facets__label > svg {
+  transition: all 0.2s ease;
+}
+
+
+.mobile-facets__label > input[type='checkbox']:checked ~ svg {
+  background-color: #0071dc;
+  border-color: #0071dc;
+}
+
+.mobile-facets__label > .facet-checkbox__text,
+.mobile-facets__label > .facet-checkbox__count {
+  position: relative;
+  z-index: 2;
+}
+
 .mobile-facets__arrow,
 .mobile-facets__summary .icon-caret {
   margin-left: auto;
   display: block;
+  width: 20px;
+  height: 20px;
+  color: #6b7280;
+  transition: transform 0.3s ease, color 0.2s ease;
+}
+
+.mobile-facets__summary:active .icon-caret {
+  color: #374151;
 }
 
 .mobile-facets__footer {
@@ -1227,27 +1306,49 @@ input.mobile-facets__checkbox {
   bottom: 0;
   position: sticky;
   display: flex;
+  gap: 1rem;
   z-index: 2;
   margin-top: auto;
   background-color: rgb(var(--color-background));
   background: var(--gradient-background);
 }
 
-.mobile-facets__footer > * + * {
-  margin-left: 1rem;
-}
-
 .mobile-facets__footer > * {
   width: 50%;
+}
+
+.mobile-facets__footer button.button--primary {
+  min-height: 44px;
+  font-size: 1.5rem;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.mobile-facets__footer button.button--primary:active {
+  transform: scale(0.98);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.mobile-facets__summary:active {
+  transform: scale(0.99);
+  background-color: #f3f4f6;
 }
 
 .mobile-facets__sort {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  padding: 1.6rem 2rem;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
 }
 
 .mobile-facets__sort label {
   flex-shrink: 0;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #374151;
 }
 
 .mobile-facets__sort .select {
@@ -1259,14 +1360,23 @@ input.mobile-facets__checkbox {
 }
 
 .mobile-facets__sort .select__select {
-  background-color: transparent;
-  border-radius: 0;
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
   box-shadow: none;
   filter: none;
   margin-left: 0.5rem;
   margin-right: 0.5rem;
-  padding-left: 0.5rem;
-  padding-right: 1.5rem;
+  padding: 0.8rem 3rem 0.8rem 1.2rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #0071dc;
+  min-width: auto;
+}
+
+.mobile-facets__sort .select__select:focus {
+  border-color: #bfdbfe;
+  box-shadow: 0 0 0 2px rgba(0, 113, 220, 0.2);
 }
 
 .product-count {
