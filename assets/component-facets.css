@@ -1289,7 +1289,9 @@ input.mobile-facets__checkbox {
 .mobile-facets__arrow,
 .mobile-facets__summary .icon-caret {
   margin-left: auto;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 20px;
   height: 20px;
   color: #6b7280;
@@ -1307,7 +1309,7 @@ input.mobile-facets__checkbox {
   position: sticky;
   display: flex;
   gap: 1rem;
-  z-index: 2;
+  z-index: 3;
   margin-top: auto;
   background-color: rgb(var(--color-background));
   background: var(--gradient-background);
