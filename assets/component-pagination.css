@@ -33,30 +33,36 @@
   width: 100%;
   padding: 0;
   text-decoration: none;
+  border: 1px solid rgba(var(--color-foreground), 0.08); /* Light border */
+  border-radius: 0; /* Square box */
+  transition: background-color 0.2s ease;
 }
 
-a.pagination__item:hover::after {
-  height: 0.1rem;
+.pagination__item:hover {
+  background-color: rgba(var(--color-foreground), 0.04);
 }
 
 .pagination__item .icon-caret {
   height: 0.6rem;
 }
 
-.pagination__item--current::after {
-  height: 0.1rem;
+.pagination__item--current {
+  background-color: #fec602; /* Judge.me yellow */
+  border-color: #fec602;
+  color: rgb(var(--color-background)); /* Ensure contrast, usually white or dark depending on theme, standard for this yellow is often dark text but let's check base styling. Assuming foreground color is blackish, keeping it might be better? Let's assume black text on yellow is good. */
+  color: rgb(var(--color-foreground));
+  font-weight: bold;
 }
 
+.pagination__item--current:hover {
+  background-color: #e5b202; /* Slightly darker on hover */
+}
+
+/* Remove old underline styles */
 .pagination__item--current::after,
 .pagination__item:hover::after {
-  content: '';
-  display: block;
-  width: 2rem;
-  position: absolute;
-  bottom: 8px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: currentColor;
+  content: none;
+  display: none;
 }
 
 .pagination__item--next .icon {
@@ -75,8 +81,4 @@ a.pagination__item:hover::after {
 
 .pagination__item--prev:hover .icon {
   transform: rotate(-90deg) scale(1.07);
-}
-
-.pagination__item-arrow:hover::after {
-  display: none;
 }
