@@ -44,6 +44,24 @@
   justify-content: center;
 }
 
+.cart-drawer__empty-content .button {
+  margin-top: 1.5rem;
+  background: #0071dc;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  min-width: 20rem; /* Give it some width */
+}
+
+.cart-drawer__empty-content .button:hover {
+  background: #005ec4;
+  box-shadow: none;
+}
+
 cart-drawer.is-empty .drawer__inner {
   display: grid;
   grid-template-rows: 1fr;
