@@ -2126,8 +2126,8 @@ details[open] > .share-button__fallback {
   bottom: var(--inputs-border-width);
   left: var(--inputs-border-width);
   border: 0.1rem solid transparent;
-  border-radius: var(--inputs-radius);
-  box-shadow: 0 0 0 var(--inputs-border-width) rgba(var(--color-foreground), var(--inputs-border-opacity));
+  border-radius: 6px;
+  box-shadow: 0 0 0 var(--inputs-border-width) #e5e7eb;
   transition: box-shadow var(--duration-short) ease;
   z-index: 1;
 }
@@ -2147,9 +2147,10 @@ details[open] > .share-button__fallback {
 .customer select:hover.select:after,
 .localization-form__select:hover.localization-form__select:after {
   box-shadow: 0 0 0 calc(0.1rem + var(--inputs-border-width))
-    rgba(var(--color-foreground), var(--inputs-border-opacity));
+    #bfdbfe;
   outline: 0;
-  border-radius: var(--inputs-radius);
+  border: 0.1rem solid transparent;
+  outline: 0;
 }
 
 .field__input:focus-visible,
@@ -2157,9 +2158,9 @@ details[open] > .share-button__fallback {
 .customer .field input:focus-visible,
 .customer select:focus-visible,
 .localization-form__select:focus-visible.localization-form__select:after {
-  box-shadow: 0 0 0 calc(0.1rem + var(--inputs-border-width)) rgba(var(--color-foreground));
+  box-shadow: 0 0 0 calc(0.1rem + var(--inputs-border-width)) #bfdbfe;
   outline: 0;
-  border-radius: var(--inputs-radius);
+  border-radius: 6px;
 }
 
 .field__input:focus,
@@ -2167,9 +2168,8 @@ details[open] > .share-button__fallback {
 .customer .field input:focus,
 .customer select:focus,
 .localization-form__select:focus.localization-form__select:after {
-  box-shadow: 0 0 0 calc(0.1rem + var(--inputs-border-width)) rgba(var(--color-foreground));
+  box-shadow: 0 0 0 calc(0.1rem + var(--inputs-border-width)) #bfdbfe;
   outline: 0;
-  border-radius: var(--inputs-radius);
 }
 
 .localization-form__select:focus {
@@ -3881,11 +3881,11 @@ details[open] > .header__submenu {
   .customer .field input:focus,
   .customer select:focus,
   .localization-form__select:focus.localization-form__select:after {
-    outline: transparent solid 1px;
+    outline: none;
   }
 
   .localization-form__select:focus {
-    outline: transparent solid 1px;
+    outline: none;
   }
 }
 
