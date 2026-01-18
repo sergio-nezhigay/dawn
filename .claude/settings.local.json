@@ -20,7 +20,8 @@
       "Bash(shopify theme dev:*)",
       "Bash(findstr:*)",
       "Bash(timeout /t 5)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(wc:*)"
     ],
     "deny": [],
     "ask": []

@@ -28,8 +28,12 @@
 .totals__total-value {
   font-size: 18px;
   color: #121212;
-  font-family: 'Tektur', sans-serif;
-  font-weight: 500;
+  font-family: 'Chakra Petch', 'Tektur', sans-serif;
+  font-weight: 600;
+}
+
+:lang(en) .totals__total-value {
+  font-weight: 700;
 }
 
 .cart__ctas + .totals {

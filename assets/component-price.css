@@ -21,11 +21,15 @@
 
 .price .price-item {
   display: inline-block;
-  font-family: 'Tektur', sans-serif;
+  font-family: 'Chakra Petch', 'Tektur', sans-serif;
   font-size: 34px;
-  font-weight: 500;
+  font-weight: 600;
   margin: 0 1rem 0 0;
   color: #2e2f32;
+}
+
+:lang(en) .price .price-item {
+  font-weight: 700;
 }
 
 .card-wrapper .price .price-item {
@@ -159,7 +163,11 @@
 
 /* Sale price indicator */
 .product-info-block__price .price-item--sale {
-  font-family: 'Tektur', sans-serif;
+  font-family: 'Chakra Petch', 'Tektur', sans-serif;
   color: #001e3c;
-  font-weight: 500;
+  font-weight: 600;
+}
+
+:lang(en) .product-info-block__price .price-item--sale {
+  font-weight: 700;
 }

@@ -344,8 +344,12 @@ cart-drawer-items {
 
 .cart-drawer .price {
   line-height: 1;
-  font-family: 'Tektur', sans-serif;
-  font-weight: 500;
+  font-family: 'Chakra Petch', 'Tektur', sans-serif;
+  font-weight: 600;
+}
+
+:lang(en) .cart-drawer .price {
+  font-weight: 700;
 }
 
 .cart-drawer .tax-note {

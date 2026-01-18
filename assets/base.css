@@ -1,12 +1,16 @@
 /* Tektur Font 500 - Loaded from Google Fonts */
 /* Chakra Petch Font - Self-Hosted (Removed) */
 
-/* Chakra Petch Utility Class - Reusable */
-.font-chakra {
-  font-family: 'Tektur', sans-serif;
-  font-weight: 500;
+/* Dual Font System: Chakra Petch (Latin) + Tektur (Cyrillic) */
+.font-heading {
+  font-family: 'Chakra Petch', 'Tektur', sans-serif;
+  font-weight: 600; /* Default for Cyrillic */
   text-transform: uppercase;
   letter-spacing: 0.025em;
+}
+
+:lang(en) .font-heading {
+  font-weight: 700;
 }
 
 
@@ -16,14 +20,21 @@
 .collection-list-title,
 .jdgm-rev-widg__title {
   font-size: 2.4rem !important;
-  font-weight: 500 !important;
+  font-weight: 600 !important;
   color: #2e2f32 !important;
   margin-bottom: 2.4rem !important;
-  font-family: 'Tektur', sans-serif !important;
+  font-family: 'Chakra Petch', 'Tektur', sans-serif !important;
   text-transform: uppercase !important;
   letter-spacing: 0.05em !important;
   padding-left: 0.4rem !important;
   padding-right: 0.4rem !important;
+}
+
+:lang(en) .section-title,
+:lang(en) .title,
+:lang(en) .collection-list-title,
+:lang(en) .jdgm-rev-widg__title {
+  font-weight: 700 !important;
 }
 
 .jdgm-review-widget--small  .jdgm-rev-widg {
