@@ -52,8 +52,13 @@
 .price .price-currency {
   color: #6b7280;
   margin-left: 0.2rem;
-  font-weight: 500;
+  font-family: 'Chakra Petch', 'Tektur', sans-serif;
+  font-weight: 600;
   font-size: 25px;
+}
+
+:lang(en) .price .price-currency {
+  font-weight: 700;
 }
 
 .card-wrapper .price .price-currency {
