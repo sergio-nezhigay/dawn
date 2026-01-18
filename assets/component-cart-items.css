@@ -41,6 +41,7 @@ cart-items .title-wrapper-with-link {
   max-width: calc(10rem / var(--font-body-scale));
   border: 1px solid #e5e5e5;
   padding: 8px;
+  border-radius: 4px;
 }
 
 @media screen and (min-width: 750px) {
