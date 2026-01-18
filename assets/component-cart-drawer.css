@@ -335,6 +335,20 @@ cart-drawer-items {
 
 .cart-drawer .cart__checkout-button {
   max-width: none;
+  width: 100%;
+  padding: 16px;
+  background: #0071dc;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.cart-drawer .cart__checkout-button:hover {
+  background: #005ec4;
 }
 
 .drawer__footer .cart__dynamic-checkout-buttons {
