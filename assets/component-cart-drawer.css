@@ -62,6 +62,10 @@
   box-shadow: none;
 }
 
+.cart-drawer__empty-content .button:active {
+  transform: scale(0.97);
+}
+
 cart-drawer.is-empty .drawer__inner {
   display: grid;
   grid-template-rows: 1fr;
@@ -376,6 +380,10 @@ cart-drawer-items {
 
 .cart-drawer .cart__checkout-button:hover {
   background: #005ec4;
+}
+
+.cart-drawer .cart__checkout-button:active {
+  transform: scale(0.97);
 }
 
 .drawer__footer .cart__dynamic-checkout-buttons {
