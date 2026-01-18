@@ -255,10 +255,14 @@ a.product__text {
 }
 
 .product__title h1 {
-  font-family: 'Tektur', sans-serif;
-  font-weight: 500;
+  font-family: 'Chakra Petch', 'Tektur', sans-serif;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.025em;
+}
+
+:lang(en) .product__title h1 {
+  font-weight: 700;
 }
 
 .product__title > a {
