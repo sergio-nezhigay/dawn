@@ -135,6 +135,11 @@ cart-drawer-items.is-empty + .drawer__footer {
   padding: 1.5rem 2.8rem 1.5rem 0;
 }
 
+.drawer__footer summary:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.3rem;
+}
+
 .drawer__footer > details + .cart-drawer__footer {
   padding-top: 1.5rem;
 }
@@ -345,6 +350,10 @@ cart-drawer-items {
   font-weight: 600;
   cursor: pointer;
   transition: background 0.2s;
+}
+
+.cart-drawer .cart__ctas {
+  margin-top: 2rem;
 }
 
 .cart-drawer .cart__checkout-button:hover {
