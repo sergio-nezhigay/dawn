@@ -20,7 +20,7 @@
   width: 40rem;
   max-width: calc(100vw - 3rem);
   padding: 0 1.5rem;
-  border: 0.1rem solid rgba(var(--color-foreground), 0.2);
+  border: 0.1rem solid #e5e5e5;
   border-right: 0;
   overflow: hidden;
   display: flex;
@@ -111,7 +111,7 @@ cart-drawer:not(.is-empty) .cart-drawer__collection {
 }
 
 .drawer__footer {
-  border-top: 0.1rem solid rgba(var(--color-foreground), 0.2);
+  border-top: 0.1rem solid #e5e5e5;
   padding: 1.5rem 0;
 }
 
@@ -121,7 +121,7 @@ cart-drawer-items.is-empty + .drawer__footer {
 
 .drawer__footer > details {
   margin-top: -1.5rem;
-  border-bottom: 0.1rem solid rgba(var(--color-foreground), 0.2);
+  border-bottom: none;
 }
 
 .drawer__footer > details[open] {
@@ -307,10 +307,17 @@ cart-drawer-items {
 
 .cart-drawer .totals {
   justify-content: space-between;
+  font-weight: 700;
+}
+
+.cart-drawer .totals__total {
+  font-weight: 700;
+  font-size: 16px;
 }
 
 .cart-drawer .price {
   line-height: 1;
+  font-family: 'Chakra Petch', sans-serif;
 }
 
 .cart-drawer .tax-note {
