@@ -213,7 +213,7 @@
       "filter_and_sort": "Фильтр и сортировка",
       "filter_by_label": "Фильтр:",
       "filter_button": "Фильтровать",
-      "max_price": "Максимальная цена: {{ price }}",
+      "max_price": "Максимальная цена: {{ price }} ₴",
       "reset": "Сбросить",
       "sort_button": "Сортировка",
       "sort_by_label": "Сортировка:",
