@@ -21,9 +21,9 @@
 
 .price .price-item {
   display: inline-block;
-  font-family: 'Chakra Petch', sans-serif;
+  font-family: 'Tektur', sans-serif;
   font-size: 34px;
-  font-weight: 700;
+  font-weight: 500;
   margin: 0 1rem 0 0;
   color: #2e2f32;
 }
@@ -159,7 +159,7 @@
 
 /* Sale price indicator */
 .product-info-block__price .price-item--sale {
-  font-family: 'Chakra Petch', sans-serif;
+  font-family: 'Tektur', sans-serif;
   color: #001e3c;
-  font-weight: 700;
+  font-weight: 500;
 }
