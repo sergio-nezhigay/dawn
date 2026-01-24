@@ -239,13 +239,13 @@
         "collection_1": {
           "type": "collection",
           "settings": {
-            "collection": "komplektuyuchi-do-pk"
+            "collection": "pamyat"
           }
         },
         "collection_2": {
           "type": "collection",
           "settings": {
-            "collection": "hdmi-vga"
+            "collection": "perehonhik_com_usb"
           }
         },
         "collection_3": {
@@ -263,13 +263,13 @@
         "collection_5": {
           "type": "collection",
           "settings": {
-            "collection": "monitory"
+            "collection": "usb-type-c"
           }
         },
         "collection_6": {
           "type": "collection",
           "settings": {
-            "collection": "mices-and-keyboards"
+            "collection": "koncentratory-usb"
           }
         }
       },
@@ -286,6 +286,8 @@
         "heading_size": "h2",
         "columns_desktop": 6,
         "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "enable_desktop_slider": false,
         "color_scheme": "scheme-1",
         "padding_top": 16,
         "padding_bottom": 36
