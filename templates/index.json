@@ -219,7 +219,7 @@
       ],
       "name": "t:sections.collection-list.presets.name",
       "settings": {
-        "title": "Популярні категорії",
+        "title": "Популярні категорії (old)",
         "heading_size": "h2",
         "image_ratio": "square",
         "columns_desktop": 6,
@@ -227,6 +227,64 @@
         "show_view_all": false,
         "columns_mobile": "2",
         "swipe_on_mobile": true,
+        "padding_top": 0,
+        "padding_bottom": 32
+      }
+    },
+    "popular_categories": {
+      "type": "popular-categories",
+      "blocks": {
+        "collection_1": {
+          "type": "collection",
+          "settings": {
+            "collection": "komplektuyuchi-do-pk"
+          }
+        },
+        "collection_2": {
+          "type": "collection",
+          "settings": {
+            "collection": "hdmi-vga"
+          }
+        },
+        "collection_3": {
+          "type": "collection",
+          "settings": {
+            "collection": "hdmi-vga"
+          }
+        },
+        "collection_4": {
+          "type": "collection",
+          "settings": {
+            "collection": "fleshki"
+          }
+        },
+        "collection_5": {
+          "type": "collection",
+          "settings": {
+            "collection": "monitory"
+          }
+        },
+        "collection_6": {
+          "type": "collection",
+          "settings": {
+            "collection": "mices-and-keyboards"
+          }
+        }
+      },
+      "block_order": [
+        "collection_1",
+        "collection_2",
+        "collection_3",
+        "collection_4",
+        "collection_5",
+        "collection_6"
+      ],
+      "settings": {
+        "title": "Популярні категорії",
+        "heading_size": "h2",
+        "columns_desktop": 6,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-1",
         "padding_top": 0,
         "padding_bottom": 32
       }
@@ -370,6 +428,7 @@
   "order": [
     "slideshow_tDPaNk",
     "collection_list_paa7de",
+    "popular_categories",
     "featured_collection",
     "multicolumn_46zNpJ",
     "174643254122ccb34f"
