@@ -6,14 +6,18 @@
 
 /* Base background */
 .template-product,
-.template-collection {
+.template-collection,
+.template-page,
+.template-index {
   background-color: #fafafa;
   position: relative;
 }
 
 /* Grid pattern layer */
 .template-product::before,
-.template-collection::before {
+.template-collection::before,
+.template-page::before,
+.template-index::before {
   content: '';
   position: absolute;
   top: 0;
@@ -28,7 +32,9 @@
 
 /* Ambient color blobs (blue top-right + yellow bottom-left) */
 .template-product::after,
-.template-collection::after {
+.template-collection::after,
+.template-page::after,
+.template-index::after {
   content: '';
   position: absolute;
   top: 0;
@@ -46,13 +52,17 @@
 
 /* Ensure content sits above background */
 .template-product > *,
-.template-collection > * {
+.template-collection > *,
+.template-page > *,
+.template-index > * {
   position: relative;
   z-index: 2;
 }
 
 /* Header priority */
 .template-product header,
-.template-collection header {
+.template-collection header,
+.template-page header,
+.template-index header {
   z-index: 10;
 }

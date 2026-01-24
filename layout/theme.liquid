@@ -17,7 +17,10 @@
     {%- endunless -%}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@700&family=Tektur:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@700&family=Tektur:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    >
 
     <title>
       {{ page_title }}
@@ -259,17 +262,23 @@
         }
       }
 
-      /* Product and Collection page background handled by shared-backgrounds.css */
+      /* Product, Collection, Page, and Index background handled by shared-backgrounds.css */
       .template-product product-info,
       .template-product .shopify-section,
-      .template-collection .shopify-section {
+      .template-collection .shopify-section,
+      .template-page .shopify-section,
+      .template-index .shopify-section {
         background-color: transparent !important;
         background-image: none !important;
       }
     {% endstyle %}
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
-    {%- if request.page_type == 'product' or request.page_type == 'collection' -%}
+    {%- if request.page_type == 'product'
+      or request.page_type == 'collection'
+      or request.page_type == 'page'
+      or request.page_type == 'index'
+    -%}
       {{ 'shared-backgrounds.css' | asset_url | stylesheet_tag }}
     {%- endif -%}
     <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
