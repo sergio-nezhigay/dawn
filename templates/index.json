@@ -110,6 +110,7 @@
         "slide_N7GGKg",
         "slide_ibAVeN"
       ],
+      "disabled": true,
       "custom_css": [
         ".slider-mobile-gutter {background-image: linear-gradient(to bottom, #265c94, white);}",
         ".slideshow {height: 450px;}",
@@ -217,6 +218,7 @@
         "featured_collection_KTqkJW",
         "featured_collection_qMndLJ"
       ],
+      "disabled": true,
       "name": "t:sections.collection-list.presets.name",
       "settings": {
         "title": "Популярні категорії (old)",
@@ -285,12 +287,13 @@
         "columns_desktop": 6,
         "columns_mobile": "2",
         "color_scheme": "scheme-1",
-        "padding_top": 0,
-        "padding_bottom": 32
+        "padding_top": 16,
+        "padding_bottom": 36
       }
     },
     "featured_collection": {
       "type": "featured-collection",
+      "disabled": true,
       "settings": {
         "collection": "popular",
         "products_to_show": 12,
@@ -389,6 +392,7 @@
         "column_aqTpVe",
         "column_r6Dh9R"
       ],
+      "disabled": true,
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
         "title": "Популярні бренди",
@@ -421,7 +425,9 @@
         "judge_me_reviews_featured_carousel_W8LLen"
       ],
       "settings": {
-        "include_margins": true
+        "include_margins": true,
+        "padding_top": 36,
+        "padding_bottom": 36
       }
     }
   },
