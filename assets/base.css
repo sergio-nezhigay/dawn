@@ -5209,7 +5209,7 @@ input {
     width: 100% !important;
 }
 
-.jdgm-carousel-wrapper {
+.shopify-section .jdgm-carousel-wrapper {
     max-width: 1600px !important;
     padding: 0 50px !important;
 }
@@ -5231,3 +5231,10 @@ input {
     color: #1f2937 !important;
 }
 
+.color-scheme-1 {
+    background-color: transparent !important;
+}
+
+.product-card-wrapper {
+    background-color: white !important;
+}
