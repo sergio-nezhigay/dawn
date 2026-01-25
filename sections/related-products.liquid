@@ -23,15 +23,51 @@
   }
 {%- endstyle -%}
 
-{% if recommendations.performed == false or recommendations.products_count > 0 %}
-  <div class="color-{{ section.settings.color_scheme }} gradient bg-transparent">
-    <product-recommendations
-      class="related-products page-width-narrow section-{{ section.id }}-padding isolate{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-      data-url="{{ routes.product_recommendations_url }}?limit={{ section.settings.products_to_show }}&intent={{ section.settings.recommendations_intent }}"
-      data-section-id="{{ section.id }}"
-      data-product-id="{{ product.id }}"
-    >
-      {% if recommendations.performed and recommendations.products_count > 0 %}
+{% if section.settings.products_source == 'recommendations' %}
+  {% if recommendations.performed == false or recommendations.products_count > 0 %}
+    <div class="color-{{ section.settings.color_scheme }} gradient bg-transparent">
+      <product-recommendations
+        class="related-products page-width-narrow section-{{ section.id }}-padding isolate{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+        data-url="{{ routes.product_recommendations_url }}?limit={{ section.settings.products_to_show }}&intent={{ section.settings.recommendations_intent }}"
+        data-section-id="{{ section.id }}"
+        data-product-id="{{ product.id }}"
+      >
+        {% if recommendations.performed and recommendations.products_count > 0 %}
+          <h2 class="section-title inline-richtext {{ section.settings.heading_size }}">
+            {{ section.settings.heading }}
+          </h2>
+          <ul
+            class="grid product-grid grid--{{ section.settings.columns_desktop }}-col-desktop grid--{{ section.settings.columns_mobile }}-col-tablet-down"
+            role="list"
+          >
+            {% assign skip_card_product_styles = false %}
+            {% for recommendation in recommendations.products %}
+              <li class="grid__item">
+                {% render 'card-product',
+                  card_product: recommendation,
+                  media_aspect_ratio: section.settings.image_ratio,
+                  image_shape: section.settings.image_shape,
+                  show_secondary_image: section.settings.show_secondary_image,
+                  show_vendor: section.settings.show_vendor,
+                  show_rating: section.settings.show_rating,
+                  skip_styles: skip_card_product_styles
+                %}
+              </li>
+              {%- assign skip_card_product_styles = true -%}
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </product-recommendations>
+      {% if section.settings.image_shape == 'arch' %}
+        {{ 'mask-arch.svg' | inline_asset_content }}
+      {%- endif -%}
+    </div>
+  {% endif %}
+{% else %}
+  {%- assign collection = section.settings.collection -%}
+  {% if collection != blank and collection.products_count > 0 %}
+    <div class="color-{{ section.settings.color_scheme }} gradient bg-transparent">
+      <div class="related-products page-width-narrow section-{{ section.id }}-padding isolate{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         <h2 class="section-title inline-richtext {{ section.settings.heading_size }}">
           {{ section.settings.heading }}
         </h2>
@@ -40,10 +76,10 @@
           role="list"
         >
           {% assign skip_card_product_styles = false %}
-          {% for recommendation in recommendations.products %}
+          {% for product in collection.products limit: section.settings.products_to_show %}
             <li class="grid__item">
               {% render 'card-product',
-                card_product: recommendation,
+                card_product: product,
                 media_aspect_ratio: section.settings.image_ratio,
                 image_shape: section.settings.image_shape,
                 show_secondary_image: section.settings.show_secondary_image,
@@ -55,12 +91,12 @@
             {%- assign skip_card_product_styles = true -%}
           {% endfor %}
         </ul>
-      {% endif %}
-    </product-recommendations>
-    {% if section.settings.image_shape == 'arch' %}
-      {{ 'mask-arch.svg' | inline_asset_content }}
-    {%- endif -%}
-  </div>
+      </div>
+      {% if section.settings.image_shape == 'arch' %}
+        {{ 'mask-arch.svg' | inline_asset_content }}
+      {%- endif -%}
+    </div>
+  {% endif %}
 {% endif %}
 
 {% schema %}
@@ -81,6 +117,28 @@
     },
     {
       "type": "select",
+      "id": "products_source",
+      "label": "Products source",
+      "options": [
+        {
+          "value": "recommendations",
+          "label": "Recommendations (upsells/similar)"
+        },
+        {
+          "value": "collection",
+          "label": "Collection"
+        }
+      ],
+      "default": "recommendations"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection",
+      "info": "Used when Products source is set to \"Collection\""
+    },
+    {
+      "type": "select",
       "id": "recommendations_intent",
       "options": [
         {
@@ -93,7 +151,8 @@
         }
       ],
       "default": "related",
-      "label": "Recommendations intent"
+      "label": "Recommendations intent",
+      "info": "Used when Products source is set to \"Recommendations\""
     },
     {
       "type": "select",
@@ -271,7 +330,6 @@
       "label": "t:sections.all.padding.padding_bottom",
       "default": 36
     }
-
   ],
   "presets": [
     {
