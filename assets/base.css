@@ -5214,9 +5214,20 @@ input {
     padding: 0 50px !important;
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 749px) {
     .jdgm-carousel-wrapper {
         padding: 0 15px !important;
     }
+}
+
+.jdgm-carousel-wrapper .jdgm-carousel .jdgm-star.jdgm-star {
+    background-color: white !important;
+    color: #ffc220 !important;
+    padding: 1px !important;
+}
+
+.jdgm-carousel-item__product-title,
+.jdgm-carousel-item__reviewer-name-wrapper {
+    color: #1f2937 !important;
 }
 
