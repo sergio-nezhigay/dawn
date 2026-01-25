@@ -28,8 +28,6 @@
   font-family: 'Chakra Petch', 'Tektur', sans-serif !important;
   text-transform: uppercase !important;
   letter-spacing: 0.05em !important;
-  padding-left: 0.4rem !important;
-  padding-right: 0.4rem !important;
   text-align: left !important;
 }
 
@@ -1281,7 +1279,7 @@ summary::-webkit-details-marker {
 /* component-title */
 .title,
 .title-wrapper-with-link {
-  margin: 3rem 0 2rem;
+  margin: 3rem 0 0;
 }
 
 .title-wrapper-with-link .title {
@@ -1301,7 +1299,6 @@ summary::-webkit-details-marker {
   justify-content: space-between;
   align-items: flex-end;
   gap: 1rem;
-  margin-bottom: 3rem;
   flex-wrap: wrap;
 }
 
@@ -5212,4 +5209,14 @@ input {
     width: 100% !important;
 }
 
+.jdgm-carousel-wrapper {
+    max-width: 1600px !important;
+    padding: 0 50px !important;
+}
+
+@media screen and (max-width: 1200px) {
+    .jdgm-carousel-wrapper {
+        padding: 0 15px !important;
+    }
+}
 
