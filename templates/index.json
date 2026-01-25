@@ -427,7 +427,7 @@
         "judge_me_reviews_featured_carousel_W8LLen"
       ],
       "settings": {
-        "include_margins": true,
+        "include_margins": false,
         "padding_top": 36,
         "padding_bottom": 36
       }
