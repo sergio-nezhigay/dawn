@@ -330,7 +330,7 @@
         "collection": "popular",
         "recommendations_intent": "related",
         "heading_size": "h1",
-        "products_to_show": 10,
+        "products_to_show": 6,
         "columns_desktop": 6,
         "columns_mobile": "2",
         "color_scheme": "",
