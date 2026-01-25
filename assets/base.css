@@ -18,7 +18,8 @@
 .section-title,
 .title,
 .collection-list-title,
-.jdgm-rev-widg__title {
+.jdgm-rev-widg__title,
+.jdgm-carousel-title {
   font-size: 2.4rem !important;
   font-weight: 600 !important;
   color: #2e2f32 !important;
@@ -28,12 +29,14 @@
   letter-spacing: 0.05em !important;
   padding-left: 0.4rem !important;
   padding-right: 0.4rem !important;
+  text-align: center !important;
 }
 
 :lang(en) .section-title,
 :lang(en) .title,
 :lang(en) .collection-list-title,
-:lang(en) .jdgm-rev-widg__title {
+:lang(en) .jdgm-rev-widg__title,
+:lang(en) .jdgm-carousel-title {
   font-weight: 700 !important;
 }
 
@@ -5162,4 +5165,31 @@ input {
 .jdgm-btn--solid {
     background-color: #ffc220 !important;
     color: #001e3c !important;
+}
+
+/* Judge.me Carousel Refinement to match Popular Categories */
+.jdgm-carousel-item__inner {
+  background-color: white !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 12px !important;
+  padding: 2.4rem !important;
+  transition: transform 300ms ease, box-shadow 300ms ease, border-color 300ms ease !important;
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.jdgm-carousel-item:hover .jdgm-carousel-item__inner {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
+  transform: translateY(-0.25rem) !important;
+  border-color: #bfdbfe !important;
+}
+
+.jdgm-carousel-item:active .jdgm-carousel-item__inner {
+  transform: scale(0.98) !important;
+}
+
+.jdgm-carousel__left-arrow,
+.jdgm-carousel__right-arrow {
+  color: #374151 !important;
 }
