@@ -12,6 +12,8 @@
   if section.settings.enable_desktop_slider and section.blocks.size > section.settings.columns_desktop
     assign show_desktop_slider = true
   endif
+
+  assign columns_tablet = section.blocks.size | divided_by: 2.0 | ceil | at_most: 6
 -%}
 
 {%- style -%}
@@ -92,9 +94,23 @@
     letter-spacing: 0.05em;
   }
 
-  .popular-categories .grid {
-    column-gap: 1.5rem;
-    row-gap: 1.5rem;
+  .popular-categories.grid {
+    column-gap: var(--grid-desktop-horizontal-spacing);
+    row-gap: var(--grid-desktop-vertical-spacing);
+  }
+
+  @media screen and (min-width: 750px) and (max-width: 989px) {
+    .popular-categories.grid {
+      display: flex;
+      flex-wrap: wrap !important;
+    }
+    .popular-categories.grid .grid__item {
+      width: calc(100% / {{ columns_tablet }} - var(--grid-desktop-horizontal-spacing) * ({{ columns_tablet | minus: 1 }}) / {{ columns_tablet }}) !important;
+      max-width: none !important;
+    }
+    .section-{{ section.id }}-padding .slider-buttons {
+      display: none !important;
+    }
   }
 
   .popular-categories.slider {
