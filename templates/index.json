@@ -295,6 +295,7 @@
     },
     "featured_collection": {
       "type": "featured-collection",
+      "disabled": true,
       "settings": {
         "collection": "popular",
         "products_to_show": 12,
@@ -325,12 +326,13 @@
       "type": "related-products",
       "name": "t:sections.related-products.name",
       "settings": {
-        "heading": "You may also like",
-        "products_source": "recommendations",
+        "heading": "Популярні товари",
+        "container_width": "page-width",
+        "products_source": "collection",
         "collection": "popular",
         "recommendations_intent": "related",
         "heading_size": "h1",
-        "products_to_show": 6,
+        "products_to_show": 10,
         "columns_desktop": 6,
         "columns_mobile": "2",
         "color_scheme": "",
