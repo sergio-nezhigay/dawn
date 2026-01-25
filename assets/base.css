@@ -1388,7 +1388,7 @@ summary::-webkit-details-marker {
 .grid {
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: 2rem;
+  /*margin-bottom: 2rem;*/
   padding: 0;
   list-style: none;
   column-gap: var(--grid-mobile-horizontal-spacing);
