@@ -19,7 +19,8 @@
 .title,
 .collection-list-title,
 .jdgm-rev-widg__title,
-.jdgm-carousel-title {
+.jdgm-carousel-title,
+.jdgm-carousel-wrapper .jdgm-carousel-title {
   font-size: 2.4rem !important;
   font-weight: 600 !important;
   color: #2e2f32 !important;
@@ -29,14 +30,15 @@
   letter-spacing: 0.05em !important;
   padding-left: 0.4rem !important;
   padding-right: 0.4rem !important;
-  text-align: center !important;
+  text-align: left !important;
 }
 
 :lang(en) .section-title,
 :lang(en) .title,
 :lang(en) .collection-list-title,
 :lang(en) .jdgm-rev-widg__title,
-:lang(en) .jdgm-carousel-title {
+:lang(en) .jdgm-carousel-title,
+:lang(en) .jdgm-carousel-wrapper .jdgm-carousel-title {
   font-weight: 700 !important;
 }
 
@@ -1323,7 +1325,7 @@ summary::-webkit-details-marker {
 @media screen and (min-width: 990px) {
   .title,
   .title-wrapper-with-link {
-    margin: 5rem 0 3rem;
+    margin: 5rem 0 0;
   }
 
   .title--primary {
@@ -5193,3 +5195,21 @@ input {
 .jdgm-carousel__right-arrow {
   color: #374151 !important;
 }
+
+.jdgm-carousel--card-theme .jdgm-carousel-item__inner-wrapper {
+    box-shadow: none !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 12px !important;
+    background-color: white !important;
+}
+
+.jdgm-all-reviews-rating-wrapper {
+    display: none !important;
+}
+
+.jdgm-carousel-title-and-link {
+    padding-left: 0 !important;
+    width: 100% !important;
+}
+
+
