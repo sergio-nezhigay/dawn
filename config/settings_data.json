@@ -403,7 +403,7 @@
       ".jdgm-prev-badge__text {padding-left: 10px; margin-left: 10px; border-left: 1px solid #374151; font-size: 16px; font-weight: 500; text-decoration-line: underline; color: #374151; transition: all 200ms ease;}",
       ".jdgm-prev-badge__text:hover {color: #0071dc !important;}",
       ".jdgm-write-rev-link {border-radius: 8px !important;}",
-      ".jdgm-carousel-title {text-align: left !important;}",
+      ".jdgm-carousel-title {text-align: center !important;}",
       "#shopify-block-AM09yR3ZERjZFMzNuO__judge_me_reviews_preview_badge_DhpJYN {border-bottom: 1px solid #e5e7eb; padding-top: 6px; padding-bottom: 20px; margin-bottom: 29px;}"
     ]
   }
