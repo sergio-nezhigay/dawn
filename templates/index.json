@@ -236,6 +236,18 @@
     "popular_categories": {
       "type": "popular-categories",
       "blocks": {
+        "collection_N6tLKa": {
+          "type": "collection",
+          "settings": {
+            "collection": "lamps"
+          }
+        },
+        "collection_U8eyWV": {
+          "type": "collection",
+          "settings": {
+            "collection": "laptop-charger-adapters"
+          }
+        },
         "collection_1": {
           "type": "collection",
           "settings": {
@@ -250,6 +262,7 @@
         },
         "collection_3": {
           "type": "collection",
+          "disabled": true,
           "settings": {
             "collection": "hdmi-vga"
           }
@@ -262,6 +275,7 @@
         },
         "collection_5": {
           "type": "collection",
+          "disabled": true,
           "settings": {
             "collection": "usb-type-c"
           }
@@ -274,6 +288,8 @@
         }
       },
       "block_order": [
+        "collection_N6tLKa",
+        "collection_U8eyWV",
         "collection_1",
         "collection_2",
         "collection_3",
