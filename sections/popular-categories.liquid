@@ -67,20 +67,19 @@
     transition-duration: 0.1s;
   }
 
-  .popular-categories__image-circle {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
+  .popular-categories__image-wrapper {
+    width: 100%;
+    aspect-ratio: 1;
     overflow: hidden;
     margin: 0 auto;
     position: relative;
-    background-color: #f3f4f6;
+    background-color: transparent;
   }
 
-  .popular-categories__image-circle img {
+  .popular-categories__image-wrapper img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
   }
 
   .popular-categories__title {
@@ -159,11 +158,11 @@
           >
             <a href="{{ block.settings.collection.url }}" class="popular-categories__card">
               <div class="popular-categories__item w-full">
-                <div class="popular-categories__image-circle">
+                <div class="popular-categories__image-wrapper">
                   {%- if block.settings.collection.featured_image != blank -%}
                     {{
                       block.settings.collection.featured_image
-                      | image_url: width: 240
+                      | image_url: width: 500
                       | image_tag: loading: 'lazy', alt: block.settings.collection.title
                     }}
                   {%- else -%}
