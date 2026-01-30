@@ -4,6 +4,8 @@
 
 .main-page-title {
   margin-bottom: 1.5rem;
+  font-family: 'Chakra Petch', 'Tektur', sans-serif;
+  font-weight: 500;
 }
 
 @media screen and (min-width: 750px) {
