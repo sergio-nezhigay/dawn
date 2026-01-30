@@ -23,6 +23,59 @@
     {%- else -%}
       <h2 class="visually-hidden">{{ 'templates.contact.form.title' | t }}</h2>
     {%- endif -%}
+
+    {%- comment -%} Contact Information Section {%- endcomment -%}
+    <div class="contact-info{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      <div class="contact-info-item">
+        <div class="contact-info-icon">
+          <span class="svg-wrapper">
+            {{- 'icon-phone.svg' | inline_asset_content -}}
+          </span>
+        </div>
+        <div class="contact-info-text">
+          <span class="contact-info-label">{{ 'sections.footer.phone_label' | t }}</span>
+          <a href="tel:+380993815288" class="contact-info-value"> (099) 381-5288 </a>
+        </div>
+      </div>
+
+      <div class="contact-info-item">
+        <div class="contact-info-icon">
+          <span class="svg-wrapper">
+            {{- 'icon-clock.svg' | inline_asset_content -}}
+          </span>
+        </div>
+        <div class="contact-info-text">
+          <span class="contact-info-label">{{ 'sections.footer.working_hours_label' | t }}</span>
+          <span class="contact-info-value">{{ 'sections.footer.working_hours_value' | t }}</span>
+        </div>
+      </div>
+
+      <div class="contact-info-item">
+        <div class="contact-info-icon">
+          <span class="svg-wrapper">
+            {{- 'icon-email.svg' | inline_asset_content -}}
+          </span>
+        </div>
+        <div class="contact-info-text">
+          <span class="contact-info-label">{{ 'sections.footer.email_label' | t }}</span>
+          <a href="mailto:info@informatica.com.ua" class="contact-info-value"> info@informatica.com.ua </a>
+        </div>
+      </div>
+
+      <div class="contact-info-item">
+        <div class="contact-info-icon">
+          <span class="svg-wrapper">
+            {{- 'icon-map-pin.svg' | inline_asset_content -}}
+          </span>
+        </div>
+        <div class="contact-info-text">
+          <span class="contact-info-label">{{ 'sections.footer.address_label' | t }}</span>
+          <span class="contact-info-value">
+            {{ 'sections.footer.address_street' | t }}, {{ 'sections.footer.address_city' | t }}
+          </span>
+        </div>
+      </div>
+    </div>
     {%- liquid
       assign contact_form_class = 'isolate'
       if settings.animations_reveal_on_scroll
