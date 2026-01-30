@@ -154,6 +154,15 @@ a.contact-info-value:hover {
   text-underline-offset: 4px;
 }
 
+.contact-info-note {
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: #6b7280;
+  font-style: italic;
+  margin-top: 0.4rem;
+  display: block;
+}
+
 @media screen and (min-width: 750px) {
   .contact-info {
     display: grid;
