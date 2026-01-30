@@ -8,7 +8,14 @@
 .template-product,
 .template-collection,
 .template-page,
-.template-index {
+.template-index,
+.template-search,
+.template-cart,
+.template-blog,
+.template-article,
+.template-404,
+.template-list-collections,
+[class*="template-customers"] {
   background-color: #fafafa;
   position: relative;
 }
@@ -17,7 +24,14 @@
 .template-product::before,
 .template-collection::before,
 .template-page::before,
-.template-index::before {
+.template-index::before,
+.template-search::before,
+.template-cart::before,
+.template-blog::before,
+.template-article::before,
+.template-404::before,
+.template-list-collections::before,
+[class*="template-customers"]::before {
   content: '';
   position: absolute;
   top: 0;
@@ -34,7 +48,14 @@
 .template-product::after,
 .template-collection::after,
 .template-page::after,
-.template-index::after {
+.template-index::after,
+.template-search::after,
+.template-cart::after,
+.template-blog::after,
+.template-article::after,
+.template-404::after,
+.template-list-collections::after,
+[class*="template-customers"]::after {
   content: '';
   position: absolute;
   top: 0;
@@ -54,7 +75,14 @@
 .template-product > *,
 .template-collection > *,
 .template-page > *,
-.template-index > * {
+.template-index > *,
+.template-search > *,
+.template-cart > *,
+.template-blog > *,
+.template-article > *,
+.template-404 > *,
+.template-list-collections > *,
+[class*="template-customers"] > * {
   position: relative;
   z-index: 2;
 }
@@ -63,6 +91,13 @@
 .template-product header,
 .template-collection header,
 .template-page header,
-.template-index header {
+.template-index header,
+.template-search header,
+.template-cart header,
+.template-blog header,
+.template-article header,
+.template-404 header,
+.template-list-collections header,
+[class*="template-customers"] header {
   z-index: 10;
 }
