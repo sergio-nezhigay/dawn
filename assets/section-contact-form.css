@@ -118,9 +118,9 @@
   /*background-color: #eff6ff;*/
 }
 
-.contact-info-item:hover .contact-info-icon svg {
+/*.contact-info-item:hover .contact-info-icon svg {
   color: #bfdbfe;
-}
+}*/
 
 .contact-info-text {
   display: flex;

@@ -1,0 +1,142 @@
+/* Policy Page Section */
+.shopify-policy__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.shopify-policy__title h1,
+.shopify-policy__title h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+/* Card-based layout for shipping and payment */
+.policy-cards-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+@media screen and (min-width: 750px) {
+    .policy-cards-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+}
+
+.policy-card {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 2.5rem;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    transition: border-color 0.2s ease;
+}
+
+.policy-card:hover {
+    border-color: #bfdbfe;
+    /*box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    transform: translateY(-2px);*/
+}
+
+.policy-card__header {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+}
+
+.contact-info-icon {
+    flex-shrink: 0;
+    width: 4rem;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.contact-info-icon svg {
+    width: 2rem;
+    height: 2rem;
+    color: #6b7280;
+    stroke-width: 1.5;
+}
+
+.policy-card .contact-info-icon {
+    margin-right: 0;
+}
+
+.policy-card:hover .contact-info-icon {
+    transform: scale(1.05);
+    border-color: #bfdbfe;
+}
+
+/*.policy-card:hover .contact-info-icon svg {
+    color: #bfdbfe;
+}*/
+
+.policy-card__title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.policy-card__content {
+    font-size: 1.5rem;
+    line-height: 1.6;
+    color: #374151;
+}
+
+.policy-card__content p {
+    margin: 0.5rem 0;
+}
+
+.policy-card__content strong {
+    color: #111827;
+}
+
+.policy-card__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.policy-card__item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.policy-card__item-title {
+    font-weight: 600;
+    color: #111827;
+}
+
+.policy-card__item-desc {
+    font-size: 1.4rem;
+    color: #6b7280;
+}
+
+.policy-card__footer {
+    font-size: 1.3rem;
+    font-style: italic;
+    color: #6b7280;
+    border-top: 1px solid #f3f4f6;
+    padding-top: 1rem;
+    margin-top: auto;
+}
