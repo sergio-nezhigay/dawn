@@ -15,6 +15,7 @@
 .template-article,
 .template-404,
 .template-list-collections,
+.template-policy,
 [class*="template-customers"] {
   background-color: #fafafa;
   position: relative;
@@ -31,6 +32,7 @@
 .template-article::before,
 .template-404::before,
 .template-list-collections::before,
+.template-policy::before,
 [class*="template-customers"]::before {
   content: '';
   position: absolute;
@@ -55,6 +57,7 @@
 .template-article::after,
 .template-404::after,
 .template-list-collections::after,
+.template-policy::after,
 [class*="template-customers"]::after {
   content: '';
   position: absolute;
@@ -82,6 +85,7 @@
 .template-article > *,
 .template-404 > *,
 .template-list-collections > *,
+.template-policy > *,
 [class*="template-customers"] > * {
   position: relative;
   z-index: 2;
@@ -98,6 +102,7 @@
 .template-article header,
 .template-404 header,
 .template-list-collections header,
+.template-policy header,
 [class*="template-customers"] header {
   z-index: 10;
 }
