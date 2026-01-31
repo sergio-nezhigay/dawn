@@ -38,26 +38,26 @@
         <div class="policy-card">
           <div class="policy-card__header">
             {% render 'icon-with-wrapper', icon_name: 'icon-truck.svg' %}
-            <h2 class="policy-card__title">Доставка</h2>
+            <h2 class="policy-card__title">{{ 'sections.main_policy.shipping_title' | t }}</h2>
           </div>
           <div class="policy-card__content">
             <div class="policy-card__list">
               <div class="policy-card__item">
-                <span class="policy-card__item-title">1. Нова Пошта (відділення або поштомат)</span>
+                <span class="policy-card__item-title">{{ 'sections.main_policy.nova_posta_title' | t }}</span>
                 <span class="policy-card__item-desc"
-                  >Доставка до найближчого відділення або поштомату. Вартість — згідно з тарифами перевізника.</span
+                  >{{ 'sections.main_policy.nova_posta_desc' | t }}</span
                 >
               </div>
               <div class="policy-card__item">
-                <span class="policy-card__item-title">2. Кур’єрська доставка Нової Пошти</span>
+                <span class="policy-card__item-title">{{ 'sections.main_policy.courier_title' | t }}</span>
                 <span class="policy-card__item-desc"
-                  >Доставка до дверей за вказаною адресою. Вартість — згідно з тарифами перевізника.</span
+                  >{{ 'sections.main_policy.courier_desc' | t }}</span
                 >
               </div>
               <div class="policy-card__item">
-                <span class="policy-card__item-title">3. Самовивіз</span>
+                <span class="policy-card__item-title">{{ 'sections.main_policy.self_pickup_title' | t }}</span>
                 <span class="policy-card__item-desc"
-                  >Можливий за попередньою домовленістю. Адреса: м. Київ, вул. Щусєва, 36.</span
+                  >{{ 'sections.main_policy.self_pickup_desc' | t }}</span
                 >
               </div>
             </div>
@@ -68,22 +68,22 @@
         <div class="policy-card">
           <div class="policy-card__header">
             {% render 'icon-with-wrapper', icon_name: 'icon-credit-card.svg' %}
-            <h2 class="policy-card__title">Оплата</h2>
+            <h2 class="policy-card__title">{{ 'sections.main_policy.payment_title' | t }}</h2>
           </div>
           <div class="policy-card__content">
             <div class="policy-card__list">
               <div class="policy-card__item">
                 <span class="policy-card__item-title"
-                  >1. Оплата на банківську картку чи рахунок (ПриватБанк або Монобанк)</span
+                  >{{ 'sections.main_policy.bank_card_title' | t }}</span
                 >
                 <span class="policy-card__item-desc"
-                  >Після оформлення замовлення ви отримаєте реквізити для оплати на вказану електронну пошту або в SMS.</span
+                  >{{ 'sections.main_policy.bank_card_desc' | t }}</span
                 >
               </div>
             </div>
           </div>
           <div class="policy-card__footer">
-            * При отриманні замовлення також можлива оплата (накладений платіж) згідно з правилами перевізника.
+            {{ 'sections.main_policy.cash_on_delivery' | t }}
           </div>
         </div>
       </div>
@@ -93,34 +93,36 @@
       or page_title contains 'Повернення'
       or policy.title contains 'повернення'
       or policy.title contains 'Повернення'
+      or page_title contains 'возврат'
+      or page_title contains 'Возврат'
+      or policy.title contains 'возврат'
+      or policy.title contains 'Возврат'
     -%}
       <div class="policy-cards-grid">
         {%- comment -%} Return Conditions Card {%- endcomment -%}
         <div class="policy-card">
           <div class="policy-card__header">
             {% render 'icon-with-wrapper', icon_name: 'icon-return.svg' %}
-            <h2 class="policy-card__title">Умови повернення та обміну</h2>
+            <h2 class="policy-card__title">{{ 'sections.main_policy.conditions_title' | t }}</h2>
           </div>
           <div class="policy-card__content">
             <div class="policy-card__list">
               <div class="policy-card__item">
-                <span class="policy-card__item-title">1. Термін повернення</span>
+                <span class="policy-card__item-title">{{ 'sections.main_policy.return_period_title' | t }}</span>
                 <span class="policy-card__item-desc"
-                  >Ви можете повернути або обміняти товар протягом 14 днів з моменту покупки (згідно із Законом України
-                  "Про захист прав споживачів").</span
+                  >{{ 'sections.main_policy.return_period_desc' | t }}</span
                 >
               </div>
               <div class="policy-card__item">
-                <span class="policy-card__item-title">2. Стан товару</span>
+                <span class="policy-card__item-title">{{ 'sections.main_policy.product_condition_title' | t }}</span>
                 <span class="policy-card__item-desc"
-                  >Товар не повинен мати слідів використання, механічних пошкоджень, а також має бути збережений
-                  товарний вигляд, повна комплектація, ярлики та заводське пакування.</span
+                  >{{ 'sections.main_policy.product_condition_desc' | t }}</span
                 >
               </div>
               <div class="policy-card__item">
-                <span class="policy-card__item-title">3. Наявність документів</span>
+                <span class="policy-card__item-title">{{ 'sections.main_policy.documents_title' | t }}</span>
                 <span class="policy-card__item-desc"
-                  >Для здійснення повернення необхідно надати розрахунковий документ (чек або видаткову накладну).</span
+                  >{{ 'sections.main_policy.documents_desc' | t }}</span
                 >
               </div>
             </div>
@@ -131,22 +133,20 @@
         <div class="policy-card">
           <div class="policy-card__header">
             {% render 'icon-with-wrapper', icon_name: 'icon-truck.svg' %}
-            <h2 class="policy-card__title">Процес повернення</h2>
+            <h2 class="policy-card__title">{{ 'sections.main_policy.process_title' | t }}</h2>
           </div>
           <div class="policy-card__content">
             <div class="policy-card__list">
               <div class="policy-card__item">
-                <span class="policy-card__item-title">1. Нова Пошта</span>
+                <span class="policy-card__item-title">{{ 'sections.main_policy.return_nova_posta_title' | t }}</span>
                 <span class="policy-card__item-desc"
-                  >Повернення здійснюється кур'єрською службою "Нова Пошта". Послуги доставки оплачує покупець (окрім
-                  випадків виявлення заводського браку).</span
+                  >{{ 'sections.main_policy.return_nova_posta_desc' | t }}</span
                 >
               </div>
               <div class="policy-card__item">
-                <span class="policy-card__item-title">2. Самовивіз (Київ)</span>
+                <span class="policy-card__item-title">{{ 'sections.main_policy.return_self_pickup_title' | t }}</span>
                 <span class="policy-card__item-desc"
-                  >Ви також можете повернути товар особисто в нашому офісі за адресою: м. Київ, вул. Щусєва, 36 (за
-                  попередньою домовленістю).</span
+                  >{{ 'sections.main_policy.return_self_pickup_desc' | t }}</span
                 >
               </div>
             </div>
@@ -157,21 +157,20 @@
         <div class="policy-card">
           <div class="policy-card__header">
             {% render 'icon-with-wrapper', icon_name: 'icon-credit-card.svg' %}
-            <h2 class="policy-card__title">Повернення коштів</h2>
+            <h2 class="policy-card__title">{{ 'sections.main_policy.refund_title' | t }}</h2>
           </div>
           <div class="policy-card__content">
             <div class="policy-card__list">
               <div class="policy-card__item">
-                <span class="policy-card__item-title">1. Спосіб виплати</span>
+                <span class="policy-card__item-title">{{ 'sections.main_policy.payment_method_title' | t }}</span>
                 <span class="policy-card__item-desc"
-                  >Кошти повертаються на банківську карту покупця або готівкою (при поверненні в офісі).</span
+                  >{{ 'sections.main_policy.payment_method_desc' | t }}</span
                 >
               </div>
               <div class="policy-card__item">
-                <span class="policy-card__item-title">2. Термін виплати</span>
+                <span class="policy-card__item-title">{{ 'sections.main_policy.payment_period_title' | t }}</span>
                 <span class="policy-card__item-desc"
-                  >Зазвичай повернення коштів займає від 1 до 7 робочих днів після отримання та перевірки товару
-                  сервісним відділом.</span
+                  >{{ 'sections.main_policy.payment_period_desc' | t }}</span
                 >
               </div>
             </div>
@@ -182,16 +181,14 @@
         <div class="policy-card">
           <div class="policy-card__header">
             {% render 'icon-with-wrapper', icon_name: 'icon-info.svg' %}
-            <h2 class="policy-card__title">Винятки</h2>
+            <h2 class="policy-card__title">{{ 'sections.main_policy.exceptions_title' | t }}</h2>
           </div>
           <div class="policy-card__content">
             <div class="policy-card__list">
               <div class="policy-card__item">
-                <span class="policy-card__item-title">Товари, що не підлягають поверненню</span>
+                <span class="policy-card__item-title">{{ 'sections.main_policy.non_returnable_title' | t }}</span>
                 <span class="policy-card__item-desc"
-                  >Зверніть увагу, що деякі категорії товарів належної якості не підлягають поверненню згідно з
-                  Постановою Кабінету Міністрів України №172 (наприклад, витратні матеріали, якщо упаковка була
-                  розкрита).</span
+                  >{{ 'sections.main_policy.non_returnable_desc' | t }}</span
                 >
               </div>
             </div>
