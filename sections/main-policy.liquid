@@ -1,0 +1,122 @@
+{{ 'section-main-policy.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="shopify-policy__container section-{{ section.id }}-padding">
+  <div class="shopify-policy__title">
+    <h1>{{ policy.title }}</h1>
+  </div>
+
+  {%- if request.path contains 'shipping-policy'
+    or request.path contains 'shipping_policy'
+    or page_title contains 'доставк'
+    or page_title contains 'Доставк'
+    or policy.title contains 'доставк'
+    or policy.title contains 'Доставк'
+  -%}
+    <div class="policy-cards-grid">
+      {%- comment -%} Shipping Methods Card {%- endcomment -%}
+      <div class="policy-card">
+        <div class="policy-card__header">
+          {% render 'icon-with-wrapper', icon_name: 'icon-truck.svg' %}
+          <h2 class="policy-card__title">Способи доставки</h2>
+        </div>
+        <div class="policy-card__content">
+          <div class="policy-card__list">
+            <div class="policy-card__item">
+              <span class="policy-card__item-title">1. Нова Пошта (відділення або поштомат)</span>
+              <span class="policy-card__item-desc"
+                >Доставка до найближчого відділення або поштомату. Вартість — згідно з тарифами перевізника.</span
+              >
+            </div>
+            <div class="policy-card__item">
+              <span class="policy-card__item-title">2. Кур’єрська доставка Нової Пошти</span>
+              <span class="policy-card__item-desc"
+                >Доставка до дверей за вказаною адресою. Вартість — згідно з тарифами перевізника.</span
+              >
+            </div>
+            <div class="policy-card__item">
+              <span class="policy-card__item-title">3. Самовивіз</span>
+              <span class="policy-card__item-desc"
+                >Можливий за попередньою домовленістю. Адреса: м. Київ, вул. Щусєва, 36.</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {%- comment -%} Payment Methods Card {%- endcomment -%}
+      <div class="policy-card">
+        <div class="policy-card__header">
+          {% render 'icon-with-wrapper', icon_name: 'icon-credit-card.svg' %}
+          <h2 class="policy-card__title">Способи оплати</h2>
+        </div>
+        <div class="policy-card__content">
+          <div class="policy-card__list">
+            <div class="policy-card__item">
+              <span class="policy-card__item-title"
+                >1. Оплата на банківську картку чи рахунок (ПриватБанк або Монобанк)</span
+              >
+              <span class="policy-card__item-desc"
+                >Після оформлення замовлення ви отримаєте реквізити для оплати на вказану електронну пошту або в SMS.</span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="policy-card__footer">
+          * При отриманні замовлення також можлива оплата (накладений платіж) згідно з правилами перевізника.
+        </div>
+      </div>
+    </div>
+  {%- else -%}
+    <div class="shopify-policy__body rte">
+      {{ policy.body }}
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Main Policy",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ]
+}
+{% endschema %}
