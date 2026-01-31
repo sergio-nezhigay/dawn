@@ -17,7 +17,13 @@
 <div class="color-{{ section.settings.color_scheme }} gradient">
   <div class="shopify-policy__container section-{{ section.id }}-padding">
     <div class="shopify-policy__title">
-      <h1>{{ policy.title }}</h1>
+      <h1 class="section-title h0{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {%- if policy.title != blank -%}
+          {{ policy.title }}
+        {%- else -%}
+          {{ page_title }}
+        {%- endif -%}
+      </h1>
     </div>
 
     {%- if request.path contains 'shipping-policy'
@@ -32,7 +38,7 @@
         <div class="policy-card">
           <div class="policy-card__header">
             {% render 'icon-with-wrapper', icon_name: 'icon-truck.svg' %}
-            <h2 class="policy-card__title">Способи доставки</h2>
+            <h2 class="policy-card__title">Доставка</h2>
           </div>
           <div class="policy-card__content">
             <div class="policy-card__list">
@@ -62,7 +68,7 @@
         <div class="policy-card">
           <div class="policy-card__header">
             {% render 'icon-with-wrapper', icon_name: 'icon-credit-card.svg' %}
-            <h2 class="policy-card__title">Способи оплати</h2>
+            <h2 class="policy-card__title">Оплата</h2>
           </div>
           <div class="policy-card__content">
             <div class="policy-card__list">
