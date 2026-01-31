@@ -410,6 +410,8 @@
       "title": "Recently viewed"
     },
     "main_policy": {
+      "shipping_policy_title": "Shipping Policy",
+      "refund_policy_title": "Refund Policy",
       "shipping_title": "Delivery",
       "nova_posta_title": "1. Nova Poshta (branch or parcel locker)",
       "nova_posta_desc": "Delivery to the nearest branch or parcel locker. Cost is according to carrier rates.",

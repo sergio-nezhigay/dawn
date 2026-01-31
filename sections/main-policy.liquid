@@ -16,13 +16,21 @@
 
 <div class="color-{{ section.settings.color_scheme }} gradient">
   <div class="shopify-policy__container section-{{ section.id }}-padding">
+    {%- liquid
+      if request.path contains 'shipping-policy' or request.path contains 'shipping_policy' or page_title contains 'доставк' or policy.title contains 'доставк'
+        assign policy_heading = 'sections.main_policy.shipping_policy_title' | t
+      elsif request.path contains 'refund-policy' or request.path contains 'refund_policy' or page_title contains 'повернення' or policy.title contains 'повернення' or page_title contains 'возврат' or policy.title contains 'возврат'
+        assign policy_heading = 'sections.main_policy.refund_policy_title' | t
+      elsif policy.title != blank
+        assign policy_heading = policy.title
+      else
+        assign policy_heading = page_title
+      endif
+    -%}
+
     <div class="shopify-policy__title">
       <h1 class="section-title h0{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-        {%- if policy.title != blank -%}
-          {{ policy.title }}
-        {%- else -%}
-          {{ page_title }}
-        {%- endif -%}
+        {{ policy_heading }}
       </h1>
     </div>
 
