@@ -81,6 +81,117 @@
           </div>
         </div>
       </div>
+    {%- elsif request.path contains 'refund-policy'
+      or request.path contains 'refund_policy'
+      or page_title contains 'повернення'
+      or page_title contains 'Повернення'
+      or policy.title contains 'повернення'
+      or policy.title contains 'Повернення'
+    -%}
+      <div class="policy-cards-grid">
+        {%- comment -%} Return Conditions Card {%- endcomment -%}
+        <div class="policy-card">
+          <div class="policy-card__header">
+            {% render 'icon-with-wrapper', icon_name: 'icon-return.svg' %}
+            <h2 class="policy-card__title">Умови повернення та обміну</h2>
+          </div>
+          <div class="policy-card__content">
+            <div class="policy-card__list">
+              <div class="policy-card__item">
+                <span class="policy-card__item-title">1. Термін повернення</span>
+                <span class="policy-card__item-desc"
+                  >Ви можете повернути або обміняти товар протягом 14 днів з моменту покупки (згідно із Законом України
+                  "Про захист прав споживачів").</span
+                >
+              </div>
+              <div class="policy-card__item">
+                <span class="policy-card__item-title">2. Стан товару</span>
+                <span class="policy-card__item-desc"
+                  >Товар не повинен мати слідів використання, механічних пошкоджень, а також має бути збережений
+                  товарний вигляд, повна комплектація, ярлики та заводське пакування.</span
+                >
+              </div>
+              <div class="policy-card__item">
+                <span class="policy-card__item-title">3. Наявність документів</span>
+                <span class="policy-card__item-desc"
+                  >Для здійснення повернення необхідно надати розрахунковий документ (чек або видаткову накладну).</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {%- comment -%} Return Process Card {%- endcomment -%}
+        <div class="policy-card">
+          <div class="policy-card__header">
+            {% render 'icon-with-wrapper', icon_name: 'icon-truck.svg' %}
+            <h2 class="policy-card__title">Процес повернення</h2>
+          </div>
+          <div class="policy-card__content">
+            <div class="policy-card__list">
+              <div class="policy-card__item">
+                <span class="policy-card__item-title">1. Нова Пошта</span>
+                <span class="policy-card__item-desc"
+                  >Повернення здійснюється кур'єрською службою "Нова Пошта". Послуги доставки оплачує покупець (окрім
+                  випадків виявлення заводського браку).</span
+                >
+              </div>
+              <div class="policy-card__item">
+                <span class="policy-card__item-title">2. Самовивіз (Київ)</span>
+                <span class="policy-card__item-desc"
+                  >Ви також можете повернути товар особисто в нашому офісі за адресою: м. Київ, вул. Щусєва, 36 (за
+                  попередньою домовленістю).</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {%- comment -%} Refund Card {%- endcomment -%}
+        <div class="policy-card">
+          <div class="policy-card__header">
+            {% render 'icon-with-wrapper', icon_name: 'icon-credit-card.svg' %}
+            <h2 class="policy-card__title">Повернення коштів</h2>
+          </div>
+          <div class="policy-card__content">
+            <div class="policy-card__list">
+              <div class="policy-card__item">
+                <span class="policy-card__item-title">1. Спосіб виплати</span>
+                <span class="policy-card__item-desc"
+                  >Кошти повертаються на банківську карту покупця або готівкою (при поверненні в офісі).</span
+                >
+              </div>
+              <div class="policy-card__item">
+                <span class="policy-card__item-title">2. Термін виплати</span>
+                <span class="policy-card__item-desc"
+                  >Зазвичай повернення коштів займає від 1 до 7 робочих днів після отримання та перевірки товару
+                  сервісним відділом.</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {%- comment -%} Exceptions Card {%- endcomment -%}
+        <div class="policy-card">
+          <div class="policy-card__header">
+            {% render 'icon-with-wrapper', icon_name: 'icon-info.svg' %}
+            <h2 class="policy-card__title">Винятки</h2>
+          </div>
+          <div class="policy-card__content">
+            <div class="policy-card__list">
+              <div class="policy-card__item">
+                <span class="policy-card__item-title">Товари, що не підлягають поверненню</span>
+                <span class="policy-card__item-desc"
+                  >Зверніть увагу, що деякі категорії товарів належної якості не підлягають поверненню згідно з
+                  Постановою Кабінету Міністрів України №172 (наприклад, витратні матеріали, якщо упаковка була
+                  розкрита).</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     {%- else -%}
       <div class="shopify-policy__body rte">
         {{ policy.body }}
