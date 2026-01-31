@@ -2160,10 +2160,10 @@ details[open] > .share-button__fallback {
 .customer .field:hover.field:after,
 .customer select:hover.select:after,
 .localization-form__select:hover.localization-form__select:after {
-  box-shadow: 0 0 0 calc(0.1rem + var(--inputs-border-width))
-    #bfdbfe;
+  /*box-shadow: 0 0 0 calc(0.1rem + var(--inputs-border-width))
+    #bfdbfe;*/
   outline: 0;
-  border: 0.1rem solid transparent;
+  border: 1px solid #bfdbfe;
   outline: 0;
 }
 

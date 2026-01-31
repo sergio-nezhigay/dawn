@@ -114,12 +114,12 @@
 
 .contact-info-item:hover .contact-info-icon {
   transform: scale(1.05);
-  border-color: #0071dc;
-  background-color: #eff6ff;
+  border-color: #bfdbfe;
+  /*background-color: #eff6ff;*/
 }
 
 .contact-info-item:hover .contact-info-icon svg {
-  color: #0071dc;
+  color: #bfdbfe;
 }
 
 .contact-info-text {
