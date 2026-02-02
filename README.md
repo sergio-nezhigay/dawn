@@ -20,6 +20,8 @@ Dawn represents a HTML-first, JavaScript-only-as-needed approach to theme develo
 
 You can find a more detailed version of our theme code principles in the [contribution guide](https://github.com/Shopify/dawn/blob/main/.github/CONTRIBUTING.md#theme-code-principles).
 
+
+
 ## Getting started
 We recommend using Dawn as a starting point for theme development. [Learn more on Shopify.dev](https://shopify.dev/themes/getting-started/create).
 
