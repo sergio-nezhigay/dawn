@@ -24,7 +24,15 @@
       "Bash(wc:*)",
       "Bash(python3:*)",
       "Bash(echo:*)",
-      "Bash(node:*)"
+      "Bash(node:*)",
+      "WebFetch(domain:informatica.com.ua)",
+      "Bash(start ms-settings:defaultapps)",
+      "mcp__shopify-dev__learn_shopify_api",
+      "mcp__shopify-dev__introspect_graphql_schema",
+      "mcp__shopify-dev__validate_graphql_codeblocks",
+      "Bash(shopify help:*)",
+      "WebFetch(domain:dev.shopify.com)",
+      "mcp__shopify-dev__search_docs_chunks"
     ],
     "deny": [],
     "ask": []
