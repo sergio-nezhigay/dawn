@@ -638,10 +638,25 @@
         "block_label": "Блокувати",
         "commune_label": "Комуна",
         "optional_street_number_label": "Номер будівлі (необов'язково)",
-        "optional_colony_label": "Колонія (необов'язково)"
+        "optional_colony_label": "Колонія (необов'язково)",
+        "email_or_phone_label": "Номер телефону",
+        "email_or_phone_placeholder": "Номер телефону",
+        "optional_first_name_label": "Ім'я",
+        "last_name_label": "Прізвище",
+        "address_title": "Адреса",
+        "address1_label": "Номер відділення нової пошти (або адреса для доставки кур'єром)",
+        "city_label": "Населений пункт",
+        "postal_code_label": "Індекс (залиште 12345)",
+        "postal_code_placeholder": "Індекс (залиште 12345)",
+        "contact_method_title": "Контакти"
       },
       "payment": {
-        "card_fields_unavailable_html": "Платежі кредитними та дебетовими картками зараз недоступні.<br> <a href=\"%{current_url}\">Оновіть сторінку</a> або повторіть спробу пізніше."
+        "card_fields_unavailable_html": "Платежі кредитними та дебетовими картками зараз недоступні.<br> <a href=\"%{current_url}\">Оновіть сторінку</a> або повторіть спробу пізніше.",
+        "title": "Оплата",
+        "billing_address_title": "Адреса платника",
+        "same_billing_address_label": "Така ж, як адреса доставка",
+        "different_billing_address_label": "Використати іншу адресу для платника",
+        "markets_pro_disclaimer_privacy_policy": "Конфіденціальність"
       },
       "field_errors": {
         "address_street_number_blank": "Введіть номер будівлі",
@@ -683,7 +698,13 @@
         "address_neighborhood_contains_emojis": "Район не може містити емодзі",
         "address_barangay_contains_html_tags": "Barangay не може містити теги HTML.",
         "address_commune_contains_html_tags": "Commune не може містити теги HTML.",
-        "address_district_contains_html_tags": "Район не може містити теги HTML."
+        "address_district_contains_html_tags": "Район не може містити теги HTML.",
+        "email_or_phone_blank": "Введіть номер телефону",
+        "email_or_phone_invalid": "Введіть правильний номер телефону",
+        "address_last_name_blank": "Введіть правильно прізвище",
+        "address_city_blank": "Введіть правильно населений пункт",
+        "address_city_too_long": "Населений пункт занадто довгий",
+        "address_zip_blank": "Індекс (або просто 12345)"
       },
       "general": {
         "complete_purchase_button_label": "Замовлення підтверджую",
@@ -691,10 +712,69 @@
           "payment": {
             "market_manager_blocks_wallet_payments": "Метод оплати не підтримується менеджером маркету."
           }
-        }
+        },
+        "page_title": "Оформлення замовлення",
+        "title": "Оформлення замовлення - {{shopName}}"
       },
       "thank_you": {
-        "location_title": "Місцезнаходження"
+        "location_title": "Місцезнаходження",
+        "login": "Зайти в кабінет"
+      },
+      "wallets": {
+        "errors": {
+          "missing": {
+            "city": "Введіть правильно населений пункт"
+          }
+        },
+        "shipping_line_label": "Доставка"
+      },
+      "customer_account": {
+        "save_my_information_label": "Зберегти цю інформацію для наступного разу",
+        "sign_in_link_label": "Зайти в кабінет"
+      },
+      "shipping": {
+        "delivery_title": "Доставка",
+        "shipping_method_title": "Виберіть доставку",
+        "free_rate_label": "По тарифах перевізника",
+        "split_shipping_option_free": "По тарифах перевізника",
+        "title": "Умови достаки і оплати"
+      },
+      "billing": {
+        "same_as_shipping": "Така ж, як адреса доставка"
+      },
+      "delivery_options": {
+        "free_total_label": "По тарифах перевізника"
+      },
+      "order_summary": {
+        "free_shipping_discount_label": "По тарифах перевізника",
+        "free_total_label": "По тарифах перевізника",
+        "free_shipping_total_label": "По тарифах перевізника",
+        "subtotal_label": "Підсума",
+        "gift_card_and_discount_title": "Код знижки",
+        "gift_card_and_discount_label": "Код знижки",
+        "gift_card_and_discount_placeholder": "Код знижки",
+        "add_discount_or_gift_card": "Додайте код знижки",
+        "shipping_label": "Доставка",
+        "total_label": "Загалом"
+      },
+      "payment_summary": {
+        "free_label": "По тарифах перевізника"
+      },
+      "shop_policies": {
+        "refund_policy": "Гарантія та повернення товару",
+        "shipping_policy": "Умови доставки і оплати",
+        "privacy_policy": "Конфіденціальність",
+        "contact_information": "Контакти"
+      },
+      "marketing": {
+        "sms": {
+          "disclaimer": {
+            "privacy_policy": "Конфіденціальність"
+          }
+        },
+        "disclaimer": {
+          "privacy_policy": "Конфіденціальність"
+        }
       }
     },
     "collections": {
@@ -709,14 +789,27 @@
     },
     "errors": {
       "email_domain_invalid": "провайдер не підтримується"
+    },
+    "attributes": {
+      "last_name": "Прізвище"
     }
   },
   "customer_accounts": {
     "order_details": {
       "login_card": {
         "resend_link_with_login": "надіслати нове посилання",
-        "resend_link_without_login": "Надіслати нове посилання"
-      }
+        "resend_link_without_login": "Надіслати нове посилання",
+        "log_in": "Зайти в кабінет"
+      },
+      "shipping": {
+        "free": "По тарифах перевізника",
+        "free_shipping_discount": "По тарифах перевізника"
+      },
+      "subtotal": "Підсума",
+      "returns": {
+        "return_and_refund_modal_header": "Гарантія та повернення товару"
+      },
+      "log_in": "Зайти в кабінет"
     },
     "orders": {
       "order_list": {
@@ -767,6 +860,21 @@
         "errors": {
           "generic": "Виникла проблема з PayPal. Спробуйте ще раз або скористайтеся іншим способом оплати."
         }
+      }
+    },
+    "account_information": {
+      "profile_card": {
+        "last_name": "Прізвище"
+      }
+    },
+    "account_menu": {
+      "aria_labels": {
+        "sign_in": "Зайти в кабінет"
+      }
+    },
+    "sign_in": {
+      "step_one": {
+        "heading": "Зайти в кабінет"
       }
     }
   }
