@@ -638,7 +638,14 @@
         "block_label": "Блокировать",
         "commune_label": "Коммуна",
         "optional_street_number_label": "Номер здания (необязательно)",
-        "optional_colony_label": "Колония (необязательно)"
+        "optional_colony_label": "Колония (необязательно)",
+        "email_or_phone_label": "Номер телефона",
+        "email_or_phone_placeholder": "Номер телефона",
+        "optional_first_name_label": "Имя",
+        "postal_code_label": "Почтовый индекс (оставьте 12345)",
+        "postal_code_placeholder": "Почтовый индекс (оставьте 12345)",
+        "address1_label": "Номер отделения Повой почты (или адрес для курьерской доставки)",
+        "city_label": "Населенный пункт"
       },
       "payment": {
         "card_fields_unavailable_html": "Платежи кредитными и дебетовыми картами сейчас недоступны.<br> <a href=\"%{current_url}\">Обновите эту страницу</a> или попробуйте другой способ оплаты."
@@ -695,6 +702,21 @@
       },
       "thank_you": {
         "location_title": "Местонахождение"
+      },
+      "payment_summary": {
+        "free_label": "По тарифам перевозчика"
+      },
+      "delivery_options": {
+        "free_total_label": "По тарифам перевозчика"
+      },
+      "order_summary": {
+        "free_shipping_discount_label": "По тарифам перевозчика",
+        "free_total_label": "По тарифам перевозчика",
+        "free_shipping_total_label": "По тарифам перевозчика"
+      },
+      "shipping": {
+        "free_rate_label": "По тарифам перевозчика",
+        "split_shipping_option_free": "По тарифам перевозчика"
       }
     },
     "collections": {
@@ -716,6 +738,10 @@
       "login_card": {
         "resend_link_with_login": "отправить новую ссылку",
         "resend_link_without_login": "Отправить новую ссылку"
+      },
+      "shipping": {
+        "free": "По тарифам перевозчика",
+        "free_shipping_discount": "По тарифам перевозчика"
       }
     },
     "orders": {
