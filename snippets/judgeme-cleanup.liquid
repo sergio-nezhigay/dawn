@@ -101,16 +101,46 @@
 
     const handleHashNavigation = () => {
       if (window.location.hash === '#judgeme_product_reviews') {
-        // Prevent browser's premature scroll to hash
-        window.scrollTo(0, 0);
+        // Store hash and remove it immediately to prevent browser scroll
+        const originalHash = window.location.hash;
+        history.replaceState(null, null, window.location.pathname + window.location.search);
 
-        // Wait for reviews section to exist in DOM, then scroll
+        let attempts = 0;
+        const maxAttempts = 50; // Max 5 seconds (50 * 100ms)
+
+        // Wait for reviews section to have actual content
         const waitForReviews = () => {
           const reviewsSection = document.querySelector('#judgeme_product_reviews');
-          if (reviewsSection) {
-            scrollToReviews();
-          } else {
+
+          // Check if section exists AND has content (not just empty container)
+          const hasContent = reviewsSection && (
+            reviewsSection.querySelector('.jdgm-widget') ||
+            reviewsSection.querySelector('.jdgm-rev') ||
+            reviewsSection.innerHTML.trim().length > 100
+          );
+
+          if (hasContent) {
+            // Content is ready, start smooth scroll from top
+            requestAnimationFrame(() => {
+              scrollToReviews();
+              // Restore hash after scroll starts (for URL sharing)
+              setTimeout(() => {
+                history.replaceState(null, null, originalHash);
+              }, 100);
+            });
+          } else if (attempts < maxAttempts) {
+            attempts++;
             setTimeout(waitForReviews, 100);
+          } else {
+            // Timeout - scroll anyway if section exists
+            if (reviewsSection) {
+              requestAnimationFrame(() => {
+                scrollToReviews();
+                setTimeout(() => {
+                  history.replaceState(null, null, originalHash);
+                }, 100);
+              });
+            }
           }
         };
 
