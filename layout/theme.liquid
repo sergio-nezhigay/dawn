@@ -397,7 +397,7 @@
     {%- endif -%}
     {% if template contains 'product' %}
       <script src="{{ 'recently-viewed.js' | asset_url }}" defer></script>
-      {% render 'judgeme-cleanup' %}
+      <script src="{{ 'judgeme-enhancements.js' | asset_url }}" defer></script>
     {% endif %}
   </body>
 </html>
