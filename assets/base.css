@@ -5330,3 +5330,89 @@ input {
 .product-card-wrapper {
   background-color: white !important;
 }
+
+/* Fix Judge.me carousel body visibility and spacing */
+.jdgm-carousel--card-theme .jdgm-carousel-item__review {
+  height: auto !important;
+  overflow: visible !important;
+  margin-bottom: 1.5rem !important;
+  flex-grow: 1 !important;
+}
+
+/* Judge.me Carousel Clamping Fix */
+.jdgm-carousel--card-theme .jdgm-line-clamp {
+  -webkit-line-clamp: 4 !important;
+  line-clamp: 4 !important;
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+}
+
+
+/* Ensure equal height for carousel cards */
+.jdgm-carousel__item-wrapper {
+  height: auto !important;
+  display: flex !important;
+  align-items: stretch !important;
+}
+
+.jdgm-carousel-item {
+  height: auto !important;
+  display: flex !important;
+  flex-shrink: 0 !important;
+}
+
+
+.jdgm-carousel-item__inner-wrapper {
+  height: 100% !important;
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.jdgm-carousel-item__product {
+  margin-bottom: 1rem !important;
+  color: #4b5563 !important;
+  text-decoration: underline !important;
+  text-underline-offset: 2px !important;
+  text-decoration-color: rgba(0, 113, 220, 0.2) !important;
+  transition: all 0.2s ease !important;
+  display: inline-block !important;
+  overflow: visible !important; /* Prevent clipping of the underline offset */
+}
+
+
+/* Force title to inherit link color to avoid being blocked by its own !important rule */
+.jdgm-carousel-item__product .jdgm-carousel-item__product-title {
+  color: inherit !important;
+}
+
+.jdgm-carousel-item__product:hover {
+  color: #0071dc !important; /* rgb(0, 113, 220) */
+  text-decoration-color: #0071dc !important;
+}
+
+.jdgm-carousel {
+  position: relative !important;
+}
+
+.jdgm-carousel__left-arrow,
+.jdgm-carousel__right-arrow {
+  position: absolute !important;
+  top: 50% !important;
+  margin-top: 0 !important;
+  z-index: 10 !important;
+}
+
+.jdgm-carousel__left-arrow {
+  left: 15px !important;
+  transform: translateY(-50%) rotate(-45deg) !important;
+}
+
+.jdgm-carousel__right-arrow {
+  right: 15px !important;
+  transform: translateY(-50%) rotate(-45deg) !important;
+}
+
+
+
