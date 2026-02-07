@@ -99,6 +99,26 @@
       }
     };
 
+    const handleHashNavigation = () => {
+      if (window.location.hash === '#judgeme_product_reviews') {
+        // Prevent browser's premature scroll to hash
+        window.scrollTo(0, 0);
+
+        // Wait for reviews section to exist in DOM, then scroll
+        const waitForReviews = () => {
+          const reviewsSection = document.querySelector('#judgeme_product_reviews');
+          if (reviewsSection) {
+            scrollToReviews();
+          } else {
+            setTimeout(waitForReviews, 100);
+          }
+        };
+
+        // Small delay to let page render critical content
+        setTimeout(waitForReviews, 300);
+      }
+    };
+
     const init = () => {
       const target = document.querySelector('#judgeme_product_reviews');
       if (target) {
@@ -112,8 +132,12 @@
     };
 
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', init);
+      document.addEventListener('DOMContentLoaded', () => {
+        handleHashNavigation();
+        init();
+      });
     } else {
+      handleHashNavigation();
       init();
     }
   })();
