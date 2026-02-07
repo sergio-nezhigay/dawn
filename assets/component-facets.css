@@ -546,6 +546,8 @@ a.active-facets__button-remove:focus-visible {
 .facet-checkbox__count {
   margin-left: 1rem;
   color: #9ca3af;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 /* Hover, active, and focus states */
