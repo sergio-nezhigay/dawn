@@ -48,33 +48,36 @@
         return headerHeight + 20;
       };
 
-      const getTargetScrollTop = () =>
-        reviewsSection.getBoundingClientRect().top + window.pageYOffset - getOffset();
-
-      window.scrollTo({ top: getTargetScrollTop(), behavior: 'smooth' });
-
-      let lastKnownTop = getTargetScrollTop();
-      let stableCount = 0;
-      const startTime = Date.now();
-
-      const checkPosition = () => {
-        if (Date.now() - startTime > 5000) return;
-
-        const currentTop = getTargetScrollTop();
-        if (Math.abs(currentTop - lastKnownTop) > 5) {
-          window.scrollTo({ top: currentTop, behavior: 'smooth' });
-          lastKnownTop = currentTop;
-          stableCount = 0;
-        } else {
-          stableCount++;
+      // Force-load lazy sections so layout settles during scroll
+      document.querySelectorAll('product-recommendations:not(.product-recommendations--loaded)').forEach(el => {
+        if (el.loadRecommendations && el.dataset.productId) {
+          el.loadRecommendations(el.dataset.productId);
         }
+      });
 
-        if (stableCount < 20) {
-          requestAnimationFrame(checkPosition);
+      const duration = 1500;
+      const startY = window.pageYOffset;
+      const startTime = performance.now();
+
+      const easeInOutCubic = (t) =>
+        t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+      const animate = (currentTime) => {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+
+        // Recalculate target each frame to adapt to layout shifts
+        const targetY = reviewsSection.getBoundingClientRect().top + window.pageYOffset - getOffset();
+        const currentY = startY + (targetY - startY) * easeInOutCubic(progress);
+
+        window.scrollTo(0, currentY);
+
+        if (progress < 1) {
+          requestAnimationFrame(animate);
         }
       };
 
-      requestAnimationFrame(checkPosition);
+      requestAnimationFrame(animate);
     };
 
     const interceptBadgeScroll = () => {
