@@ -32,7 +32,19 @@
       "mcp__shopify-dev__validate_graphql_codeblocks",
       "Bash(shopify help:*)",
       "WebFetch(domain:dev.shopify.com)",
-      "mcp__shopify-dev__search_docs_chunks"
+      "mcp__shopify-dev__search_docs_chunks",
+      "Bash(git log:*)",
+      "Bash(git -C \"C:\\\\projects\\\\dawn\" log --oneline --all -- \"assets/chakra-petch-700.woff2\")",
+      "Bash(git -C \"C:\\\\projects\\\\dawn\" log --oneline -20 -- \"assets/base.css\")",
+      "Bash(git -C \"C:\\\\projects\\\\dawn\" show 1216959a --stat)",
+      "Bash(git -C \"C:\\\\projects\\\\dawn\" show 3532a8a4 --stat)",
+      "Bash(git -C \"C:\\\\projects\\\\dawn\" diff 1216959a^..1216959a -- layout/theme.liquid)",
+      "Bash(git -C \"C:\\\\projects\\\\dawn\" diff 3532a8a4^..3532a8a4 -- layout/theme.liquid)",
+      "Bash(git -C \"C:\\\\projects\\\\dawn\" log --oneline --diff-filter=A -- \"assets/chakra-petch*\" \"assets/tektur*\")",
+      "Bash(powershell -Command:*)",
+      "Bash(git -C \"C:\\\\projects\\\\dawn\" log --oneline --all -- \"layout/theme.liquid\")",
+      "Bash(git -C \"C:\\\\projects\\\\dawn\" diff cdde8c79^..cdde8c79 -- layout/theme.liquid)",
+      "Bash(del \"C:\\\\projects\\\\dawn\\\\assets\\\\chakra-petch-700.woff2\")"
     ],
     "deny": [],
     "ask": []
