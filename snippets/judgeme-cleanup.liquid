@@ -37,6 +37,65 @@
       });
     });
 
+    const scrollToReviews = () => {
+      const reviewsSection = document.querySelector('#judgeme_product_reviews');
+      if (!reviewsSection) return;
+
+      const getOffset = () => {
+        const headerHeight = parseInt(
+          getComputedStyle(document.documentElement).getPropertyValue('--header-height')
+        ) || 80;
+        return headerHeight + 20;
+      };
+
+      const getTargetScrollTop = () =>
+        reviewsSection.getBoundingClientRect().top + window.pageYOffset - getOffset();
+
+      window.scrollTo({ top: getTargetScrollTop(), behavior: 'smooth' });
+
+      let lastKnownTop = getTargetScrollTop();
+      let stableCount = 0;
+      const startTime = Date.now();
+
+      const checkPosition = () => {
+        if (Date.now() - startTime > 5000) return;
+
+        const currentTop = getTargetScrollTop();
+        if (Math.abs(currentTop - lastKnownTop) > 5) {
+          window.scrollTo({ top: currentTop, behavior: 'smooth' });
+          lastKnownTop = currentTop;
+          stableCount = 0;
+        } else {
+          stableCount++;
+        }
+
+        if (stableCount < 20) {
+          requestAnimationFrame(checkPosition);
+        }
+      };
+
+      requestAnimationFrame(checkPosition);
+    };
+
+    const interceptBadgeScroll = () => {
+      document.querySelectorAll('.jdgm-prev-badge__text, .jdgm-prev-badge a[href*="judgeme_product_reviews"]').forEach(el => {
+        el.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          scrollToReviews();
+        }, true);
+      });
+    };
+
+    const initBadgeScroll = () => {
+      const badge = document.querySelector('.jdgm-prev-badge__text');
+      if (badge) {
+        interceptBadgeScroll();
+      } else {
+        setTimeout(initBadgeScroll, 500);
+      }
+    };
+
     const init = () => {
       const target = document.querySelector('#judgeme_product_reviews');
       if (target) {
@@ -46,6 +105,7 @@
         // Retry if the widget container isn't in the DOM yet
         setTimeout(init, 500);
       }
+      initBadgeScroll();
     };
 
     if (document.readyState === 'loading') {
