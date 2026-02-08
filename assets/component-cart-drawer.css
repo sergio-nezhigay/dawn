@@ -350,6 +350,7 @@ cart-drawer-items {
   line-height: 1;
   font-family: 'Chakra Petch', 'Tektur', sans-serif;
   font-weight: 600;
+  white-space: nowrap;
 }
 
 :lang(en) .cart-drawer .price {
