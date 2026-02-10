@@ -5371,11 +5371,11 @@ input {
 }
 
 .color-scheme-1 {
-  background-color: transparent !important;
+  /* background-color: transparent !important; */
 }
 
 .product-card-wrapper {
-  background-color: white !important;
+  /* background-color: white !important; */
 }
 
 /* Fix Judge.me carousel body visibility and spacing */
