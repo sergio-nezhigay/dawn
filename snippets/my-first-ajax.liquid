@@ -1,0 +1,50 @@
+<button id="my-add-button">Add to Cart</button>
+
+<script>
+  console.log('Hello World');
+  document.getElementById('my-add-button').addEventListener('click', () => {
+    console.log('Button clicked');
+    const selector = document.querySelector('[name="id"]');
+    console.log(selector);
+    const variantID = selector.value;
+    console.log(variantID);
+    const quantityElement = document.querySelector('[name="quantity"]');
+    // If it exists, use its value; otherwise, default to 1
+    const quantity = quantityElement ? quantityElement.value : 1;
+    console.log('Quantity to add:', quantity);
+    const fetchUrl = '{{ routes.cart_add_url }}.js';
+    console.log(fetchUrl);
+    fetch(fetchUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+      },
+      body: JSON.stringify({
+        items: [
+          // 3. Use the items array format
+          {
+            id: variantID,
+            quantity: quantity,
+            // MAGIC LINE: Ask Shopify for the updated header icon HTML
+          },
+        ],
+        sections: 'cart-icon-bubble',
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Response data:', data);
+        // 1. Get the new HTML for the cart icon from the response
+        const newCartIconHtml = data.sections['cart-icon-bubble'];
+        // 2. Find the element on the page and replace its content
+        const cartIconElement = document.getElementById('cart-icon-bubble');
+        if (cartIconElement && newCartIconHtml) {
+          cartIconElement.innerHTML = newCartIconHtml;
+        }
+        if (typeof publish === 'function') {
+          publish(PUB_SUB_EVENTS.cartUpdate, { source: 'my-first-ajax' });
+        }
+      });
+  });
+</script>

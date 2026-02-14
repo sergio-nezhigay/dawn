@@ -214,13 +214,18 @@
                           </span>
                         </div>
                       </div>
-                      <button type="button" class="link product__description-toggle" aria-expanded="false" aria-controls="ProductDescription-{{ section.id }}">
+                      <button
+                        type="button"
+                        class="link product__description-toggle"
+                        aria-expanded="false"
+                        aria-controls="ProductDescription-{{ section.id }}"
+                      >
                         Читати повністю
                       </button>
                     </div>
 
                     <script>
-                      document.addEventListener('DOMContentLoaded', function() {
+                      document.addEventListener('DOMContentLoaded', function () {
                         const container = document.getElementById('ProductDescription-{{ section.id }}');
                         if (!container) return;
 
@@ -239,7 +244,7 @@
                           return;
                         }
 
-                        toggleBtn.addEventListener('click', function() {
+                        toggleBtn.addEventListener('click', function () {
                           const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
 
                           if (isExpanded) {
@@ -266,18 +271,21 @@
                             // However, strictly sticking to scrollHeight is safer for the reverse transition without extra logic.
                             // But for responsiveness (window resize), 'none' is better.
                             // Let's attach a one-time listener to clear it.
-                            content.addEventListener('transitionend', function() {
-                              if (content.classList.contains('is-expanded')) {
-                                content.style.maxHeight = 'none';
-                              }
-                            }, { once: true });
+                            content.addEventListener(
+                              'transitionend',
+                              function () {
+                                if (content.classList.contains('is-expanded')) {
+                                  content.style.maxHeight = 'none';
+                                }
+                              },
+                              { once: true }
+                            );
                           }
                         });
                       });
                     </script>
                   </div>
                 {%- endif -%}
-
 
               {%- when 'sku' -%}
                 <p
@@ -548,6 +556,7 @@
               {%- when 'variant_picker' -%}
                 {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
               {%- when 'buy_buttons' -%}
+                {% comment %} {% render 'my-first-ajax' %} {% endcomment %}
                 <div class="product-form__row">
                   {%- render 'buy-buttons',
                     block: block,
@@ -559,7 +568,7 @@
 
                   {%- liquid
                     assign share_block = section.blocks | where: 'type', 'share' | first
-                    if share_block == nil
+                    if share_block == null
                       assign share_block = block
                     endif
                     assign share_url = product.selected_variant.url | default: product.url | prepend: request.origin

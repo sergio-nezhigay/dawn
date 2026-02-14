@@ -1,0 +1,23 @@
+<svg
+  class="header-cart__icon"
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="8" cy="21" r="1"></circle>
+  <circle cx="19" cy="21" r="1"></circle>
+  <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+</svg>
+<span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
+<span class="header-cart__badge" aria-hidden="true">
+  {%- if cart.item_count < 100 -%}
+    {{ cart.item_count }}
+  {%- else -%}
+    99+
+  {%- endif -%}
+</span>
+<span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>

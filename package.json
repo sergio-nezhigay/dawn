@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "shopify theme dev --store=c2da09-15.myshopify.com --theme 183417536828",
-    "push": "shopify theme push --store=c2da09-15.myshopify.com --theme 183417536828",
-    "pull": "shopify theme pull --store=c2da09-15.myshopify.com --theme 183417536828"
+    "dev": "shopify theme dev --store=c2da09-15.myshopify.com --theme 183865770300",
+    "push": "shopify theme push --store=c2da09-15.myshopify.com --theme 183865770300",
+    "pull": "shopify theme pull --store=c2da09-15.myshopify.com --theme 183865770300"
   },
   "repository": {
     "type": "git",
