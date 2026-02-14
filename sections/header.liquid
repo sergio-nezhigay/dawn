@@ -60,9 +60,9 @@
     transform: scale(0.95);
   }
   .header__icon:focus-visible {
-    outline: 2px solid #FFB800;
+    outline: 2px solid #ffb800;
     outline-offset: 2px;
-}
+  }
 
   .list-menu {
     list-style: none;
@@ -122,10 +122,10 @@
     .header__heading,
     .header__heading-link,
     .header-logo {
-       justify-self: start;
+      justify-self: start;
     }
     .header__icons {
-       justify-self: end;
+      justify-self: end;
     }
   }
 
@@ -173,7 +173,6 @@
   /* Set header background color */
   .header-wrapper {
     background-color: #0071dc;
-
   }
 
   /* Keep 3rd row (menu row) white */
@@ -184,8 +183,7 @@
   /* Add box shadow for desktop */
   @media screen and (min-width: 990px) {
     .header-wrapper {
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05),
-            0 2px 4px -1px rgba(0, 0, 0, 0.03);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
     }
   }
 {%- endstyle -%}
@@ -246,7 +244,7 @@
 
         {%- if localization.available_languages.size > 1 -%}
           <div class="desktop-localization-wrapper header-localization">
-             <localization-form>
+            <localization-form>
               {%- form 'localization', id: 'HeaderLanguageForm', class: 'localization-form' -%}
                 <div>
                   <h2 class="visually-hidden" id="HeaderLanguageLabel">{{ 'localization.language_label' | t }}</h2>
@@ -273,7 +271,16 @@
     <a href="{{ routes.root_url }}" class="header-logo focus-inset">
       <span class="header-logo__icon-wrapper">
         <span class="header-logo__glow"></span>
-        <svg class="header-logo__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg
+          class="header-logo__icon"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
           <rect x="4" y="4" width="16" height="16" rx="2"></rect>
           <rect x="9" y="9" width="6" height="6"></rect>
           <path d="M15 2v2"></path>
@@ -293,7 +300,7 @@
     {%- endif -%}
 
     <div class="max-md:hidden header-search-navigation" style="grid-area: navigation;">
-       {% render 'header-search-inline', input_id: 'Search-In-Modal-Inline' %}
+      {% render 'header-search-inline', input_id: 'Search-In-Modal-Inline' %}
     </div>
 
     <div class="header__icons{% if localization_forms %} header__icons--localization header-localization{% endif %}">
@@ -319,20 +326,7 @@
       </a>
 
       <a href="{{ routes.cart_url }}" class="header-cart focus-inset" id="cart-icon-bubble">
-        <svg class="header-cart__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="8" cy="21" r="1"></circle>
-          <circle cx="19" cy="21" r="1"></circle>
-          <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
-        </svg>
-        <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
-        <span class="header-cart__badge" aria-hidden="true">
-          {%- if cart.item_count < 100 -%}
-            {{ cart.item_count }}
-          {%- else -%}
-            99+
-          {%- endif -%}
-        </span>
-        <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
+        {% render 'cart-icon-logic' %}
       </a>
     </div>
   </header>
@@ -349,10 +343,7 @@
 </sticky-header>
 
 {%- if settings.cart_type == 'notification' -%}
-  {%- render 'cart-notification',
-    color_scheme: 'scheme-5',
-    desktop_menu_type: 'dropdown'
-  -%}
+  {%- render 'cart-notification', color_scheme: 'scheme-5', desktop_menu_type: 'dropdown' -%}
 {%- endif -%}
 
 {% javascript %}
@@ -530,6 +521,3 @@
   ]
 }
 {% endschema %}
-
-
-
