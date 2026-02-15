@@ -305,7 +305,7 @@
       }
     </script>
     {{ 'tailwind.output.css' | asset_url | stylesheet_tag }}
-    {{ 'chat.css' | asset_url | stylesheet_tag }}
+    {% comment %} {{ 'chat.css' | asset_url | stylesheet_tag }} {% endcomment %}
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %} template-{{ request.page_type }}">
