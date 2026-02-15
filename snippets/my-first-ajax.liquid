@@ -29,18 +29,35 @@
             // MAGIC LINE: Ask Shopify for the updated header icon HTML
           },
         ],
-        sections: 'cart-icon-bubble',
+        sections: 'cart-icon-bubble,cart-notification-product',
       }),
     })
       .then((response) => response.json())
       .then((data) => {
         console.log('Response data:', data);
         // 1. Get the new HTML for the cart icon from the response
+        // This is the "Section Rendering API" in action via POST (Bundling).
         const newCartIconHtml = data.sections['cart-icon-bubble'];
+
+        console.group('Lesson 2: Section Rendering Debug');
+        console.log('We asked for: cart-icon-bubble');
+        console.log('Shopify returned HTML:', newCartIconHtml);
+        console.groupEnd();
+
         // 2. Find the element on the page and replace its content
         const cartIconElement = document.getElementById('cart-icon-bubble');
         if (cartIconElement && newCartIconHtml) {
           cartIconElement.innerHTML = newCartIconHtml;
+        }
+        const newCartNotificationHtml = data.sections['cart-notification-product'];
+        const notificationElement = document.getElementById('cart-notification-product');
+        console.log(notificationElement);
+        // ^ Let's find out if this ID exists on your page first!
+
+        if (notificationElement && newCartNotificationHtml) {
+          notificationElement.innerHTML = newCartNotificationHtml;
+          // Bonus: Maybe show the notification too?
+          document.querySelector('cart-notification').open();
         }
         if (typeof publish === 'function') {
           publish(PUB_SUB_EVENTS.cartUpdate, { source: 'my-first-ajax' });
