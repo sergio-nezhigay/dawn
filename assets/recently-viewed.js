@@ -45,7 +45,6 @@ class RecentlyViewedProducts extends HTMLElement {
     searchParams.set('q', sortedHandles.map((h) => `handle:"${h}"`).join(' OR '));
 
     const rootUrl = (window.Shopify && window.Shopify.routes && window.Shopify.routes.root) || '/';
-    console.log(`Recently Viewed: Fetching ${sortedHandles.length} products...`);
 
     fetch(`${rootUrl.endsWith('/') ? rootUrl : rootUrl + '/'}search?${searchParams.toString()}`)
       .then((response) => response.text())
@@ -58,17 +57,17 @@ class RecentlyViewedProducts extends HTMLElement {
           // Re-sort elements to match our chronological order if needed
           const grid = sectionContent.querySelector('.grid');
           if (grid && sortedHandles.length > 1) {
-             const items = Array.from(grid.querySelectorAll('.grid__item'));
-             // Sort items based on our sortedHandles array
-             items.sort((a, b) => {
-                const handleA = a.dataset.handle || a.querySelector('[data-handle]')?.dataset.handle || '';
-                const handleB = b.dataset.handle || b.querySelector('[data-handle]')?.dataset.handle || '';
-                const indexA = sortedHandles.indexOf(handleA);
-                const indexB = sortedHandles.indexOf(handleB);
-                return (indexA === -1 ? 999 : indexA) - (indexB === -1 ? 999 : indexB);
-             });
-             // Re-append in correct order
-             items.forEach(item => grid.appendChild(item));
+            const items = Array.from(grid.querySelectorAll('.grid__item'));
+            // Sort items based on our sortedHandles array
+            items.sort((a, b) => {
+              const handleA = a.dataset.handle || a.querySelector('[data-handle]')?.dataset.handle || '';
+              const handleB = b.dataset.handle || b.querySelector('[data-handle]')?.dataset.handle || '';
+              const indexA = sortedHandles.indexOf(handleA);
+              const indexB = sortedHandles.indexOf(handleB);
+              return (indexA === -1 ? 999 : indexA) - (indexB === -1 ? 999 : indexB);
+            });
+            // Re-append in correct order
+            items.forEach((item) => grid.appendChild(item));
           }
 
           this.innerHTML = sectionContent.innerHTML;
