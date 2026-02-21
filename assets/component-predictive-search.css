@@ -276,3 +276,27 @@ predictive-search[loading] .predictive-search__results-groups-wrapper ~ .predict
   transition: transform 0.3s ease;
 }
 
+/* Backdrop overlay when predictive search is open */
+body:has(predictive-search[open])::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25);
+  background-image: none;
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* Darken nav menu row (inside header stacking context, needs separate overlay) */
+body:has(predictive-search[open]) .header__menu-row {
+  position: relative;
+}
+
+body:has(predictive-search[open]) .header__menu-row::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+}
+
