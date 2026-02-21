@@ -1,3 +1,8 @@
+predictive-search input::selection {
+  background-color: #0071dc;
+  color: #ffffff;
+}
+
 .predictive-search {
   display: none;
   position: absolute;
@@ -159,7 +164,8 @@ predictive-search[loading] .predictive-search__results-groups-wrapper ~ .predict
   transition: transform 0.2s;
 }
 
-.predictive-search__list-item:hover::before {
+.predictive-search__list-item:hover::before,
+.predictive-search__list-item[aria-selected='true']::before {
   transform: scaleY(1);
 }
 

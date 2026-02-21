@@ -83,17 +83,21 @@ class PredictiveSearch extends SearchForm {
 
   onKeyup(event) {
     if (!this.getQuery().length) this.close(true);
-    event.preventDefault();
 
     switch (event.code) {
       case 'ArrowUp':
+        event.preventDefault();
         this.switchOption('up');
         break;
       case 'ArrowDown':
+        event.preventDefault();
         this.switchOption('down');
         break;
       case 'Enter':
         this.selectOption();
+        break;
+      case 'Escape':
+        this.close();
         break;
     }
   }
@@ -101,6 +105,10 @@ class PredictiveSearch extends SearchForm {
   onKeydown(event) {
     // Prevent the cursor from moving in the input when using the up and down arrow keys
     if (event.code === 'ArrowUp' || event.code === 'ArrowDown') {
+      event.preventDefault();
+    }
+    // Prevent native <input type="search"> from clearing the value on Escape
+    if (event.code === 'Escape') {
       event.preventDefault();
     }
   }
