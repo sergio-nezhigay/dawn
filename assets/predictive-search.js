@@ -176,7 +176,8 @@ class PredictiveSearch extends SearchForm {
   }
 
   getSearchResults(searchTerm) {
-    const queryKey = searchTerm.replace(' ', '-').toLowerCase();
+    const limit = this.getResultsLimit();
+    const queryKey = `${searchTerm.replace(' ', '-').toLowerCase()}-${limit}`;
     this.setLiveRegionLoadingState();
 
     if (this.cachedResults[queryKey]) {
@@ -184,7 +185,7 @@ class PredictiveSearch extends SearchForm {
       return;
     }
 
-    fetch(`${routes.predictive_search_url}?q=${encodeURIComponent(searchTerm)}&section_id=predictive-search`, {
+    fetch(`${routes.predictive_search_url}?q=${encodeURIComponent(searchTerm)}&section_id=predictive-search&resources[limit]=${limit}`, {
       signal: this.abortController.signal,
     })
       .then((response) => {
@@ -252,11 +253,35 @@ class PredictiveSearch extends SearchForm {
     return this.resultsMaxHeight;
   }
 
+  getResultsLimit() {
+    const ITEM_HEIGHT = 90;
+    const SHOW_ALL_HEIGHT = 59;
+    const available = this.getResultsMaxHeight();
+    const limit = Math.floor((available - SHOW_ALL_HEIGHT) / ITEM_HEIGHT);
+    return Math.min(10, Math.max(3, limit));
+  }
+
   open() {
     this.predictiveSearchResults.style.maxHeight = `${this.getResultsMaxHeight()}px`;
     this.setAttribute('open', true);
     this.input.setAttribute('aria-expanded', true);
     this.isOpen = true;
+    this.trimOverflowingResults();
+  }
+
+  trimOverflowingResults() {
+    const container = this.predictiveSearchResults;
+    if (!container) return;
+    const productItems = [
+      ...container.querySelectorAll('#predictive-search-results-products-list .predictive-search__list-item'),
+    ];
+    // Reset any previously hidden items before trimming
+    productItems.forEach((el) => el.style.removeProperty('display'));
+    let i = productItems.length - 1;
+    while (container.scrollHeight > container.clientHeight && i >= 1) {
+      productItems[i].style.display = 'none';
+      i--;
+    }
   }
 
   close(clearSearchTerm = false) {
