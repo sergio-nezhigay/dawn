@@ -596,5 +596,12 @@
       "send_on": "YYYY-MM-DD",
       "send_on_label": "Send on (optional)"
     }
+  },
+  "shopify": {
+    "collections": {
+      "sorting": {
+        "best_selling": "Recommended"
+      }
+    }
   }
 }
