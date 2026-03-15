@@ -8,11 +8,11 @@
 
       if (!authorEl) return;
 
-      const author = authorEl.innerText.trim().toLowerCase();
+      const author = authorEl.textContent.trim().toLowerCase();
 
       // Hide title if it matches author
       if (titleEl) {
-        const title = titleEl.innerText.trim().toLowerCase();
+        const title = titleEl.textContent.trim().toLowerCase();
         if (title === author) {
           titleEl.style.setProperty('display', 'none', 'important');
         }
@@ -20,7 +20,7 @@
 
       // Hide body if it matches author
       if (bodyEl) {
-        const body = bodyEl.innerText.trim().toLowerCase();
+        const body = bodyEl.textContent.trim().toLowerCase();
         if (body === author) {
           bodyEl.style.setProperty('display', 'none', 'important');
         }
@@ -56,6 +56,10 @@
     const duration = 1500;
     const startY = window.pageYOffset;
     const startTime = performance.now();
+    const offset = getOffset();
+    
+    // Calculate target once to prevent layout thrashing (forced reflow) on each frame
+    const targetY = reviewsSection.getBoundingClientRect().top + window.pageYOffset - offset;
 
     const easeInOutCubic = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
@@ -63,8 +67,6 @@
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
 
-      // Recalculate target each frame to adapt to layout shifts
-      const targetY = reviewsSection.getBoundingClientRect().top + window.pageYOffset - getOffset();
       const currentY = startY + (targetY - startY) * easeInOutCubic(progress);
 
       window.scrollTo(0, currentY);
