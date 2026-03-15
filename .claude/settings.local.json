@@ -44,7 +44,12 @@
       "Bash(powershell -Command:*)",
       "Bash(git -C \"C:\\\\projects\\\\dawn\" log --oneline --all -- \"layout/theme.liquid\")",
       "Bash(git -C \"C:\\\\projects\\\\dawn\" diff cdde8c79^..cdde8c79 -- layout/theme.liquid)",
-      "Bash(del \"C:\\\\projects\\\\dawn\\\\assets\\\\chakra-petch-700.woff2\")"
+      "Bash(del \"C:\\\\projects\\\\dawn\\\\assets\\\\chakra-petch-700.woff2\")",
+      "Bash(gh api:*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:api.github.com)",
+      "Bash(git checkout:*)"
     ],
     "deny": [],
     "ask": []
