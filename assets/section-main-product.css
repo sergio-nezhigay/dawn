@@ -52,7 +52,7 @@ product-info {
   }
 
   .product__media-wrapper .slider-buttons {
-    display: flex !important; /* Force visibility over theme-level hiders */
+    display: flex !important;
     position: absolute;
     top: 50%;
     left: 0;
@@ -62,33 +62,44 @@ product-info {
     z-index: 10;
     margin: 0;
     transform: translateY(-50%);
+    opacity: 0 !important; /* Force hide unless hovering */
+    transition: opacity var(--duration-medium) ease;
+  }
+
+  .product__media-wrapper:hover .slider-buttons {
+    opacity: 1 !important; /* Force show on hover */
   }
 
   .product__media-wrapper .slider-buttons .slider-button {
     pointer-events: auto;
-    background: rgb(var(--color-background));
+    background: rgba(255, 255, 255, 0.7); /* Glassmorphism */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border: 0.1rem solid rgba(var(--color-foreground), 0.1);
     border-radius: 50%;
-    width: 4rem;
-    height: 4rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    width: 4.4rem;
+    height: 4.4rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transition: all var(--duration-short) ease;
     padding: 0;
     display: flex !important;
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    color: rgb(var(--color-foreground));
   }
 
-  .product__media-wrapper .slider-buttons .slider-button:hover {
-    background: rgb(var(--color-foreground));
-    color: rgb(var(--color-background));
+  .product__media-wrapper .slider-buttons .slider-button:hover:not([disabled]) {
+    background: #ffffff; /* Solid white hover */
+    color: rgb(var(--color-foreground));
     transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    border-color: rgba(var(--color-foreground), 0.2);
   }
 
   .product__media-wrapper .slider-buttons .slider-button--prev {
     position: absolute;
-    left: 1rem;
+    left: 1.5rem;
   }
 
   .product__media-wrapper .slider-buttons .slider-button--next {
@@ -96,9 +107,19 @@ product-info {
     right: 1.5rem;
   }
 
+  /* Distinct Disabled State */
+  .product__media-wrapper .slider-buttons .slider-button[disabled] {
+    opacity: 0.15;
+    cursor: not-allowed;
+    background: rgba(var(--color-foreground), 0.05);
+    backdrop-filter: none;
+    box-shadow: none;
+    border-color: transparent;
+  }
+
   .product__media-wrapper .slider-buttons .slider-button .icon {
-    height: 1.2rem;
-    width: 1.2rem;
+    height: 1.4rem;
+    width: 1.4rem;
   }
 
   .product__media-wrapper .slider-counter {
