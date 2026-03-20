@@ -22,14 +22,16 @@ if (!customElements.get('media-gallery')) {
 
         this.initButtonNav();
         this.updateButtonVisibility();
+        if (this.elements.viewer) {
+          this.elements.viewer.enableSliderLooping = true;
+        }
       }
 
       updateButtonVisibility() {
+        // Disabled state no longer needed as we're looping, but we can keep the method for future or clear existing disabled attributes
         if (!this.mql.matches || !this.elements.viewer.prevButton || !this.elements.viewer.nextButton) return;
-        const activeMedia = this.elements.viewer.querySelector('.is-active');
-        if (!activeMedia) return;
-        this.elements.viewer.prevButton.toggleAttribute('disabled', !activeMedia.previousElementSibling);
-        this.elements.viewer.nextButton.toggleAttribute('disabled', !activeMedia.nextElementSibling);
+        this.elements.viewer.prevButton.removeAttribute('disabled');
+        this.elements.viewer.nextButton.removeAttribute('disabled');
       }
 
       initButtonNav() {
@@ -43,10 +45,10 @@ if (!customElements.get('media-gallery')) {
           const items = Array.from(this.elements.viewer.querySelectorAll('.product__media-item'));
           const activeItem = this.elements.viewer.querySelector('.is-active');
           const currentIndex = items.indexOf(activeItem);
-          const newIndex = button.classList.contains('slider-button--next') ? currentIndex + 1 : currentIndex - 1;
+          const nextIndex = (currentIndex + (button.classList.contains('slider-button--next') ? 1 : -1) + items.length) % items.length;
 
-          if (newIndex >= 0 && newIndex < items.length) {
-            this.setActiveMedia(items[newIndex].dataset.mediaId, false);
+          if (items[nextIndex]) {
+            this.setActiveMedia(items[nextIndex].dataset.mediaId, false);
           }
         });
       }
@@ -101,8 +103,7 @@ if (!customElements.get('media-gallery')) {
         this.announceLiveRegion(activeMedia, activeThumbnail.dataset.mediaPosition);
 
         if (this.mql.matches) {
-          this.elements.viewer.prevButton?.toggleAttribute('disabled', activeMedia.previousElementSibling === null);
-          this.elements.viewer.nextButton?.toggleAttribute('disabled', activeMedia.nextElementSibling === null);
+          this.updateButtonVisibility();
         }
       }
 
