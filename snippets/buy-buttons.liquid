@@ -104,7 +104,11 @@
             {{ form | payment_button }}
           {%- endif -%}
         </div>
-        <input type="hidden" name="properties[_d]" value="{{ product.metafields.custom.delta }}">
+        <input
+          type="hidden"
+          name="properties[_d]"
+          value="{{ product.selected_or_first_available_variant.metafields.custom.delta | default: '' | escape }}"
+        >
       {%- endform -%}
     </product-form>
   {%- else -%}
