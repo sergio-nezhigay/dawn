@@ -1671,7 +1671,7 @@ summary::-webkit-details-marker {
 }
 
 .media>img {
-  object-fit: cover;
+  object-fit: contain;
   object-position: center center;
   transition: opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
@@ -3564,6 +3564,7 @@ details[open]>.header__submenu {
 }
 
 .header__submenu {
+  background-color: #ffffff;
   transition: opacity 0.2s ease, transform 0.2s ease;
   top: calc(100% - 5px);
   /* Hidden state by default */
@@ -3576,6 +3577,7 @@ details[open]>.header__submenu {
   /* Default left alignment */
   left: 0;
 }
+
 
 /* Right-align dropdown for last 3 menu items to prevent viewport overflow */
 .list-menu--inline>li:nth-last-child(-n+3) .header__submenu {
