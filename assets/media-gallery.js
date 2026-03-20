@@ -19,6 +19,36 @@ if (!customElements.get('media-gallery')) {
             .addEventListener('click', this.setActiveMedia.bind(this, mediaToSwitch.dataset.target, false));
         });
         if (this.dataset.desktopLayout.includes('thumbnail') && this.mql.matches) this.removeListSemantic();
+
+        this.initButtonNav();
+        this.updateButtonVisibility();
+      }
+
+      updateButtonVisibility() {
+        if (!this.mql.matches || !this.elements.viewer.prevButton || !this.elements.viewer.nextButton) return;
+        const activeMedia = this.elements.viewer.querySelector('.is-active');
+        if (!activeMedia) return;
+        this.elements.viewer.prevButton.toggleAttribute('disabled', !activeMedia.previousElementSibling);
+        this.elements.viewer.nextButton.toggleAttribute('disabled', !activeMedia.nextElementSibling);
+      }
+
+      initButtonNav() {
+        if (!this.elements.viewer.prevButton || !this.elements.viewer.nextButton) return;
+
+        this.elements.viewer.addEventListener('click', (event) => {
+          if (!this.mql.matches) return;
+          const button = event.target.closest('.slider-button--prev, .slider-button--next');
+          if (!button) return;
+
+          const items = Array.from(this.elements.viewer.querySelectorAll('.product__media-item'));
+          const activeItem = this.elements.viewer.querySelector('.is-active');
+          const currentIndex = items.indexOf(activeItem);
+          const newIndex = button.classList.contains('slider-button--next') ? currentIndex + 1 : currentIndex - 1;
+
+          if (newIndex >= 0 && newIndex < items.length) {
+            this.setActiveMedia(items[newIndex].dataset.mediaId, false);
+          }
+        });
       }
 
       onSlideChanged(event) {
@@ -63,11 +93,17 @@ if (!customElements.get('media-gallery')) {
           window.scrollTo({ top: top, behavior: 'smooth' });
         });
         this.playActiveMedia(activeMedia);
+        this.updateButtonVisibility();
 
         if (!this.elements.thumbnails) return;
         const activeThumbnail = this.elements.thumbnails.querySelector(`[data-target="${mediaId}"]`);
         this.setActiveThumbnail(activeThumbnail);
         this.announceLiveRegion(activeMedia, activeThumbnail.dataset.mediaPosition);
+
+        if (this.mql.matches) {
+          this.elements.viewer.prevButton?.toggleAttribute('disabled', activeMedia.previousElementSibling === null);
+          this.elements.viewer.nextButton?.toggleAttribute('disabled', activeMedia.nextElementSibling === null);
+        }
       }
 
       setActiveThumbnail(thumbnail) {
