@@ -1,36 +1,49 @@
-<div class="space-y-4 fulfillment-wrapper">
-  {% assign warranty_months = product.metafields.custom.warranty %}
-  {% if warranty_months %}
-    <div class="flex items-start justify-start gap-5 ">
-      <span class="svg-wrapper shrink-0">
-        {{- 'icon-shield-check.svg' | inline_asset_content -}}
-      </span>
-      <span class="font-semibold fulfillment-title">{{ 'products.product.features.warranty' | t }}:</span
-      ><span class="opacity-90 fulfillment-description">
-        {{ warranty_months }}
-        {{ 'products.product.features.months' | t }}. {{ 'products.product.features.return_exchange' | t }}
-      </span>
-    </div>
-  {% endif %}
-
-  <div class="flex items-start justify-start gap-5 ">
-    <span class="svg-wrapper shrink-0">
-      {{- 'icon-truck.svg' | inline_asset_content -}}
-    </span>
-    <span class="font-semibold fulfillment-title">{{ 'products.product.features.delivery' | t }}:</span
-    ><span class="opacity-90 fulfillment-description">
-      {{ 'products.product.features.delivery_info' | t }}
-    </span>
-  </div>
-
-  <div class="flex items-start justify-start gap-5 ">
-    <span class="svg-wrapper shrink-0">
-      {{- 'icon-credit-card.svg' | inline_asset_content -}}
-    </span>
-    <span class="font-semibold fulfillment-title">{{ 'products.product.features.payment' | t }}:</span
-    ><span class="opacity-90 fulfillment-description">
-      {{ 'products.product.features.payment_info' | t }}
-    </span>
-  </div>
-
+<div class="fulfillment-wrapper">
+  <table class="fulfillment-table">
+    {% assign warranty_months = product.metafields.custom.warranty %}
+    {% if warranty_months %}
+    <tr class="fulfillment-row">
+      <td class="fulfillment-icon-cell">
+        <span class="svg-wrapper">{{- 'icon-shield-check.svg' | inline_asset_content -}}</span>
+      </td>
+      <td class="fulfillment-label-cell">
+        <span class="fulfillment-title">{{ 'products.product.features.warranty' | t }}</span>
+        <span class="fulfillment-description">{{ warranty_months }} {{ 'products.product.features.months' | t }}. {{ 'products.product.features.return_exchange' | t }}</span>
+      </td>
+      <td class="fulfillment-link-cell">
+        <a href="/policies/refund-policy" class="fulfillment-info-link" aria-label="{{ 'products.product.features.warranty' | t }}">
+          <span class="fulfillment-info-icon">i</span>
+        </a>
+      </td>
+    </tr>
+    {% endif %}
+    <tr class="fulfillment-row">
+      <td class="fulfillment-icon-cell">
+        <span class="svg-wrapper">{{- 'icon-truck.svg' | inline_asset_content -}}</span>
+      </td>
+      <td class="fulfillment-label-cell">
+        <span class="fulfillment-title">{{ 'products.product.features.delivery' | t }}</span>
+        <span class="fulfillment-description">{{ 'products.product.features.delivery_info' | t }}</span>
+      </td>
+      <td class="fulfillment-link-cell">
+        <a href="/policies/shipping-policy" class="fulfillment-info-link" aria-label="{{ 'products.product.features.delivery' | t }}">
+          <span class="fulfillment-info-icon">i</span>
+        </a>
+      </td>
+    </tr>
+    <tr class="fulfillment-row">
+      <td class="fulfillment-icon-cell">
+        <span class="svg-wrapper">{{- 'icon-credit-card.svg' | inline_asset_content -}}</span>
+      </td>
+      <td class="fulfillment-label-cell">
+        <span class="fulfillment-title">{{ 'products.product.features.payment' | t }}</span>
+        <span class="fulfillment-description">{{ 'products.product.features.payment_info' | t }}</span>
+      </td>
+      <td class="fulfillment-link-cell">
+        <a href="/policies/shipping-policy" class="fulfillment-info-link" aria-label="{{ 'products.product.features.payment' | t }}">
+          <span class="fulfillment-info-icon">i</span>
+        </a>
+      </td>
+    </tr>
+  </table>
 </div>
