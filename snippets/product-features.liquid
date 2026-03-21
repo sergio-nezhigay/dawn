@@ -4,44 +4,41 @@
     {% if warranty_months %}
     <tr class="fulfillment-row">
       <td class="fulfillment-icon-cell">
-        <span class="svg-wrapper">{{- 'icon-shield-check.svg' | inline_asset_content -}}</span>
+        <a href="/policies/refund-policy" class="fulfillment-icon-link" aria-label="{{ 'products.product.features.warranty' | t }}" target="_blank" rel="noopener noreferrer">
+          <span class="svg-wrapper">{{- 'icon-shield-check.svg' | inline_asset_content -}}</span>
+        </a>
       </td>
       <td class="fulfillment-label-cell">
         <span class="fulfillment-title">{{ 'products.product.features.warranty' | t }}</span>
-        <span class="fulfillment-description">{{ warranty_months }} {{ 'products.product.features.months' | t }}. {{ 'products.product.features.return_exchange' | t }}</span>
-      </td>
-      <td class="fulfillment-link-cell">
-        <a href="/policies/refund-policy" class="fulfillment-info-link" aria-label="{{ 'products.product.features.warranty' | t }}">
-          <span class="fulfillment-info-icon">i</span>
+        <a href="/policies/refund-policy" class="fulfillment-desc-link" target="_blank" rel="noopener noreferrer">
+          {{ warranty_months }} {{ 'products.product.features.months' | t }}. {{ 'products.product.features.return_exchange' | t }}<span class="fulfillment-arrow"> →</span>
         </a>
       </td>
     </tr>
     {% endif %}
     <tr class="fulfillment-row">
       <td class="fulfillment-icon-cell">
-        <span class="svg-wrapper">{{- 'icon-truck.svg' | inline_asset_content -}}</span>
+        <a href="/policies/shipping-policy" class="fulfillment-icon-link" aria-label="{{ 'products.product.features.delivery' | t }}" target="_blank" rel="noopener noreferrer">
+          <span class="svg-wrapper">{{- 'icon-truck.svg' | inline_asset_content -}}</span>
+        </a>
       </td>
       <td class="fulfillment-label-cell">
         <span class="fulfillment-title">{{ 'products.product.features.delivery' | t }}</span>
-        <span class="fulfillment-description">{{ 'products.product.features.delivery_info' | t }}</span>
-      </td>
-      <td class="fulfillment-link-cell">
-        <a href="/policies/shipping-policy" class="fulfillment-info-link" aria-label="{{ 'products.product.features.delivery' | t }}">
-          <span class="fulfillment-info-icon">i</span>
+        <a href="/policies/shipping-policy" class="fulfillment-desc-link" target="_blank" rel="noopener noreferrer">
+          {{ 'products.product.features.delivery_info' | t }}<span class="fulfillment-arrow"> →</span>
         </a>
       </td>
     </tr>
     <tr class="fulfillment-row">
       <td class="fulfillment-icon-cell">
-        <span class="svg-wrapper">{{- 'icon-credit-card.svg' | inline_asset_content -}}</span>
+        <a href="/policies/shipping-policy" class="fulfillment-icon-link" aria-label="{{ 'products.product.features.payment' | t }}" target="_blank" rel="noopener noreferrer">
+          <span class="svg-wrapper">{{- 'icon-credit-card.svg' | inline_asset_content -}}</span>
+        </a>
       </td>
       <td class="fulfillment-label-cell">
         <span class="fulfillment-title">{{ 'products.product.features.payment' | t }}</span>
-        <span class="fulfillment-description">{{ 'products.product.features.payment_info' | t }}</span>
-      </td>
-      <td class="fulfillment-link-cell">
-        <a href="/policies/shipping-policy" class="fulfillment-info-link" aria-label="{{ 'products.product.features.payment' | t }}">
-          <span class="fulfillment-info-icon">i</span>
+        <a href="/policies/shipping-policy" class="fulfillment-desc-link" target="_blank" rel="noopener noreferrer">
+          {{ 'products.product.features.payment_info' | t }}<span class="fulfillment-arrow"> →</span>
         </a>
       </td>
     </tr>
