@@ -278,13 +278,6 @@
       {{ 'component-discounts.css' | asset_url | stylesheet_tag }}
     {%- endif -%}
 
-    {%- unless settings.type_body_font.system? -%}
-      {{ settings.type_body_font | font_url | preload_tag: as: 'font', type: 'font/woff2' }}
-    {%- endunless -%}
-    {%- unless settings.type_header_font.system? -%}
-      {{ settings.type_header_font | font_url | preload_tag: as: 'font', type: 'font/woff2' }}
-    {%- endunless -%}
-
     {%- if localization.available_countries.size > 1 or localization.available_languages.size > 1 -%}
       {{ 'component-localization-form.css' | asset_url | stylesheet_tag: preload: true }}
       <script src="{{ 'localization-form.js' | asset_url }}" defer="defer"></script>
