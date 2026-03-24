@@ -120,6 +120,8 @@
       "add_to_cart": "Додати в кошик",
       "buy": "Купити",
       "description": "Опис",
+      "description_read_more": "Читати повністю",
+      "description_read_less": "Приховати",
       "on_sale": "Розпродаж",
       "share": "Поділитися цим продуктом",
       "sold_out": "Продано",
