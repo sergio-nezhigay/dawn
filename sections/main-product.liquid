@@ -220,7 +220,7 @@
                         aria-expanded="false"
                         aria-controls="ProductDescription-{{ section.id }}"
                       >
-                        Читати повністю
+                        {{ 'products.product.description_read_more' | t }}
                       </button>
                     </div>
 
@@ -258,13 +258,13 @@
                             // 3. Transition to collapsed state
                             content.style.maxHeight = '32rem';
                             toggleBtn.setAttribute('aria-expanded', 'false');
-                            toggleBtn.textContent = 'Читати повністю';
+                            toggleBtn.textContent = {{ 'products.product.description_read_more' | t | json }};
                             content.classList.remove('is-expanded');
                           } else {
                             // Expand
                             content.style.maxHeight = content.scrollHeight + 'px';
                             toggleBtn.setAttribute('aria-expanded', 'true');
-                            toggleBtn.textContent = 'Приховати';
+                            toggleBtn.textContent = {{ 'products.product.description_read_less' | t | json }};
                             content.classList.add('is-expanded');
 
                             // Optional: Remove max-height after transition to allow window resizing
