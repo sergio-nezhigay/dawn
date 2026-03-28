@@ -37,7 +37,7 @@
             "image": "shopify://shop_images/ktc-articles-solutions-pc-performance-different-ssd-form-factors-hero-lg.jpg",
             "logo_image": "shopify://shop_images/Kingston-logo.png",
             "image_overlay_opacity": 0,
-            "heading": "Пам’ять і сховища для будь-яких задач",
+            "heading": "Сховища для будь-яких задач",
             "heading_size": "h1",
             "subheading": "",
             "button_label": "Перейти",
@@ -49,14 +49,34 @@
             "text_alignment_mobile": "center",
             "color_scheme": ""
           }
+        },
+        "slide_NJCWL4": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/social.jpg",
+            "logo_image": "shopify://shop_images/1691604298samsung-logo-transparent..webp",
+            "image_overlay_opacity": 0,
+            "heading": "Пам’ять без компромісів",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "Перейти",
+            "link": "/collections/samsung",
+            "button_style_secondary": false,
+            "show_text_box": true,
+            "box_align": "middle-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": "scheme-1"
+          }
         }
       },
       "block_order": [
         "slide_4jBHYL",
-        "slide_Zp8Kx1"
+        "slide_Zp8Kx1",
+        "slide_NJCWL4"
       ],
       "custom_css": [
-        ".slideshow__text.banner__box {background: rgba(255, 255, 255, 0.82) !important; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);}",
+        ".slideshow__text.banner__box {background: rgba(255, 255, 255, 0.9) !important;}",
         ".slideshow__text .button {background-color: #265c94; color: #ffffff; opacity: 1;}",
         ".slideshow__text .banner__heading {color: #1a1a1a !important; font-size: 2.2rem !important; font-weight: 500 !important;}",
         ".slideshow__text .banner__text p {color: #555555 !important; font-size: 1.4rem !important;}"

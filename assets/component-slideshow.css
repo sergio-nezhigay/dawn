@@ -11,7 +11,8 @@ slideshow-component {
 }
 
 .slideshow__logo-img {
-  max-width: 240px;
+  display: block;
+  max-width: 200px;
   max-height: 130px;
   width: auto;
   height: auto;
@@ -246,7 +247,7 @@ slideshow-component:not(.page-width) .slider-buttons {
   .banner--large .slideshow__logo--media-overlay  { top: calc(26rem / 2); transform: translate(-50%, -50%); }
 
   .slideshow__logo--media-overlay .slideshow__logo-img {
-    max-height: 50px;
+    max-height: 48px;
     width: auto;
   }
 
