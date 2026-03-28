@@ -9,125 +9,6 @@
  */
 {
   "sections": {
-    "slideshow_tDPaNk": {
-      "type": "slideshow",
-      "blocks": {
-        "slide_EranBV": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/4241211.jpg",
-            "image_overlay_opacity": 0,
-            "heading": "Заміни старий жорсткий — відчуй різницю з SSD Kingston",
-            "heading_size": "h1",
-            "subheading": "",
-            "button_label": "Детальніше",
-            "link": "/products/nakopitel-ssd-25-480gb-kingston-sa400s37480g",
-            "button_style_secondary": false,
-            "show_text_box": false,
-            "box_align": "middle-center",
-            "text_alignment": "center",
-            "text_alignment_mobile": "center",
-            "color_scheme": "scheme-1"
-          }
-        },
-        "slide_4bGM9A": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/digitus-4-port-usb-2-0-hub-da-70216.jpg",
-            "image_overlay_opacity": 0,
-            "heading": "Незвичний вигляд — звична зручність. Хаб, що кидається в очі",
-            "heading_size": "h0",
-            "subheading": "",
-            "button_label": "Детальніше",
-            "link": "/products/hub-usb-4-port-digitus-usb-20-passivnyy-belyy-da-70216",
-            "button_style_secondary": false,
-            "show_text_box": false,
-            "box_align": "middle-center",
-            "text_alignment": "center",
-            "text_alignment_mobile": "center",
-            "color_scheme": ""
-          }
-        },
-        "slide_e7xQpV": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/94e760164e7485fc671740b7b96d_1.webp",
-            "image_overlay_opacity": 20,
-            "heading": "Живи з природою — фонтан, що працює від сонця. ☀️💧",
-            "heading_size": "h0",
-            "subheading": "",
-            "button_label": "Детальніше",
-            "link": "/products/fontan-na-solnechnoy-bataree-16sm-s-nasadkami",
-            "button_style_secondary": false,
-            "show_text_box": false,
-            "box_align": "middle-center",
-            "text_alignment": "center",
-            "text_alignment_mobile": "center",
-            "color_scheme": "scheme-1"
-          }
-        },
-        "slide_N7GGKg": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/image_7.webp",
-            "image_overlay_opacity": 20,
-            "heading": "Милий дизайн. Надійне зберігання. Ваші файли завжди під лапкою! 🦊",
-            "heading_size": "h1",
-            "subheading": "",
-            "button_label": "Детальніше",
-            "link": "/products/flesh-nakopitel-lisichka-64-gb-usb-2-0-kompaktnaya-fleshka-dlya-smartfona-64gb",
-            "button_style_secondary": false,
-            "show_text_box": false,
-            "box_align": "middle-center",
-            "text_alignment": "center",
-            "text_alignment_mobile": "center",
-            "color_scheme": "scheme-1"
-          }
-        },
-        "slide_ibAVeN": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/Screenshot_283.jpg",
-            "image_overlay_opacity": 0,
-            "heading": "Фірмовий звук JBL. Чисто, гучно, стильно",
-            "heading_size": "h0",
-            "subheading": "",
-            "button_label": "Детальніше",
-            "link": "/products/naushniki-jbl-t110-black-jblt110blk",
-            "button_style_secondary": false,
-            "show_text_box": false,
-            "box_align": "middle-center",
-            "text_alignment": "center",
-            "text_alignment_mobile": "center",
-            "color_scheme": ""
-          }
-        }
-      },
-      "block_order": [
-        "slide_EranBV",
-        "slide_4bGM9A",
-        "slide_e7xQpV",
-        "slide_N7GGKg",
-        "slide_ibAVeN"
-      ],
-      "disabled": true,
-      "custom_css": [
-        ".slider-mobile-gutter {background-image: linear-gradient(to bottom, #265c94, white);}",
-        ".slideshow {height: 450px;}",
-        "@media (max-width: 768px) {.slideshow {height: 300px; } .banner__heading {font-size: 24px; }}"
-      ],
-      "name": "t:sections.slideshow.presets.name",
-      "settings": {
-        "layout": "full_bleed",
-        "slide_height": "small",
-        "slider_visual": "dots",
-        "auto_rotate": true,
-        "change_slides_speed": 7,
-        "image_behavior": "ambient",
-        "show_text_below": false,
-        "accessibility_info": "Slideshow about our brand"
-      }
-    },
     "slideshow_6nENYz": {
       "type": "slideshow",
       "blocks": {
@@ -150,34 +31,17 @@
             "color_scheme": ""
           }
         },
-        "slide_9zaEG6": {
-          "type": "slide",
-          "settings": {
-            "image_overlay_opacity": 0,
-            "heading": "Image slide",
-            "heading_size": "h1",
-            "subheading": "Tell your brand's story through images",
-            "button_label": "Button label",
-            "link": "",
-            "button_style_secondary": false,
-            "show_text_box": true,
-            "box_align": "middle-center",
-            "text_alignment": "center",
-            "text_alignment_mobile": "center",
-            "color_scheme": ""
-          }
-        },
         "slide_Zp8Kx1": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/logitech-staples-ca-122220-lifestyle.jpg",
-            "logo_image": "shopify://shop_images/Logitech-Symbol.png",
+            "image": "shopify://shop_images/ktc-articles-solutions-pc-performance-different-ssd-form-factors-hero-lg.jpg",
+            "logo_image": "shopify://shop_images/Kingston-logo.png",
             "image_overlay_opacity": 0,
-            "heading": "Комп'ютерна періферія",
+            "heading": "Пам’ять і сховища для будь-яких задач",
             "heading_size": "h1",
             "subheading": "",
             "button_label": "Перейти",
-            "link": "/collections/logitech",
+            "link": "/collections/kingston",
             "button_style_secondary": false,
             "show_text_box": true,
             "box_align": "middle-center",
@@ -189,11 +53,10 @@
       },
       "block_order": [
         "slide_4jBHYL",
-        "slide_9zaEG6",
         "slide_Zp8Kx1"
       ],
       "custom_css": [
-        ".slideshow__text.banner__box { background: rgba(255,255,255,0.82) !important; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }",
+        ".slideshow__text.banner__box {background: rgba(255, 255, 255, 0.82) !important; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);}",
         ".slideshow__text .button {background-color: #265c94; color: #ffffff; opacity: 1;}",
         ".slideshow__text .banner__heading {color: #1a1a1a !important; font-size: 2.2rem !important; font-weight: 500 !important;}",
         ".slideshow__text .banner__text p {color: #555555 !important; font-size: 1.4rem !important;}"
@@ -203,7 +66,7 @@
         "layout": "full_bleed",
         "slide_height": "small",
         "slider_visual": "dots",
-        "auto_rotate": false,
+        "auto_rotate": true,
         "change_slides_speed": 5,
         "image_behavior": "ambient",
         "show_text_below": true,
@@ -555,7 +418,6 @@
     }
   },
   "order": [
-    "slideshow_tDPaNk",
     "slideshow_6nENYz",
     "collection_list_paa7de",
     "popular_categories",

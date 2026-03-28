@@ -245,8 +245,8 @@ slideshow-component:not(.page-width) .slider-buttons {
   .banner--mobile-bottom .slideshow__text.banner__box {
     /* height: auto; */
     height: 100%;
-    padding-top: 2rem;
-    padding-bottom: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1.5rem;
   }
 }
 
