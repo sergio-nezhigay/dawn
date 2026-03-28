@@ -6,6 +6,10 @@
   isolation: isolate;
 }
 
+.banner__media > img {
+  object-fit: cover;
+}
+
 .banner__box {
   text-align: center;
 }
