@@ -141,7 +141,7 @@
             "heading_size": "h1",
             "subheading": "",
             "button_label": "Перейти",
-            "link": "",
+            "link": "/collections/logitech",
             "button_style_secondary": false,
             "show_text_box": true,
             "box_align": "middle-center",
@@ -166,11 +166,31 @@
             "text_alignment_mobile": "center",
             "color_scheme": ""
           }
+        },
+        "slide_Zp8Kx1": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/logitech-staples-ca-122220-lifestyle.jpg",
+            "logo_image": "shopify://shop_images/Logitech-Symbol.png",
+            "image_overlay_opacity": 0,
+            "heading": "Комп'ютерна періферія",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "Перейти",
+            "link": "/collections/logitech",
+            "button_style_secondary": false,
+            "show_text_box": true,
+            "box_align": "middle-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": ""
+          }
         }
       },
       "block_order": [
         "slide_4jBHYL",
-        "slide_9zaEG6"
+        "slide_9zaEG6",
+        "slide_Zp8Kx1"
       ],
       "custom_css": [
         ".slideshow__text.banner__box { background: rgba(255,255,255,0.82) !important; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }",
