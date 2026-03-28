@@ -53,7 +53,11 @@
       "WebSearch",
       "WebFetch(domain:www.analyticsmania.com)",
       "WebFetch(domain:help.shopify.com)",
-      "WebFetch(domain:www.slicedbread.agency)"
+      "WebFetch(domain:www.slicedbread.agency)",
+      "mcp__playwright__browser_resize",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_take_screenshot",
+      "mcp__playwright__browser_evaluate"
     ],
     "deny": [],
     "ask": []
