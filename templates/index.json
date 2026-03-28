@@ -173,9 +173,10 @@
         "slide_9zaEG6"
       ],
       "custom_css": [
+        ".slideshow__text.banner__box { background: rgba(255,255,255,0.82) !important; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }",
         ".slideshow__text .button {background-color: #265c94; color: #ffffff; opacity: 1;}",
         ".slideshow__text .banner__heading {color: #1a1a1a !important; font-size: 2.2rem !important; font-weight: 500 !important;}",
-        ".slideshow__text .banner__text p {color: #666666 !important; font-size: 1.4rem !important;}"
+        ".slideshow__text .banner__text p {color: #555555 !important; font-size: 1.4rem !important;}"
       ],
       "name": "t:sections.slideshow.presets.name",
       "settings": {

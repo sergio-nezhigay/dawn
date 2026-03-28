@@ -158,6 +158,12 @@
             {%- endif -%}
           {%- endif -%}
         </div>
+        {%- if block.settings.logo_image and block.settings.show_text_box and section.settings.show_text_below -%}
+          <div class="slideshow__logo slideshow__logo--media-overlay">
+            {{- block.settings.logo_image | image_url: width: 200
+              | image_tag: loading: 'lazy', class: 'slideshow__logo-img', alt: block.settings.heading -}}
+          </div>
+        {%- endif -%}
         <div class="slideshow__text-wrapper banner__content banner__content--{{ block.settings.box_align }} page-width{% if block.settings.show_text_box == false %} banner--desktop-transparent{% endif %}{% if settings.animations_reveal_on_scroll and forloop.index == 1 %} scroll-trigger animate--slide-in{% endif %}">
           <div class="slideshow__text banner__box content-container content-container--full-width-mobile color-{{ block.settings.color_scheme }} gradient slideshow__text--{{ block.settings.text_alignment }} slideshow__text-mobile--{{ block.settings.text_alignment_mobile }}">
             {%- if block.settings.logo_image and block.settings.show_text_box -%}
