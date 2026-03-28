@@ -98,6 +98,19 @@
   justify-content: center;
 }
 
+@media screen and (max-width: 390px) {
+  .header-logo__icon-wrapper {
+   display: none
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .header-logo__text {
+    font-size: 11px !important
+  }
+}
+
+
 /* Glow effect behind the icon */
 .header-logo__glow {
   position: absolute;
