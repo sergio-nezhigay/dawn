@@ -135,12 +135,12 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/logitech-staples-ca-122220-lifestyle.jpg",
-            "logo_image": "shopify://shop_images/logitech-logo-png_seeklogo-611389.png",
+            "logo_image": "shopify://shop_images/Logitech-Symbol.png",
             "image_overlay_opacity": 0,
-            "heading": "Комп'ютерна периферія",
+            "heading": "Комп'ютерна періферія",
             "heading_size": "h1",
-            "subheading": "Якість, стиль та надійність",
-            "button_label": "Переглянути колекцію",
+            "subheading": "",
+            "button_label": "Перейти",
             "link": "",
             "button_style_secondary": false,
             "show_text_box": true,
@@ -172,12 +172,12 @@
         "slide_4jBHYL",
         "slide_9zaEG6"
       ],
-      "name": "t:sections.slideshow.presets.name",
       "custom_css": [
-        ".slideshow__text .button { background-color: #265c94; color: #ffffff; opacity: 1; }",
-        ".slideshow__text .banner__heading { color: #1a1a1a !important; font-size: 2.2rem !important; font-weight: 500 !important; }",
-        ".slideshow__text .banner__text p { color: #666666 !important; font-size: 1.4rem !important; }"
+        ".slideshow__text .button {background-color: #265c94; color: #ffffff; opacity: 1;}",
+        ".slideshow__text .banner__heading {color: #1a1a1a !important; font-size: 2.2rem !important; font-weight: 500 !important;}",
+        ".slideshow__text .banner__text p {color: #666666 !important; font-size: 1.4rem !important;}"
       ],
+      "name": "t:sections.slideshow.presets.name",
       "settings": {
         "layout": "full_bleed",
         "slide_height": "small",
