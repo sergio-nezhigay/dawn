@@ -124,36 +124,6 @@
     "show_vendor": false,
     "show_cart_note": true,
     "cart_drawer_collection": "популярні-товари",
-    "sections": {
-      "main-password-header": {
-        "type": "main-password-header",
-        "settings": {
-          "color_scheme": "scheme-1"
-        }
-      },
-      "main-password-footer": {
-        "type": "main-password-footer",
-        "settings": {
-          "color_scheme": "scheme-1"
-        }
-      }
-    },
-    "content_for_index": [],
-    "blocks": {
-      "14060646107696862457": {
-        "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-        "disabled": false,
-        "settings": {}
-      },
-      "11540801135891226883": {
-        "type": "shopify://apps/shop-chat-agent/blocks/chat-interface/3b4e1bf2-3ed8-43ba-9492-d1670dda1f2e",
-        "disabled": false,
-        "settings": {
-          "welcome_message": "👋 Привіт! Чим можу тобі допомогти сьогодні?",
-          "system_prompt": "standardAssistant"
-        }
-      }
-    },
     "color_schemes": {
       "scheme-1": {
         "settings": {
@@ -208,6 +178,35 @@
           "button_label": "#334fb4",
           "secondary_button_label": "#ffffff",
           "shadow": "#121212"
+        }
+      }
+    },
+    "sections": {
+      "main-password-header": {
+        "type": "main-password-header",
+        "settings": {
+          "color_scheme": "scheme-1"
+        }
+      },
+      "main-password-footer": {
+        "type": "main-password-footer",
+        "settings": {
+          "color_scheme": "scheme-1"
+        }
+      }
+    },
+    "content_for_index": [],
+    "blocks": {
+      "14060646107696862457": {
+        "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+        "disabled": false,
+        "settings": {}
+      },
+      "11540801135891226883": {
+        "type": "shopify://apps/shop-chat-agent/blocks/chat-interface/3b4e1bf2-3ed8-43ba-9492-d1670dda1f2e",
+        "disabled": false,
+        "settings": {
+          "welcome_message": "👋 Привіт! Чим можу тобі допомогти сьогодні?"
         }
       }
     }

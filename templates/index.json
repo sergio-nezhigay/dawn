@@ -128,6 +128,61 @@
         "accessibility_info": "Slideshow about our brand"
       }
     },
+    "slideshow_6nENYz": {
+      "type": "slideshow",
+      "blocks": {
+        "slide_4jBHYL": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/logitech-staples-ca-122220-lifestyle.jpg",
+            "image_overlay_opacity": 0,
+            "heading": "Logitech",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "Button label",
+            "link": "",
+            "button_style_secondary": false,
+            "show_text_box": true,
+            "box_align": "top-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": ""
+          }
+        },
+        "slide_9zaEG6": {
+          "type": "slide",
+          "settings": {
+            "image_overlay_opacity": 0,
+            "heading": "Image slide",
+            "heading_size": "h1",
+            "subheading": "Tell your brand's story through images",
+            "button_label": "Button label",
+            "link": "",
+            "button_style_secondary": false,
+            "show_text_box": true,
+            "box_align": "middle-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": ""
+          }
+        }
+      },
+      "block_order": [
+        "slide_4jBHYL",
+        "slide_9zaEG6"
+      ],
+      "name": "t:sections.slideshow.presets.name",
+      "settings": {
+        "layout": "full_bleed",
+        "slide_height": "small",
+        "slider_visual": "dots",
+        "auto_rotate": false,
+        "change_slides_speed": 5,
+        "image_behavior": "ambient",
+        "show_text_below": true,
+        "accessibility_info": "Slideshow about our brand"
+      }
+    },
     "collection_list_paa7de": {
       "type": "collection-list",
       "blocks": {
@@ -474,6 +529,7 @@
   },
   "order": [
     "slideshow_tDPaNk",
+    "slideshow_6nENYz",
     "collection_list_paa7de",
     "popular_categories",
     "featured_collection",
