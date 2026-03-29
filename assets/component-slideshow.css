@@ -270,6 +270,7 @@ slideshow-component:not(.page-width) .slider-buttons {
 
   /* Center within image per slide_height */
   .banner--small .slideshow__logo--media-overlay  { top: calc(20rem / 2); transform: translate(-50%, -50%); }
+  .banner--extra_small .slideshow__logo--media-overlay { top: calc((20rem * 0.7) / 2); transform: translate(-50%, -50%); }
   .banner--medium .slideshow__logo--media-overlay { top: calc(22rem / 2); transform: translate(-50%, -50%); }
   .banner--large .slideshow__logo--media-overlay  { top: calc(26rem / 2); transform: translate(-50%, -50%); }
 
