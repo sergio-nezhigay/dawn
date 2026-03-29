@@ -3049,6 +3049,9 @@
         "auto_rotate": {
           "label": "Auto rotate slides"
         },
+        "show_controls": {
+          "label": "Show slide controls"
+        },
         "change_slides_speed": {
           "label": "Change slides every"
         },

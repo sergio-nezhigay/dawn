@@ -735,15 +735,15 @@ class SliderComponent extends HTMLElement {
     this.prevButton = this.querySelector('button[name="previous"]');
     this.nextButton = this.querySelector('button[name="next"]');
 
-    if (!this.slider || !this.nextButton) return;
+    if (!this.slider) return;
 
     this.initPages();
     const resizeObserver = new ResizeObserver((entries) => this.initPages());
     resizeObserver.observe(this.slider);
 
     this.slider.addEventListener('scroll', this.update.bind(this));
-    this.prevButton.addEventListener('click', this.onButtonClick.bind(this));
-    this.nextButton.addEventListener('click', this.onButtonClick.bind(this));
+    if (this.prevButton) this.prevButton.addEventListener('click', this.onButtonClick.bind(this));
+    if (this.nextButton) this.nextButton.addEventListener('click', this.onButtonClick.bind(this));
   }
 
   initPages() {
@@ -765,7 +765,7 @@ class SliderComponent extends HTMLElement {
   update() {
     // Temporarily prevents unneeded updates resulting from variant changes
     // This should be refactored as part of https://github.com/Shopify/dawn/issues/2057
-    if (!this.slider || !this.nextButton) return;
+    if (!this.slider) return;
 
     const previousPage = this.currentPage;
     this.currentPage = Math.round(this.slider.scrollLeft / this.sliderItemOffset) + 1;
@@ -786,7 +786,7 @@ class SliderComponent extends HTMLElement {
       );
     }
 
-    if (this.enableSliderLooping) return;
+    if (this.enableSliderLooping || !this.prevButton || !this.nextButton) return;
 
     if (this.isSlideVisible(this.sliderItemsToShow[0]) && this.slider.scrollLeft === 0) {
       this.prevButton.setAttribute('disabled', 'disabled');
@@ -831,8 +831,6 @@ class SlideshowComponent extends SliderComponent {
     this.sliderControlWrapper = this.querySelector('.slider-buttons');
     this.enableSliderLooping = true;
 
-    if (!this.sliderControlWrapper) return;
-
     this.sliderFirstItemNode = this.slider.querySelector('.slideshow__slide');
     if (this.sliderItemsToShow.length > 0) this.currentPage = 1;
 
@@ -840,7 +838,9 @@ class SlideshowComponent extends SliderComponent {
     // Value below should match --duration-announcement-bar CSS value
     this.announcerBarAnimationDelay = this.announcementBarSlider ? 250 : 0;
 
-    this.sliderControlLinksArray = Array.from(this.sliderControlWrapper.querySelectorAll('.slider-counter__link'));
+    this.sliderControlLinksArray = this.sliderControlWrapper
+      ? Array.from(this.sliderControlWrapper.querySelectorAll('.slider-counter__link'))
+      : [];
     this.sliderControlLinksArray.forEach((link) => link.addEventListener('click', this.linkToSlide.bind(this)));
     this.slider.addEventListener('scroll', this.setSlideVisibility.bind(this));
     this.setSlideVisibility();
@@ -853,7 +853,7 @@ class SlideshowComponent extends SliderComponent {
         if (this.slider.getAttribute('data-autoplay') === 'true') this.setAutoPlay();
       });
 
-      [this.prevButton, this.nextButton].forEach((button) => {
+      [this.prevButton, this.nextButton].filter(Boolean).forEach((button) => {
         button.addEventListener(
           'click',
           () => {
@@ -880,7 +880,8 @@ class SlideshowComponent extends SliderComponent {
       this.autoplayButtonIsSetToPlay = true;
       this.play();
     } else {
-      this.reducedMotion.matches || this.announcementBarArrowButtonWasClicked ? this.pause() : this.play();
+      const prefersReducedMotion = this.reducedMotion?.matches || false;
+      prefersReducedMotion || this.announcementBarArrowButtonWasClicked ? this.pause() : this.play();
     }
   }
 
@@ -920,7 +921,7 @@ class SlideshowComponent extends SliderComponent {
   update() {
     super.update();
     this.sliderControlButtons = this.querySelectorAll('.slider-counter__link');
-    this.prevButton.removeAttribute('disabled');
+    if (this.prevButton) this.prevButton.removeAttribute('disabled');
 
     if (!this.sliderControlButtons.length) return;
 
@@ -944,7 +945,7 @@ class SlideshowComponent extends SliderComponent {
         event.target === this.sliderAutoplayButton || this.sliderAutoplayButton.contains(event.target);
       if (!this.autoplayButtonIsSetToPlay || focusedOnAutoplayButton) return;
       this.play();
-    } else if (!this.reducedMotion.matches && !this.announcementBarArrowButtonWasClicked) {
+    } else if (!this.reducedMotion?.matches && !this.announcementBarArrowButtonWasClicked) {
       this.play();
     }
   }
@@ -958,7 +959,7 @@ class SlideshowComponent extends SliderComponent {
       } else if (this.autoplayButtonIsSetToPlay) {
         this.pause();
       }
-    } else if (this.announcementBarSlider.contains(event.target)) {
+    } else if (!this.announcementBarSlider || this.announcementBarSlider.contains(event.target)) {
       this.pause();
     }
   }
