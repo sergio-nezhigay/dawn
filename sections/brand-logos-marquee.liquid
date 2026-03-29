@@ -1,0 +1,253 @@
+{{ 'section-brand-logos-marquee.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign logo_count = 0
+  for block in section.blocks
+    if block.settings.image != blank
+      assign logo_count = logo_count | plus: 1
+    endif
+  endfor
+-%}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  .section-{{ section.id }}-marquee {
+    --brand-logos-duration: {{ section.settings.marquee_speed }}s;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+{%- if logo_count > 0 or request.design_mode -%}
+  <div class="color-{{ section.settings.color_scheme }} gradient">
+    <div class="brand-logos brand-logos--{{ section.settings.container_width }} section-{{ section.id }}-padding section-{{ section.id }}-marquee isolate{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      <div class="{% if section.settings.container_width == 'page-width' %}page-width{% endif %} brand-logos__inner">
+        <div class="brand-logos__viewport">
+          {%- if logo_count > 0 -%}
+            <div class="brand-logos__track{% if logo_count > 1 %} brand-logos__track--animated{% endif %}">
+              <ul class="brand-logos__list{% if logo_count == 1 %} brand-logos__list--static{% endif %}" role="list" aria-label="Brand logos">
+                {%- for block in section.blocks -%}
+                  {%- if block.settings.image != blank -%}
+                    {%- liquid
+                      assign alt_text = block.settings.alt_text
+                      if alt_text == blank
+                        assign alt_text = block.settings.image.alt
+                      endif
+                      if alt_text == blank
+                        assign alt_text = shop.name
+                      endif
+                    -%}
+                    <li class="brand-logos__item" {{ block.shopify_attributes }}>
+                      {%- if block.settings.link != blank -%}
+                        <a href="{{ block.settings.link }}" class="brand-logos__link" aria-label="{{ alt_text | escape }}">
+                          {{
+                            block.settings.image
+                            | image_url: width: 400
+                            | image_tag:
+                              loading: 'lazy',
+                              class: 'brand-logos__image',
+                              alt: alt_text,
+                              widths: '120, 180, 240, 320, 400'
+                          }}
+                        </a>
+                      {%- else -%}
+                        <span class="brand-logos__logo">
+                          {{
+                            block.settings.image
+                            | image_url: width: 400
+                            | image_tag:
+                              loading: 'lazy',
+                              class: 'brand-logos__image',
+                              alt: alt_text,
+                              widths: '120, 180, 240, 320, 400'
+                          }}
+                        </span>
+                      {%- endif -%}
+                    </li>
+                  {%- endif -%}
+                {%- endfor -%}
+              </ul>
+
+              {%- if logo_count > 1 -%}
+                <ul class="brand-logos__list" role="list" aria-hidden="true">
+                  {%- for block in section.blocks -%}
+                    {%- if block.settings.image != blank -%}
+                      {%- liquid
+                        assign alt_text = block.settings.alt_text
+                        if alt_text == blank
+                          assign alt_text = block.settings.image.alt
+                        endif
+                        if alt_text == blank
+                          assign alt_text = shop.name
+                        endif
+                      -%}
+                      <li class="brand-logos__item">
+                        {%- if block.settings.link != blank -%}
+                          <a href="{{ block.settings.link }}" class="brand-logos__link" aria-label="{{ alt_text | escape }}" tabindex="-1">
+                            {{
+                              block.settings.image
+                              | image_url: width: 400
+                              | image_tag:
+                                loading: 'lazy',
+                                class: 'brand-logos__image',
+                                alt: '',
+                                widths: '120, 180, 240, 320, 400'
+                            }}
+                          </a>
+                        {%- else -%}
+                          <span class="brand-logos__logo">
+                            {{
+                              block.settings.image
+                              | image_url: width: 400
+                              | image_tag:
+                                loading: 'lazy',
+                                class: 'brand-logos__image',
+                                alt: '',
+                                widths: '120, 180, 240, 320, 400'
+                            }}
+                          </span>
+                        {%- endif -%}
+                      </li>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+            </div>
+          {%- else -%}
+            <div class="brand-logos__empty">
+              Add logo blocks here to show the brand marquee on the homepage.
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Brand Logos Marquee",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "max_blocks": 20,
+  "settings": [
+    {
+      "type": "select",
+      "id": "container_width",
+      "label": "Container width",
+      "options": [
+        {
+          "value": "page-width",
+          "label": "Same as Popular Categories"
+        },
+        {
+          "value": "full-width",
+          "label": "Full width"
+        }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "marquee_speed",
+      "min": 20,
+      "max": 80,
+      "step": 5,
+      "unit": "s",
+      "label": "Marquee speed",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 12
+    }
+  ],
+  "blocks": [
+    {
+      "type": "logo",
+      "name": "Logo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Logo image"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "text",
+          "id": "alt_text",
+          "label": "Alt text",
+          "info": "Optional. Falls back to the image alt text."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brand Logos Marquee",
+      "blocks": [
+        {
+          "type": "logo"
+        },
+        {
+          "type": "logo"
+        },
+        {
+          "type": "logo"
+        },
+        {
+          "type": "logo"
+        },
+        {
+          "type": "logo"
+        },
+        {
+          "type": "logo"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

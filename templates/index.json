@@ -87,6 +87,93 @@
         "accessibility_info": "Slideshow about our brand"
       }
     },
+    "brand_logos_marquee_U4geGy": {
+      "type": "brand-logos-marquee",
+      "blocks": {
+        "logo_7RgCdt": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/85WPWE631732671266.png",
+            "link": "",
+            "alt_text": ""
+          }
+        },
+        "logo_tAKgwQ": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/OriginalLogo_127_Crucial.png",
+            "link": "",
+            "alt_text": ""
+          }
+        },
+        "logo_LT9diG": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/1691604298samsung-logo-transparent..webp",
+            "link": "",
+            "alt_text": ""
+          }
+        },
+        "logo_MVyJEU": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Kingston-logo.png",
+            "link": "",
+            "alt_text": ""
+          }
+        },
+        "logo_cYjEHP": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Logitech-Symbol.png",
+            "link": "",
+            "alt_text": ""
+          }
+        },
+        "logo_gDxHDF": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/logo_1.png",
+            "link": "",
+            "alt_text": ""
+          }
+        },
+        "logo_EMLePK": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Micron_Logo_-_Black_-_RGB.ai.web.2000.2000.png",
+            "link": "",
+            "alt_text": ""
+          }
+        },
+        "logo_cFWtfz": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/hynix.png",
+            "link": "",
+            "alt_text": ""
+          }
+        }
+      },
+      "block_order": [
+        "logo_7RgCdt",
+        "logo_tAKgwQ",
+        "logo_LT9diG",
+        "logo_MVyJEU",
+        "logo_cYjEHP",
+        "logo_gDxHDF",
+        "logo_EMLePK",
+        "logo_cFWtfz"
+      ],
+      "name": "Brand Logos Marquee",
+      "settings": {
+        "container_width": "page-width",
+        "color_scheme": "",
+        "marquee_speed": 20,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
     "collection_list_paa7de": {
       "type": "collection-list",
       "blocks": {
@@ -433,6 +520,7 @@
   },
   "order": [
     "slideshow_6nENYz",
+    "brand_logos_marquee_U4geGy",
     "collection_list_paa7de",
     "popular_categories",
     "featured_collection",
