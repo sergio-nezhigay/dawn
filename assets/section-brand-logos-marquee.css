@@ -1,6 +1,6 @@
 .brand-logos {
   --brand-logos-logo-height: 3.2rem;
-  --brand-logos-duration: 40s;
+  --brand-logos-duration: 120s;
 }
 
 .brand-logos--full-width {
@@ -16,8 +16,7 @@
   overflow: hidden;
   display: flex;
   align-items: center;
-  min-height: 6.4rem;
-  border-top: 0.1rem solid rgba(17, 24, 39, 0.08);
+  min-height: 3.4rem;
   border-bottom: 0.1rem solid rgba(17, 24, 39, 0.08);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.72));

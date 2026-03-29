@@ -152,6 +152,7 @@ slideshow-component .slideshow.banner {
 
 .slideshow__controls {
   border: 0.1rem solid rgba(var(--color-foreground), 0.08);
+  background-color: white;;
 }
 
 .slideshow__controls--top {
@@ -164,6 +165,9 @@ slideshow-component .slideshow.banner {
     border-bottom-right-radius: var(--text-boxes-radius);
     border-bottom-left-radius: var(--text-boxes-radius);
   }
+  /* .slideshow__controls {
+   display: none !important;
+} */
 }
 
 .spaced-section--full-width:last-child slideshow-component:not(.page-width) .slideshow__controls {
