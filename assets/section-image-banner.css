@@ -61,6 +61,11 @@
     height: 28rem;
   }
 
+  .banner--extra_small.banner--mobile-bottom:not(.banner--adapt) .banner__media,
+  .banner--extra_small.banner--stacked:not(.banner--mobile-bottom):not(.banner--adapt) > .banner__media {
+    height: calc(28rem * 0.7);
+  }
+
   .banner--medium.banner--mobile-bottom:not(.banner--adapt) .banner__media,
   .banner--medium.banner--stacked:not(.banner--mobile-bottom):not(.banner--adapt) > .banner__media {
     height: 34rem;
@@ -72,6 +77,7 @@
   }
 
   .banner--small.banner--mobile-bottom:not(.banner--adapt) .banner__media { height: 20rem; }
+  .banner--extra_small.banner--mobile-bottom:not(.banner--adapt) .banner__media { height: calc(20rem * 0.7); }
   .banner--medium.banner--mobile-bottom:not(.banner--adapt) .banner__media { height: 22rem; }
   .banner--large.banner--mobile-bottom:not(.banner--adapt) .banner__media { height: 26rem; }
 
@@ -81,6 +87,10 @@
 
   .banner--small:not(.banner--mobile-bottom):not(.banner--adapt) .banner__content {
     min-height: 28rem;
+  }
+
+  .banner--extra_small:not(.banner--mobile-bottom):not(.banner--adapt) .banner__content {
+    min-height: calc(28rem * 0.7);
   }
 
   .banner--medium:not(.banner--mobile-bottom):not(.banner--adapt) .banner__content {
@@ -99,6 +109,10 @@
 
   .banner--small:not(.banner--adapt) {
     min-height: 42rem;
+  }
+
+  .banner--extra_small:not(.banner--adapt) {
+    min-height: calc(42rem * 0.7);
   }
 
   .banner--medium:not(.banner--adapt) {

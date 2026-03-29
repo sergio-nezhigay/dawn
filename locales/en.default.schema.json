@@ -3025,9 +3025,12 @@
             "label": "Small"
           },
           "options__3": {
-            "label": "Medium"
+            "label": "Extra small"
           },
           "options__4": {
+            "label": "Medium"
+          },
+          "options__5": {
             "label": "Large"
           }
         },
