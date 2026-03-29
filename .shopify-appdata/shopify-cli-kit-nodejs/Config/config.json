@@ -7,15 +7,17 @@
 		"rate-limited-occurrences-report-analytics-event": {
 			"value": [
 				1774779992357,
-				1774780017767
+				1774780017767,
+				1774780620414
 			],
-			"timestamp": 1774780017767
+			"timestamp": 1774780620414
 		},
 		"rate-limited-occurrences-send-error-to-bugsnag": {
 			"value": [
-				1774779992471
+				1774779992471,
+				1774780620724
 			],
-			"timestamp": 1774779992471
+			"timestamp": 1774780620724
 		},
 		"npm-package-@shopify/cli": {
 			"value": "3.92.1",

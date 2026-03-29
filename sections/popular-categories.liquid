@@ -104,8 +104,15 @@
     }
 
     .popular-categories.grid {
-      column-gap: var(--grid-desktop-horizontal-spacing);
-      row-gap: var(--grid-desktop-vertical-spacing);
+      column-gap: var(--grid-mobile-horizontal-spacing);
+      row-gap: var(--grid-mobile-vertical-spacing);
+    }
+
+    @media screen and (min-width: 750px) {
+      .popular-categories.grid {
+        column-gap: var(--grid-desktop-horizontal-spacing);
+        row-gap: var(--grid-desktop-vertical-spacing);
+      }
     }
 
     @media screen and (min-width: 750px) and (max-width: 989px) {
