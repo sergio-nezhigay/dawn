@@ -266,6 +266,21 @@ slideshow-component:not(.page-width) .slider-buttons {
   .slideshow__text.banner__box {
     padding-left: 20px !important;
     padding-right: 20px !important;
+    padding-top: 5rem !important;
+  }
+
+  .slideshow__logo {
+    margin-bottom: 1.5rem !important;
+  }
+
+  .slideshow__logo-img {
+    max-height: 80px !important;
+    width: auto;
+  }
+
+  .slideshow__text .banner__heading {
+    font-size: 22px !important;
+    margin-bottom: 1.5rem !important;
   }
 
   /* Force overlay on mobile */
