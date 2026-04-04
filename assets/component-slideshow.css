@@ -266,7 +266,17 @@ slideshow-component:not(.page-width) .slider-buttons {
   .slideshow__text.banner__box {
     padding-left: 20px !important;
     padding-right: 20px !important;
-    padding-top: 5rem !important;
+    padding-top: 2.5rem !important;
+  }
+
+  .slideshow.banner, .slideshow__slide, .slideshow__media {
+    min-height: 270px !important;
+  }
+
+  .slideshow__text .button {
+    width: 100% !important;
+    max-width: 300px;
+    justify-content: center;
   }
 
   .slideshow__logo {
