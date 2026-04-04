@@ -54,9 +54,9 @@ slideshow-component .slideshow.banner {
   justify-content: center !important;
   align-items: flex-start !important;
   text-align: left !important;
-  max-width: 54.5rem;
+  max-width: 100%;
   background: transparent !important;
-  padding-left: 48px !important;
+  padding: 0 !important;
   border: none !important;
   box-shadow: none !important;
 }
@@ -66,23 +66,23 @@ slideshow-component .slideshow.banner {
 }
 
 .slideshow__text .button {
-  background-color: #1a7ee8 !important;
-  color: #ffffff;
+  background-color: transparent !important;
+  color: #ffffff !important;
   padding: 11px 28px !important;
   border-radius: 6px !important;
-  border: none !important;
+  border: 1px solid #ffffff !important;
   opacity: 1;
 }
 
 .slideshow__text .button:hover {
-  background-color: #005bb5 !important;
-  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
   opacity: 1;
 }
 
 .slideshow__text .button:active {
-  background-color: #004a99 !important;
-  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
   opacity: 1;
 }
 
