@@ -116,10 +116,6 @@ slideshow-component .slideshow.banner {
     flex-grow: 1;
   }
 
-  /* .banner--mobile-bottom .slideshow__text.banner__box {
-    height: 100%;
-  } */
-
   .banner--mobile-bottom .slideshow__text .button {
     flex-grow: 0;
   }
@@ -155,6 +151,9 @@ slideshow-component .slideshow.banner {
   .slideshow__text-wrapper.banner__content {
     height: 100%;
     padding: 5rem;
+  }
+  .slideshow__text-wrapper{
+    justify-content: flex-start !important;
   }
 }
 
