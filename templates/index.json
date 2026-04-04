@@ -16,7 +16,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/logitech-staples-ca-122220-lifestyle.jpg",
-            "logo_image": "shopify://shop_images/Logitech-Background-PNG-Image.png",
+            "logo_image": "shopify://shop_images/LOGI_BIG.D-3f288e21.png",
             "image_overlay_opacity": 0,
             "heading": "Періферія Logitech",
             "heading_size": "h1",
@@ -33,7 +33,6 @@
         },
         "slide_Zp8Kx1": {
           "type": "slide",
-          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/ktc-articles-solutions-pc-performance-different-ssd-form-factors-hero-lg.jpg",
             "logo_image": "shopify://shop_images/Kingston-Logo-White.png",
@@ -53,7 +52,6 @@
         },
         "slide_NJCWL4": {
           "type": "slide",
-          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/social.jpg",
             "logo_image": "shopify://shop_images/66954.webp",
