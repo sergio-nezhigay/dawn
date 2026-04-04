@@ -16,7 +16,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/logitech-staples-ca-122220-lifestyle.jpg",
-            "logo_image": "shopify://shop_images/Logitech-Symbol.png",
+            "logo_image": "shopify://shop_images/Logitech-Background-PNG-Image.png",
             "image_overlay_opacity": 0,
             "heading": "Періферія Logitech",
             "heading_size": "h1",
@@ -35,7 +35,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/ktc-articles-solutions-pc-performance-different-ssd-form-factors-hero-lg.jpg",
-            "logo_image": "shopify://shop_images/Kingston-logo.png",
+            "logo_image": "shopify://shop_images/Kingston-Logo-White.png",
             "image_overlay_opacity": 0,
             "heading": "Сховища Kingston",
             "heading_size": "h1",
@@ -54,8 +54,8 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/social.jpg",
-            "logo_image": "shopify://shop_images/1691604298samsung-logo-transparent..webp",
-            "image_overlay_opacity": 0,
+            "logo_image": "shopify://shop_images/66954.webp",
+            "image_overlay_opacity": 100,
             "heading": "Пам’ять Samsung",
             "heading_size": "h1",
             "subheading": "",
