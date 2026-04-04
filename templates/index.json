@@ -15,7 +15,7 @@
         "slide_4jBHYL": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/logitech-banner.jpg",
+            "image": "shopify://shop_images/logitech-mxmechanical-master3s-hero.jpg",
             "logo_image": "shopify://shop_images/LOGI_BIG.D-3f288e21.png",
             "image_overlay_opacity": 0,
             "heading": "Періферія Logitech",
@@ -31,9 +31,26 @@
             "color_scheme": ""
           }
         },
-        "slide_Zp8Kx1": {
+        "slide_dtTgdW": {
           "type": "slide",
           "disabled": true,
+          "settings": {
+            "image_overlay_opacity": 0,
+            "heading": "Image slide",
+            "heading_size": "h1",
+            "subheading": "Tell your brand's story through images",
+            "button_label": "Button label",
+            "link": "",
+            "button_style_secondary": false,
+            "show_text_box": true,
+            "box_align": "middle-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": "scheme-1"
+          }
+        },
+        "slide_Zp8Kx1": {
+          "type": "slide",
           "settings": {
             "image": "shopify://shop_images/ktc-articles-solutions-pc-performance-different-ssd-form-factors-hero-lg.jpg",
             "logo_image": "shopify://shop_images/Kingston-Logo-White.png",
@@ -53,7 +70,6 @@
         },
         "slide_NJCWL4": {
           "type": "slide",
-          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/social.jpg",
             "logo_image": "shopify://shop_images/66954.webp",
@@ -74,6 +90,7 @@
       },
       "block_order": [
         "slide_4jBHYL",
+        "slide_dtTgdW",
         "slide_Zp8Kx1",
         "slide_NJCWL4"
       ],

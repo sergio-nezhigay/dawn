@@ -295,7 +295,6 @@
       "announcement": "Announcement",
       "announcement_bar": "Announcement bar"
     },
-
     "header": {
       "announcement": "Announcement",
       "menu": "Menu",
@@ -355,7 +354,7 @@
     "featured_collection": {
       "view_all": "View all",
       "view_all_label": "View all products in the {{ collection_name }} collection",
-      "view_all_products_in_category": "View all products in the category",
+      "view_all_products_in_category": "View all products in the category"
     },
     "collection_list": {
       "view_all": "View all"
@@ -603,6 +602,32 @@
     "collections": {
       "sorting": {
         "best_selling": "Recommended"
+      }
+    },
+    "checkout": {
+      "payment": {
+        "card_fields_unavailable_html": "Credit and debit card payments are currently unavailable.<br> <a href=\"%{current_url}\">Please refresh the page</a> or try again later."
+      },
+      "field_errors": {
+        "split_quantity_per_delivery_line_not_allowed": "Multiple shipping lines refer to at least one product line.",
+        "address_street_number_contains_mathematical_symbols": "House number cannot contain mathematical symbols",
+        "address_neighborhood_contains_mathematical_symbols": "Neighborhoods cannot contain mathematical symbols.",
+        "address_ward_too_long": "Word is too long (maximum number of characters: {{count}} )",
+        "address_street_number_too_long": "Building number is too long (maximum number of characters: {{count}} )",
+        "address_neighborhood_too_long": "Neighborhood too long (maximum number of characters: {{count}} )",
+        "address_street_name_too_long": "Street is too long (maximum number of characters: {{count}} )",
+        "address_barangay_too_long": "Barangay too long (maximum number of characters: {{count}} )",
+        "address_colony_too_long": "Colony too long (maximum number of characters: {{count}} )",
+        "address_commune_too_long": "The commune is too long (maximum number of characters: {{count}} )",
+        "address_district_too_long": "The district is too long (maximum number of characters: {{count}} )",
+        "split_cart_not_allowed": "Invalid session or feature not enabled for this store."
+      },
+      "general": {
+        "errors": {
+          "payment": {
+            "market_manager_blocks_wallet_payments": "The payment method is not supported by the market manager."
+          }
+        }
       }
     }
   }
