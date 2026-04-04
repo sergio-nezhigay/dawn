@@ -33,6 +33,7 @@
         },
         "slide_Zp8Kx1": {
           "type": "slide",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/ktc-articles-solutions-pc-performance-different-ssd-form-factors-hero-lg.jpg",
             "logo_image": "shopify://shop_images/Kingston-Logo-White.png",
@@ -52,6 +53,7 @@
         },
         "slide_NJCWL4": {
           "type": "slide",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/social.jpg",
             "logo_image": "shopify://shop_images/66954.webp",

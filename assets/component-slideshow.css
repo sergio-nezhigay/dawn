@@ -156,6 +156,7 @@ slideshow-component .slideshow.banner {
   }
   .slideshow__text-wrapper{
     justify-content: flex-start !important;
+    max-width: 1330px;
   }
 }
 
