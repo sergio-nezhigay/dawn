@@ -650,15 +650,18 @@
         "city_label": "Населений пункт",
         "postal_code_label": "Індекс (залиште 12345)",
         "postal_code_placeholder": "Індекс (залиште 12345)",
-        "contact_method_title": "Контакти"
+        "contact_method_title": "Контакти",
+        "country_label": "Країна",
+        "country_code": "Країна"
       },
       "payment": {
         "card_fields_unavailable_html": "Платежі кредитними та дебетовими картками зараз недоступні.<br> <a href=\"%{current_url}\">Оновіть сторінку</a> або повторіть спробу пізніше.",
         "title": "Оплата",
-        "billing_address_title": "Адреса платника",
+        "billing_address_title": "Платник",
         "same_billing_address_label": "Така ж, як адреса доставка",
         "different_billing_address_label": "Використати іншу адресу для платника",
-        "markets_pro_disclaimer_privacy_policy": "Конфіденціальність"
+        "markets_pro_disclaimer_privacy_policy": "Конфіденціальність",
+        "card_security_notice": "Усі платежі захищені та зашифровані"
       },
       "field_errors": {
         "address_street_number_blank": "Введіть номер будівлі",
@@ -716,11 +719,31 @@
           }
         },
         "page_title": "Оформлення замовлення",
-        "title": "Оформлення замовлення - {{shopName}}"
+        "title": "Оформлення замовлення - {{shopName}}",
+        "choose_payment_method": "Оплата"
       },
       "thank_you": {
         "location_title": "Місцезнаходження",
-        "login": "Зайти в кабінет"
+        "login": "Зайти в кабінет",
+        "thank_you_title": "Ваше замовлення підтверджено",
+        "confirmed_title": "Ваше замовлення підтверджено",
+        "thank_you_confirmed_with_phone_description": {
+          "single_store": "Ми затефонуємо Вам в найближчий робочий час"
+        },
+        "customer_information_title": "Деталі замовлення",
+        "contact_information_title": "Контактна інформація",
+        "title": "Дякуємо за вашу покупку",
+        "shipping_method_title": "Доставка",
+        "billing_address_title": "Платник",
+        "contact_us_html": "Потрібна допомога {{ Наші контакти }}",
+        "return_to_store_link_label": "Продовжити перегляд товарів",
+        "page_title": "Дякуємо, {{ display_name }}!",
+        "page_title_no_name": "Дякуємо!",
+        "confirmed": "Підтверджено",
+        "shipping_address_title": "Адреса доставки",
+        "marker": {
+          "shipping": "Адреса доставки"
+        }
       },
       "wallets": {
         "errors": {
@@ -745,7 +768,8 @@
         "same_as_shipping": "Така ж, як адреса доставка"
       },
       "delivery_options": {
-        "free_total_label": "По тарифах перевізника"
+        "free_total_label": "По тарифах перевізника",
+        "shipping_address": "Адреса доставки"
       },
       "order_summary": {
         "free_shipping_discount_label": "По тарифах перевізника",
@@ -757,25 +781,48 @@
         "gift_card_and_discount_placeholder": "Код знижки",
         "add_discount_or_gift_card": "Додайте код знижки",
         "shipping_label": "Доставка",
-        "total_label": "Загалом"
+        "total_label": "Загалом",
+        "confirmation_number_label": "Підтвердження",
+        "enter_shipping_address": "Введіть адресу доставки",
+        "order_name_label": "Замовлення {{ name }}",
+        "order_total_label": "Загалом",
+        "partial_total_label": "Загалом",
+        "multiple_shipping_lines_label": "Загалом"
       },
       "payment_summary": {
-        "free_label": "По тарифах перевізника"
+        "free_label": "По тарифах перевізника",
+        "billing_address_title": "Платник"
       },
       "shop_policies": {
         "refund_policy": "Гарантія та повернення товару",
         "shipping_policy": "Умови доставки і оплати",
         "privacy_policy": "Конфіденціальність",
-        "contact_information": "Контакти"
+        "contact_information": "Контакти",
+        "terms_of_service": "Умови обслуговування",
+        "terms_of_sale": "Умови продаж"
       },
       "marketing": {
         "sms": {
           "disclaimer": {
-            "privacy_policy": "Конфіденціальність"
+            "privacy_policy": "Конфіденціальність",
+            "description_transactional_html": "Ваш контактний телефон",
+            "terms_of_service": "Умови обслуговування"
           }
         },
         "disclaimer": {
-          "privacy_policy": "Конфіденціальність"
+          "privacy_policy": "Конфіденціальність",
+          "terms_of_service": "Умови обслуговування"
+        },
+        "accept_marketing_checkbox_label": "Ваш контакт"
+      },
+      "review": {
+        "blocks": {
+          "shipping_method_title": "Доставка"
+        }
+      },
+      "notice_banner": {
+        "individual_violations_title": {
+          "PaymentViolations": "Платник"
         }
       }
     },
@@ -805,13 +852,24 @@
       },
       "shipping": {
         "free": "По тарифах перевізника",
-        "free_shipping_discount": "По тарифах перевізника"
+        "free_shipping_discount": "По тарифах перевізника",
+        "method": "Доставка",
+        "address": "Адреса доставки",
+        "address_map_marker": "Адреса доставки"
       },
       "subtotal": "Підсума",
       "returns": {
         "return_and_refund_modal_header": "Гарантія та повернення товару"
       },
-      "log_in": "Зайти в кабінет"
+      "log_in": "Зайти в кабінет",
+      "order_details": "Деталі замовлення",
+      "contact_information": "Контактна інформація",
+      "billing_address": "Платник",
+      "subtotal_label_with_quantity": {
+        "one": "Підсума",
+        "other": "Підсума - {{ count }}шт"
+      },
+      "marketing_checkbox_label": "Ваш контакт"
     },
     "orders": {
       "order_list": {
@@ -847,7 +905,8 @@
         "delivered_description": "Цей вантаж доставлено.",
         "delivered_title": "Ваше відправлення доставлено",
         "out_for_delivery_title": "Ваше відправлення готове до доставки"
-      }
+      },
+      "list_title": "Замовлення"
     },
     "shop_policies": {
       "refund_policy": "Політика відшкодування",
@@ -862,12 +921,36 @@
         "errors": {
           "generic": "Виникла проблема з PayPal. Спробуйте ще раз або скористайтеся іншим способом оплати."
         }
+      },
+      "update_success": {
+        "done_button": "Продовжити перегляд товарів"
+      },
+      "add_success": {
+        "done_button": "Продовжити перегляд товарів"
+      },
+      "payment_details": {
+        "billing_title": "Платник"
+      },
+      "edit_payment_method": {
+        "billing_address": "Платник"
+      },
+      "add_payment_method": {
+        "billing_address": {
+          "title": "Платник"
+        }
+      },
+      "card_fields": {
+        "tooltip": {
+          "card_security_notice": "Усі платежі захищені та зашифровані"
+        }
       }
     },
     "account_information": {
       "profile_card": {
-        "last_name": "Прізвище"
-      }
+        "last_name": "Прізвище",
+        "title": "Профіль"
+      },
+      "title": "Профіль"
     },
     "account_menu": {
       "aria_labels": {
@@ -878,6 +961,12 @@
       "step_one": {
         "heading": "Зайти в кабінет"
       }
+    },
+    "navigation_and_structure": {
+      "contact_link": "Контактна інформація"
+    },
+    "addresses": {
+      "billing_address_dropdown_placeholder": "Платник"
     }
   }
 }
