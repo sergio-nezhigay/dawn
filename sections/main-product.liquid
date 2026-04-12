@@ -776,6 +776,17 @@
       </div>
     </div>
 
+    <div class="product__desktop-placeholder" aria-hidden="true">
+      <div class="product__desktop-placeholder-inner rte">
+        {%- if product.description != blank -%}
+          <h2>{{ 'products.product.description' | t }}</h2>
+          <div class="product__desktop-placeholder-copy">
+            {{ product.description }}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
     {% render 'product-media-modal', variant_images: variant_images %}
 
     {% assign popups = section.blocks | where: 'type', 'popup' %}
