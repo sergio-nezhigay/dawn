@@ -74,6 +74,11 @@
   {%- endif -%}
 
   {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
+  {%- assign description_text = product.description | strip_html | replace: '&nbsp;', ' ' | strip_newlines | strip -%}
+  {%- assign show_wide_description = false -%}
+  {%- if description_text.size >= section.settings.desktop_description_threshold -%}
+    {%- assign show_wide_description = true -%}
+  {%- endif -%}
   <div class="page-width-narrow">
     {% render 'breadcrumbs' %}
     <div
@@ -196,7 +201,10 @@
 
               {%- when 'description' -%}
                 {%- if product.description != blank -%}
-                  <div class="product__description rte quick-add-hidden" {{ block.shopify_attributes }}>
+                  <div
+                    class="product__description rte quick-add-hidden{% if show_wide_description %} product__description--desktop-hidden{% else %} product__description--desktop-visible{% endif %}"
+                    {{ block.shopify_attributes }}
+                  >
                     <h2 class="description__headings">
                       {{ 'products.product.description' | t }}
                     </h2>
@@ -776,16 +784,16 @@
       </div>
     </div>
 
-    <div class="product__desktop-placeholder" aria-hidden="true">
-      <div class="product__desktop-placeholder-inner rte">
-        {%- if product.description != blank -%}
+    {%- if product.description != blank and show_wide_description -%}
+      <div class="product__desktop-placeholder">
+        <div class="product__desktop-placeholder-inner rte">
           <h2>{{ 'products.product.description' | t }}</h2>
           <div class="product__desktop-placeholder-copy">
             {{ product.description }}
           </div>
-        {%- endif -%}
+        </div>
       </div>
-    </div>
+    {%- endif -%}
 
     {% render 'product-media-modal', variant_images: variant_images %}
 
@@ -1543,6 +1551,16 @@
       "id": "hide_variants",
       "default": false,
       "label": "t:sections.main-product.settings.hide_variants.label"
+    },
+    {
+      "type": "range",
+      "id": "desktop_description_threshold",
+      "min": 200,
+      "max": 2000,
+      "step": 50,
+      "default": 900,
+      "label": "Desktop description threshold",
+      "info": "Descriptions shorter than this stay in the inline block on desktop. Longer ones move to the wide block."
     },
     {
       "type": "checkbox",
