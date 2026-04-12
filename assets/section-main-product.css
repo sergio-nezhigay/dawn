@@ -54,7 +54,11 @@ product-info {
   margin-top: 1.2rem;
 }
 
-@media screen and (min-width: 750px) {
+@media screen and (min-width: 990px) {
+  .product__description--desktop-hidden {
+    display: none;
+  }
+
   .product__column-sticky {
     display: block;
     position: sticky;
@@ -161,12 +165,6 @@ product-info {
     order: 2;
   }
 
-  .product__desktop-placeholder {
-    display: block;
-  }
-}
-
-@media screen and (min-width: 990px) {
   .product--large:not(.product--no-media) .product__media-wrapper {
     max-width: 65%;
     width: calc(65% - var(--grid-desktop-horizontal-spacing) / 2);
@@ -192,6 +190,10 @@ product-info {
   .product--small:not(.product--no-media) .product__media-wrapper {
     max-width: 45%;
     width: calc(45% - var(--grid-desktop-horizontal-spacing) / 2);
+  }
+
+  .product__desktop-placeholder {
+    display: block;
   }
 }
 
