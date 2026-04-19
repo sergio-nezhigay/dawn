@@ -790,6 +790,16 @@
           <h2>{{ 'products.product.description' | t }}</h2>
           <div class="product__desktop-placeholder-copy">
             {{ product.description }}
+            <div class="flex justify-between items-center" style="margin-top: 2rem;">
+              <span>
+                {{- 'products.product.barcode_label' | t }}:<span class="uppercase">
+                  {{ product.selected_or_first_available_variant.barcode -}}
+                </span>
+              </span>
+              <span class="opacity-30 border rounded-full p-1 text-base">
+                {{ product.selected_or_first_available_variant.sku | split: '^' | last -}}
+              </span>
+            </div>
           </div>
         </div>
       </div>
