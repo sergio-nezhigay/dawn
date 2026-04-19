@@ -79,6 +79,20 @@
   {%- if description_text.size >= section.settings.desktop_description_threshold -%}
     {%- assign show_wide_description = true -%}
   {%- endif -%}
+
+  {%- capture product_barcode_supplier_info -%}
+    <div class="flex justify-between items-center" style="margin-top: 2rem;">
+      <span>
+        {{- 'products.product.barcode_label' | t }}:<span class="uppercase">
+          {{ product.selected_or_first_available_variant.barcode -}}
+        </span>
+      </span>
+      <span class="opacity-30 border rounded-full p-1 text-base">
+        {{ product.selected_or_first_available_variant.sku | split: '^' | last -}}
+      </span>
+    </div>
+  {%- endcapture -%}
+
   <div class="page-width-narrow">
     {% render 'breadcrumbs' %}
     <div
@@ -211,16 +225,7 @@
                     <div class="product__description-container" id="ProductDescription-{{ section.id }}">
                       <div class="description__text product__description-content">
                         {{ product.description }}
-                        <div class="flex justify-between items-center" style="margin-top: 2rem;">
-                          <span>
-                            {{- 'products.product.barcode_label' | t }}:<span class="uppercase">
-                              {{ product.selected_or_first_available_variant.barcode -}}
-                            </span>
-                          </span>
-                          <span class="opacity-30 border rounded-full p-1 text-base">
-                            {{ product.selected_or_first_available_variant.sku | split: '^' | last -}}
-                          </span>
-                        </div>
+                        {{ product_barcode_supplier_info }}
                       </div>
                       <button
                         type="button"
@@ -790,16 +795,7 @@
           <h2>{{ 'products.product.description' | t }}</h2>
           <div class="product__desktop-placeholder-copy">
             {{ product.description }}
-            <div class="flex justify-between items-center" style="margin-top: 2rem;">
-              <span>
-                {{- 'products.product.barcode_label' | t }}:<span class="uppercase">
-                  {{ product.selected_or_first_available_variant.barcode -}}
-                </span>
-              </span>
-              <span class="opacity-30 border rounded-full p-1 text-base">
-                {{ product.selected_or_first_available_variant.sku | split: '^' | last -}}
-              </span>
-            </div>
+            {{ product_barcode_supplier_info }}
           </div>
         </div>
       </div>
