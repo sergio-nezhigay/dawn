@@ -790,10 +790,10 @@
     </div>
 
     {%- if product.description != blank and show_wide_description -%}
-      <div class="product__desktop-placeholder">
-        <div class="product__desktop-placeholder-inner rte">
+      <div class="product__wide-description">
+        <div class="product__wide-description-card rte">
           <h2>{{ 'products.product.description' | t }}</h2>
-          <div class="product__desktop-placeholder-copy">
+          <div class="product__wide-description-body">
             {{ product.description }}
             {{ product_barcode_supplier_info }}
           </div>
