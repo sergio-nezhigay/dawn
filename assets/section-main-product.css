@@ -23,8 +23,11 @@ product-info {
   display: none;
 }
 
-.product-description img {
-  max-width: 500px !important
+.product-description img,
+.product__wide-description img
+ {
+  max-width: 600px !important;
+  margin: 0 auto;
 }
 
 .product__wide-description-card {
