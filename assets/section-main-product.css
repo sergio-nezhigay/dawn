@@ -23,6 +23,10 @@ product-info {
   display: none;
 }
 
+.product-description img {
+  max-width: 500px !important
+}
+
 .product__wide-description-card {
   width: 100%;
   max-width: 1000px;
