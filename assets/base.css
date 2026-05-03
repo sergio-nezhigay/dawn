@@ -5202,6 +5202,12 @@ button[id^="ProductSubmitButton-"]:active {
    Footer Custom Color Scheme
    ======================================== */
 
+
+
+footer {
+  z-index: 1 !important;
+}
+
 .footer-custom {
   position: relative;
   background-color: #001e3c;
