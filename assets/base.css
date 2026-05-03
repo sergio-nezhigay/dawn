@@ -5349,6 +5349,8 @@ input {
   background-color: white !important;
 }
 
+
+
 .jdgm-all-reviews-rating-wrapper {
   display: none !important;
 }
@@ -5456,6 +5458,9 @@ input {
 .jdgm-carousel {
   position: relative !important;
   padding-bottom: 60px !important;
+  margin-left: -20px !important;
+  margin-right: -20px !important;
+  width: auto !important;
 }
 
 .jdgm-carousel__left-arrow,
@@ -5490,5 +5495,18 @@ input {
   transform: rotate(-45deg) !important;
 }
 
+@media screen and (min-width: 750px) {
+  /* Reduce gap to 8px on desktop (4px padding per side) */
+  .jdgm-carousel--card-theme .jdgm-carousel-item {
+    padding-left: 4px !important;
+    padding-right: 4px !important;
+  }
+  
+  /* Update the offset to match the new 4px padding so cards align perfectly */
+  .jdgm-carousel {
+    margin-left: -4px !important;
+    margin-right: -4px !important;
+  }
+}
 
 
