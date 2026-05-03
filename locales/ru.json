@@ -200,7 +200,9 @@
         "payment": "Оплата",
         "payment_info": "При получении или предоплата"
       },
-      "may_be_interested": "Также вас могут заинтересовать"
+      "may_be_interested": "Также вас могут заинтересовать",
+      "description_read_more": "Читать полностью",
+      "description_read_less": "Скрыть"
     },
     "modal": {
       "label": "Галерея мультимедиа"
