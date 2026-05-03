@@ -5455,24 +5455,39 @@ input {
 
 .jdgm-carousel {
   position: relative !important;
+  padding-bottom: 60px !important;
 }
 
 .jdgm-carousel__left-arrow,
 .jdgm-carousel__right-arrow {
   position: absolute !important;
-  top: 50% !important;
+  top: auto !important;
+  bottom: 20px !important;
   margin-top: 0 !important;
   z-index: 10 !important;
+  width: 14px !important;
+  height: 14px !important;
+  border-width: 2px !important;
+  border-color: #6b7280 !important;
+  cursor: pointer !important;
+  transition: border-color 0.2s ease, opacity 0.2s ease !important;
+  opacity: 0.7;
+}
+
+.jdgm-carousel__left-arrow:hover,
+.jdgm-carousel__right-arrow:hover {
+  border-color: #0071dc !important;
+  opacity: 1;
 }
 
 .jdgm-carousel__left-arrow {
-  left: 15px !important;
-  transform: translateY(-50%) rotate(-45deg) !important;
+  left: calc(50% - 30px) !important;
+  transform: rotate(-45deg) !important;
 }
 
 .jdgm-carousel__right-arrow {
-  right: 15px !important;
-  transform: translateY(-50%) rotate(-45deg) !important;
+  right: calc(50% - 30px) !important;
+  transform: rotate(-45deg) !important;
 }
 
 
