@@ -14,9 +14,9 @@ if (!customElements.get('sticky-buy-button')) {
       this.observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting && entry.boundingClientRect.top < 0) {
-            this.classList.add('is-visible');
+            document.body.classList.add('is-visible');
           } else {
-            this.classList.remove('is-visible');
+            document.body.classList.remove('is-visible');
           }
         });
       }, {

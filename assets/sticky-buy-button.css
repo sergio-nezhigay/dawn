@@ -108,7 +108,7 @@
     z-index: 999;
   }
 
-  .sticky-buy-button.show-on-desktop.is-visible {
+  body.is-visible .sticky-buy-button.show-on-desktop {
     transform: translateY(0);
   }
 }
@@ -150,7 +150,7 @@
     transform: translateY(100%);
   }
 
-  .sticky-buy-button.show-on-mobile.is-visible {
+  body.is-visible .sticky-buy-button.show-on-mobile {
     transform: translateY(0);
   }
   
@@ -158,9 +158,19 @@
     min-width: unset;
     padding: 0 1.5rem;
   }
+
+  .shop-chat-interface {
+    transition: bottom 0.3s ease-in-out !important;
+  }
+
+  body.is-visible .shop-chat-interface {
+    bottom: 90px !important;
+  }
 }
 
 sticky-buy-button .price .price-amount,
 sticky-buy-button .price .price-currency {
   font-size: 20px;
 }
+
+
