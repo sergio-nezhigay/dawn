@@ -891,6 +891,10 @@
   <script src="{{ 'product-price-update.js' | asset_url }}" defer></script>
 </product-info>
 
+{%- if section.settings.enable_sticky_buy_desktop or section.settings.enable_sticky_buy_mobile -%}
+  {% render 'sticky-buy-button', product: product, section: section %}
+{%- endif -%}
+
 {% schema %}
 {
   "name": "t:sections.main-product.name",
@@ -1419,6 +1423,22 @@
       "id": "enable_sticky_info",
       "default": true,
       "label": "t:sections.main-product.settings.enable_sticky_info.label"
+    },
+    {
+      "type": "header",
+      "content": "Sticky Buy Button"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sticky_buy_desktop",
+      "default": true,
+      "label": "Enable on desktop"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sticky_buy_mobile",
+      "default": true,
+      "label": "Enable on mobile"
     },
     {
       "type": "color_scheme",

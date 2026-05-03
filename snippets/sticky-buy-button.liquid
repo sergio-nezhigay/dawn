@@ -1,0 +1,84 @@
+{% comment %}
+  Renders a sticky buy button.
+  Accepts:
+  - product: {Object} product object.
+  - section: {Object} section object.
+
+  Usage:
+  {% render 'sticky-buy-button', product: product, section: section %}
+{% endcomment %}
+
+{{ 'sticky-buy-button.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'sticky-buy-button.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign show_on_desktop = section.settings.enable_sticky_buy_desktop
+  assign show_on_mobile = section.settings.enable_sticky_buy_mobile
+  
+  assign sticky_class = 'sticky-buy-button'
+  if show_on_desktop
+    assign sticky_class = sticky_class | append: ' show-on-desktop'
+  endif
+  if show_on_mobile
+    assign sticky_class = sticky_class | append: ' show-on-mobile'
+  endif
+
+  assign current_variant = product.selected_or_first_available_variant
+  assign image = current_variant.featured_image | default: product.featured_image
+-%}
+
+<sticky-buy-button class="{{ sticky_class }}" data-section-id="{{ section.id }}">
+  <div class="sticky-buy-button__container page-width">
+    <div class="sticky-buy-button__info">
+      {%- if image -%}
+        <div class="sticky-buy-button__image-wrapper">
+          <img
+            src="{{ image | image_url: width: 100 }}"
+            alt="{{ image.alt | escape }}"
+            loading="lazy"
+            width="50"
+            height="50"
+            class="sticky-buy-button__image"
+            data-sticky-image
+          >
+        </div>
+      {%- endif -%}
+      <div class="sticky-buy-button__text">
+        <h3 class="sticky-buy-button__title">{{ product.title | escape }}</h3>
+        <div class="sticky-buy-button__price" data-sticky-price>
+          {%- render 'price', product: product, use_variant: true, show_badges: false -%}
+        </div>
+      </div>
+    </div>
+    
+    <div class="sticky-buy-button__form">
+      {%- form 'product', product, id: 'StickyProductForm', class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+        <input type="hidden" name="id" value="{{ current_variant.id }}" class="product-variant-id" data-sticky-variant>
+        {%- liquid
+          assign is_available = current_variant.available
+          assign button_text = 'products.product.add_to_cart' | t
+          if is_available == false
+            assign button_text = 'products.product.sold_out' | t
+          endif
+        -%}
+        <button
+          type="submit"
+          name="add"
+          class="sticky-buy-button__submit button button--primary"
+          {% if is_available == false %}disabled{% endif %}
+          data-sticky-submit
+        >
+          <span class="buy-button-text flex align-center justify-center gap-4">
+            <span class="svg-wrapper">
+              {{- 'icon-cart-shopping.svg' | inline_asset_content -}}
+            </span>
+            <span class="text-inside">
+              {{ 'products.product.buy' | t }}
+            </span>
+          </span>
+          {%- render 'loading-spinner' -%}
+        </button>
+      {%- endform -%}
+    </div>
+  </div>
+</sticky-buy-button>

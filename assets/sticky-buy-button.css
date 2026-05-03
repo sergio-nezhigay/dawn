@@ -1,0 +1,135 @@
+.sticky-buy-button {
+  display: none;
+  position: fixed;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  background-color: rgb(var(--color-background));
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  transition: transform 0.3s ease-in-out;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(var(--color-foreground), 0.08);
+}
+
+.sticky-buy-button__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.sticky-buy-button__info {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.sticky-buy-button__image-wrapper {
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid rgba(var(--color-foreground), 0.08);
+  flex-shrink: 0;
+}
+
+.sticky-buy-button__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sticky-buy-button__text {
+  min-width: 0;
+}
+
+.sticky-buy-button__title {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sticky-buy-button__price {
+  margin-top: 0.2rem;
+}
+
+.sticky-buy-button__price .price {
+  font-size: 1.4rem;
+}
+
+.sticky-buy-button__form {
+  flex-shrink: 0;
+}
+
+.sticky-buy-button__submit {
+  min-height: 4.4rem;
+  padding: 0 3rem;
+  margin: 0;
+}
+
+/* Desktop: Top */
+@media screen and (min-width: 750px) {
+  .sticky-buy-button.show-on-desktop {
+    display: block;
+    top: var(--header-bottom-position, var(--header-height, 0px));
+    transform: translateY(-100%);
+    z-index: 999;
+  }
+
+  .sticky-buy-button.show-on-desktop.is-visible {
+    transform: translateY(0);
+  }
+}
+
+/* Mobile: Bottom */
+@media screen and (max-width: 749px) {
+  .sticky-buy-button {
+    box-shadow: 0 -4px 6px -1px rgb(0 0 0 / 0.1), 0 -2px 4px -2px rgb(0 0 0 / 0.1);
+    border-bottom: none;
+    border-top: 1px solid rgba(var(--color-foreground), 0.08);
+    padding: 1rem 1.5rem;
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+    /* Leave room for chat widget if present */
+    padding-right: 70px;
+  }
+
+  .sticky-buy-button__container {
+    gap: 1rem;
+    padding: 0;
+  }
+
+  .sticky-buy-button__image-wrapper {
+    display: none;
+  }
+
+  .sticky-buy-button__title {
+    font-size: 1.2rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
+    white-space: normal;
+  }
+
+  .sticky-buy-button.show-on-mobile {
+    display: block;
+    bottom: 0;
+    top: auto;
+    transform: translateY(100%);
+  }
+
+  .sticky-buy-button.show-on-mobile.is-visible {
+    transform: translateY(0);
+  }
+  
+  .sticky-buy-button__submit {
+    min-width: unset;
+    padding: 0 1.5rem;
+  }
+}
