@@ -16,6 +16,9 @@
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
+  max-width: 1340px;
+  padding: 0 50px;
+  margin: 0 auto;
 }
 
 .sticky-buy-button__info {
@@ -56,7 +59,7 @@
 }
 
 .sticky-buy-button__price {
-  margin-top: 0.2rem;
+  margin-top: -10px;
 }
 
 .sticky-buy-button__price .price {
@@ -132,4 +135,9 @@
     min-width: unset;
     padding: 0 1.5rem;
   }
+}
+
+sticky-buy-button .price .price-amount,
+sticky-buy-button .price .price-currency {
+  font-size: 20px;
 }
