@@ -121,8 +121,6 @@
     border-top: 1px solid rgba(var(--color-foreground), 0.08);
     padding: 1rem 1.5rem;
     padding-bottom: calc(1rem + env(safe-area-inset-bottom));
-    /* Leave room for chat widget if present */
-    padding-right: 70px;
   }
 
   .sticky-buy-button__container {
