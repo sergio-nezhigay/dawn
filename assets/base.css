@@ -5208,7 +5208,7 @@ button[id^="ProductSubmitButton-"]:active {
   color: #ffffff;
   padding-top: 6.4rem;
   padding-bottom: 4rem;
-  margin-top: 5rem;
+  /* margin-top: 5rem; */
   font-size: 1.6rem;
   overflow: hidden;
 }
@@ -5462,12 +5462,15 @@ input {
   margin-right: -20px !important;
   width: auto !important;
 }
+.jdgm-carousel__arrows {
+  margin-top: 0 !important;
+}
 
 .jdgm-carousel__left-arrow,
 .jdgm-carousel__right-arrow {
   position: absolute !important;
   top: auto !important;
-  bottom: 20px !important;
+  bottom: 34px !important;
   margin-top: 0 !important;
   z-index: 10 !important;
   width: 14px !important;
