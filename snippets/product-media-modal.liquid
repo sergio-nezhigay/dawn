@@ -1,5 +1,6 @@
 {% comment %}
   Renders a product media modal. Also see 'product-media-gallery'
+  Supports fullscreen mobile mode with swipe navigation and pinch-to-zoom.
 
   Accepts:
   - product: {Object} Product liquid object
@@ -9,7 +10,11 @@
   {% render 'product-media-modal' %}
 {% endcomment %}
 
-<product-modal id="ProductModal-{{ section.id }}" class="product-media-modal media-modal">
+<product-modal
+  id="ProductModal-{{ section.id }}"
+  class="product-media-modal media-modal"
+  data-mobile-style="{{ section.settings.mobile_lightbox_style | default: 'fullscreen' }}"
+>
   <div
     class="product-media-modal__dialog color-{{ section.settings.color_scheme }} gradient"
     role="dialog"
@@ -25,6 +30,14 @@
     >
       {{ 'icon-close.svg' | inline_asset_content }}
     </button>
+
+    {%- if section.settings.mobile_lightbox_style != 'classic' -%}
+      <button class="product-media-modal__prev" type="button" aria-label="Previous image">&#8249;</button>
+      <button class="product-media-modal__next" type="button" aria-label="Next image">&#8250;</button>
+      <div class="product-media-modal__counter" aria-live="polite" aria-atomic="true">
+        <span class="product-media-modal__index">1</span>&thinsp;/&thinsp;<span class="product-media-modal__total">{{ product.media.size }}</span>
+      </div>
+    {%- endif -%}
 
     <div
       class="product-media-modal__content color-{{ section.settings.color_scheme }} gradient"
