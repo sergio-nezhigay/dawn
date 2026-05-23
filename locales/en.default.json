@@ -95,7 +95,9 @@
       "read_more_title": "Read more: {{ title }}",
       "comments": {
         "one": "{{ count }} comment",
-        "other": "{{ count }} comments"
+        "other": "{{ count }} comments",
+        "few": "Comments: {{ count }}",
+        "many": "Comments: {{ count }}"
       },
       "moderated": "Please note, comments need to be approved before they are published.",
       "comment_form_title": "Leave a comment",
@@ -216,7 +218,9 @@
       "filter_button": "Filter",
       "filters_selected": {
         "one": "{{ count }} selected",
-        "other": "{{ count }} selected"
+        "other": "{{ count }} selected",
+        "few": "Selected: {{ count }}",
+        "many": "Selected: {{ count }}"
       },
       "filter_selected_accessibility": "{{ type }} ({{ count }} filters selected)",
       "show_more": "Show more",
@@ -224,11 +228,15 @@
       "max_price": "The highest price is {{ price }} ₴",
       "product_count": {
         "one": "{{ product_count }} of {{ count }} product",
-        "other": "{{ product_count }} of {{ count }} products"
+        "other": "{{ product_count }} of {{ count }} products",
+        "few": "{{ product_count }} of {{ count }} products.",
+        "many": "{{ product_count }} of {{ count }} products."
       },
       "product_count_simple": {
         "one": "{{ count }} product",
-        "other": "{{ count }} products"
+        "other": "{{ count }} products",
+        "few": "Products: {{ count }}",
+        "many": "Products: {{ count }}"
       },
       "reset": "Reset",
       "sort_button": "Sort",
@@ -244,23 +252,33 @@
       "products": "Products",
       "results_pages_with_count": {
         "one": "{{ count }} page",
-        "other": "{{ count }} pages"
+        "other": "{{ count }} pages",
+        "few": "Number of pages: {{ count }}",
+        "many": "Number of pages: {{ count }}"
       },
       "results_suggestions_with_count": {
         "one": "{{ count }} suggestion",
-        "other": "{{ count }} suggestions"
+        "other": "{{ count }} suggestions",
+        "few": "Recommendations: {{ count }}",
+        "many": "Recommendations: {{ count }}"
       },
       "results_products_with_count": {
         "one": "{{ count }} product",
-        "other": "{{ count }} products"
+        "other": "{{ count }} products",
+        "few": "Products: {{ count }}",
+        "many": "Products: {{ count }}"
       },
       "results_with_count": {
         "one": "{{ count }} result",
-        "other": "{{ count }} results"
+        "other": "{{ count }} results",
+        "few": "Results: {{ count }}",
+        "many": "Results: {{ count }}"
       },
       "results_with_count_and_term": {
         "one": "{{ count }} result found for “{{ terms }}”",
-        "other": "{{ count }} results found for “{{ terms }}”"
+        "other": "{{ count }} results found for “{{ terms }}”",
+        "few": "{{ count }} results for query « {{ terms }} »",
+        "many": "{{ count }} results for query « {{ terms }} »"
       },
       "title": "Search results",
       "search_for": "Search for “{{ terms }}”",
@@ -300,7 +318,9 @@
       "menu": "Menu",
       "cart_count": {
         "one": "{{ count }} item",
-        "other": "{{ count }} items"
+        "other": "{{ count }} items",
+        "few": "Items: {{ count }}",
+        "many": "Items: {{ count }}"
       }
     },
     "cart": {
@@ -388,11 +408,15 @@
       "variant_total": "Variant total",
       "items_added": {
         "one": "{{ quantity }} item added",
-        "other": "{{ quantity }} items added"
+        "other": "{{ quantity }} items added",
+        "few": "Added products: {{ quantity }}",
+        "many": "Added products: {{ quantity }}"
       },
       "items_removed": {
         "one": "{{ quantity }} item removed",
-        "other": "{{ quantity }} items removed"
+        "other": "{{ quantity }} items removed",
+        "few": "Removed items: {{ quantity }}",
+        "many": "Removed products: {{ quantity }}"
       },
       "product_variants": "Product variants",
       "total_items": "Total items",
@@ -620,7 +644,35 @@
         "address_colony_too_long": "Colony too long (maximum number of characters: {{count}} )",
         "address_commune_too_long": "The commune is too long (maximum number of characters: {{count}} )",
         "address_district_too_long": "The district is too long (maximum number of characters: {{count}} )",
-        "split_cart_not_allowed": "Invalid session or feature not enabled for this store."
+        "split_cart_not_allowed": "Invalid session or feature not enabled for this store.",
+        "address_street_number_blank": "Enter building number",
+        "address_street_name_contains_mathematical_symbols": "Street cannot contain mathematical symbols",
+        "address_street_number_contains_html_tags": "The house number cannot contain HTML tags.",
+        "address_colony_contains_mathematical_symbols": "Colony cannot contain mathematical symbols",
+        "address_ward_contains_mathematical_symbols": "Word cannot contain mathematical symbols.",
+        "address_barangay_contains_mathematical_symbols": "Barangay cannot contain mathematical symbols",
+        "address_commune_contains_mathematical_symbols": "A comma cannot contain mathematical symbols.",
+        "address_district_contains_mathematical_symbols": "Area cannot contain mathematical symbols.",
+        "address_colony_blank": "Enter the colony",
+        "address_block_blank": "Enter the block",
+        "address_area_blank": "Enter the area",
+        "address_barangay_blank": "Enter barangay",
+        "address_district_blank": "Enter the area",
+        "address_commune_blank": "Enter the commune",
+        "address_ward_blank": "Enter the chamber",
+        "address_ward_contains_emojis": "Word cannot contain emojis.",
+        "address_street_name_contains_emojis": "Street cannot contain emojis",
+        "address_colony_contains_emojis": "Colony cannot contain emojis",
+        "address_commune_contains_emojis": "Commune cannot contain emojis",
+        "address_street_name_contains_html_tags": "Street cannot contain HTML tags.",
+        "address_barangay_contains_emojis": "Barangay cannot contain emojis",
+        "address_colony_contains_html_tags": "A colony cannot contain HTML tags.",
+        "address_district_contains_emojis": "District cannot contain emojis",
+        "address_ward_contains_html_tags": "Ward cannot contain HTML tags.",
+        "address_neighborhood_contains_emojis": "District cannot contain emojis",
+        "address_barangay_contains_html_tags": "Barangay cannot contain HTML tags.",
+        "address_commune_contains_html_tags": "Commune cannot contain HTML tags.",
+        "address_district_contains_html_tags": "The district cannot contain HTML tags."
       },
       "general": {
         "errors": {
@@ -628,7 +680,83 @@
             "market_manager_blocks_wallet_payments": "The payment method is not supported by the market manager."
           }
         }
+      },
+      "contact": {
+        "area_label": "Area",
+        "optional_neighborhood_label": "Neighborhood (optional)",
+        "optional_block_label": "Block (optional)",
+        "street_number_label": "House number",
+        "optional_ward_label": "ward (optional)",
+        "optional_area_label": "Area (optional)",
+        "optional_barangay_label": "Barangay (optional)",
+        "optional_commune_label": "Commune (optional)",
+        "optional_district_label": "District (optional)",
+        "neighborhood_label": "Neighborhood",
+        "street_name_label": "street",
+        "colony_label": "Colony",
+        "block_label": "Block",
+        "commune_label": "Commune",
+        "optional_street_number_label": "Building number (optional)",
+        "optional_colony_label": "Colony (optional)"
+      },
+      "thank_you": {
+        "location_title": "Location"
       }
+    },
+    "errors": {
+      "email_domain_invalid": "provider is not supported"
+    }
+  },
+  "customer_accounts": {
+    "order_details": {
+      "login_card": {
+        "resend_link_with_login": "send a new link",
+        "resend_link_without_login": "Send new link"
+      }
+    },
+    "orders": {
+      "order_list": {
+        "payment_status": {
+          "table_view": {
+            "paid": "Paid",
+            "due_without_date": "appropriate",
+            "payment_not_due": "The deadline has not yet come.",
+            "pay_to_confirm": "Pay to confirm",
+            "due_on_fulfillment": "Subject to execution",
+            "due_today": "Deadline today",
+            "overdue": "Expired",
+            "due": "Deadline {{date}}"
+          }
+        },
+        "table_view": "Show table view",
+        "list_view": "Show list",
+        "column_headers": {
+          "items": "Items"
+        }
+      },
+      "order_status": {
+        "delivered_description_digital": {
+          "one": "This item is complete.",
+          "other": "These items are complete."
+        },
+        "preparing_for_shipping_description": "These items are being prepared for shipment.",
+        "confirmed_description": "We have received your order.",
+        "on_its_way_description": "This cargo is already on its way.",
+        "on_its_way_title": "Your shipment is already on its way.",
+        "out_for_delivery_description": "This cargo is ready for delivery.",
+        "picked_up_description": "These things were collected.",
+        "delivered_description": "This cargo has been delivered.",
+        "delivered_title": "Your shipment has been delivered.",
+        "out_for_delivery_title": "Your shipment is ready for delivery."
+      }
+    },
+    "shop_policies": {
+      "refund_policy": "Refund Policy",
+      "terms_of_sale": "Terms of sale",
+      "shipping_policy": "Shipping Policy",
+      "privacy_policy": "Privacy Policy",
+      "legal_notice": "Legal notice",
+      "terms_of_service": "Terms of use"
     }
   }
 }
