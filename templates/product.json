@@ -101,6 +101,8 @@
       ],
       "settings": {
         "enable_sticky_info": true,
+        "enable_sticky_buy_desktop": false,
+        "enable_sticky_buy_mobile": false,
         "color_scheme": "",
         "media_size": "small",
         "constrain_to_viewport": true,

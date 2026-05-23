@@ -175,3 +175,8 @@ Shopify Dev MCP server can be added for enhanced development:
 claude mcp add shopify-dev -- npx -y @shopify/dev-mcp
 ```
 Do not use tailwind for styling, can only leave it in cases it already exists
+
+## Liquid / Schema Rules
+
+- **Never hardcode section IDs** — always use `{{ section.id }}` in Liquid (e.g. `#shopify-section-{{ section.id }}`). Hardcoded IDs break when sections are duplicated or moved.
+- **One `{% schema %}` block per section file** — Shopify throws a Liquid syntax error if a section file contains duplicate `{% schema %}` tags. After any edit touching schema content, verify only one `{% schema %}` tag exists in the file before saving.
