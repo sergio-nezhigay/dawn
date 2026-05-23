@@ -1067,8 +1067,18 @@ hr {
   margin: 3rem 0;
 }
 
+.product__description hr,
+.shopify-product-description hr {
+  margin: 1rem 0;
+}
+
 @media screen and (min-width: 750px) {
-  hr {
+
+  .product__description hr,
+  .shopify-product-description hr {
+    margin: 1rem 0;
+  }
+    hr {
     margin: 7rem 0;
   }
 }
