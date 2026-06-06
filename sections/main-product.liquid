@@ -5,7 +5,7 @@
   data-product-id="{{ product.id }}"
   data-update-url="true"
   data-url="{{ product.url }}"
-  {% if section.settings.hover_zoom_enabled %}
+  {% if section.settings.image_zoom == 'hover' %}
     data-zoom-on-hover
   {% endif %}
 >
@@ -47,7 +47,7 @@
     <script src="{{ 'price-per-item.js' | asset_url }}" defer="defer"></script>
   {%- endif -%}
 
-  {% if section.settings.hover_zoom_enabled %}
+  {% if section.settings.image_zoom == 'hover' %}
     <script id="EnableZoomOnHover-main" src="{{ 'magnify.js' | asset_url }}" defer="defer"></script>
   {% endif %}
   {%- if request.design_mode -%}
@@ -1571,13 +1571,6 @@
       ],
       "default": "lightbox",
       "label": "t:sections.main-product.settings.image_zoom.label"
-    },
-    {
-      "type": "checkbox",
-      "id": "hover_zoom_enabled",
-      "label": "Enable desktop hover zoom (new)",
-      "info": "Hover over the product image to see a zoomed panel on the right (desktop only). Overrides the image zoom setting above.",
-      "default": false
     },
     {
       "type": "select",
