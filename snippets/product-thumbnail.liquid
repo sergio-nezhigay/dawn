@@ -45,14 +45,8 @@
     assign mobile_columns = 2
   endif
 
-  if section.settings.hover_zoom_enabled
-    assign effective_zoom = 'hover'
-  else
-    assign effective_zoom = 'lightbox'
-  endif
-
   if media.media_type == 'image'
-    assign image_class = 'image-magnify-' | append: effective_zoom
+    assign image_class = 'image-magnify-' | append: section.settings.image_zoom
   endif
 -%}
 
@@ -69,7 +63,7 @@
     data-modal="#ProductModal-{{ modal_id }}"
   >
     <span
-      class="product__media-icon motion-reduce quick-add-hidden{% if media.media_type == 'image' %} product__media-icon--{{ effective_zoom }}{% endif %}"
+      class="product__media-icon motion-reduce quick-add-hidden{% if media.media_type == 'image' %} product__media-icon--{{ section.settings.image_zoom }}{% endif %}"
       aria-hidden="true"
     >
       {% case media.media_type %}
@@ -101,7 +95,7 @@
       }}
     </div>
     <button
-      class="product__media-toggle quick-add-hidden product__media-zoom-{{ effective_zoom }}"
+      class="product__media-toggle quick-add-hidden product__media-zoom-{{ section.settings.image_zoom }}"
       type="button"
       aria-haspopup="dialog"
       data-media-id="{{ media.id }}"
