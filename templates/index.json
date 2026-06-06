@@ -194,111 +194,6 @@
         "padding_bottom": 0
       }
     },
-    "collection_list_paa7de": {
-      "type": "collection-list",
-      "blocks": {
-        "featured_collection_H7gLQX": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "ssd"
-          }
-        },
-        "featured_collection_PPH3fn": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "pamyat"
-          }
-        },
-        "featured_collection_7wTCCW": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "karmany-dlja-hdd"
-          }
-        },
-        "featured_collection_6MbzDg": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "fleshki"
-          }
-        },
-        "featured_collection_Wr3Hwa": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "usb-type-c"
-          }
-        },
-        "featured_collection_hp8zJR": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "koncentratory-usb"
-          }
-        },
-        "featured_collection_tJBahA": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "keyboards"
-          }
-        },
-        "featured_collection_WFWA7q": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "mice"
-          }
-        },
-        "featured_collection_K9xRdg": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "light-strings"
-          }
-        },
-        "featured_collection_xtgDBj": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "hdmi-vga"
-          }
-        },
-        "featured_collection_KTqkJW": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "perehonhik_com_usb"
-          }
-        },
-        "featured_collection_qMndLJ": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "laptop-power-supply"
-          }
-        }
-      },
-      "block_order": [
-        "featured_collection_H7gLQX",
-        "featured_collection_PPH3fn",
-        "featured_collection_7wTCCW",
-        "featured_collection_6MbzDg",
-        "featured_collection_Wr3Hwa",
-        "featured_collection_hp8zJR",
-        "featured_collection_tJBahA",
-        "featured_collection_WFWA7q",
-        "featured_collection_K9xRdg",
-        "featured_collection_xtgDBj",
-        "featured_collection_KTqkJW",
-        "featured_collection_qMndLJ"
-      ],
-      "disabled": true,
-      "name": "t:sections.collection-list.presets.name",
-      "settings": {
-        "title": "Популярні категорії (old)",
-        "heading_size": "h2",
-        "image_ratio": "square",
-        "columns_desktop": 6,
-        "color_scheme": "",
-        "show_view_all": false,
-        "columns_mobile": "2",
-        "swipe_on_mobile": true,
-        "padding_top": 0,
-        "padding_bottom": 32
-      }
-    },
     "popular_categories": {
       "type": "popular-categories",
       "blocks": {
@@ -326,24 +221,10 @@
             "collection": "perehonhik_com_usb"
           }
         },
-        "collection_3": {
-          "type": "collection",
-          "disabled": true,
-          "settings": {
-            "collection": "hdmi-vga"
-          }
-        },
         "collection_4": {
           "type": "collection",
           "settings": {
             "collection": "fleshki"
-          }
-        },
-        "collection_5": {
-          "type": "collection",
-          "disabled": true,
-          "settings": {
-            "collection": "usb-type-c"
           }
         },
         "collection_6": {
@@ -358,9 +239,7 @@
         "collection_U8eyWV",
         "collection_1",
         "collection_2",
-        "collection_3",
         "collection_4",
-        "collection_5",
         "collection_6"
       ],
       "settings": {
@@ -372,35 +251,6 @@
         "enable_desktop_slider": false,
         "color_scheme": "scheme-1",
         "padding_top": 32,
-        "padding_bottom": 36
-      }
-    },
-    "featured_collection": {
-      "type": "featured-collection",
-      "disabled": true,
-      "settings": {
-        "collection": "popular",
-        "products_to_show": 12,
-        "title": "Популярні товари",
-        "heading_size": "h2",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "columns_desktop": 6,
-        "enable_desktop_slider": true,
-        "full_width": false,
-        "show_view_all": false,
-        "view_all_style": "solid",
-        "color_scheme": "scheme-1",
-        "image_ratio": "square",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "quick_add": "none",
-        "columns_mobile": "2",
-        "swipe_on_mobile": true,
-        "padding_top": 36,
         "padding_bottom": 36
       }
     },
@@ -427,97 +277,6 @@
         "padding_bottom": 36
       }
     },
-    "multicolumn_46zNpJ": {
-      "type": "multicolumn",
-      "blocks": {
-        "column_jjrQjU": {
-          "type": "column",
-          "settings": {
-            "image": "shopify://shop_images/kingston.webp",
-            "title": "",
-            "text": "",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "column_wYk4jQ": {
-          "type": "column",
-          "settings": {
-            "image": "shopify://shop_images/logitech-logo-png_seeklogo-611389.png",
-            "title": "",
-            "text": "",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "column_nN6qkY": {
-          "type": "column",
-          "settings": {
-            "image": "shopify://shop_images/ugreen.webp",
-            "title": "",
-            "text": "",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "column_GrpzpU": {
-          "type": "column",
-          "settings": {
-            "image": "shopify://shop_images/282685.webp",
-            "title": "",
-            "text": "",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "column_aqTpVe": {
-          "type": "column",
-          "settings": {
-            "image": "shopify://shop_images/samsung.webp",
-            "title": "",
-            "text": "",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "column_r6Dh9R": {
-          "type": "column",
-          "settings": {
-            "image": "shopify://shop_images/crucial8485.webp",
-            "title": "",
-            "text": "",
-            "link_label": "",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "column_jjrQjU",
-        "column_wYk4jQ",
-        "column_nN6qkY",
-        "column_GrpzpU",
-        "column_aqTpVe",
-        "column_r6Dh9R"
-      ],
-      "disabled": true,
-      "name": "t:sections.multicolumn.presets.name",
-      "settings": {
-        "title": "Популярні бренди",
-        "heading_size": "h2",
-        "image_width": "full",
-        "image_ratio": "adapt",
-        "button_label": "",
-        "button_link": "",
-        "columns_desktop": 6,
-        "column_alignment": "center",
-        "background_style": "none",
-        "color_scheme": "scheme-1",
-        "columns_mobile": "2",
-        "swipe_on_mobile": true,
-        "padding_top": 0,
-        "padding_bottom": 0
-      }
-    },
     "174643254122ccb34f": {
       "type": "apps",
       "blocks": {
@@ -541,11 +300,8 @@
   "order": [
     "slideshow_6nENYz",
     "brand_logos_marquee_U4geGy",
-    "collection_list_paa7de",
     "popular_categories",
-    "featured_collection",
     "related_products_wQpik6",
-    "multicolumn_46zNpJ",
     "174643254122ccb34f"
   ]
 }
