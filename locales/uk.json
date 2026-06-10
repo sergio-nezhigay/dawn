@@ -787,7 +787,15 @@
         "order_name_label": "Замовлення {{ name }}",
         "order_total_label": "Загалом",
         "partial_total_label": "Загалом",
-        "multiple_shipping_lines_label": "Загалом"
+        "multiple_shipping_lines_label": "Загалом",
+        "title": "Підсумок замовлення",
+        "discount_discovery": {
+          "add_code": "Застосована знижка"
+        },
+        "number_items": {
+          "one": "{{ count }} товар",
+          "other": "{{ count }} товарів"
+        }
       },
       "payment_summary": {
         "free_label": "По тарифах перевізника",
@@ -823,6 +831,19 @@
       "notice_banner": {
         "individual_violations_title": {
           "PaymentViolations": "Платник"
+        }
+      },
+      "shipping_errors": {
+        "empty_state": "Додайте адресу доставки, щоб переглянути варіанти доставки."
+      },
+      "remote_merchandise_only": {
+        "detail_item_label": {
+          "other": "{{ count }} товарів"
+        }
+      },
+      "stock": {
+        "item_label": {
+          "other": "{{ count }} товарів"
         }
       }
     },
