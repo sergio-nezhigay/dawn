@@ -1745,10 +1745,12 @@ a.product__text {
 
 
 
-.ws-desc [class*="-grid"] > * {
-  min-width: 0;
+.product__wide-description img {
+  max-width: 100% !important;
+  height: auto;
 }
 
-.ws-desc [class*="-grid"] > * img {
-  max-width: 100% !important;
+.product__wide-description [class*="grid"] > *,
+.product__wide-description [class*="cols"] > * {
+  min-width: 0;
 }
