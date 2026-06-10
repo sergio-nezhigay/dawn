@@ -1743,3 +1743,12 @@ a.product__text {
 }
 
 
+
+
+.ws-desc [class*="-grid"] > * {
+  min-width: 0;
+}
+
+.ws-desc [class*="-grid"] > * img {
+  max-width: 100% !important;
+}
