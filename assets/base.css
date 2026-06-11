@@ -4270,7 +4270,6 @@ details[open]>.header__submenu {
 
   :root {
     --easter-egg: none;
-    --sparkle: url('./sparkle.gif');
   }
 
   .animate--hover-vertical-lift .button:not(.button--tertiary),
