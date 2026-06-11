@@ -162,8 +162,11 @@
               {% assign skip_card_product_styles = false %}
               {%- for product in collection.products -%}
                 {% assign lazy_load = false %}
+                {%- assign fetch_priority = nil -%}
                 {%- if forloop.index > 2 -%}
                   {%- assign lazy_load = true -%}
+                {%- else -%}
+                  {%- assign fetch_priority = 'high' -%}
                 {%- endif -%}
                 <li
                   class="grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
@@ -180,6 +183,7 @@
                     show_vendor: section.settings.show_vendor,
                     show_rating: section.settings.show_rating,
                     lazy_load: lazy_load,
+                    fetch_priority: fetch_priority,
                     skip_styles: skip_card_product_styles,
                     quick_add: section.settings.quick_add,
                     section_id: section.id
