@@ -120,7 +120,7 @@
       }
     },
     "related_products_gEVb87": {
-      "type": "related-products",
+      "type": "product-suggestions",
       "settings": {
         "heading": "Також вас можуть зацікавити",
         "container_width": "page-width-narrow",
@@ -142,8 +142,8 @@
       }
     },
     "related_products_FUNdGf": {
-      "type": "related-products",
-      "name": "t:sections.related-products.name",
+      "type": "product-suggestions",
+      "name": "Product Suggestions",
       "settings": {
         "heading": "Супутні товари",
         "container_width": "page-width-narrow",
@@ -165,7 +165,7 @@
       }
     },
     "related-products": {
-      "type": "related-products",
+      "type": "product-suggestions",
       "settings": {
         "heading": "Нещодавно переглянуті",
         "container_width": "page-width-narrow",

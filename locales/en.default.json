@@ -428,7 +428,7 @@
       "max_error": "This item has a maximum of {{ max }}",
       "step_error": "You can only add this item in increments of {{ step }}"
     },
-    "related-products": {
+    "product-suggestions": {
       "title": "You may also like"
     },
     "recently_viewed": {

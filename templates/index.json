@@ -255,8 +255,8 @@
       }
     },
     "related_products_wQpik6": {
-      "type": "related-products",
-      "name": "t:sections.related-products.name",
+      "type": "product-suggestions",
+      "name": "Product Suggestions",
       "settings": {
         "heading": "Популярні товари",
         "container_width": "page-width",

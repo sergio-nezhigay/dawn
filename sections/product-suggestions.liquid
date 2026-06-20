@@ -1,3 +1,22 @@
+{%- if search.performed -%}
+  {%- assign skip_card_product_styles = false -%}
+  {%- for result in search.results -%}
+    <li class="grid__item">
+      {%- render 'card-product',
+        card_product: result,
+        media_aspect_ratio: section.settings.image_ratio,
+        image_shape: section.settings.image_shape,
+        show_secondary_image: section.settings.show_secondary_image,
+        show_vendor: section.settings.show_vendor,
+        show_rating: section.settings.show_rating,
+        section_id: section.id,
+        skip_styles: skip_card_product_styles
+      -%}
+    </li>
+    {%- assign skip_card_product_styles = true -%}
+  {%- endfor -%}
+{%- else -%}
+
 {{ 'component-card.css' | asset_url | stylesheet_tag }}
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
 {{ 'section-related-products.css' | asset_url | stylesheet_tag }}
@@ -106,6 +125,7 @@
     <recently-viewed-related-products
       class="related-products {{ section.settings.container_width }} section-{{ section.id }}-padding isolate{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
       data-product-handle="{{ product.handle }}"
+      data-section-id="{{ section.id }}"
     >
       <h2 class="section-title inline-richtext {{ section.settings.heading_size }}">
         {{ section.settings.heading }}
@@ -143,15 +163,17 @@
 </script>
 {%- endif -%}
 
+{%- endif -%}
+
 {% schema %}
 {
-  "name": "t:sections.related-products.name",
+  "name": "Product Suggestions",
   "tag": "section",
   "class": "section",
   "settings": [
     {
       "type": "paragraph",
-      "content": "t:sections.related-products.settings.paragraph__1.content"
+      "content": "Shows related, complementary, or recently-viewed products depending on the source selected below."
     },
     {
       "type": "inline_richtext",
@@ -253,7 +275,7 @@
       "max": 18,
       "step": 1,
       "default": 4,
-      "label": "t:sections.related-products.settings.products_to_show.label"
+      "label": "Products to show"
     },
     {
       "type": "range",
@@ -262,21 +284,21 @@
       "max": 6,
       "step": 1,
       "default": 4,
-      "label": "t:sections.related-products.settings.columns_desktop.label"
+      "label": "Number of columns on desktop"
     },
     {
       "type": "select",
       "id": "columns_mobile",
       "default": "2",
-      "label": "t:sections.related-products.settings.columns_mobile.label",
+      "label": "Number of columns on mobile",
       "options": [
         {
           "value": "1",
-          "label": "t:sections.related-products.settings.columns_mobile.options__1.label"
+          "label": "1 column"
         },
         {
           "value": "2",
-          "label": "t:sections.related-products.settings.columns_mobile.options__2.label"
+          "label": "2 columns"
         }
       ]
     },
@@ -289,7 +311,7 @@
     },
     {
       "type": "header",
-      "content": "t:sections.related-products.settings.header__2.content"
+      "content": "Product card"
     },
     {
       "type": "select",
@@ -297,19 +319,19 @@
       "options": [
         {
           "value": "adapt",
-          "label": "t:sections.related-products.settings.image_ratio.options__1.label"
+          "label": "Adapt to image"
         },
         {
           "value": "portrait",
-          "label": "t:sections.related-products.settings.image_ratio.options__2.label"
+          "label": "Portrait"
         },
         {
           "value": "square",
-          "label": "t:sections.related-products.settings.image_ratio.options__3.label"
+          "label": "Square"
         }
       ],
       "default": "adapt",
-      "label": "t:sections.related-products.settings.image_ratio.label"
+      "label": "Image ratio"
     },
     {
       "type": "select",
@@ -355,20 +377,20 @@
       "type": "checkbox",
       "id": "show_secondary_image",
       "default": false,
-      "label": "t:sections.related-products.settings.show_secondary_image.label"
+      "label": "Show secondary image on hover"
     },
     {
       "type": "checkbox",
       "id": "show_vendor",
       "default": false,
-      "label": "t:sections.related-products.settings.show_vendor.label"
+      "label": "Show vendor"
     },
     {
       "type": "checkbox",
       "id": "show_rating",
       "default": false,
-      "label": "t:sections.related-products.settings.show_rating.label",
-      "info": "t:sections.related-products.settings.show_rating.info"
+      "label": "Show product rating",
+      "info": "To display a rating, add a product rating app to your store."
     },
     {
       "type": "header",
@@ -397,7 +419,7 @@
   ],
   "presets": [
     {
-      "name": "t:sections.related-products.name"
+      "name": "Product Suggestions"
     }
   ]
 }
