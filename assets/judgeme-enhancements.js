@@ -36,7 +36,7 @@
     });
   });
 
-  const scrollToReviews = () => {
+  const scrollToReviews = (onComplete) => {
     const reviewsSection = document.querySelector('#judgeme_product_reviews');
     if (!reviewsSection) return;
 
@@ -46,37 +46,61 @@
       return headerHeight + 20;
     };
 
-    // Force-load lazy sections so layout settles during scroll
+    const doScroll = () => {
+      const duration = 1500;
+      const startY = window.pageYOffset;
+      const startTime = performance.now();
+      const offset = getOffset();
+      const targetY = reviewsSection.getBoundingClientRect().top + window.pageYOffset - offset;
+
+      const easeInOutCubic = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+
+      const animate = (currentTime) => {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        window.scrollTo(0, startY + (targetY - startY) * easeInOutCubic(progress));
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        } else if (typeof onComplete === 'function') {
+          onComplete();
+        }
+      };
+
+      requestAnimationFrame(animate);
+    };
+
+    // Phase 1: trigger lazy recs and wait for their fetches to complete
     document.querySelectorAll('product-recommendations:not(.product-recommendations--loaded)').forEach((el) => {
       if (el.loadRecommendations && el.dataset.productId) {
         el.loadRecommendations(el.dataset.productId);
       }
     });
 
-    const duration = 1500;
-    const startY = window.pageYOffset;
-    const startTime = performance.now();
-    const offset = getOffset();
-    
-    // Calculate target once to prevent layout thrashing (forced reflow) on each frame
-    const targetY = reviewsSection.getBoundingClientRect().top + window.pageYOffset - offset;
-
-    const easeInOutCubic = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
-
-    const animate = (currentTime) => {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-
-      const currentY = startY + (targetY - startY) * easeInOutCubic(progress);
-
-      window.scrollTo(0, currentY);
-
-      if (progress < 1) {
-        requestAnimationFrame(animate);
+    const recsDeadline = Date.now() + 3000;
+    const waitForRecs = () => {
+      const pending = document.querySelectorAll('product-recommendations:not(.product-recommendations--loaded)');
+      if (pending.length === 0 || Date.now() >= recsDeadline) {
+        // Phase 2: recs loaded (or timed out) — wait for layout to stabilise
+        let lastTop = -1;
+        let stableCount = 0;
+        const stabilityDeadline = Date.now() + 1000;
+        const waitForStable = () => {
+          const top = Math.round(reviewsSection.getBoundingClientRect().top + window.pageYOffset);
+          stableCount = top === lastTop ? stableCount + 1 : 0;
+          lastTop = top;
+          if (stableCount >= 3 || Date.now() >= stabilityDeadline) {
+            doScroll();
+          } else {
+            setTimeout(waitForStable, 100);
+          }
+        };
+        waitForStable();
+      } else {
+        setTimeout(waitForRecs, 100);
       }
     };
 
-    requestAnimationFrame(animate);
+    waitForRecs();
   };
 
   const interceptBadgeScroll = () => {
@@ -125,13 +149,11 @@
             reviewsSection.innerHTML.trim().length > 100);
 
         if (hasContent) {
-          // Content is ready, start smooth scroll from top
+          // Content is ready, start smooth scroll; restore hash only after animation completes
           requestAnimationFrame(() => {
-            scrollToReviews();
-            // Restore hash after scroll starts (for URL sharing)
-            setTimeout(() => {
+            scrollToReviews(() => {
               history.replaceState(null, null, originalHash);
-            }, 100);
+            });
           });
         } else if (attempts < maxAttempts) {
           attempts++;
@@ -140,10 +162,9 @@
           // Timeout - scroll anyway if section exists
           if (reviewsSection) {
             requestAnimationFrame(() => {
-              scrollToReviews();
-              setTimeout(() => {
+              scrollToReviews(() => {
                 history.replaceState(null, null, originalHash);
-              }, 100);
+              });
             });
           }
         }
