@@ -428,7 +428,7 @@
       "max_error": "Максимальное количество этого товара — {{ max }}",
       "step_error": "Вы можете добавить этот товар только в количестве, кратном {{ step }}"
     },
-    "related-products": {
+    "product-suggestions": {
       "title": "Вам также может понравиться"
     },
     "recently_viewed": {

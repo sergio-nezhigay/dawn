@@ -19,7 +19,7 @@ class RecentlyViewedRelatedProducts extends HTMLElement {
     }
 
     const params = new URLSearchParams({
-      section_id: 'recently-viewed',
+      section_id: this.dataset.sectionId,
       type: 'product',
       q: sortedHandles.map(function(h) { return 'handle:"' + h + '"'; }).join(' OR ')
     });
