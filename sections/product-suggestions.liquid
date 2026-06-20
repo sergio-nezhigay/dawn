@@ -152,7 +152,7 @@
       productUrl: '{{ product.url }}',
       productImageAltText: '{{ product.featured_media.alt | escape }}'
     };
-    const max = {{ section.settings.products_to_show | default: 6 }};
+    const max = {{ section.settings.products_to_show | default: 6 }} + 1;
     let products = [];
     try { products = JSON.parse(localStorage.getItem('recentlyViewedProduct') || '[]'); } catch (e) {}
     products = products.filter(function(p) { return p.productHandle !== productData.productHandle; });
