@@ -2,6 +2,10 @@
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
 {{ 'section-related-products.css' | asset_url | stylesheet_tag }}
 
+{%- if section.settings.products_source == 'recently_viewed' -%}
+  <script src="{{ 'recently-viewed-related.js' | asset_url }}" defer></script>
+{%- endif -%}
+
 {% if section.settings.image_shape == 'blob' %}
   {{ 'mask-blobs.css' | asset_url | stylesheet_tag }}
 {%- endif -%}
@@ -23,8 +27,8 @@
   }
 {%- endstyle -%}
 
-{% if section.settings.products_source == 'recommendations' %}
-  {% if recommendations.performed == false or recommendations.products_count > 0 %}
+{%- if section.settings.products_source == 'recommendations' -%}
+  {%- if recommendations.performed == false or recommendations.products_count > 0 -%}
     <div class="color-{{ section.settings.color_scheme }} gradient bg-transparent">
       <product-recommendations
         class="related-products {{ section.settings.container_width }} section-{{ section.id }}-padding isolate{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
@@ -32,7 +36,7 @@
         data-section-id="{{ section.id }}"
         data-product-id="{{ product.id }}"
       >
-        {% if recommendations.performed and recommendations.products_count > 0 %}
+        {%- if recommendations.performed and recommendations.products_count > 0 -%}
           <h2 class="section-title inline-richtext {{ section.settings.heading_size }}">
             {{ section.settings.heading }}
           </h2>
@@ -40,10 +44,10 @@
             class="grid product-grid grid--{{ section.settings.columns_desktop }}-col-desktop grid--{{ section.settings.columns_mobile }}-col-tablet-down"
             role="list"
           >
-            {% assign skip_card_product_styles = false %}
-            {% for recommendation in recommendations.products %}
+            {%- assign skip_card_product_styles = false -%}
+            {%- for recommendation in recommendations.products -%}
               <li class="grid__item">
-                {% render 'card-product',
+                {%- render 'card-product',
                   card_product: recommendation,
                   media_aspect_ratio: section.settings.image_ratio,
                   image_shape: section.settings.image_shape,
@@ -51,21 +55,21 @@
                   show_vendor: section.settings.show_vendor,
                   show_rating: section.settings.show_rating,
                   skip_styles: skip_card_product_styles
-                %}
+                -%}
               </li>
               {%- assign skip_card_product_styles = true -%}
-            {% endfor %}
+            {%- endfor -%}
           </ul>
-        {% endif %}
+        {%- endif -%}
       </product-recommendations>
-      {% if section.settings.image_shape == 'arch' %}
+      {%- if section.settings.image_shape == 'arch' -%}
         {{ 'mask-arch.svg' | inline_asset_content }}
       {%- endif -%}
     </div>
-  {% endif %}
-{% else %}
+  {%- endif -%}
+{%- elsif section.settings.products_source == 'collection' -%}
   {%- assign collection = section.settings.collection -%}
-  {% if collection != blank and collection.products_count > 0 %}
+  {%- if collection != blank and collection.products_count > 0 -%}
     <div class="color-{{ section.settings.color_scheme }} gradient bg-transparent">
       <div class="related-products {{ section.settings.container_width }} section-{{ section.id }}-padding isolate{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         <h2 class="section-title inline-richtext {{ section.settings.heading_size }}">
@@ -75,10 +79,10 @@
           class="grid product-grid grid--{{ section.settings.columns_desktop }}-col-desktop grid--{{ section.settings.columns_mobile }}-col-tablet-down"
           role="list"
         >
-          {% assign skip_card_product_styles = false %}
-          {% for product in collection.products limit: section.settings.products_to_show %}
+          {%- assign skip_card_product_styles = false -%}
+          {%- for product in collection.products limit: section.settings.products_to_show -%}
             <li class="grid__item">
-              {% render 'card-product',
+              {%- render 'card-product',
                 card_product: product,
                 media_aspect_ratio: section.settings.image_ratio,
                 image_shape: section.settings.image_shape,
@@ -86,18 +90,58 @@
                 show_vendor: section.settings.show_vendor,
                 show_rating: section.settings.show_rating,
                 skip_styles: skip_card_product_styles
-              %}
+              -%}
             </li>
             {%- assign skip_card_product_styles = true -%}
-          {% endfor %}
+          {%- endfor -%}
         </ul>
       </div>
-      {% if section.settings.image_shape == 'arch' %}
+      {%- if section.settings.image_shape == 'arch' -%}
         {{ 'mask-arch.svg' | inline_asset_content }}
       {%- endif -%}
     </div>
-  {% endif %}
-{% endif %}
+  {%- endif -%}
+{%- elsif section.settings.products_source == 'recently_viewed' -%}
+  <div class="recently-viewed-related-section color-{{ section.settings.color_scheme }} gradient bg-transparent">
+    <recently-viewed-related-products
+      class="related-products {{ section.settings.container_width }} section-{{ section.id }}-padding isolate{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+      data-product-handle="{{ product.handle }}"
+    >
+      <h2 class="section-title inline-richtext {{ section.settings.heading_size }}">
+        {{ section.settings.heading }}
+      </h2>
+      <ul
+        class="grid product-grid grid--{{ section.settings.columns_desktop }}-col-desktop grid--{{ section.settings.columns_mobile }}-col-tablet-down"
+        role="list"
+      ></ul>
+    </recently-viewed-related-products>
+    {%- if section.settings.image_shape == 'arch' -%}
+      {{ 'mask-arch.svg' | inline_asset_content }}
+    {%- endif -%}
+  </div>
+{%- endif -%}
+
+{%- if section.settings.products_source == 'recently_viewed' and product -%}
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const productData = {
+      productHandle: '{{ product.handle }}',
+      productTitle: '{{ product.title | escape }}',
+      productImg: '{% if product.featured_media %}{{ product.featured_media | image_url: width: 533 }}{% endif %}',
+      productPrice: '{{ product.price | money }}',
+      productUrl: '{{ product.url }}',
+      productImageAltText: '{{ product.featured_media.alt | escape }}'
+    };
+    const max = {{ section.settings.products_to_show | default: 6 }};
+    let products = [];
+    try { products = JSON.parse(localStorage.getItem('recentlyViewedProduct') || '[]'); } catch (e) {}
+    products = products.filter(function(p) { return p.productHandle !== productData.productHandle; });
+    products.push(productData);
+    if (products.length > max) products = products.slice(-max);
+    localStorage.setItem('recentlyViewedProduct', JSON.stringify(products));
+  });
+</script>
+{%- endif -%}
 
 {% schema %}
 {
@@ -143,6 +187,10 @@
         {
           "value": "collection",
           "label": "Collection"
+        },
+        {
+          "value": "recently_viewed",
+          "label": "Recently viewed products"
         }
       ],
       "default": "recommendations"
