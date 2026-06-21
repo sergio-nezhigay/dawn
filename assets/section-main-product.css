@@ -467,6 +467,10 @@ a.product__text {
 }
 
 @media screen and (min-width: 750px) {
+  .product__info-wrapper {
+    padding: 0 0 0 3rem;
+  }
+
   .product__info-container {
     max-width: 100%;
   }
