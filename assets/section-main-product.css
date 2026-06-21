@@ -623,8 +623,7 @@ a.product__text {
   }
 
   .product__media-item img {
-    border-radius: 12px;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
     overflow: hidden;
   }
 }
@@ -1482,6 +1481,13 @@ a.product__text {
   position: relative;
   width: 100%;
   max-width: calc(100% - calc(var(--media-border-width) * 2));
+  border: 1px solid #e5e7eb !important;
+  border-radius: 8px !important;
+}
+
+.product-media-container::after {
+  box-shadow: none !important;
+  border-radius: 8px !important;
 }
 
 .product-media-container.constrain-height {
