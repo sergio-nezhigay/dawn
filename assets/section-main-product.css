@@ -50,7 +50,7 @@ product-info {
   grid-template-columns: 1fr 30rem;
   gap: 4rem;
   align-items: start;
-  max-width: 1200px;
+  max-width: none;
 }
 
 .product__wide-desc-content {
@@ -59,7 +59,7 @@ product-info {
 
 .product__wide-desc-sidebar {
   position: sticky;
-  top: 9rem;
+  top: 17rem;
   display: flex;
   flex-direction: column;
   gap: 1.6rem;
