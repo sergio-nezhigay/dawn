@@ -501,7 +501,12 @@
 
 /* ======================================== */
 
+*, *::before, *::after {
+  color-scheme: only light;
+}
+
 :root {
+  color-scheme: only light;
   --alpha-button-background: 1;
   --alpha-button-border: 1;
   --alpha-link: 0.85;
