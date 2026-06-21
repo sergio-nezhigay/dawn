@@ -791,14 +791,102 @@
 
     {%- if product.description != blank and show_wide_description -%}
       <div class="product__wide-description">
-        <div class="product__wide-description-card rte">
-          <h2>{{ 'products.product.description' | t }}</h2>
-          <div class="product__wide-description-body">
-            {{ product.description }}
-            {{ product_barcode_supplier_info }}
+        <div class="product__wide-description-card product__wide-description-card--split">
+
+          {%- comment %} LEFT: description text {%- endcomment %}
+          <div class="product__wide-desc-content rte">
+            <h2>{{ 'products.product.description' | t }}</h2>
+            <div class="product__wide-description-body">
+              {{ product.description }}
+              {{ product_barcode_supplier_info }}
+            </div>
+          </div>
+
+          {%- comment %} RIGHT: sticky sidebar — compact, NOT a copy of the hero {%- endcomment %}
+          <div class="product__wide-desc-sidebar">
+
+            <div id="price-sidebar-{{ section.id }}" role="status">
+              {%- render 'price',
+                product: product,
+                use_variant: true,
+                show_badges: false,
+                price_class: 'price--large'
+              -%}
+            </div>
+
+            <p class="product-info-block__inventory product__wide-desc-sidebar__availability">
+              {%- assign _v = product.selected_or_first_available_variant -%}
+              {%- if _v.inventory_management == 'shopify' -%}
+                {%- if _v.inventory_quantity > 0 -%}
+                  {%- if _v.inventory_quantity <= 10 -%}
+                    <span class="svg-wrapper" style="color: rgb(238,148,65)">
+                      {{- 'icon-inventory-status.svg' | inline_asset_content -}}
+                    </span>
+                    {{- 'products.product.inventory_low_stock' | t -}}
+                  {%- else -%}
+                    <span class="svg-wrapper" style="color: #16a34a">
+                      {{- 'icon-inventory-status.svg' | inline_asset_content -}}
+                    </span>
+                    {{- 'products.product.inventory_in_stock' | t -}}
+                  {%- endif -%}
+                {%- else -%}
+                  {%- if _v.inventory_policy == 'continue' -%}
+                    <span class="svg-wrapper" style="color: rgb(62,214,96)">
+                      {{- 'icon-inventory-status.svg' | inline_asset_content -}}
+                    </span>
+                    {{- 'products.product.inventory_out_of_stock_continue_selling' | t -}}
+                  {%- else -%}
+                    <span class="svg-wrapper" style="color: rgb(200,200,200)">
+                      {{- 'icon-inventory-status.svg' | inline_asset_content -}}
+                    </span>
+                    {{- 'products.product.inventory_out_of_stock' | t -}}
+                  {%- endif -%}
+                {%- endif -%}
+              {%- endif -%}
+            </p>
+
+            {%- assign sidebar_form_id = product_form_id | append: '-sidebar' -%}
+            {%- form 'product', product,
+              id: sidebar_form_id,
+              class: 'product-form product-form--sidebar',
+              novalidate: 'novalidate'
+            -%}
+              <input
+                type="hidden"
+                name="id"
+                value="{{ product.selected_or_first_available_variant.id }}"
+                class="product-variant-id"
+                data-product-form-id="{{ sidebar_form_id }}"
+              >
+              <button
+                id="ProductSubmitButton-{{ section.id }}-sidebar"
+                type="submit"
+                class="product-form__submit button button--full-width button--primary"
+                {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}
+              >
+                {%- if product.selected_or_first_available_variant.available -%}
+                  {{ 'products.product.add_to_cart' | t }}
+                {%- else -%}
+                  {{ 'products.product.sold_out' | t }}
+                {%- endif -%}
+              </button>
+            {%- endform -%}
+
           </div>
         </div>
       </div>
+      {%- if show_wide_description -%}
+        <script>
+          (function () {
+            var heroBtn = document.getElementById('ProductSubmitButton-{{ section.id }}');
+            var sidebar = document.querySelector('#shopify-section-{{ section.id }} .product__wide-desc-sidebar');
+            if (!heroBtn || !sidebar) return;
+            new IntersectionObserver(function (entries) {
+              sidebar.classList.toggle('is-visible', !entries[0].isIntersecting);
+            }, { threshold: 0 }).observe(heroBtn);
+          })();
+        </script>
+      {%- endif -%}
     {%- endif -%}
 
     {% render 'product-media-modal', variant_images: variant_images %}
