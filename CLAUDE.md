@@ -174,6 +174,14 @@ Shopify Dev MCP server can be added for enhanced development:
 ```bash
 claude mcp add shopify-dev -- npx -y @shopify/dev-mcp
 ```
+
+## Querying/Mutating Store Data (Admin API)
+
+Claude isn't limited to theme code — it can read or modify live store content and admin settings (products, orders, inventory, settings, etc.) via the Admin GraphQL API using the `shopify-plugin` skills:
+1. `shopify-admin` skill searches docs and validates the GraphQL query/mutation.
+2. `shopify-admin-execution` skill runs it against a real store with `shopify store auth --store <domain> --scopes ...` then `shopify store execute --store <domain> --query '...'` (add `--allow-mutations` for mutations).
+
+Use this whenever a task needs actual store data/state rather than theme code.
 Do not use tailwind for styling, can only leave it in cases it already exists
 
 ## Liquid / Schema Rules
