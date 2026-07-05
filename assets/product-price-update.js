@@ -38,7 +38,6 @@ document.addEventListener('DOMContentLoaded', function () {
           .join('')
       );
     } catch (error) {
-      console.error('Base64 decoding error:', error);
       return '';
     }
   }
@@ -89,9 +88,6 @@ document.addEventListener('DOMContentLoaded', function () {
       if (!isSignatureValid) {
         throw new Error('JWT signature validation failed.');
       }
-      console.log('JWT signature successfully validated.');
-    } else {
-      console.warn('JWT signature validation was skipped.');
     }
 
     return { header, payload };
@@ -170,7 +166,6 @@ nUnlSsIrOfroxTLu2XnigBK/lfYRxzQWq9K6nqsSjjYeea0T12r+y3nvqg==
     }
 
     if (typeof payload.exp !== 'number' || payload.o === undefined) {
-      console.warn('Missing required payload fields:', payload);
       return false;
     }
 
@@ -256,7 +251,6 @@ nUnlSsIrOfroxTLu2XnigBK/lfYRxzQWq9K6nqsSjjYeea0T12r+y3nvqg==
           badge.className = 'badge-super-price';
           badge.textContent = 'СУПЕР ЦІНА';
           detailsSection.insertBefore(badge, detailsSection.firstChild);
-          console.log('Created super price badge');
         }
       }
 
@@ -331,8 +325,8 @@ nUnlSsIrOfroxTLu2XnigBK/lfYRxzQWq9K6nqsSjjYeea0T12r+y3nvqg==
 
       try {
         document.cookie = `pv2=${pv2}; path=/; max-age=${60 * 60 * 24 * 3}; SameSite=Lax`;
-      } catch (cookieError) {
-        console.error('Error setting cookie:', cookieError);
+      } catch {
+        // Cookie persistence failed; non-fatal.
       }
 
       try {
@@ -354,16 +348,6 @@ nUnlSsIrOfroxTLu2XnigBK/lfYRxzQWq9K6nqsSjjYeea0T12r+y3nvqg==
         const productId = `gid://shopify/Product/${productIdRaw}`;
 
         if (!isTokenValid(payload, productId)) {
-          const currentTime = Math.floor(Date.now() / 1000);
-          console.warn('Token validation failed details:', {
-            payload,
-            productId,
-            currentTime,
-            exp: payload && payload.exp,
-            o: payload && payload.o,
-            expVsNow: payload && payload.exp ? payload.exp - currentTime : undefined,
-            oVsProductId: payload && payload.o ? String(payload.o) === String(productId) : undefined,
-          });
           throw new Error('Token is invalid or expired');
         }
 
@@ -384,7 +368,6 @@ nUnlSsIrOfroxTLu2XnigBK/lfYRxzQWq9K6nqsSjjYeea0T12r+y3nvqg==
         }
 
         if (discountedPrice >= originalPrice) {
-          console.warn('Discounted price is not lower than original price, not applying discount');
           return;
         }
 
@@ -401,7 +384,20 @@ nUnlSsIrOfroxTLu2XnigBK/lfYRxzQWq9K6nqsSjjYeea0T12r+y3nvqg==
           }
         }
       } catch (tokenError) {
-        console.error('Error processing discount token:', tokenError.message);
+        const message = tokenError && tokenError.message ? tokenError.message : String(tokenError);
+        const expectedTokenErrors = [
+          'Token is invalid or expired',
+          'Token decoding or validation failed.',
+          'Invalid JWT token format',
+          'JWT parsing failed',
+          'Invalid token header',
+          'JWT signature validation failed.',
+          'Failed to import public key for validation.',
+        ];
+
+        if (!expectedTokenErrors.some((prefix) => message.startsWith(prefix))) {
+          console.error('Error processing discount token:', tokenError);
+        }
       }
     } catch (globalError) {
       console.error('Critical error in discount code:', globalError);
