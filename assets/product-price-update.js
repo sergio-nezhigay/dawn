@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
       return decodeURIComponent(
         Array.from(binaryString)
           .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
-          .join('')
+          .join(''),
       );
     } catch (error) {
       return '';
@@ -146,7 +146,7 @@ nUnlSsIrOfroxTLu2XnigBK/lfYRxzQWq9K6nqsSjjYeea0T12r+y3nvqg==
           namedCurve: 'P-256',
         },
         true,
-        ['verify']
+        ['verify'],
       );
     } catch (error) {
       console.error('Error importing public key:', error);
