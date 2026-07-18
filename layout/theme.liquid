@@ -25,9 +25,11 @@
       {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
     </title>
 
-    {% if page_description %}
+    {%- if page_description -%}
       <meta name="description" content="{{ page_description | escape }}">
-    {% endif %}
+    {%- elsif template contains 'product' -%}
+      <meta name="description" content="{{ 'general.meta.product_description_fallback' | t: title: product.title | escape }}">
+    {%- endif -%}
 
     {% render 'meta-tags' %}
 

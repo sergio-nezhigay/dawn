@@ -48,6 +48,8 @@
   if media.media_type == 'image'
     assign image_class = 'image-magnify-' | append: section.settings.image_zoom
   endif
+
+  assign thumbnail_alt = media.alt | default: product.title
 -%}
 
 {%- capture sizes -%}
@@ -88,6 +90,7 @@
         | image_url: width: 1946
         | image_tag:
           class: image_class,
+          alt: thumbnail_alt,
           loading: lazy,
           fetchpriority: fetch_priority,
           sizes: sizes,
@@ -130,6 +133,7 @@
         media.preview_image
         | image_url: width: 1946
         | image_tag:
+          alt: thumbnail_alt,
           loading: lazy,
           fetchpriority: fetch_priority,
           sizes: sizes,
