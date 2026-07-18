@@ -75,7 +75,14 @@
       "WebFetch(domain:www.newegg.com)",
       "WebFetch(domain:www.superwarehouse.com)",
       "WebFetch(domain:www.officecrave.com)",
-      "WebFetch(domain:commons.wikimedia.org)"
+      "WebFetch(domain:commons.wikimedia.org)",
+      "Read(//tmp/**)",
+      "Bash(gzip -c assets/tailwind.output.css)",
+      "Bash(shopify version *)",
+      "Bash(shopify store execute --store c2da09-15.myshopify.com --query ' *)",
+      "Bash(python3 *)",
+      "Bash(mkdir -p \"C:/Users/abc19/AppData/Local/Temp/claude/C--projects-informatica-dawn/3ddae44a-5d0e-490d-9d0e-abd8ffc72f38/scratchpad\")",
+      "Bash(python3 -)"
     ],
     "deny": [],
     "ask": []
