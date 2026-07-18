@@ -19,6 +19,9 @@
       "admin_link_html": "Вы владелец магазина? <a href=\"/admin\" class=\"link underlined-link\">Войдите здесь</a>",
       "powered_by_shopify_html": "Этот магазин работает на платформе {{ shopify }}"
     },
+    "meta": {
+      "product_description_fallback": "Купить {{ title }} ✓ Официальная гарантия ✓ Доставка по Украине"
+    },
     "social": {
       "alt_text": {
         "share_on_facebook": "Поделиться в Facebook",

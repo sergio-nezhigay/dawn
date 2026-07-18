@@ -76,7 +76,7 @@
                 "
                 src="{{ card_product.featured_media | image_url: width: 533 }}"
                 sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 62px) / 2)"
-                alt="{{ card_product.featured_media.alt | escape }}"
+                alt="{{ card_product.featured_media.alt | default: card_product.title | escape }}"
                 class="motion-reduce !object-contain"
                 {% unless lazy_load == false %}
                   loading="lazy"
@@ -104,7 +104,7 @@
                   "
                   src="{{ card_product.media[1] | image_url: width: 533 }}"
                   sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 62px) / 2)"
-                  alt="{{ card_product.media[1].alt | escape }}"
+                  alt="{{ card_product.media[1].alt | default: card_product.title | escape }}"
                   class="motion-reduce test !object-contain  test55"
                   loading="lazy"
                   width="{{ card_product.media[1].width }}"
@@ -460,7 +460,7 @@
                                 "
                                 src="{{ card_product.featured_media | image_url: width: 533 }}"
                                 sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 62px) / 2)"
-                                alt="{{ card_product.featured_media.alt | escape }}"
+                                alt="{{ card_product.featured_media.alt | default: card_product.title | escape }}"
                                 class="motion-reduce"
                                 {% unless lazy_load == false %}
                                   loading="lazy"
