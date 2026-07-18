@@ -124,6 +124,45 @@
     "show_vendor": false,
     "show_cart_note": true,
     "cart_drawer_collection": "популярні-товари",
+    "sections": {
+      "main-password-header": {
+        "type": "main-password-header",
+        "settings": {
+          "color_scheme": "scheme-1"
+        }
+      },
+      "main-password-footer": {
+        "type": "main-password-footer",
+        "settings": {
+          "color_scheme": "scheme-1"
+        }
+      }
+    },
+    "content_for_index": [],
+    "blocks": {
+      "14060646107696862457": {
+        "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+        "disabled": false,
+        "settings": {}
+      },
+      "11540801135891226883": {
+        "type": "shopify://apps/shop-chat-agent/blocks/chat-interface/3b4e1bf2-3ed8-43ba-9492-d1670dda1f2e",
+        "disabled": false,
+        "settings": {
+          "welcome_message": "👋 Привіт! Чим можу тобі допомогти сьогодні?"
+        }
+      },
+      "2567389343055140935": {
+        "type": "shopify://apps/microsoft-clarity/blocks/clarity_js/31c3d126-8116-4b4a-8ba1-baeda7c4aeea",
+        "disabled": false,
+        "settings": {}
+      },
+      "2200952712151285029": {
+        "type": "shopify://apps/microsoft-clarity/blocks/brandAgents_js/31c3d126-8116-4b4a-8ba1-baeda7c4aeea",
+        "disabled": false,
+        "settings": {}
+      }
+    },
     "color_schemes": {
       "scheme-1": {
         "settings": {
@@ -178,35 +217,6 @@
           "button_label": "#334fb4",
           "secondary_button_label": "#ffffff",
           "shadow": "#121212"
-        }
-      }
-    },
-    "sections": {
-      "main-password-header": {
-        "type": "main-password-header",
-        "settings": {
-          "color_scheme": "scheme-1"
-        }
-      },
-      "main-password-footer": {
-        "type": "main-password-footer",
-        "settings": {
-          "color_scheme": "scheme-1"
-        }
-      }
-    },
-    "content_for_index": [],
-    "blocks": {
-      "14060646107696862457": {
-        "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-        "disabled": false,
-        "settings": {}
-      },
-      "11540801135891226883": {
-        "type": "shopify://apps/shop-chat-agent/blocks/chat-interface/3b4e1bf2-3ed8-43ba-9492-d1670dda1f2e",
-        "disabled": false,
-        "settings": {
-          "welcome_message": "👋 Привіт! Чим можу тобі допомогти сьогодні?"
         }
       }
     }
