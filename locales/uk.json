@@ -738,7 +738,7 @@
         "title": "Дякуємо за вашу покупку",
         "shipping_method_title": "Доставка",
         "billing_address_title": "Платник",
-        "contact_us_html": "Потрібна допомога {{ Наші контакти }}",
+        "contact_us_html": "Потрібна допомога? <a href=\"tel:+380993815288\">+38(099)381-5288</a>",
         "return_to_store_link_label": "Продовжити перегляд товарів",
         "page_title": "Дякуємо, {{ display_name }}!",
         "page_title_no_name": "Дякуємо!",
@@ -746,7 +746,13 @@
         "shipping_address_title": "Адреса доставки",
         "marker": {
           "shipping": "Адреса доставки"
-        }
+        },
+        "order_status_updates_with_email": "Ви отримуватимете оновлення щодо доставки на електронну пошту.",
+        "order_status_updates_with_email_and_phone": "Ви отримуватимете оновлення щодо доставки на електронну пошту.",
+        "order_updates_title": "Оновлення замовлення",
+        "order_updates_subscribe_to_email_notifications": "Отримувати оновлення доставки на email",
+        "order_updates_subscribe_to_email_or_phone_notifications": "Отримувати оновлення доставки на email",
+        "payment_method_title": "Оплата"
       },
       "wallets": {
         "errors": {
@@ -828,7 +834,8 @@
       },
       "review": {
         "blocks": {
-          "shipping_method_title": "Доставка"
+          "shipping_method_title": "Доставка",
+          "payment_method_title": "Оплата"
         }
       },
       "notice_banner": {
@@ -848,6 +855,10 @@
         "item_label": {
           "other": "{{ count }} товарів"
         }
+      },
+      "customer_payment_methods": {
+        "page_title": "Оплата",
+        "title": "Оплата"
       }
     },
     "collections": {
