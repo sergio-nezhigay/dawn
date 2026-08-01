@@ -722,6 +722,13 @@
       "shipping": {
         "free_rate_label": "По тарифам перевозчика",
         "split_shipping_option_free": "По тарифам перевозчика"
+      },
+      "marketing": {
+        "sms": {
+          "disclaimer": {
+            "description_transactional_html": "Для подтверждения заказа"
+          }
+        }
       }
     },
     "collections": {
