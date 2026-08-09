@@ -5252,6 +5252,17 @@ footer {
   padding-right: 1.5rem;
 }
 
+@media screen and (min-width: 750px) {
+  .footer-custom .footer-content {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .footer-custom .footer-content > .footer-item {
+    margin-block-start: 0;
+  }
+}
+
 /* Footer list items */
 .footer-custom .footer-item {
   display: flex;
