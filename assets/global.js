@@ -734,6 +734,8 @@ class SliderComponent extends HTMLElement {
     this.pageTotalElement = this.querySelector('.slider-counter--total');
     this.prevButton = this.querySelector('button[name="previous"]');
     this.nextButton = this.querySelector('button[name="next"]');
+    this.sliderControlLinksArray = Array.from(this.querySelectorAll('.slider-counter__link'));
+    this.sliderControlLinksArray.forEach((link) => link.addEventListener('click', this.linkToSlide.bind(this)));
 
     if (!this.slider) return;
 
@@ -773,6 +775,18 @@ class SliderComponent extends HTMLElement {
     if (this.currentPageElement && this.pageTotalElement) {
       this.currentPageElement.textContent = this.currentPage;
       this.pageTotalElement.textContent = this.totalPages;
+    }
+
+    if (this.sliderControlLinksArray.length) {
+      this.sliderControlLinksArray.forEach((link) => {
+        link.classList.remove('slider-counter__link--active');
+        link.removeAttribute('aria-current');
+      });
+      const activeLink = this.sliderControlLinksArray[this.currentPage - 1];
+      if (activeLink) {
+        activeLink.classList.add('slider-counter__link--active');
+        activeLink.setAttribute('aria-current', 'true');
+      }
     }
 
     if (this.currentPage != previousPage) {
@@ -821,6 +835,13 @@ class SliderComponent extends HTMLElement {
       left: position,
     });
   }
+
+  linkToSlide(event) {
+    event.preventDefault();
+    const targetSlide = this.sliderItemsToShow[this.sliderControlLinksArray.indexOf(event.currentTarget)];
+    if (!targetSlide) return;
+    this.setSlidePosition(targetSlide.offsetLeft);
+  }
 }
 
 customElements.define('slider-component', SliderComponent);
@@ -828,7 +849,6 @@ customElements.define('slider-component', SliderComponent);
 class SlideshowComponent extends SliderComponent {
   constructor() {
     super();
-    this.sliderControlWrapper = this.querySelector('.slider-buttons');
     this.enableSliderLooping = true;
 
     this.sliderFirstItemNode = this.slider.querySelector('.slideshow__slide');
@@ -837,11 +857,6 @@ class SlideshowComponent extends SliderComponent {
     this.announcementBarSlider = this.querySelector('.announcement-bar-slider');
     // Value below should match --duration-announcement-bar CSS value
     this.announcerBarAnimationDelay = this.announcementBarSlider ? 250 : 0;
-
-    this.sliderControlLinksArray = this.sliderControlWrapper
-      ? Array.from(this.sliderControlWrapper.querySelectorAll('.slider-counter__link'))
-      : [];
-    this.sliderControlLinksArray.forEach((link) => link.addEventListener('click', this.linkToSlide.bind(this)));
     this.slider.addEventListener('scroll', this.setSlideVisibility.bind(this));
     this.setSlideVisibility();
 
