@@ -165,13 +165,18 @@
 /* Mobile (< 750px) */
 @media screen and (max-width: 749px) {
   .product-info-block {
-    padding: 1.5rem 1.8rem;
-    gap: 1.2rem;
+    padding: 0.75rem 1.8rem;
+    margin: 0.75rem 0;
+    gap: 0.5rem;
   }
 
   .product-info-block__price .price,
   .product-info-block__price .price--large {
     font-size: 2.8rem;
+  }
+
+  .product-info-block .price .price-item {
+    font-size: 30px;
   }
 
   /* Keep horizontal layout - same as desktop */
