@@ -267,6 +267,31 @@
         background-color: transparent !important;
         background-image: none !important;
       }
+
+      /* Footer-reveal wrapper: lets the footer-reveal section stick to the
+         viewport bottom and fade/scale into view, contained within its own
+         stacking context so it can't bleed above other content. */
+      .footer-reveal-wrapper {
+        position: relative;
+        isolation: isolate;
+        overflow-x: clip;
+        overflow-y: visible;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .footer-reveal-wrapper #MainContent {
+        position: relative;
+        z-index: 1;
+        flex: 1 0 auto;
+        background-color: #fafafa;
+      }
+
+      .footer-reveal-wrapper > footer:has(> footer-reveal) {
+        position: sticky;
+        bottom: 0;
+        z-index: -1 !important;
+      }
     {% endstyle %}
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
@@ -315,16 +340,18 @@
 
     {% sections 'header-group' %}
 
-    <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
-      {%- if request.page_type == 'policy' -%}
-        {%- section 'main-policy' -%}
-        <div style="display:none">{{ content_for_layout }}</div>
-      {%- else -%}
-        {{ content_for_layout }}
-      {%- endif -%}
-    </main>
+    <div class="footer-reveal-wrapper">
+      <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
+        {%- if request.page_type == 'policy' -%}
+          {%- section 'main-policy' -%}
+          <div style="display:none">{{ content_for_layout }}</div>
+        {%- else -%}
+          {{ content_for_layout }}
+        {%- endif -%}
+      </main>
 
-    {% sections 'footer-group' %}
+      {% sections 'footer-group' %}
+    </div>
 
     <ul hidden>
       <li id="a11y-refresh-page-message">{{ 'accessibility.refresh_page' | t }}</li>

@@ -1,0 +1,90 @@
+{{ 'component-footer-reveal.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'vendor-motion-scroll.min.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'footer-reveal.js' | asset_url }}" defer="defer"></script>
+
+<footer-reveal class="footer-reveal">
+  <div class="footer-reveal__fade">
+    <div class="footer-reveal__scale">
+      <div class="footer-reveal__inner page-width-narrow" itemscope itemtype="http://schema.org/LocalBusiness">
+        <ul class="footer-reveal__content">
+          <li class="footer-reveal__item">
+            <div class="footer-reveal__icon">
+              <span class="svg-wrapper">
+                {{- 'icon-phone.svg' | inline_asset_content -}}
+              </span>
+            </div>
+            <div class="footer-reveal__text">
+              <span>{{ 'sections.footer.phone_label' | t }}</span>
+              <a href="tel:+380993815288" itemprop="telephone">
+                (099) 381-5288
+              </a>
+            </div>
+          </li>
+
+          <li class="footer-reveal__item">
+            <div class="footer-reveal__icon">
+              <span class="svg-wrapper">
+                {{- 'icon-clock.svg' | inline_asset_content -}}
+              </span>
+            </div>
+            <div class="footer-reveal__text">
+              <span>{{ 'sections.footer.working_hours_label' | t }}</span>
+              <span>{{ 'sections.footer.working_hours_value' | t }}</span>
+            </div>
+          </li>
+
+          <li class="footer-reveal__item">
+            <div class="footer-reveal__icon">
+              <span class="svg-wrapper">
+                {{- 'icon-email.svg' | inline_asset_content -}}
+              </span>
+            </div>
+            <div class="footer-reveal__text">
+              <span>{{ 'sections.footer.email_label' | t }}</span>
+              <a
+                href="mailto:info@informatica.com.ua"
+                itemprop="email"
+              >
+                info@informatica.com.ua
+              </a>
+            </div>
+          </li>
+
+          <li class="footer-reveal__item">
+            <div class="footer-reveal__icon">
+              <span class="svg-wrapper">
+                {{- 'icon-map-pin.svg' | inline_asset_content -}}
+              </span>
+            </div>
+            <div class="footer-reveal__text" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+              <span>{{ 'sections.footer.address_label' | t }}</span>
+              <span>
+                <span itemprop="streetAddress">{{ 'sections.footer.address_street' | t }}</span>,
+                <span itemprop="addressLocality">{{ 'sections.footer.address_city' | t }}</span>,
+                <span itemprop="addressCountry">{{ 'sections.footer.address_country' | t }}</span>
+              </span>
+            </div>
+          </li>
+        </ul>
+
+        <p class="footer-reveal__copyright">
+          &#169; 2025 Informatica. By
+          <a href="https://serhii.vercel.app/"> serhii.vercel.app </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer-reveal>
+
+{% schema %}
+{
+  "name": "Footer (reveal)",
+  "tag": "footer",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Footer (reveal)"
+    }
+  ]
+}
+{% endschema %}
