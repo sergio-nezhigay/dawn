@@ -661,9 +661,20 @@ a.product__text {
     padding-right: calc(var(--media-shadow-horizontal-offset) * var(--media-shadow-visible));
   }
 
-  .product--thumbnail .product__media-item:not(.is-active),
-  .product--thumbnail_slider .product__media-item:not(.is-active) {
-    display: none;
+  .product--thumbnail .product__media-list,
+  .product--thumbnail_slider .product__media-list {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .product--thumbnail .product__media-item,
+  .product--thumbnail_slider .product__media-item {
+    width: 100%;
+    flex: 0 0 100%;
+    scroll-snap-align: start;
   }
 
   .product-media-modal__content > .product__media-item--variant.product__media-item--variant {
