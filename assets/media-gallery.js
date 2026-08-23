@@ -21,6 +21,7 @@ if (!customElements.get('media-gallery')) {
         if (this.dataset.desktopLayout.includes('thumbnail') && this.mql.matches) this.removeListSemantic();
 
         this.initButtonNav();
+        this.initKeyboardNav();
         this.updateButtonVisibility();
         if (this.elements.viewer) {
           this.elements.viewer.enableSliderLooping = true;
@@ -41,16 +42,31 @@ if (!customElements.get('media-gallery')) {
           if (!this.mql.matches) return;
           const button = event.target.closest('.slider-button--prev, .slider-button--next');
           if (!button) return;
-
-          const items = Array.from(this.elements.viewer.querySelectorAll('.product__media-item'));
-          const activeItem = this.elements.viewer.querySelector('.is-active');
-          const currentIndex = items.indexOf(activeItem);
-          const nextIndex = (currentIndex + (button.classList.contains('slider-button--next') ? 1 : -1) + items.length) % items.length;
-
-          if (items[nextIndex]) {
-            this.setActiveMedia(items[nextIndex].dataset.mediaId, false);
-          }
+          this.goToAdjacentMedia(button.classList.contains('slider-button--next') ? 1 : -1);
         });
+      }
+
+      initKeyboardNav() {
+        const list = this.elements.viewer.slider;
+        if (!list) return;
+
+        list.setAttribute('tabindex', '0');
+        list.addEventListener('keydown', (event) => {
+          if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+          event.preventDefault();
+          this.goToAdjacentMedia(event.key === 'ArrowRight' ? 1 : -1);
+        });
+      }
+
+      goToAdjacentMedia(step) {
+        const items = Array.from(this.elements.viewer.querySelectorAll('.product__media-item'));
+        const activeItem = this.elements.viewer.querySelector('.is-active');
+        const currentIndex = items.indexOf(activeItem);
+        const nextIndex = (currentIndex + step + items.length) % items.length;
+
+        if (items[nextIndex]) {
+          this.setActiveMedia(items[nextIndex].dataset.mediaId, false);
+        }
       }
 
       onSlideChanged(event) {
