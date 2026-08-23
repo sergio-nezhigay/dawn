@@ -127,6 +127,16 @@
     </ul>
     {%- if media_count > 1 -%}
       <div class="slider-buttons quick-add-hidden{% if hide_mobile_slider %} small-hide{% endif %}">
+        <button
+          type="button"
+          class="slider-button slider-button--prev"
+          name="previous"
+          aria-label="{{ 'general.slider.previous_slide' | t }}"
+        >
+          <span class="svg-wrapper">
+            {{- 'icon-caret.svg' | inline_asset_content -}}
+          </span>
+        </button>
         <div class="slider-counter slider-counter--dots">
           {%- for i in (1..media_count) -%}
             <button
@@ -139,6 +149,16 @@
             </button>
           {%- endfor -%}
         </div>
+        <button
+          type="button"
+          class="slider-button slider-button--next"
+          name="next"
+          aria-label="{{ 'general.slider.next_slide' | t }}"
+        >
+          <span class="svg-wrapper">
+            {{- 'icon-caret.svg' | inline_asset_content -}}
+          </span>
+        </button>
       </div>
     {%- endif -%}
   </slider-component>
