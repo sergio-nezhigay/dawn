@@ -111,6 +111,31 @@ product-info {
   margin-top: 1.2rem;
 }
 
+/* Collapse the wide description behind a "show more" toggle. Clamp is moderate
+   (not a small pixel value) so the sticky Add-to-Cart sidebar keeps its runway. */
+.product__wide-description-body {
+  max-height: 72vh;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 6rem), transparent);
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 6rem), transparent);
+}
+
+.product__wide-description-body.is-expanded {
+  max-height: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .product__wide-description-body {
+    transition: max-height 0.3s ease-out;
+  }
+}
+
+.product__wide-description-toggle {
+  margin-top: 1.4rem;
+}
+
 @media screen and (min-width: 990px) {
   .product__description--desktop-hidden {
     display: none;
