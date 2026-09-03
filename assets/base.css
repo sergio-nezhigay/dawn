@@ -4693,10 +4693,14 @@ button[id^="ProductSubmitButton-"]:active {
   overflow: hidden;
   max-height: 32rem;
   transition: max-height 0.3s ease-out;
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 4rem), transparent);
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 4rem), transparent);
 }
 
 .product__description-content.is-expanded {
   max-height: none;
+  -webkit-mask-image: none;
+  mask-image: none;
 }
 
 .product-form__row {
