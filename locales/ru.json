@@ -754,7 +754,8 @@
       "shipping": {
         "free": "По тарифам перевозчика",
         "free_shipping_discount": "По тарифам перевозчика"
-      }
+      },
+      "contact_information": "Контактная информация"
     },
     "orders": {
       "order_list": {
