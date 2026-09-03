@@ -715,7 +715,8 @@
       "login_card": {
         "resend_link_with_login": "send a new link",
         "resend_link_without_login": "Send new link"
-      }
+      },
+      "contact_information": "Contact Information"
     },
     "orders": {
       "order_list": {
