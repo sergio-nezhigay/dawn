@@ -128,7 +128,7 @@ product-info {
 
 @media (prefers-reduced-motion: no-preference) {
   .product__wide-description-body {
-    transition: max-height 0.3s ease-out;
+    transition: max-height 0.25s cubic-bezier(0.33, 1, 0.68, 1);
   }
 }
 

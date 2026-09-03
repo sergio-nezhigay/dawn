@@ -42,6 +42,7 @@
 
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'product-description-toggle.js' | asset_url }}" defer="defer"></script>
   {%- if product.quantity_price_breaks_configured? -%}
     <script src="{{ 'show-more.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'price-per-item.js' | asset_url }}" defer="defer"></script>
@@ -222,7 +223,10 @@
                     <h2 class="description__headings">
                       {{ 'products.product.description' | t }}
                     </h2>
-                    <div class="product__description-container" id="ProductDescription-{{ section.id }}">
+                    <product-description-toggle
+                      class="product__description-container product__description-disclosure"
+                      id="ProductDescription-{{ section.id }}"
+                    >
                       <div class="description__text product__description-content">
                         {{ product.description }}
                         {{ product_barcode_supplier_info }}
@@ -232,72 +236,12 @@
                         class="link product__description-toggle"
                         aria-expanded="false"
                         aria-controls="ProductDescription-{{ section.id }}"
+                        data-label-more="{{ 'products.product.description_read_more' | t | escape }}"
+                        data-label-less="{{ 'products.product.description_read_less' | t | escape }}"
                       >
                         {{ 'products.product.description_read_more' | t }}
                       </button>
-                    </div>
-
-                    <script>
-                      document.addEventListener('DOMContentLoaded', function () {
-                        const container = document.getElementById('ProductDescription-{{ section.id }}');
-                        if (!container) return;
-
-                        const toggleBtn = container.querySelector('.product__description-toggle');
-                        const content = container.querySelector('.product__description-content');
-
-                        // Check if content needs "read more" button
-                        const maxHeightPx = parseFloat(getComputedStyle(content).maxHeight);
-                        const contentHeight = content.scrollHeight;
-                        const threshold = 100; // Only show button if content is at least 100px taller
-
-                        if (contentHeight <= maxHeightPx + threshold) {
-                          // Content fits or is barely overflowing, hide the button
-                          toggleBtn.style.display = 'none';
-                          content.classList.add('is-expanded');
-                          content.style.maxHeight = 'none';
-                          return;
-                        }
-
-                        toggleBtn.addEventListener('click', function () {
-                          const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
-
-                          if (isExpanded) {
-                            // Collapse
-                            // 1. Set height to current scrollHeight to enable transition from a fixed value
-                            content.style.maxHeight = content.scrollHeight + 'px';
-
-                            // 2. Force reflow
-                            void content.offsetHeight;
-
-                            // 3. Transition to collapsed state
-                            content.style.maxHeight = '32rem';
-                            toggleBtn.setAttribute('aria-expanded', 'false');
-                            toggleBtn.textContent = {{ 'products.product.description_read_more' | t | json }};
-                            content.classList.remove('is-expanded');
-                          } else {
-                            // Expand
-                            content.style.maxHeight = content.scrollHeight + 'px';
-                            toggleBtn.setAttribute('aria-expanded', 'true');
-                            toggleBtn.textContent = {{ 'products.product.description_read_less' | t | json }};
-                            content.classList.add('is-expanded');
-
-                            // Optional: Remove max-height after transition to allow window resizing
-                            // However, strictly sticking to scrollHeight is safer for the reverse transition without extra logic.
-                            // But for responsiveness (window resize), 'none' is better.
-                            // Let's attach a one-time listener to clear it.
-                            content.addEventListener(
-                              'transitionend',
-                              function () {
-                                if (content.classList.contains('is-expanded')) {
-                                  content.style.maxHeight = 'none';
-                                }
-                              },
-                              { once: true }
-                            );
-                          }
-                        });
-                      });
-                    </script>
+                    </product-description-toggle>
                   </div>
                 {%- endif -%}
 
@@ -797,18 +741,22 @@
           {%- comment %} LEFT: description text {%- endcomment %}
           <div class="product__wide-desc-content rte">
             <h2>{{ 'products.product.description' | t }}</h2>
-            <div class="product__wide-description-body" id="WideDescription-{{ section.id }}">
-              {{ product.description }}
-              {{ product_barcode_supplier_info }}
-            </div>
-            <button
-              type="button"
-              class="link product__description-toggle product__wide-description-toggle"
-              aria-expanded="false"
-              aria-controls="WideDescription-{{ section.id }}"
-            >
-              {{ 'products.product.description_read_more' | t }}
-            </button>
+            <product-description-toggle class="product__description-disclosure">
+              <div class="product__wide-description-body" id="WideDescription-{{ section.id }}">
+                {{ product.description }}
+                {{ product_barcode_supplier_info }}
+              </div>
+              <button
+                type="button"
+                class="link product__description-toggle product__wide-description-toggle"
+                aria-expanded="false"
+                aria-controls="WideDescription-{{ section.id }}"
+                data-label-more="{{ 'products.product.description_read_more' | t | escape }}"
+                data-label-less="{{ 'products.product.description_read_less' | t | escape }}"
+              >
+                {{ 'products.product.description_read_more' | t }}
+              </button>
+            </product-description-toggle>
           </div>
 
           {%- comment %} RIGHT: sticky sidebar — compact, NOT a copy of the hero {%- endcomment %}
@@ -893,30 +841,6 @@
             new IntersectionObserver(function (entries) {
               sidebar.classList.toggle('is-visible', !entries[0].isIntersecting);
             }, { threshold: 0 }).observe(heroBtn);
-          })();
-          (function () {
-            var body = document.getElementById('WideDescription-{{ section.id }}');
-            var toggle = document.querySelector('#shopify-section-{{ section.id }} .product__wide-description-toggle');
-            if (!body || !toggle) return;
-            toggle.addEventListener('click', function () {
-              var expanded = toggle.getAttribute('aria-expanded') === 'true';
-              body.classList.toggle('is-expanded', !expanded);
-              toggle.setAttribute('aria-expanded', String(!expanded));
-              toggle.textContent = expanded
-                ? {{ 'products.product.description_read_more' | t | json }}
-                : {{ 'products.product.description_read_less' | t | json }};
-            });
-            // After images have laid out, drop the clamp entirely if the body already fits.
-            // Bail when the wide block is hidden (below the 990px breakpoint): otherwise
-            // scrollHeight/clientHeight are both 0 and the check would wrongly expand it.
-            window.addEventListener('load', function () {
-              if (!body.offsetParent) return;
-              if (body.classList.contains('is-expanded')) return;
-              if (body.scrollHeight <= body.clientHeight + 24) {
-                body.classList.add('is-expanded');
-                toggle.hidden = true;
-              }
-            });
           })();
         </script>
       {%- endif -%}
