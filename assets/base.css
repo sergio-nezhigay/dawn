@@ -4689,12 +4689,29 @@ button[id^="ProductSubmitButton-"]:active {
   margin-top: 0.8rem;
 }
 
+.product__description-disclosure {
+  display: block;
+}
+
+/* Scroll target when a collapse pulls the description start back into view:
+   clear the sticky header so the heading is not hidden behind it. Static 17rem
+   matches the wide-description sticky sidebar offset and sidesteps the sticky
+   header's height changing as it is scrolled past. */
+:where(.description__headings, .product__wide-description-card h2, .product__description-disclosure) {
+  scroll-margin-top: 17rem;
+}
+
 .product__description-content {
   overflow: hidden;
   max-height: 32rem;
-  transition: max-height 0.3s ease-out;
   -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 4rem), transparent);
   mask-image: linear-gradient(to bottom, #000 calc(100% - 4rem), transparent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .product__description-content {
+    transition: max-height 0.25s cubic-bezier(0.33, 1, 0.68, 1);
+  }
 }
 
 .product__description-content.is-expanded {
