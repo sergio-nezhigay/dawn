@@ -4710,7 +4710,7 @@ button[id^="ProductSubmitButton-"]:active {
 
 @media (prefers-reduced-motion: no-preference) {
   .product__description-content {
-    transition: max-height 0.25s cubic-bezier(0.33, 1, 0.68, 1);
+    transition: max-height 0.45s cubic-bezier(0.33, 1, 0.68, 1);
   }
 }
 

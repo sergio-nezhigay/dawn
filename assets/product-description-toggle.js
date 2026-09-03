@@ -28,7 +28,9 @@ class ProductDescriptionToggle extends HTMLElement {
 
     this.dataset.ready = 'true';
     this.slop = 24;
-    this.transitionFallbackMs = 400;
+    // Safety net for the max-height transition (0.45s in CSS) in case
+    // transitionend does not fire; must comfortably exceed it.
+    this.transitionFallbackMs = 650;
     this.labelMore = this.button.dataset.labelMore || this.button.textContent.trim();
     this.labelLess = this.button.dataset.labelLess || this.button.textContent.trim();
 
