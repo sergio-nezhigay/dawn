@@ -7,9 +7,9 @@
   "lighthouse_version": "13.4.1",
   "tooling": {
     "lab": "Lighthouse CLI 13.4.1 (npx), headless Chrome, 3 runs per URL per device, median reported",
-    "chrome_devtools_mcp": "configured and healthy, but MCP tools load only at session start - unavailable this session; trace-insight capture deferred",
-    "shopify_dev_mcp": "configured and healthy, same session-start limitation - validate_theme not run",
-    "shopify_admin_skills": "Shopify AI Toolkit plugin not installed - RUM performanceMetrics not queried"
+    "chrome_devtools_mcp": "connected; trace-insight capture still deferred (lab LCP proved to be a throttling artifact, so it is no longer the priority)",
+    "shopify_dev_mcp": "connected; validate_theme run",
+    "shopify_admin_skills": "Shopify AI Toolkit plugin installed; field data sourced via ShopifyQL web_performance"
   },
   "conditions": {
     "url_pattern": "https://informatica.com.ua/<path>?pb=0",
@@ -26,6 +26,7 @@
       "product": 0.4,
       "collection": 0.43
     },
+    "shopify_page_weighting_note": "Shopify's generic weighting. This shop's actual traffic is far more product-skewed - see field.traffic_share_pct (product 74.7%, collection 14.4%, index 3.8%). Prefer the measured share when prioritising.",
     "weighted_score": {
       "mobile": 76.6,
       "desktop": 97.8
@@ -33,45 +34,294 @@
     "ci_floor_performance": 0.6
   },
   "noise_band": 10,
-  "noise_band_note": "A Lighthouse delta under 10 points is noise, not a result. NOTE: product_mobile observed a 30-point spread across 3 runs at identical byte weight (see pages.product_mobile.observed_spread) - for that page treat anything under ~30 points as noise until the LCP contention item (P1-1) is fixed.",
+  "noise_band_note": "A Lighthouse delta under 10 points is noise, not a result. product_mobile observed a 30-point spread across 3 runs at identical byte weight (see pages.product_mobile.observed_spread), so for that page treat anything under ~30 points as noise. IMPORTANT: field data shows product/mobile LCP p75 = 1624 ms (good), so the lab LCP of 8437 ms is an artifact of the 4x-CPU / slow-4G preset, not a user-facing problem. Use `field`, not `pages`, to decide what to fix; `pages` exists to detect regressions in this repo code under fixed conditions.",
   "field": {
-    "_source": null,
-    "_source_note": "NO field data captured. Shopify RUM performanceMetrics needs the Shopify AI Toolkit plugin (not installed). PageSpeed Insights / CrUX returned \"Quota exceeded for quota metric Queries per day\" on the keyless endpoint. Fill this in next week - see backlog.md \"Data sources\".",
-    "home": {
-      "mobile": {
-        "lcp_p75_ms": null,
-        "inp_p75_ms": null,
-        "cls_p75": null
+    "_source": "Shopify ShopifyQL `web_performance` schema via `shopify store execute` (read_reports), 90 days to 2026-09-05",
+    "_note": "The Admin GraphQL `performanceMetrics` query returns an EMPTY array for this shop even with valid auth and read_reports scope - it is not a usable source here. The ShopifyQL web_performance schema is, and gives p75 per page_type per device directly.",
+    "_thresholds": {
+      "lcp_good_ms": 2500,
+      "inp_good_ms": 200,
+      "cls_good": 0.1
+    },
+    "window_days": 90,
+    "total_page_loads": 7997,
+    "device_split_pct": {
+      "mobile": 52,
+      "desktop": 48
+    },
+    "traffic_share_pct": {
+      "404": 0.2,
+      "product": 74.7,
+      "collection": 14.4,
+      "index": 3.8,
+      "search": 3.6,
+      "page": 1.7,
+      "policy": 1,
+      "article": 0.4,
+      "cart": 0.3,
+      "other": 0
+    },
+    "by_page_type": {
+      "404": {
+        "desktop": {
+          "page_loads": 11,
+          "lcp_p75_ms": 1389,
+          "inp_p75_ms": 0,
+          "cls_p75": 0.09,
+          "fcp_p75_ms": 1173,
+          "lcp_rating": "good",
+          "inp_rating": "good",
+          "cls_rating": "good"
+        },
+        "mobile": {
+          "page_loads": 5,
+          "lcp_p75_ms": 1008,
+          "inp_p75_ms": 0,
+          "cls_p75": 0.01,
+          "fcp_p75_ms": 668,
+          "lcp_rating": "good",
+          "inp_rating": "good",
+          "cls_rating": "good"
+        }
       },
-      "desktop": {
-        "lcp_p75_ms": null,
-        "inp_p75_ms": null,
-        "cls_p75": null
+      "product": {
+        "mobile": {
+          "page_loads": 3199,
+          "lcp_p75_ms": 1624,
+          "inp_p75_ms": 160,
+          "cls_p75": 0,
+          "fcp_p75_ms": 1199,
+          "lcp_rating": "good",
+          "inp_rating": "good",
+          "cls_rating": "good"
+        },
+        "desktop": {
+          "page_loads": 2773,
+          "lcp_p75_ms": 1772,
+          "inp_p75_ms": 48,
+          "cls_p75": 0.03,
+          "fcp_p75_ms": 1396,
+          "lcp_rating": "good",
+          "inp_rating": "good",
+          "cls_rating": "good"
+        }
+      },
+      "collection": {
+        "mobile": {
+          "page_loads": 644,
+          "lcp_p75_ms": 1599,
+          "inp_p75_ms": 174,
+          "cls_p75": 0,
+          "fcp_p75_ms": 1251,
+          "lcp_rating": "good",
+          "inp_rating": "good",
+          "cls_rating": "good"
+        },
+        "desktop": {
+          "page_loads": 508,
+          "lcp_p75_ms": 1820,
+          "inp_p75_ms": 48,
+          "cls_p75": 0.03,
+          "fcp_p75_ms": 1230,
+          "lcp_rating": "good",
+          "inp_rating": "good",
+          "cls_rating": "good"
+        }
+      },
+      "search": {
+        "desktop": {
+          "page_loads": 209,
+          "lcp_p75_ms": 1720,
+          "inp_p75_ms": 32,
+          "cls_p75": 0.02,
+          "fcp_p75_ms": 1508,
+          "lcp_rating": "good",
+          "inp_rating": "good",
+          "cls_rating": "good"
+        },
+        "mobile": {
+          "page_loads": 78,
+          "lcp_p75_ms": 1371,
+          "inp_p75_ms": 152,
+          "cls_p75": 0,
+          "fcp_p75_ms": 1080,
+          "lcp_rating": "good",
+          "inp_rating": "good",
+          "cls_rating": "good"
+        }
+      },
+      "index": {
+        "desktop": {
+          "page_loads": 200,
+          "lcp_p75_ms": 1156,
+          "inp_p75_ms": 64,
+          "cls_p75": 0.03,
+          "fcp_p75_ms": 1014,
+          "lcp_rating": "good",
+          "inp_rating": "good",
+          "cls_rating": "good"
+        },
+        "mobile": {
+          "page_loads": 106,
+          "lcp_p75_ms": 1135,
+          "inp_p75_ms": 272,
+          "cls_p75": 0,
+          "fcp_p75_ms": 949,
+          "lcp_rating": "good",
+          "inp_rating": "needs-improvement",
+          "cls_rating": "good"
+        }
+      },
+      "page": {
+        "desktop": {
+          "page_loads": 76,
+          "lcp_p75_ms": 1028,
+          "inp_p75_ms": 16,
+          "cls_p75": 0.02,
+          "fcp_p75_ms": 865,
+          "lcp_rating": "good",
+          "inp_rating": "good",
+          "cls_rating": "good"
+        },
+        "mobile": {
+          "page_loads": 56,
+          "lcp_p75_ms": 898,
+          "inp_p75_ms": 108,
+          "cls_p75": 0,
+          "fcp_p75_ms": 702,
+          "lcp_rating": "good",
+          "inp_rating": "good",
+          "cls_rating": "good"
+        }
+      },
+      "policy": {
+        "mobile": {
+          "page_loads": 41,
+          "lcp_p75_ms": 1358,
+          "inp_p75_ms": 168,
+          "cls_p75": 0,
+          "fcp_p75_ms": 848,
+          "lcp_rating": "good",
+          "inp_rating": "good",
+          "cls_rating": "good"
+        },
+        "desktop": {
+          "page_loads": 41,
+          "lcp_p75_ms": 576,
+          "inp_p75_ms": 22,
+          "cls_p75": 0,
+          "fcp_p75_ms": 540,
+          "lcp_rating": "good",
+          "inp_rating": "good",
+          "cls_rating": "good"
+        }
+      },
+      "article": {
+        "mobile": {
+          "page_loads": 21,
+          "lcp_p75_ms": 2069,
+          "inp_p75_ms": 148,
+          "cls_p75": 0,
+          "fcp_p75_ms": 1699,
+          "lcp_rating": "good",
+          "inp_rating": "good",
+          "cls_rating": "good"
+        },
+        "desktop": {
+          "page_loads": 8,
+          "lcp_p75_ms": 1094,
+          "inp_p75_ms": 48,
+          "cls_p75": 0.02,
+          "fcp_p75_ms": 886,
+          "lcp_rating": "good",
+          "inp_rating": "good",
+          "cls_rating": "good"
+        }
+      },
+      "cart": {
+        "desktop": {
+          "page_loads": 11,
+          "lcp_p75_ms": 2073,
+          "inp_p75_ms": 108,
+          "cls_p75": 0.03,
+          "fcp_p75_ms": 1554,
+          "lcp_rating": "good",
+          "inp_rating": "good",
+          "cls_rating": "good"
+        },
+        "mobile": {
+          "page_loads": 9,
+          "lcp_p75_ms": 2866,
+          "inp_p75_ms": 76,
+          "cls_p75": 0,
+          "fcp_p75_ms": 2324,
+          "lcp_rating": "needs-improvement",
+          "inp_rating": "good",
+          "cls_rating": "good"
+        }
+      },
+      "other": {
+        "desktop": {
+          "page_loads": 1,
+          "lcp_p75_ms": 1685,
+          "inp_p75_ms": 0,
+          "cls_p75": 0,
+          "fcp_p75_ms": 1331,
+          "lcp_rating": "good",
+          "inp_rating": "good",
+          "cls_rating": "good"
+        }
       }
     },
-    "product": {
-      "mobile": {
-        "lcp_p75_ms": null,
-        "inp_p75_ms": null,
-        "cls_p75": null
-      },
-      "desktop": {
-        "lcp_p75_ms": null,
-        "inp_p75_ms": null,
-        "cls_p75": null
-      }
-    },
-    "collection": {
-      "mobile": {
-        "lcp_p75_ms": null,
-        "inp_p75_ms": null,
-        "cls_p75": null
-      },
-      "desktop": {
-        "lcp_p75_ms": null,
-        "inp_p75_ms": null,
-        "cls_p75": null
-      }
+    "weekly_inp_history_mobile": {
+      "_note": "p75 INP per week, mobile. n = page loads that week; rows with n under ~30 are statistically meaningless (index/mobile runs 4-19 loads a week, which is why its extremes are noise, not regressions).",
+      "product_mobile": [
+        "2026-06-01 inp=80ms n=11",
+        "2026-06-08 inp=160ms n=246",
+        "2026-06-15 inp=172ms n=270",
+        "2026-06-22 inp=240ms n=174",
+        "2026-06-29 inp=160ms n=229",
+        "2026-07-06 inp=184ms n=253",
+        "2026-07-13 inp=144ms n=287",
+        "2026-07-20 inp=168ms n=266",
+        "2026-07-27 inp=144ms n=277",
+        "2026-08-03 inp=206ms n=273",
+        "2026-08-10 inp=146ms n=241",
+        "2026-08-17 inp=160ms n=257",
+        "2026-08-24 inp=136ms n=247",
+        "2026-08-31 inp=112ms n=168"
+      ],
+      "collection_mobile": [
+        "2026-06-01 inp=136ms n=3",
+        "2026-06-08 inp=228ms n=35",
+        "2026-06-15 inp=188ms n=40",
+        "2026-06-22 inp=144ms n=34",
+        "2026-06-29 inp=128ms n=37",
+        "2026-07-06 inp=156ms n=52",
+        "2026-07-13 inp=270ms n=56",
+        "2026-07-20 inp=136ms n=51",
+        "2026-07-27 inp=88ms n=45",
+        "2026-08-03 inp=208ms n=64",
+        "2026-08-10 inp=134ms n=58",
+        "2026-08-17 inp=188ms n=72",
+        "2026-08-24 inp=344ms n=65",
+        "2026-08-31 inp=112ms n=32"
+      ],
+      "index_mobile": [
+        "2026-06-08 inp=360ms n=3",
+        "2026-06-15 inp=112ms n=19",
+        "2026-06-22 inp=256ms n=6",
+        "2026-06-29 inp=134ms n=8",
+        "2026-07-06 inp=152ms n=7",
+        "2026-07-13 inp=0ms n=4",
+        "2026-07-20 inp=234ms n=7",
+        "2026-07-27 inp=184ms n=6",
+        "2026-08-03 inp=584ms n=15",
+        "2026-08-10 inp=202ms n=11",
+        "2026-08-17 inp=0ms n=5",
+        "2026-08-24 inp=532ms n=8",
+        "2026-08-31 inp=3890ms n=7"
+      ]
     }
   },
   "pages": {
@@ -308,8 +558,12 @@
     "performance_rule_offenses": 0
   },
   "validate_theme": {
-    "violations": null,
-    "_source_note": "shopify-dev MCP tools not loaded this session"
+    "_source": "shopify-dev MCP validate_theme, 2026-09-05",
+    "_scope": "spot-check of 6 high-traffic files, not the whole theme",
+    "files_checked": 6,
+    "errors": 1,
+    "warnings": 4,
+    "error_detail": "sections/header.liquid: 'accessibility.call_store' has no matching entry in locales/en.default.json (same offense theme-check reports as TranslationKeyExists)"
   },
   "tailwind": {
     "referenced_at": "layout/theme.liquid:328",

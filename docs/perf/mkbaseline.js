@@ -74,21 +74,31 @@ for (const dev of ['mobile', 'desktop']) {
   weighted[dev] = ok ? +s.toFixed(1) : null;
 }
 
-const nullField = () => ({ lcp_p75_ms: null, inp_p75_ms: null, cls_p75: null });
+// field.json comes from the ShopifyQL web_performance schema (see docs/perf/backlog.md).
+// If it is absent the baseline still builds, with field recorded as explicitly unavailable.
+const fieldPath = path.join(D, 'field.json');
+const field = fs.existsSync(fieldPath)
+  ? JSON.parse(fs.readFileSync(fieldPath, 'utf8'))
+  : { _source: null, _source_note: 'field.json not present - no field data captured this run' };
 
 const out = {
   _README:
     'Performance regression contract. Every future week re-measures with the same conditions and diffs against this file. Unavailable values are explicit null with a source note - never omitted.',
   measured_at: new Date().toISOString().slice(0, 10),
-  commit: execSync('git rev-parse HEAD', { cwd: REPO }).toString().trim(),
+  // The last commit that touched theme code - that, not HEAD, is the state measured.
+  // Commits to docs/ or .github/ do not invalidate a baseline.
+  commit: execSync(
+    'git log -1 --format=%H -- assets sections snippets layout templates blocks config locales',
+    { cwd: REPO }
+  ).toString().trim(),
   branch: execSync('git rev-parse --abbrev-ref HEAD', { cwd: REPO }).toString().trim(),
   cli_version: '4.7.1',
   lighthouse_version: '13.4.1',
   tooling: {
     lab: 'Lighthouse CLI 13.4.1 (npx), headless Chrome, 3 runs per URL per device, median reported',
-    chrome_devtools_mcp: 'configured and healthy, but MCP tools load only at session start - unavailable this session; trace-insight capture deferred',
-    shopify_dev_mcp: 'configured and healthy, same session-start limitation - validate_theme not run',
-    shopify_admin_skills: 'Shopify AI Toolkit plugin not installed - RUM performanceMetrics not queried',
+    chrome_devtools_mcp: 'connected; trace-insight capture still deferred (lab LCP proved to be a throttling artifact, so it is no longer the priority)',
+    shopify_dev_mcp: 'connected; validate_theme run',
+    shopify_admin_skills: 'Shopify AI Toolkit plugin installed; field data sourced via ShopifyQL web_performance',
   },
   conditions: {
     url_pattern: 'https://informatica.com.ua/<path>?pb=0',
@@ -102,20 +112,15 @@ const out = {
   targets: {
     bar: 'average Lighthouse performance >= 60 across home + product + collection, both devices',
     shopify_page_weighting: W,
+    shopify_page_weighting_note:
+      "Shopify's generic weighting. This shop's actual traffic is far more product-skewed - see field.traffic_share_pct (product 74.7%, collection 14.4%, index 3.8%). Prefer the measured share when prioritising.",
     weighted_score: weighted,
     ci_floor_performance: 0.6,
   },
   noise_band: 10,
   noise_band_note:
-    'A Lighthouse delta under 10 points is noise, not a result. NOTE: product_mobile observed a 30-point spread across 3 runs at identical byte weight (see pages.product_mobile.observed_spread) - for that page treat anything under ~30 points as noise until the LCP contention item (P1-1) is fixed.',
-  field: {
-    _source: null,
-    _source_note:
-      'NO field data captured. Shopify RUM performanceMetrics needs the Shopify AI Toolkit plugin (not installed). PageSpeed Insights / CrUX returned "Quota exceeded for quota metric Queries per day" on the keyless endpoint. Fill this in next week - see backlog.md "Data sources".',
-    home: { mobile: nullField(), desktop: nullField() },
-    product: { mobile: nullField(), desktop: nullField() },
-    collection: { mobile: nullField(), desktop: nullField() },
-  },
+    'A Lighthouse delta under 10 points is noise, not a result. product_mobile observed a 30-point spread across 3 runs at identical byte weight (see pages.product_mobile.observed_spread), so for that page treat anything under ~30 points as noise. IMPORTANT: field data shows product/mobile LCP p75 = 1624 ms (good), so the lab LCP of 8437 ms is an artifact of the 4x-CPU / slow-4G preset, not a user-facing problem. Use `field`, not `pages`, to decide what to fix; `pages` exists to detect regressions in this repo code under fixed conditions.',
+  field,
   pages,
   liquid_profile: {
     _source: 'shopify theme profile --json (CLI 4.7.1), self-time per frame, live theme',
@@ -124,7 +129,15 @@ const out = {
   },
   assets_over_10kb: assets,
   theme_check: { total_offenses: checkTotal, by_rule: checkCounts, performance_rule_offenses: 0 },
-  validate_theme: { violations: null, _source_note: 'shopify-dev MCP tools not loaded this session' },
+  validate_theme: {
+    _source: 'shopify-dev MCP validate_theme, 2026-09-05',
+    _scope: 'spot-check of 6 high-traffic files, not the whole theme',
+    files_checked: 6,
+    errors: 1,
+    warnings: 4,
+    error_detail:
+      "sections/header.liquid: 'accessibility.call_store' has no matching entry in locales/en.default.json (same offense theme-check reports as TranslationKeyExists)",
+  },
   tailwind: {
     referenced_at: 'layout/theme.liquid:328',
     committed_bytes: fs.statSync(REPO + '/assets/tailwind.output.css').size,
