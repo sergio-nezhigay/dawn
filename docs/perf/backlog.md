@@ -64,7 +64,7 @@ purchase proximity. **Re-rank once RUM/analytics is connected (P1-0).**
 | **product** | **mobile** | **61** | **8437 ms** | 166 ms | 0.000 | 2108 KB | **30** |
 | product | desktop | 99 | 812 ms | 69 ms | 0.001 | 2277 KB | 2 |
 | collection | mobile | 87 | 3069 ms | 174 ms | 0.003 | 2384 KB | 3 |
-| collection | desktop | 97 | 1090 ms | 10 ms | 0.005 | 2384 KB | 5 |
+| collection | desktop | 97 | 1090 ms | 10 ms | 0.005 | 2327 KB | 5 |
 
 **Weighted (17/40/43): mobile 76.6 · desktop 97.8.** Both clear the ≥60 bar today.
 
@@ -376,3 +376,27 @@ still visible below it. Revert with `git checkout assets/tailwind.output.css`.
 
 For **P1-0**, run the two `/plugin` commands from *Needs the store owner* item 1, then query
 RUM on the `unstable` API version and fill `field.*` in `baseline.json`.
+
+---
+
+## Reproducing this baseline
+
+The measurement is scripted so next week's numbers are generated, not hand-transcribed:
+
+```bash
+npx -y lighthouse@13 --version          # once, populates the npx cache
+node docs/perf/measure.js    <outDir>   # 18 runs -> lh_*.json + lh_summary.json
+shopify theme check --output=json > <outDir>/themecheck.json
+node docs/perf/mkbaseline.js <outDir>   # -> docs/perf/baseline.json
+```
+
+`measure.js` holds the three tracked URLs. Changing them invalidates comparison with this
+baseline — if you must, say why in the commit message.
+
+**`shopify theme profile` needs `SHOPIFY_CLI_THEME_TOKEN` unset** — it rejects Theme Access
+tokens with *"Unable to use Admin API or Theme Access tokens with the profile command"*.
+
+> **Live-theme hazard.** `npm run dev` targets `--theme 186192232764`, which is the **live**
+> theme, so `shopify theme dev` syncs local edits straight to production. Do not run it while
+> editing theme files (P1-3's Tailwind rebuild especially). Measurement does not need it —
+> the tracked URLs are public.
