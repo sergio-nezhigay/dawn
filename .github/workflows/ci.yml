@@ -23,6 +23,16 @@ jobs:
   lhci:
     name: Lighthouse
     runs-on: ubuntu-latest
+    # Auth is unresolved, so this job is advisory (does not fail CI) until a
+    # working credential exists:
+    #   - client_id/client_secret (Dev Dashboard app): authenticates, then
+    #     `themeCreate` returns ACCESS_DENIED -- that mutation needs a
+    #     Shopify-granted exemption on top of write_themes.
+    #   - access_token (Theme Access shptka_ token): 401 on `publicApiVersions`
+    #     during `shopify theme push --development` in CI, even though the same
+    #     token lists themes fine via `shopify theme list` locally.
+    # Remove continue-on-error once the action can create a development theme.
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v4
       - name: Lighthouse
@@ -30,11 +40,6 @@ jobs:
         with:
           store: ${{ secrets.SHOP_STORE_OS2 }}
           password: ${{ secrets.SHOP_PASSWORD_OS2 }}
-          # Theme Access token (shptka_...) from the free Theme Access app on the store.
-          # Dev Dashboard app credentials (client_id/client_secret) were tried and fail:
-          # `themeCreate` returns ACCESS_DENIED because that mutation needs a
-          # Shopify-granted exemption on top of write_themes. Theme Access tokens are
-          # exempt and are the sanctioned credential for `shopify theme push` in CI.
           access_token: ${{ secrets.SHOP_ACCESS_TOKEN }}
           product_handle: ${{ secrets.SHOP_PRODUCT_HANDLE }}
           collection_handle: ${{ secrets.SHOP_COLLECTION_HANDLE }}
