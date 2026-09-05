@@ -56,9 +56,11 @@ jobs:
         env:
           SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOP_ACCESS_TOKEN }}
           SHOPIFY_FLAG_STORE: ${{ env.STORE }}
+          # Only the base URL is overridden; product/collection paths fall back to
+          # measure.js's built-in defaults (the same handles baseline.json was measured
+          # on). The old SHOP_PRODUCT_HANDLE / SHOP_COLLECTION_HANDLE secrets held stale
+          # values -> ERRORED_DOCUMENT_REQUEST on those pages.
           PERF_BASE_URL: http://127.0.0.1:9292
-          PERF_PRODUCT_PATH: /products/${{ secrets.SHOP_PRODUCT_HANDLE }}
-          PERF_COLLECTION_PATH: /collections/${{ secrets.SHOP_COLLECTION_HANDLE }}
         run: |
           set -eo pipefail
           # Strip any stray whitespace from the pasted token (cheap insurance).
