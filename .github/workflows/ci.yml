@@ -56,7 +56,9 @@ jobs:
           PERF_COLLECTION_PATH: /collections/${{ secrets.SHOP_COLLECTION_HANDLE }}
         run: |
           set -eo pipefail
-          shopify theme dev --store "$SHOPIFY_FLAG_STORE" --port 9292 --theme-editor-sync=false > theme-dev.log 2>&1 &
+          # --theme-editor-sync is opt-in (a bare boolean flag); leaving it off is the
+          # default and avoids pulling editor changes into the CI render.
+          shopify theme dev --store "$SHOPIFY_FLAG_STORE" --port 9292 > theme-dev.log 2>&1 &
           DEV_PID=$!
           trap 'kill $DEV_PID 2>/dev/null || true' EXIT
           if ! npx --yes wait-on http://127.0.0.1:9292 --timeout 180000; then
