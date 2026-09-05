@@ -41,10 +41,11 @@ jobs:
     # which is what produced the publicApiVersions 401 -- a valid token pointed at the
     # wrong store. Only SHOP_ACCESS_TOKEN (a shptka_ Theme Access password) is a secret.
     #
-    # This job now fails CI on a real regression. The gate is a per-URL median-score
-    # floor in docs/perf/ci-floors.json, calibrated to this job's own runner numbers
-    # (the localhost `theme dev` render scores well below baseline.json's production
-    # numbers). Field data in baseline.json remains the real perf source of truth.
+    # Gate = a render smoke test, NOT a score check. ci-gate.js fails only if a tracked
+    # template (home / product / collection) failed to produce a Lighthouse result --
+    # i.e. it 500'd, hit a Liquid error, or wouldn't load. Absolute scores are logged
+    # for eyeballing but not gated: on shared runners they swing 20+ pts run-to-run on
+    # identical code. Field data in baseline.json remains the real perf source of truth.
     env:
       STORE: c2da09-15.myshopify.com
     steps:
