@@ -28,16 +28,21 @@ jobs:
       group: lhci-${{ github.ref }}
       cancel-in-progress: true
     # `shopify/lighthouse-ci-action` is not used: it always creates a scratch
-    # development theme (themeCreate) and mis-wires the Theme Access token in CI
-    # (401 on publicApiVersions -- Shopify/lighthouse-ci-action#41). Instead we
-    # drive the CLI directly the way it works locally: SHOPIFY_CLI_THEME_TOKEN +
-    # `shopify theme dev` serve branch code on localhost, then Lighthouse audits it.
+    # development theme (themeCreate) and mis-wires auth in CI. Instead we drive the
+    # CLI directly with a Theme Access token the way it works locally --
+    # `shopify theme dev` serves branch code on localhost, then Lighthouse audits it.
+    #
+    # The store is hardcoded on purpose: it is not secret (it is in CLAUDE.md /
+    # docs/perf/backlog.md) and the old SHOP_STORE_OS2 secret held the WRONG domain,
+    # which is what produced the publicApiVersions 401 -- a valid token pointed at the
+    # wrong store. Only SHOP_ACCESS_TOKEN (a shptka_ Theme Access password) is a secret.
     #
     # continue-on-error stays ONLY until the per-URL floors in docs/perf/ci-floors.json
-    # are calibrated to the scores this job actually produces on a CI runner (the
-    # localhost dev render is slower than the production URL the baseline used).
-    # Remove it once the first green run's medians are baked into ci-floors.json.
+    # are calibrated to the scores this job produces on a runner. Remove it once the
+    # first green run's medians are baked into ci-floors.json.
     continue-on-error: true
+    env:
+      STORE: c2da09-15.myshopify.com
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -50,34 +55,20 @@ jobs:
       - name: Lighthouse against `shopify theme dev`
         env:
           SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOP_ACCESS_TOKEN }}
-          SHOPIFY_FLAG_STORE: ${{ secrets.SHOP_STORE_OS2 }}
+          SHOPIFY_FLAG_STORE: ${{ env.STORE }}
           PERF_BASE_URL: http://127.0.0.1:9292
           PERF_PRODUCT_PATH: /products/${{ secrets.SHOP_PRODUCT_HANDLE }}
           PERF_COLLECTION_PATH: /collections/${{ secrets.SHOP_COLLECTION_HANDLE }}
         run: |
           set -eo pipefail
-
-          # The CI 401 on publicApiVersions hit `theme list` too (not just the action or
-          # `theme dev`), and the raw secrets printed 39 / 26 bytes -- `c2da09-15.myshopify.com`
-          # is 23, so at least SHOP_STORE_OS2 carries trailing junk from a bad paste.
-          # Sanitize both defensively: strip whitespace, and strip protocol / trailing slash
-          # from the store (a leading https:// is a known cause of this exact 401).
-          RAW_TOKEN_BYTES=$(printf '%s' "$SHOPIFY_CLI_THEME_TOKEN" | wc -c)
-          RAW_STORE_BYTES=$(printf '%s' "$SHOPIFY_FLAG_STORE" | wc -c)
+          # Strip any stray whitespace from the pasted token (cheap insurance).
           SHOPIFY_CLI_THEME_TOKEN=$(printf '%s' "$SHOPIFY_CLI_THEME_TOKEN" | tr -d '[:space:]')
-          SHOPIFY_FLAG_STORE=$(printf '%s' "$SHOPIFY_FLAG_STORE" | tr -d '[:space:]' | sed -E 's#^https?://##; s#/+$##')
-          export SHOPIFY_CLI_THEME_TOKEN SHOPIFY_FLAG_STORE
+          export SHOPIFY_CLI_THEME_TOKEN
 
-          echo "CLI: $(shopify version)"
-          echo "token: ${RAW_TOKEN_BYTES} raw -> $(printf '%s' "$SHOPIFY_CLI_THEME_TOKEN" | wc -c) clean bytes, md5 $(printf '%s' "$SHOPIFY_CLI_THEME_TOKEN" | md5sum | cut -c1-8) (shptka_ + 32 hex = 39)"
-          echo "store: ${RAW_STORE_BYTES} raw -> $(printf '%s' "$SHOPIFY_FLAG_STORE" | wc -c) clean bytes, value [$SHOPIFY_FLAG_STORE]"
-          case "$SHOPIFY_FLAG_STORE" in
-            *.myshopify.com) ;;
-            *) echo "::error::SHOP_STORE_OS2 is not a <name>.myshopify.com domain after sanitizing: [$SHOPIFY_FLAG_STORE]"; exit 1 ;;
-          esac
-
-          echo "--- theme list probe (backlog says this works locally with the token) ---"
-          shopify theme list --store "$SHOPIFY_FLAG_STORE" || echo "::warning::theme list FAILED ($?)"
+          echo "CLI: $(shopify version) | store: $SHOPIFY_FLAG_STORE"
+          # Fast auth check before the slower `theme dev` -- fail loudly on a bad token.
+          shopify theme list --store "$SHOPIFY_FLAG_STORE" >/dev/null \
+            || { echo "::error::Theme Access token rejected by $SHOPIFY_FLAG_STORE"; exit 1; }
 
           echo "--- starting theme dev ---"
           shopify theme dev --store "$SHOPIFY_FLAG_STORE" --port 9292 > theme-dev.log 2>&1 &
