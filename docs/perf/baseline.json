@@ -1,0 +1,328 @@
+{
+  "_README": "Performance regression contract. Every future week re-measures with the same conditions and diffs against this file. Unavailable values are explicit null with a source note - never omitted.",
+  "measured_at": "2026-09-05",
+  "commit": "6d9f677faff900b90bfbcc89de2a4ad98f045274",
+  "branch": "perf/baseline-and-guard",
+  "cli_version": "4.7.1",
+  "lighthouse_version": "13.4.1",
+  "tooling": {
+    "lab": "Lighthouse CLI 13.4.1 (npx), headless Chrome, 3 runs per URL per device, median reported",
+    "chrome_devtools_mcp": "configured and healthy, but MCP tools load only at session start - unavailable this session; trace-insight capture deferred",
+    "shopify_dev_mcp": "configured and healthy, same session-start limitation - validate_theme not run",
+    "shopify_admin_skills": "Shopify AI Toolkit plugin not installed - RUM performanceMetrics not queried"
+  },
+  "conditions": {
+    "url_pattern": "https://informatica.com.ua/<path>?pb=0",
+    "url_pattern_note": "Theme 186192232764 is the LIVE theme, so the plain storefront URL already renders this repo code. ?preview_theme_id= was deliberately NOT used: it adds a 302 that injected ~780ms of pure measurement artifact into every LCP (home mobile measured 76/4156ms with it vs 87/2914ms without).",
+    "mobile": "Lighthouse default mobile preset - Moto G Power emulation, 4x CPU throttle, 1638.4 Kbps down / 675 Kbps up / 150ms RTT",
+    "desktop": "Lighthouse --preset=desktop",
+    "runs_per_url": 3,
+    "statistic": "median"
+  },
+  "targets": {
+    "bar": "average Lighthouse performance >= 60 across home + product + collection, both devices",
+    "shopify_page_weighting": {
+      "home": 0.17,
+      "product": 0.4,
+      "collection": 0.43
+    },
+    "weighted_score": {
+      "mobile": 76.6,
+      "desktop": 97.8
+    },
+    "ci_floor_performance": 0.6
+  },
+  "noise_band": 10,
+  "noise_band_note": "A Lighthouse delta under 10 points is noise, not a result. NOTE: product_mobile observed a 30-point spread across 3 runs at identical byte weight (see pages.product_mobile.observed_spread) - for that page treat anything under ~30 points as noise until the LCP contention item (P1-1) is fixed.",
+  "field": {
+    "_source": null,
+    "_source_note": "NO field data captured. Shopify RUM performanceMetrics needs the Shopify AI Toolkit plugin (not installed). PageSpeed Insights / CrUX returned \"Quota exceeded for quota metric Queries per day\" on the keyless endpoint. Fill this in next week - see backlog.md \"Data sources\".",
+    "home": {
+      "mobile": {
+        "lcp_p75_ms": null,
+        "inp_p75_ms": null,
+        "cls_p75": null
+      },
+      "desktop": {
+        "lcp_p75_ms": null,
+        "inp_p75_ms": null,
+        "cls_p75": null
+      }
+    },
+    "product": {
+      "mobile": {
+        "lcp_p75_ms": null,
+        "inp_p75_ms": null,
+        "cls_p75": null
+      },
+      "desktop": {
+        "lcp_p75_ms": null,
+        "inp_p75_ms": null,
+        "cls_p75": null
+      }
+    },
+    "collection": {
+      "mobile": {
+        "lcp_p75_ms": null,
+        "inp_p75_ms": null,
+        "cls_p75": null
+      },
+      "desktop": {
+        "lcp_p75_ms": null,
+        "inp_p75_ms": null,
+        "cls_p75": null
+      }
+    }
+  },
+  "pages": {
+    "home_mobile": {
+      "url": "https://informatica.com.ua/?pb=0",
+      "runs": 3,
+      "performance": 87,
+      "lcp_ms": 2914,
+      "tbt_ms": 215,
+      "cls": 0.0228,
+      "ttfb_ms": 10,
+      "fcp_ms": 2171,
+      "total_bytes": 2557588,
+      "all_runs": [
+        87,
+        86,
+        90
+      ],
+      "observed_spread": 4
+    },
+    "home_desktop": {
+      "url": "https://informatica.com.ua/?pb=0",
+      "runs": 3,
+      "performance": 97,
+      "lcp_ms": 989,
+      "tbt_ms": 97,
+      "cls": 0.017,
+      "ttfb_ms": 11,
+      "fcp_ms": 627,
+      "total_bytes": 2803923,
+      "all_runs": [
+        92,
+        98,
+        97
+      ],
+      "observed_spread": 6
+    },
+    "product_mobile": {
+      "url": "https://informatica.com.ua/products/адаптер-живлення-магнітний-type-c-magsafe-3-pd-100-вт-для-apple-macbook?pb=0",
+      "runs": 3,
+      "performance": 61,
+      "lcp_ms": 8437,
+      "tbt_ms": 166,
+      "cls": 0,
+      "ttfb_ms": 8,
+      "fcp_ms": 3125,
+      "total_bytes": 2159067,
+      "all_runs": [
+        61,
+        59,
+        89
+      ],
+      "observed_spread": 30
+    },
+    "product_desktop": {
+      "url": "https://informatica.com.ua/products/адаптер-живлення-магнітний-type-c-magsafe-3-pd-100-вт-для-apple-macbook?pb=0",
+      "runs": 3,
+      "performance": 99,
+      "lcp_ms": 812,
+      "tbt_ms": 69,
+      "cls": 0.0012,
+      "ttfb_ms": 10,
+      "fcp_ms": 618,
+      "total_bytes": 2331909,
+      "all_runs": [
+        97,
+        99,
+        99
+      ],
+      "observed_spread": 2
+    },
+    "collection_mobile": {
+      "url": "https://informatica.com.ua/collections/hdmi_cable?pb=0",
+      "runs": 3,
+      "performance": 87,
+      "lcp_ms": 3069,
+      "tbt_ms": 174,
+      "cls": 0.0025,
+      "ttfb_ms": 10,
+      "fcp_ms": 2176,
+      "total_bytes": 2441082,
+      "all_runs": [
+        87,
+        89,
+        86
+      ],
+      "observed_spread": 3
+    },
+    "collection_desktop": {
+      "url": "https://informatica.com.ua/collections/hdmi_cable?pb=0",
+      "runs": 3,
+      "performance": 97,
+      "lcp_ms": 1090,
+      "tbt_ms": 10,
+      "cls": 0.0051,
+      "ttfb_ms": 9,
+      "fcp_ms": 636,
+      "total_bytes": 2382752,
+      "all_runs": [
+        93,
+        97,
+        98
+      ],
+      "observed_spread": 5
+    }
+  },
+  "liquid_profile": {
+    "_source": "shopify theme profile --json (CLI 4.7.1), self-time per frame, live theme",
+    "_note": "Requires SHOPIFY_CLI_THEME_TOKEN to be unset - the profile command rejects Theme Access tokens.",
+    "home": {
+      "total_render_ms": 189.9,
+      "widest_frames": [
+        {
+          "frame": "raw_section",
+          "self_ms": 31.7,
+          "pct": 16.7
+        },
+        {
+          "frame": "tag:render 'card-product',",
+          "self_ms": 17.7,
+          "pct": 9.3
+        },
+        {
+          "frame": "raw_section",
+          "self_ms": 9.1,
+          "pct": 4.8
+        },
+        {
+          "frame": "tag:render 'cart-drawer'",
+          "self_ms": 8.5,
+          "pct": 4.5
+        },
+        {
+          "frame": "tag:render 'header-drawer'",
+          "self_ms": 7.6,
+          "pct": 4
+        }
+      ]
+    },
+    "product": {
+      "total_render_ms": 131.9,
+      "widest_frames": [
+        {
+          "frame": "raw_section",
+          "self_ms": 30.5,
+          "pct": 23.1
+        },
+        {
+          "frame": "tag:render 'product-media-gallery', variant_images: variant_images",
+          "self_ms": 9.7,
+          "pct": 7.3
+        },
+        {
+          "frame": "filter:inline_asset_content",
+          "self_ms": 7.1,
+          "pct": 5.4
+        },
+        {
+          "frame": "tag:render 'product-thumbnail',",
+          "self_ms": 5.2,
+          "pct": 3.9
+        },
+        {
+          "frame": "tag:render 'buy-buttons',",
+          "self_ms": 4.7,
+          "pct": 3.6
+        }
+      ]
+    },
+    "collection": {
+      "total_render_ms": 231.8,
+      "widest_frames": [
+        {
+          "frame": "tag:render 'facets',",
+          "self_ms": 25.8,
+          "pct": 11.1
+        },
+        {
+          "frame": "tag:render 'card-product',",
+          "self_ms": 14.7,
+          "pct": 6.3
+        },
+        {
+          "frame": "tag:unless results.filters == empty",
+          "self_ms": 13.1,
+          "pct": 5.7
+        },
+        {
+          "frame": "tag:render 'cart-drawer'",
+          "self_ms": 11.6,
+          "pct": 5
+        },
+        {
+          "frame": "raw_section",
+          "self_ms": 10.5,
+          "pct": 4.5
+        }
+      ]
+    }
+  },
+  "assets_over_10kb": {
+    "base.css": 125946,
+    "cart.js": 10779,
+    "component-card.css": 15560,
+    "component-facets.css": 33958,
+    "component-image-with-text.css": 11542,
+    "component-localization-form.css": 10594,
+    "customer.css": 13986,
+    "facets.js": 13928,
+    "global.js": 44721,
+    "mask-blobs.css": 12089,
+    "product-info.js": 18832,
+    "product-price-update.js": 13928,
+    "quick-order-list.css": 12711,
+    "quick-order-list.js": 18028,
+    "section-image-banner.css": 11348,
+    "section-main-product.css": 46447,
+    "section-tv-guide.css": 14435,
+    "tailwind.output.css": 21031,
+    "vendor-motion-scroll.min.js": 15330
+  },
+  "theme_check": {
+    "total_offenses": 32,
+    "by_rule": {
+      "OrphanedSnippet": 4,
+      "HardcodedRoutes": 1,
+      "VariableName": 3,
+      "UnsupportedFilterArguments": 1,
+      "UnusedAssign": 5,
+      "UndefinedObject": 15,
+      "ValidSchemaTranslations": 2,
+      "TranslationKeyExists": 1
+    },
+    "performance_rule_offenses": 0
+  },
+  "validate_theme": {
+    "violations": null,
+    "_source_note": "shopify-dev MCP tools not loaded this session"
+  },
+  "tailwind": {
+    "referenced_at": "layout/theme.liquid:328",
+    "committed_bytes": 21031,
+    "fresh_rebuild_bytes": 16627,
+    "fresh_rebuild_minified_bytes": 13464,
+    "last_built": "2025-08-30",
+    "transferred_bytes_on_wire": 0,
+    "transferred_note": "Lighthouse reports tailwind.output.css as 0 KB / 0 ms render-blocking - it is not a measurable performance cost.",
+    "stale_classes_missing_from_shipped_css": [
+      "md:hidden",
+      "bg-transparent"
+    ],
+    "build_version_hazard": "Repo pins tailwindcss 4.1.4; a bare `npx @tailwindcss/cli@4` resolves 4.3.3 and produces unrelated churn. Pin the version when rebuilding."
+  }
+}
