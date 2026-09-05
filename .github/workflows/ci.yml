@@ -56,12 +56,27 @@ jobs:
           PERF_COLLECTION_PATH: /collections/${{ secrets.SHOP_COLLECTION_HANDLE }}
         run: |
           set -eo pipefail
-          # --theme-editor-sync is opt-in (a bare boolean flag); leaving it off is the
-          # default and avoids pulling editor changes into the CI render.
+
+          # --- credential diagnostics (both theme dev and the action 401 on
+          # publicApiVersions in CI while the same token works locally; narrow it down) ---
+          echo "CLI: $(shopify version)"
+          echo "token bytes: $(printf '%s' "$SHOPIFY_CLI_THEME_TOKEN" | wc -c) (shptka_ is 38)"
+          echo "token md5:   $(printf '%s' "$SHOPIFY_CLI_THEME_TOKEN" | md5sum | cut -c1-8)"
+          echo "store bytes: $(printf '%s' "$SHOPIFY_FLAG_STORE" | wc -c)  value: [$SHOPIFY_FLAG_STORE]"
+          echo "--- theme list probe (backlog says this works locally with the token) ---"
+          shopify theme list --store "$SHOPIFY_FLAG_STORE" || echo "::warning::theme list FAILED ($?)"
+
+          echo "--- starting theme dev ---"
           shopify theme dev --store "$SHOPIFY_FLAG_STORE" --port 9292 > theme-dev.log 2>&1 &
           DEV_PID=$!
           trap 'kill $DEV_PID 2>/dev/null || true' EXIT
-          if ! npx --yes wait-on http://127.0.0.1:9292 --timeout 180000; then
+          up=""
+          for i in $(seq 1 60); do
+            if curl -sf -o /dev/null http://127.0.0.1:9292; then up=1; break; fi
+            kill -0 $DEV_PID 2>/dev/null || break
+            sleep 2
+          done
+          if [ -z "$up" ]; then
             echo "::error::shopify theme dev did not come up"; cat theme-dev.log; exit 1
           fi
           echo "--- theme dev up ---"; head -n 40 theme-dev.log
