@@ -300,37 +300,35 @@ the Admin changelog by hand.
 from the CLI locally. Instead the job drives the CLI directly:
 
 1. `SHOPIFY_CLI_THEME_TOKEN` (= `SHOP_ACCESS_TOKEN`, the `shptka_…` Theme Access password) +
-   `SHOPIFY_FLAG_STORE` → `shopify theme dev --port 9292 --theme-editor-sync=false` serves
-   **branch code** on `http://127.0.0.1:9292` non-interactively.
+   a **hardcoded** `--store c2da09-15.myshopify.com` → `shopify theme dev --port 9292` serves
+   **branch code** on `http://127.0.0.1:9292` non-interactively. A `shopify theme list` runs
+   first as a fast auth check.
 2. `node docs/perf/measure.js ci-perf` runs Lighthouse 13 three times per URL × {mobile,
-   desktop} against that local server (`PERF_BASE_URL` / `PERF_PRODUCT_PATH` /
-   `PERF_COLLECTION_PATH` env overrides; defaults still reproduce the production baseline).
-3. `node docs/perf/ci-gate.js ci-perf` fails the job if any **median** performance score is
-   below its floor in `docs/perf/ci-floors.json`.
+   desktop} against that local server. Only `PERF_BASE_URL` is overridden; the product /
+   collection paths fall back to `measure.js` defaults (same handles as `baseline.json`).
+3. `node docs/perf/ci-gate.js ci-perf` **fails the job** if any **median** performance score
+   is below its floor in `docs/perf/ci-floors.json`.
 
-**Gate is a per-URL score floor, not a diff against `baseline.json`.** `baseline.json` was
-measured on the production URL (CDN, live tags); the CI localhost dev render scores lower and
-differently, so a diff would need its own CI baseline refreshed on every `main` merge — more
-upkeep for no extra signal. A CI-baseline diff is a possible later enhancement.
+**Gate is a per-URL median-score floor, not a diff against `baseline.json`.** `baseline.json`
+was measured on the production URL (CDN, live tags); the CI localhost `theme dev` render
+scores much lower and noisier (home/mobile LCP ~7.8 s vs 2.9 s in `baseline.json`), so the
+floors are calibrated to *this job's own runner numbers* with a ~15–20 pt margin for the
+documented mobile flap. It is a gross-regression guard; field data in `baseline.json` stays
+the real perf source of truth. A CI-baseline diff is a possible later enhancement.
 
-**`continue-on-error: true` is still on the job — temporarily.** It is no longer an auth
-dead-end; it is there only until the floors in `ci-floors.json` are calibrated to the scores
-this job actually produces on a runner. After the first green run, bake the observed medians
-(with margin) into `ci-floors.json` and delete `continue-on-error`.
+First calibrated run `33991882319` (2026-09-06) medians: home m/d **0.61 / 0.82**,
+product **0.57 / 0.89**, collection **0.60 / 0.85**.
 
 ### Repository secrets
 
-`GitHub repo → Settings → Secrets and variables → Actions → New repository secret`
+`GitHub repo → Settings → Secrets and variables → Actions`
 
-| Secret | Value |
-|---|---|
-| `SHOP_STORE_OS2` | `c2da09-15.myshopify.com` |
-| `SHOP_ACCESS_TOKEN` | Theme Access app password (`shptka_…`) for that store |
-| `SHOP_PRODUCT_HANDLE` | a stable product handle |
-| `SHOP_COLLECTION_HANDLE` | e.g. `hdmi_cable` |
-| `SHOP_PULL_THEME` | theme whose settings/JSON templates form the test baseline |
-| `SHOP_PASSWORD_OS2` | only if the storefront is password-protected — it is not |
-| `SHOP_CLIENT_ID` / `SHOP_CLIENT_SECRET` | Dev Dashboard app creds — set, verified, **currently unused** (see below) |
+| Secret | Value | Status |
+|---|---|---|
+| `SHOP_ACCESS_TOKEN` | Theme Access app password (`shptka_…`) for `c2da09-15.myshopify.com` | **the only one the job uses** |
+| `SHOP_STORE_OS2` | was meant to be `c2da09-15.myshopify.com` | **held the wrong domain — caused the 401. Now unused (store is hardcoded).** |
+| `SHOP_PRODUCT_HANDLE` / `SHOP_COLLECTION_HANDLE` | product / collection handle | held stale values → `ERRORED_DOCUMENT_REQUEST`. Now unused (measure.js defaults). |
+| `SHOP_PULL_THEME`, `SHOP_PASSWORD_OS2`, `SHOP_CLIENT_ID` / `SHOP_CLIENT_SECRET` | — | unused, safe to delete |
 
 ### History — why the action was dropped
 
@@ -341,21 +339,17 @@ The `shopify/lighthouse-ci-action` must create a scratch development theme
   exchange succeeds, then `themeCreate` → `ACCESS_DENIED` — needs `write_themes` **and a
   Shopify-granted exemption**. That exemption is a separate, slow application that a private
   perf check does not qualify for.
-- **Theme Access token** (`shptka_…`): the action 401s on `publicApiVersions` during
-  `theme push --development` — yet the **same token + store works locally** for the exact
-  command. Known unresolved action bug ([#41](https://github.com/Shopify/lighthouse-ci-action/issues/41)).
-
-The scripted `shopify theme dev` approach above sidesteps both: we set
-`SHOPIFY_CLI_THEME_TOKEN` ourselves, so the CLI authenticates the way it does locally instead
-of through the action's broken plumbing.
+- **Theme Access token** (`shptka_…`): the action 401s on `publicApiVersions`. This was
+  **not** actually an action bug or a Theme Access limitation — the `SHOP_STORE_OS2` secret
+  held the wrong `*.myshopify.com` domain, so a valid token was being pointed at a store it
+  had no access to. Proven 2026-09-06: logged-out, token-only
+  `shopify theme list --store c2da09-15.myshopify.com` succeeds, and the token's md5 matches
+  the `SHOP_ACCESS_TOKEN` secret. Hardcoding the store fixed CI.
 
 **Fallback if `shopify theme dev` proves flaky headless:** create one permanent *unpublished*
 "CI" theme on the store once, `shopify theme push --theme <id> --path .` each run (an update —
 no `themeCreate`), and point Lighthouse at `https://<store>/?preview_theme_id=<id>` (accept
 the ~780 ms 302 artifact; it is constant run-to-run, so a floor still works).
-
-`SHOP_CLIENT_ID` / `SHOP_CLIENT_SECRET` and `SHOP_PULL_THEME` are now unused by the workflow
-and can be deleted.
 
 ---
 

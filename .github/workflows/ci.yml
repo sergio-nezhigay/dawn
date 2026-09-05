@@ -37,10 +37,10 @@ jobs:
     # which is what produced the publicApiVersions 401 -- a valid token pointed at the
     # wrong store. Only SHOP_ACCESS_TOKEN (a shptka_ Theme Access password) is a secret.
     #
-    # continue-on-error stays ONLY until the per-URL floors in docs/perf/ci-floors.json
-    # are calibrated to the scores this job produces on a runner. Remove it once the
-    # first green run's medians are baked into ci-floors.json.
-    continue-on-error: true
+    # This job now fails CI on a real regression. The gate is a per-URL median-score
+    # floor in docs/perf/ci-floors.json, calibrated to this job's own runner numbers
+    # (the localhost `theme dev` render scores well below baseline.json's production
+    # numbers). Field data in baseline.json remains the real perf source of truth.
     env:
       STORE: c2da09-15.myshopify.com
     steps:
