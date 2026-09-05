@@ -290,20 +290,33 @@ the Admin changelog by hand.
 
 # CI regression guard
 
-`.github/workflows/ci.yml` — all four defects fixed, YAML verified to parse.
+`.github/workflows/ci.yml` — the `lhci` (Lighthouse) job.
 
-| # | Was | Now |
-|---|---|---|
-| 1 | `on: [push]` | `on: [push, pull_request]` — score comments never fire on push-only |
-| 2 | `access_token:` (legacy custom app; discontinued Jan 2026) | `client_id:` + `client_secret:` |
-| 3 | `lhci_min_score_performance: 0.8` | `0.6` — matches the ≥60 bar and the action's default |
-| 4 | Whole `lhci` job commented out | Enabled |
+**How it works (since 2026-09-05):** the job does **not** use
+`shopify/lighthouse-ci-action`. That action always creates a scratch development theme
+(`themeCreate`) and mis-wires the Theme Access token in CI, 401ing on `publicApiVersions`
+([issue #41](https://github.com/Shopify/lighthouse-ci-action/issues/41),
+[#47](https://github.com/Shopify/lighthouse-ci-action/issues/47)) — the same command works
+from the CLI locally. Instead the job drives the CLI directly:
 
-Input names were verified against the action's own
-[`action.yml`](https://github.com/Shopify/lighthouse-ci-action/blob/main/action.yml).
-`lhci_github_app_token` is intentionally omitted — optional, and without it the job still
-passes/fails and prints scores to its log. The `tailwindcss-update` job was left commented as
-found.
+1. `SHOPIFY_CLI_THEME_TOKEN` (= `SHOP_ACCESS_TOKEN`, the `shptka_…` Theme Access password) +
+   `SHOPIFY_FLAG_STORE` → `shopify theme dev --port 9292 --theme-editor-sync=false` serves
+   **branch code** on `http://127.0.0.1:9292` non-interactively.
+2. `node docs/perf/measure.js ci-perf` runs Lighthouse 13 three times per URL × {mobile,
+   desktop} against that local server (`PERF_BASE_URL` / `PERF_PRODUCT_PATH` /
+   `PERF_COLLECTION_PATH` env overrides; defaults still reproduce the production baseline).
+3. `node docs/perf/ci-gate.js ci-perf` fails the job if any **median** performance score is
+   below its floor in `docs/perf/ci-floors.json`.
+
+**Gate is a per-URL score floor, not a diff against `baseline.json`.** `baseline.json` was
+measured on the production URL (CDN, live tags); the CI localhost dev render scores lower and
+differently, so a diff would need its own CI baseline refreshed on every `main` merge — more
+upkeep for no extra signal. A CI-baseline diff is a possible later enhancement.
+
+**`continue-on-error: true` is still on the job — temporarily.** It is no longer an auth
+dead-end; it is there only until the floors in `ci-floors.json` are calibrated to the scores
+this job actually produces on a runner. After the first green run, bake the observed medians
+(with margin) into `ci-floors.json` and delete `continue-on-error`.
 
 ### Repository secrets
 
@@ -319,34 +332,30 @@ found.
 | `SHOP_PASSWORD_OS2` | only if the storefront is password-protected — it is not |
 | `SHOP_CLIENT_ID` / `SHOP_CLIENT_SECRET` | Dev Dashboard app creds — set, verified, **currently unused** (see below) |
 
-### Auth is unresolved — `lhci` job runs with `continue-on-error`
+### History — why the action was dropped
 
-The action must create a scratch development theme (`shopify theme push --development`,
-which calls the `themeCreate` GraphQL mutation) to audit branch code. No credential we can
-issue lets it:
+The `shopify/lighthouse-ci-action` must create a scratch development theme
+(`themeCreate`) to audit branch code, and no credential we can issue lets it do that in CI:
 
-- **Dev Dashboard app** (`client_id` + `client_secret`, scopes `read_products` +
-  `write_themes`, approved on the store): token exchange succeeds, then `themeCreate` returns
-  `ACCESS_DENIED` — "needs `write_themes` **and an exemption from Shopify** to modify themes."
-  That exemption is a separate application ([form](https://docs.google.com/forms/d/e/1FAIpQLSfZTB1vxFC5d1-GPdqYunWRGUoDcOheHQzfK2RoEFEHrknt5g/viewform));
-  community reports show it is slow and often still fails after approval, and a private perf
-  check does not match the listed eligibility categories.
-- **Theme Access token** (`access_token` = `shptka_…`): the action 401s on the
-  `publicApiVersions` query during `theme push --development` —
-  `[API] Invalid API key or access token`. The **same token + store works locally** for the
-  exact command (`SHOPIFY_CLI_THEME_TOKEN=shptka_… shopify theme push --development --store
-  c2da09-15.myshopify.com --path .` created a dev theme cleanly). Verified against a fresh
-  push, a re-issued token, and `SHOP_STORE_OS2` corrected — CI still 401s. This CLI-succeeds /
-  Action-401s split is a known, unresolved action bug
-  ([issue #41](https://github.com/Shopify/lighthouse-ci-action/issues/41)).
+- **Dev Dashboard app** (`client_id` + `client_secret`, `write_themes` approved): token
+  exchange succeeds, then `themeCreate` → `ACCESS_DENIED` — needs `write_themes` **and a
+  Shopify-granted exemption**. That exemption is a separate, slow application that a private
+  perf check does not qualify for.
+- **Theme Access token** (`shptka_…`): the action 401s on `publicApiVersions` during
+  `theme push --development` — yet the **same token + store works locally** for the exact
+  command. Known unresolved action bug ([#41](https://github.com/Shopify/lighthouse-ci-action/issues/41)).
 
-`.github/workflows/ci.yml` keeps `continue-on-error: true` on the `lhci` job so this does not
-hold CI red. Drop it once the action can create a development theme. If revisiting: pin an
-older `@shopify/cli` in a fork of the action, or run Lighthouse locally against
-`shopify theme dev` instead of in CI.
+The scripted `shopify theme dev` approach above sidesteps both: we set
+`SHOPIFY_CLI_THEME_TOKEN` ourselves, so the CLI authenticates the way it does locally instead
+of through the action's broken plumbing.
 
-> Verified: the YAML parses, every input name exists in the action, and the Theme Access
-> credential itself is good. The blocker is inside the action's CI environment.
+**Fallback if `shopify theme dev` proves flaky headless:** create one permanent *unpublished*
+"CI" theme on the store once, `shopify theme push --theme <id> --path .` each run (an update —
+no `themeCreate`), and point Lighthouse at `https://<store>/?preview_theme_id=<id>` (accept
+the ~780 ms 302 artifact; it is constant run-to-run, so a floor still works).
+
+`SHOP_CLIENT_ID` / `SHOP_CLIENT_SECRET` and `SHOP_PULL_THEME` are now unused by the workflow
+and can be deleted.
 
 ---
 

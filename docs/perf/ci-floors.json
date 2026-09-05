@@ -1,0 +1,9 @@
+{
+  "_comment": "Minimum acceptable median Lighthouse performance score (0-1) per tracked URL, checked by ci-gate.js. product_mobile is deliberately low: backlog.md documents a ~30-point run-to-run spread on that page under mobile throttling. Recalibrate to the CI runner's own medians (measured against `shopify theme dev`, not production) once the Lighthouse job has a green run, then drop continue-on-error in ci.yml.",
+  "home_mobile": 0.55,
+  "home_desktop": 0.85,
+  "product_mobile": 0.4,
+  "product_desktop": 0.85,
+  "collection_mobile": 0.55,
+  "collection_desktop": 0.85
+}

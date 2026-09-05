@@ -23,33 +23,57 @@ jobs:
   lhci:
     name: Lighthouse
     runs-on: ubuntu-latest
-    # Auth is unresolved, so this job is advisory (does not fail CI) until a
-    # working credential exists:
-    #   - client_id/client_secret (Dev Dashboard app): authenticates, then
-    #     `themeCreate` returns ACCESS_DENIED -- that mutation needs a
-    #     Shopify-granted exemption on top of write_themes.
-    #   - access_token (Theme Access shptka_ token): 401 on `publicApiVersions`
-    #     during `shopify theme push --development` in CI, even though the same
-    #     token lists themes fine via `shopify theme list` locally.
-    # Remove continue-on-error once the action can create a development theme.
+    timeout-minutes: 20
+    concurrency:
+      group: lhci-${{ github.ref }}
+      cancel-in-progress: true
+    # `shopify/lighthouse-ci-action` is not used: it always creates a scratch
+    # development theme (themeCreate) and mis-wires the Theme Access token in CI
+    # (401 on publicApiVersions -- Shopify/lighthouse-ci-action#41). Instead we
+    # drive the CLI directly the way it works locally: SHOPIFY_CLI_THEME_TOKEN +
+    # `shopify theme dev` serve branch code on localhost, then Lighthouse audits it.
+    #
+    # continue-on-error stays ONLY until the per-URL floors in docs/perf/ci-floors.json
+    # are calibrated to the scores this job actually produces on a CI runner (the
+    # localhost dev render is slower than the production URL the baseline used).
+    # Remove it once the first green run's medians are baked into ci-floors.json.
     continue-on-error: true
     steps:
       - uses: actions/checkout@v4
-      - name: Lighthouse
-        uses: shopify/lighthouse-ci-action@v1
+      - uses: actions/setup-node@v4
         with:
-          store: ${{ secrets.SHOP_STORE_OS2 }}
-          password: ${{ secrets.SHOP_PASSWORD_OS2 }}
-          access_token: ${{ secrets.SHOP_ACCESS_TOKEN }}
-          product_handle: ${{ secrets.SHOP_PRODUCT_HANDLE }}
-          collection_handle: ${{ secrets.SHOP_COLLECTION_HANDLE }}
-          pull_theme: ${{ secrets.SHOP_PULL_THEME }}
-          # 0.6 matches the >= 60 Lighthouse bar and the action's own default. It was
-          # pinned at 0.8, which is tighter than run-to-run noise allows on this theme.
-          lhci_min_score_performance: 0.6
-          lhci_min_score_accessibility: 0.8
-          # lhci_github_app_token is optional; without it the job still passes/fails and
-          # prints scores to its log. Add secrets.LHCI_GITHUB_APP_TOKEN to get PR comments.
+          node-version: 20
+      - name: Install Shopify CLI
+        run: npm install -g @shopify/cli
+      - name: Warm Lighthouse CLI cache
+        run: npx --yes lighthouse@13 --version
+      - name: Lighthouse against `shopify theme dev`
+        env:
+          SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOP_ACCESS_TOKEN }}
+          SHOPIFY_FLAG_STORE: ${{ secrets.SHOP_STORE_OS2 }}
+          PERF_BASE_URL: http://127.0.0.1:9292
+          PERF_PRODUCT_PATH: /products/${{ secrets.SHOP_PRODUCT_HANDLE }}
+          PERF_COLLECTION_PATH: /collections/${{ secrets.SHOP_COLLECTION_HANDLE }}
+        run: |
+          set -eo pipefail
+          shopify theme dev --store "$SHOPIFY_FLAG_STORE" --port 9292 --theme-editor-sync=false > theme-dev.log 2>&1 &
+          DEV_PID=$!
+          trap 'kill $DEV_PID 2>/dev/null || true' EXIT
+          if ! npx --yes wait-on http://127.0.0.1:9292 --timeout 180000; then
+            echo "::error::shopify theme dev did not come up"; cat theme-dev.log; exit 1
+          fi
+          echo "--- theme dev up ---"; head -n 40 theme-dev.log
+          node docs/perf/measure.js ci-perf
+          node docs/perf/ci-gate.js ci-perf
+      - name: Upload Lighthouse output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-${{ github.run_id }}
+          path: |
+            ci-perf/lh_summary.json
+            theme-dev.log
+          if-no-files-found: warn
   theme-check:
     name: Theme Check
     runs-on: ubuntu-latest

@@ -29,14 +29,21 @@ const LH_CLI = findLhCli();
 // Theme 186192232764 is the LIVE theme, so the plain storefront URL already renders this
 // repo's theme code. Using ?preview_theme_id= instead adds a 302 that put ~780ms of
 // pure measurement artifact into every LCP, so it is deliberately not used here.
-const PREVIEW = (p) => `https://informatica.com.ua${p}${p.includes('?') ? '&' : '?'}pb=0`;
+//
+// Base URL and page paths are overridable via env so CI can point Lighthouse at a local
+// `shopify theme dev` server (branch code) instead of production. Defaults reproduce the
+// production baseline measurement in baseline.json.
+const BASE = process.env.PERF_BASE_URL || 'https://informatica.com.ua';
+const PRODUCT_PATH =
+  process.env.PERF_PRODUCT_PATH ||
+  '/products/адаптер-живлення-магнітний-type-c-magsafe-3-pd-100-вт-для-apple-macbook';
+const COLLECTION_PATH = process.env.PERF_COLLECTION_PATH || '/collections/hdmi_cable';
+const PREVIEW = (p) => `${BASE}${p}${p.includes('?') ? '&' : '?'}pb=0`;
 
 const URLS = {
   home: PREVIEW('/'),
-  product: PREVIEW(
-    '/products/адаптер-живлення-магнітний-type-c-magsafe-3-pd-100-вт-для-apple-macbook'
-  ),
-  collection: PREVIEW('/collections/hdmi_cable'),
+  product: PREVIEW(PRODUCT_PATH),
+  collection: PREVIEW(COLLECTION_PATH),
 };
 
 const RUNS = 3;
