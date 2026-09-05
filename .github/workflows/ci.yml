@@ -24,6 +24,10 @@ jobs:
     name: Lighthouse
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    # Run once per change: on PR updates and on main. The workflow triggers on
+    # `push` too (for Theme Check), but a branch push with an open PR would
+    # otherwise run this store-hitting job twice.
+    if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
     concurrency:
       group: lhci-${{ github.ref }}
       cancel-in-progress: true

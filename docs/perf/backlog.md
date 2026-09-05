@@ -311,12 +311,22 @@ from the CLI locally. Instead the job drives the CLI directly:
 
 **Gate is a per-URL median-score floor, not a diff against `baseline.json`.** `baseline.json`
 was measured on the production URL (CDN, live tags); the CI localhost `theme dev` render
-scores much lower and noisier (home/mobile LCP ~7.8 s vs 2.9 s in `baseline.json`), so the
-floors are calibrated to *this job's own runner numbers* with a ~15–20 pt margin for the
-documented mobile flap. It is a gross-regression guard; field data in `baseline.json` stays
-the real perf source of truth. A CI-baseline diff is a possible later enhancement.
+scores much lower (home/mobile LCP ~7.8 s vs 2.9 s in `baseline.json`).
 
-First calibrated run `33991882319` (2026-09-06) medians: home m/d **0.61 / 0.82**,
+- **Desktop floors are meaningful.** Runner desktop scores are stable (home 74–85,
+  product 84–89, collection 82–86); floors sit ~10 pts under the observed min and will catch
+  a real regression.
+- **Mobile floors are `0.25` — a "did the page render" check only.** Mobile lab scores swing
+  20+ pts run-to-run on shared runners through the dev proxy (`collection/mobile` has ranged
+  0.38–0.61), so a tight mobile floor just flakes. Mobile perf regressions are caught by
+  field data (P1-1), not here.
+
+The job runs **once per change** (`if: pull_request || ref == main`) — the workflow also
+triggers on `push`, but that would double-run this store-hitting job on a branch with an open
+PR. Field data in `baseline.json` stays the real perf source of truth; a CI-baseline diff is
+a possible later enhancement.
+
+Calibration run `33991882319` (2026-09-06) medians: home m/d **0.61 / 0.82**,
 product **0.57 / 0.89**, collection **0.60 / 0.85**.
 
 ### Repository secrets
