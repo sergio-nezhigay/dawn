@@ -305,26 +305,48 @@ Input names were verified against the action's own
 passes/fails and prints scores to its log. The `tailwindcss-update` job was left commented as
 found.
 
-### Repository secrets to create
+### Repository secrets
 
 `GitHub repo → Settings → Secrets and variables → Actions → New repository secret`
 
 | Secret | Value |
 |---|---|
 | `SHOP_STORE_OS2` | `c2da09-15.myshopify.com` |
-| `SHOP_CLIENT_ID` | Dev Dashboard app → **Client ID** |
-| `SHOP_CLIENT_SECRET` | Dev Dashboard app → **Client secret** |
+| `SHOP_ACCESS_TOKEN` | Theme Access app password (`shptka_…`) for that store |
 | `SHOP_PRODUCT_HANDLE` | a stable product handle |
 | `SHOP_COLLECTION_HANDLE` | e.g. `hdmi_cable` |
 | `SHOP_PULL_THEME` | theme whose settings/JSON templates form the test baseline |
 | `SHOP_PASSWORD_OS2` | only if the storefront is password-protected — it is not |
+| `SHOP_CLIENT_ID` / `SHOP_CLIENT_SECRET` | Dev Dashboard app creds — set, verified, **currently unused** (see below) |
 
-**Creating the app:** Shopify **Dev Dashboard** → create an app → enable scopes
-**`read_products`** and **`write_themes`** → install on the store → copy Client ID and secret.
-Tokens refresh each run (24 h validity); nothing to rotate manually.
+### Auth is unresolved — `lhci` job runs with `continue-on-error`
 
-> The job cannot be verified end-to-end from here — it needs secrets only the store owner can
-> create. Verified: the YAML parses, and every input name exists in the action.
+The action must create a scratch development theme (`shopify theme push --development`,
+which calls the `themeCreate` GraphQL mutation) to audit branch code. No credential we can
+issue lets it:
+
+- **Dev Dashboard app** (`client_id` + `client_secret`, scopes `read_products` +
+  `write_themes`, approved on the store): token exchange succeeds, then `themeCreate` returns
+  `ACCESS_DENIED` — "needs `write_themes` **and an exemption from Shopify** to modify themes."
+  That exemption is a separate application ([form](https://docs.google.com/forms/d/e/1FAIpQLSfZTB1vxFC5d1-GPdqYunWRGUoDcOheHQzfK2RoEFEHrknt5g/viewform));
+  community reports show it is slow and often still fails after approval, and a private perf
+  check does not match the listed eligibility categories.
+- **Theme Access token** (`access_token` = `shptka_…`): the action 401s on the
+  `publicApiVersions` query during `theme push --development` —
+  `[API] Invalid API key or access token`. The **same token + store works locally** for the
+  exact command (`SHOPIFY_CLI_THEME_TOKEN=shptka_… shopify theme push --development --store
+  c2da09-15.myshopify.com --path .` created a dev theme cleanly). Verified against a fresh
+  push, a re-issued token, and `SHOP_STORE_OS2` corrected — CI still 401s. This CLI-succeeds /
+  Action-401s split is a known, unresolved action bug
+  ([issue #41](https://github.com/Shopify/lighthouse-ci-action/issues/41)).
+
+`.github/workflows/ci.yml` keeps `continue-on-error: true` on the `lhci` job so this does not
+hold CI red. Drop it once the action can create a development theme. If revisiting: pin an
+older `@shopify/cli` in a fork of the action, or run Lighthouse locally against
+`shopify theme dev` instead of in CI.
+
+> Verified: the YAML parses, every input name exists in the action, and the Theme Access
+> credential itself is good. The blocker is inside the action's CI environment.
 
 ---
 
