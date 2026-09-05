@@ -8,7 +8,9 @@ const { spawnSync, execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
-const OUT = process.argv[2] || path.join(require('os').tmpdir(), 'perf-runs');
+// Resolve to absolute: Lighthouse is spawned with cwd:OUT, so a relative --output-path
+// would land under OUT/OUT and fail ("cannot be written to").
+const OUT = path.resolve(process.argv[2] || path.join(require('os').tmpdir(), 'perf-runs'));
 fs.mkdirSync(OUT, { recursive: true });
 
 // Resolve the Lighthouse CLI entry from the npx cache. Spawning `npx.cmd` directly is not an
