@@ -3,23 +3,39 @@
 Two prompts that drive the performance work on this theme. Paste them into a **fresh**
 Claude Code session — they are self-contained.
 
-- **Prompt A** — run **once**. Sets up tooling, establishes field + traffic data, baselines
-  the theme, repairs the CI regression guard, and writes `docs/perf/backlog.md` and
-  `docs/perf/baseline.json`.
+- **Prompt A** — already run, 2026-09-05. **Do not run it again** unless you are re-baselining
+  from scratch; it would overwrite `backlog.md` and `baseline.json`. Kept for the record.
+  Several facts embedded in it were disproved by the run itself — see the note below.
 - **Prompt B** — paste **every week**. Executes one ~1–2 hour slice from the backlog, proves
-  it helped and proves it broke nothing, then updates the baseline.
+  it helped and proves it broke nothing, then updates the baseline. **This is the one to use.**
 
 Files involved:
 
 ```
 docs/perf/
   PROMPTS.md      <- this file
-  backlog.md      <- ranked <=2h items          (created by Prompt A)
-  baseline.json   <- medians + profile + bytes  (created by Prompt A)
+  backlog.md      <- ranked <=2h items, data sources, gotchas   READ THIS FIRST
+  baseline.json   <- field + lab + profile + bytes; the contract
+  measure.js      <- Lighthouse runner (fixed conditions)
+  mkfield.js      <- ShopifyQL web_performance -> field.json
+  mkbaseline.js   <- assembles baseline.json
 ```
 
-Written 2026-09-05 against Shopify CLI 4.7.1. The facts embedded in Prompt A were verified
-at that date; if a year has passed, re-check the API version note and the CI action inputs.
+Written 2026-09-05 against Shopify CLI 4.7.1. Prompt B was corrected on the same date after
+Prompt A's run contradicted it.
+
+> **What Prompt A got wrong** (corrected in Prompt B, kept here so it is not rediscovered):
+> - Admin GraphQL `performanceMetrics` returns an **empty array** for this shop. Field data
+>   comes from the **ShopifyQL `web_performance`** schema instead.
+> - `tailwind.output.css` transfers as **0 KB / 0 ms**. It was not a byte problem; it ships a
+>   stale-build *correctness* bug instead.
+> - Measuring via `?preview_theme_id=` adds a **302 worth ~780 ms** to every LCP. Theme
+>   186192232764 is **live**, so the plain URL renders this repo's code — and `npm run dev`
+>   syncs edits to production.
+> - The lab and the field disagree: lab product/mobile LCP 8437 ms vs field p75 1624 ms
+>   (good). Prioritise from field data.
+> - Real traffic is product 74.7% / collection 14.4% / index 3.8% — not Shopify's generic
+>   17/40/43 weighting.
 
 ---
 
@@ -218,27 +234,53 @@ Commit all of it on one branch. Change no theme code. Finish by printing the Wee
 ## Prompt B — Weekly slice, regression-checked (paste each week, fresh session)
 
 ```text
-Repo: C:\projects\informatica\dawn (customized Dawn + stale Tailwind v4). Windows /
-PowerShell. Dev store c2da09-15.myshopify.com, live informatica.com.ua. Local dev =
-`npm run dev`. Do NOT use `shopify theme push` / `pull`.
+Repo: C:\projects\informatica\dawn (customized Dawn + Tailwind v4). Windows / PowerShell.
+Store c2da09-15.myshopify.com, custom domain informatica.com.ua.
+
+DANGER: `npm run dev` targets `--theme 186192232764`, which is the LIVE theme, so
+`shopify theme dev` syncs local edits straight to production. Do not run it while editing
+theme files. Measurement never needs it — the tracked URLs are public.
+Do NOT use `shopify theme push` / `pull` either.
 
 GOAL: Execute ONE ~1–2 hour performance slice from docs/perf/backlog.md, prove it helped and
 prove it broke nothing, then update the baseline. One slice only, then stop.
 
 0. If docs/perf/backlog.md or docs/perf/baseline.json is missing, stop and tell me to run
    Prompt A from docs/perf/PROMPTS.md first. Do not improvise either file.
-   Confirm `claude mcp list` shows chrome-devtools and shopify-dev; if not, re-add them:
+   READ FIRST, and prefer them over this prompt wherever they disagree — they were written
+   from measurement, this prompt was written from assumptions:
+     - docs/perf/backlog.md sections "Data sources", "Gotchas worth keeping", and
+       "Reproducing this baseline"
+     - docs/perf/baseline.json `conditions`, `field` and `noise_band_note`
+   chrome-devtools + shopify-dev MCP and the Shopify AI Toolkit plugin are already
+   installed. Confirm with `claude mcp list`; re-add only if missing:
      claude mcp add chrome-devtools -- npx -y chrome-devtools-mcp@latest
      claude mcp add shopify-dev -e LIQUID=true -e LIQUID_VALIDATION_MODE=full -- npx -y @shopify/dev-mcp@latest
    Call `learn_shopify_api` before any other shopify-dev tool.
 
-1. REGRESSION SWEEP FIRST, before picking any work. Read baseline.json. Pull current Shopify
-   RUM p75 LCP/INP/CLS via the shopify-admin / shopify-admin-execution skills — root query
-   `performanceMetrics(aggregationLevel: DAILY, deviceTypes: [ALL], maxDays: 90,
-   storefrontId: "online_store")`, only available on the **unstable** API version, needs
-   themes + reports access. Fall back to CrUX for informatica.com.ua if that is not
-   reachable. Compare against baseline.json's `field` block, and read the RUM event
-   annotations to see whether a theme or app change lines up with any drop.
+1. REGRESSION SWEEP FIRST, before picking any work. Read baseline.json, then pull current
+   field data with ShopifyQL — NOT with Admin GraphQL `performanceMetrics`, which returns an
+   empty array for this shop (verified 2026-09-05 with valid auth and read_reports, with and
+   without storefrontId, with explicit deviceTypes). Do not retry it.
+
+     shopify store auth --store c2da09-15.myshopify.com --scopes read_reports
+     shopify store execute --store c2da09-15.myshopify.com --json --query 'query {
+       shopifyqlQuery(query: """
+         FROM web_performance
+         SHOW page_loads, percent_of_page_loads, lcp_p75_ms, inp_p75_ms, p75_cls, fcp_p75_ms
+         GROUP BY page_type, device_type SINCE -90d ORDER BY page_loads DESC
+       """) { tableData { columns { name dataType } rows } parseErrors } }'
+
+   Note: `--store` needs the .myshopify.com domain (the custom domain makes the CLI request
+   `informatica.com.ua.myshopify.com` and fail on a cert mismatch); the flag is `--version`,
+   not `--api-version`; and metric naming is `lcp_p75_ms` / `inp_p75_ms` but `p75_cls`.
+
+   Compare against baseline.json's `field` block. Judge regressions on FIELD data, not lab
+   scores. Weight by real traffic share (product 74.7%, collection 14.4%, index 3.8%) — not
+   Shopify's generic 17/40/43. Ignore any page_type/week with fewer than ~30 page loads:
+   index/mobile runs 4-19 loads a week and its p75 swings wildly for that reason alone.
+   RUM event annotations are NOT available (same dead query), so a regression cannot be
+   auto-attributed — check the Admin changelog and recent commits by hand instead.
    If anything regressed beyond the noise band, that regression IS this week's slice —
    name the likely cause and fix or revert it instead of taking the next backlog item.
 
@@ -252,34 +294,61 @@ prove it broke nothing, then update the baseline. One slice only, then stop.
 
 3. For a theme-code item, create a branch perf/<item-id>.
 
-4. BEFORE. Reproduce baseline.json's `conditions` exactly — same cpuThrottlingRate,
-   networkConditions and viewport via chrome-devtools `emulate`. Start `npm run dev`, use
-   the preview URL with `?pb=0`. On the item's target URL(s): `lighthouse_audit` 3x, take
-   the median, and run one `performance_start_trace(reload: true, autoStop: true)` +
-   `performance_analyze_insight` on the flagged insights. Also capture `shopify theme check`
-   for the files you will touch. If today's "before" numbers differ from baseline.json by
-   more than the noise band on an untouched page, stop and investigate that first — the
-   environment or the store drifted, and measuring against it would be meaningless.
+4. BEFORE. Reproduce baseline.json's `conditions` exactly by running the committed script —
+   do NOT hand-roll the conditions with chrome-devtools `emulate`, or the numbers will not
+   compare to baseline.json:
+
+     npx -y lighthouse@13 --version        # once, populates the npx cache
+     node docs/perf/measure.js <outDir>    # 3 runs x 3 URLs x 2 devices, medians
+
+   DO NOT start `npm run dev` and DO NOT use `?preview_theme_id=`. Theme 186192232764 is the
+   LIVE theme, so (a) the plain URL `https://informatica.com.ua/<path>?pb=0` already renders
+   this repo's code, and (b) `theme dev` would sync your edits straight to production.
+   `preview_theme_id` also adds a 302 worth ~780ms of pure artifact to every LCP (home mobile
+   measured 76/4156ms with it vs 87/2914ms without).
+
+   Then run one `performance_start_trace(reload: true, autoStop: true)` +
+   `performance_analyze_insight` on the flagged insights for the item's target URL. For an
+   INP item, interact with the page (variant picker, add-to-cart) and analyze `INPBreakdown`.
+   Also capture `shopify theme check` for the files you will touch.
+   If today's "before" numbers differ from baseline.json by more than the noise band on an
+   untouched page, stop and investigate — the environment or the store drifted.
 
 5. Implement the fix — surgical and minimal, matching Dawn's existing style. Obey the repo
    CLAUDE.md rules: no new Tailwind; never hardcode section IDs (use {{ section.id }}); one
    {% schema %} block per section file; image_url not img_url; vanilla JS / Web Components;
    console.log for debugging. Validate every file you touched with
-   `validate_theme_codeblocks` (shopify-dev MCP) as you go. For a Tailwind-removal item,
-   confirm no visual regression on the affected templates using the claude-in-chrome tools
-   or the shopify-frontend-loop skill.
+   `validate_theme_codeblocks` (shopify-dev MCP) as you go. Confirm no visual regression on
+   the affected templates using the claude-in-chrome tools or the shopify-frontend-loop
+   skill. NOTE for the Tailwind REBUILD item (P1-2): it is expected to change what renders —
+   the shipped CSS is missing `.md\:hidden`, so the header phone icon at
+   sections/header.liquid:320 is currently visible on desktop and SHOULD disappear at
+   >=768px after the rebuild. That is the fix, not a regression.
 
 6. AFTER — and this is the regression guard, not a formality:
-   a) Re-measure the TARGET URL(s): lighthouse_audit median-of-3 + one trace. Record the
-      delta. If the delta is inside the noise band (~10 points), say so plainly — "no
-      measurable change" is an honest result and a 6-point gain is not a win.
-   b) Re-measure EVERY OTHER tracked URL in baseline.json, mobile and desktop. A slice that
+   a) Re-measure the TARGET URL(s) with `node docs/perf/measure.js`. Record the delta.
+      Noise band is 10 points — EXCEPT product/mobile, which showed a 30-point spread
+      ([61,59,89]) across three runs at identical byte weight, so nothing under ~30 points
+      is a result there. "No measurable change" is an honest outcome; a 6-point gain is not
+      a win.
+   b) LAB CANNOT VERIFY EVERY ITEM. The lab and the field disagree on this store: Lighthouse
+      reports product/mobile LCP at 8437ms, the field says 1624ms (good) — the lab number is
+      an artifact of the 4x-CPU / slow-4G preset. So:
+        - For a BYTES or RENDER-BLOCKING item, the lab delta is valid evidence.
+        - For an INP or LCP item, the lab proves nothing. Verification is next week's
+          `web_performance` query (step 1). Say so plainly, mark the item
+          "awaiting field verification" in backlog.md, and do NOT claim a win from a lab
+          score. This is the "verify in the field" step of Shopify's method; it takes a week
+          and cannot be rushed.
+   c) Re-measure EVERY OTHER tracked URL in baseline.json, mobile and desktop. A slice that
       helps the product page and quietly costs the collection page is a net loss.
-   c) `shopify theme check` and `validate_theme` must be no worse than baseline.json's
+   d) `shopify theme check` and `validate_theme` must be no worse than baseline.json's
       counts.
-   d) Asset bytes: no file in assets/ may grow versus baseline.json without an explicit
-      justification in the commit message.
-   If (b), (c) or (d) regresses beyond the noise band and you cannot fix it inside the
+   e) Asset bytes: no file in assets/ may grow versus baseline.json without an explicit
+      justification in the commit message. (Expected exception: rebuilding
+      assets/tailwind.output.css — minified it should SHRINK from 21031 bytes; if it grows,
+      you used the wrong CLI version. Pin @tailwindcss/cli@4.1.4; a bare @4 pulls 4.3.3.)
+   If (c), (d) or (e) regresses beyond the noise band and you cannot fix it inside the
    timebox, REVERT the slice, and add what you learned to the backlog item. A reverted
    slice that documented a dead end is a good week.
 
@@ -289,10 +358,13 @@ prove it broke nothing, then update the baseline. One slice only, then stop.
 8. Update both files:
    - docs/perf/backlog.md: mark the item done with the date, the measured before/after
      numbers, and the commit/PR link. Add newly found issues as new items, each <= 2h.
-   - docs/perf/baseline.json: update the pages/assets/theme_check entries you improved, bump
-     `measured_at` and `commit`. Leave `conditions` and `noise_band` alone — changing the
-     measurement conditions silently invalidates every past comparison. If conditions must
-     change, say so loudly and re-baseline every tracked page in the same commit.
+   - docs/perf/baseline.json: DO NOT hand-edit it. Regenerate:
+       node docs/perf/mkfield.js    <outDir>   # needs webperf.json + webperf_trend.json
+       node docs/perf/mkbaseline.js <outDir>   # needs lh_summary.json + themecheck.json
+     `commit` auto-resolves to the last theme-code change, so doc-only commits do not
+     invalidate a baseline. Leave `conditions` and `noise_band` alone — changing measurement
+     conditions silently invalidates every past comparison. If they must change, say so
+     loudly and re-baseline every tracked page in the same commit.
 
 9. Commit; open a PR (ask me before pushing if you are unsure of the repo norm). CI runs
    theme-check plus the Lighthouse CI action on the PR — wait for it and report the result.
@@ -307,7 +379,8 @@ Stop after one slice. Do not batch multiple items.
 
 - [Testing for performance — shopify.dev](https://shopify.dev/docs/storefronts/themes/best-practices/performance/testing-for-performance)
 - [Web Performance Tools for 2026 — performance.shopify.com](https://performance.shopify.com/blogs/blog/web-performance-tools-for-2026)
-- [PerformanceMetrics (unstable) — GraphQL Admin](https://shopify.dev/docs/api/admin-graphql/unstable/objects/performancemetrics)
+- [ShopifyQL `web_performance` schema](https://shopify.dev/docs/api/shopifyql/2026-07/schemas/sessions_and_behavior/web_performance) — the field-data source that actually works here
+- [PerformanceMetrics (unstable) — GraphQL Admin](https://shopify.dev/docs/api/admin-graphql/unstable/objects/performancemetrics) — documented, but returns an empty array for this shop
 - [Shopify Lighthouse CI GitHub Action](https://shopify.dev/docs/storefronts/themes/tools/lighthouse-ci)
 - [Shopify Dev MCP now supports Liquid](https://shopify.dev/changelog/dev-mcp-now-supports-liquid)
 - [chrome-devtools-mcp](https://github.com/ChromeDevTools/chrome-devtools-mcp)
