@@ -57,12 +57,25 @@ jobs:
         run: |
           set -eo pipefail
 
-          # --- credential diagnostics (both theme dev and the action 401 on
-          # publicApiVersions in CI while the same token works locally; narrow it down) ---
+          # The CI 401 on publicApiVersions hit `theme list` too (not just the action or
+          # `theme dev`), and the raw secrets printed 39 / 26 bytes -- `c2da09-15.myshopify.com`
+          # is 23, so at least SHOP_STORE_OS2 carries trailing junk from a bad paste.
+          # Sanitize both defensively: strip whitespace, and strip protocol / trailing slash
+          # from the store (a leading https:// is a known cause of this exact 401).
+          RAW_TOKEN_BYTES=$(printf '%s' "$SHOPIFY_CLI_THEME_TOKEN" | wc -c)
+          RAW_STORE_BYTES=$(printf '%s' "$SHOPIFY_FLAG_STORE" | wc -c)
+          SHOPIFY_CLI_THEME_TOKEN=$(printf '%s' "$SHOPIFY_CLI_THEME_TOKEN" | tr -d '[:space:]')
+          SHOPIFY_FLAG_STORE=$(printf '%s' "$SHOPIFY_FLAG_STORE" | tr -d '[:space:]' | sed -E 's#^https?://##; s#/+$##')
+          export SHOPIFY_CLI_THEME_TOKEN SHOPIFY_FLAG_STORE
+
           echo "CLI: $(shopify version)"
-          echo "token bytes: $(printf '%s' "$SHOPIFY_CLI_THEME_TOKEN" | wc -c) (shptka_ is 38)"
-          echo "token md5:   $(printf '%s' "$SHOPIFY_CLI_THEME_TOKEN" | md5sum | cut -c1-8)"
-          echo "store bytes: $(printf '%s' "$SHOPIFY_FLAG_STORE" | wc -c)  value: [$SHOPIFY_FLAG_STORE]"
+          echo "token: ${RAW_TOKEN_BYTES} raw -> $(printf '%s' "$SHOPIFY_CLI_THEME_TOKEN" | wc -c) clean bytes, md5 $(printf '%s' "$SHOPIFY_CLI_THEME_TOKEN" | md5sum | cut -c1-8) (shptka_ + 32 hex = 39)"
+          echo "store: ${RAW_STORE_BYTES} raw -> $(printf '%s' "$SHOPIFY_FLAG_STORE" | wc -c) clean bytes, value [$SHOPIFY_FLAG_STORE]"
+          case "$SHOPIFY_FLAG_STORE" in
+            *.myshopify.com) ;;
+            *) echo "::error::SHOP_STORE_OS2 is not a <name>.myshopify.com domain after sanitizing: [$SHOPIFY_FLAG_STORE]"; exit 1 ;;
+          esac
+
           echo "--- theme list probe (backlog says this works locally with the token) ---"
           shopify theme list --store "$SHOPIFY_FLAG_STORE" || echo "::warning::theme list FAILED ($?)"
 
