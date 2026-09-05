@@ -90,7 +90,8 @@
     "total_reviews": "всього відгуків",
     "star_reviews_info": "{{ rating_value }} з {{ rating_max }} зірок",
     "collapsible_content_title": "Контент, який можна згорнути",
-    "complementary_products": "Додаткові товари"
+    "complementary_products": "Додаткові товари",
+    "call_store": "Телефонувати в магазин"
   },
   "blogs": {
     "article": {
