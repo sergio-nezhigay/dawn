@@ -21,11 +21,11 @@ This is a customized version of Shopify's Dawn theme - a HTML-first, JavaScript-
 npm run dev
 ```
 
-This starts a local development server that syncs changes to your Shopify store in real-time. Always test changes locally with `npm run dev` before considering deployment.
+This starts a local development server that renders your local changes. Always test changes locally with `npm run dev` before considering deployment.
 
-**Store Configuration:** Development server targets `c2da09-15.myshopify.com`
+**Store Configuration:** Development server targets `c2da09-15.myshopify.com`, and `npm run dev` is pinned to a dedicated **unpublished** dev theme (see the `dev` script in `package.json`) so local edits never touch the live theme (`186192232764`).
 
-**Avoid using push/pull commands** - prefer local development workflow with `npm run dev` for all changes and testing.
+**Avoid using push/pull commands** - prefer local development workflow with `npm run dev` for all changes and testing. `npm run push` / `npm run pull` still target the **live** theme and are the deliberate deploy/read commands.
 
 ### Linting and Validation
 ```bash
