@@ -1,10 +1,13 @@
 # Performance backlog — informatica.com.ua
 
-**Baseline date:** 2026-09-05 · **Theme code:** `6d9f677f` · **Branch:** `perf/baseline-and-guard`
+**Baseline date:** 2026-09-05 · **Theme code:** `6d9f677f` · **Branch:** merged to `main` via PR #1
 **Source of truth for all numbers:** [`baseline.json`](./baseline.json). This file explains
 them; that file is what CI and future weeks diff against.
 
-No theme code was changed in this session. Only `docs/perf/*` and `.github/workflows/ci.yml`.
+The baseline session changed no theme code — only `docs/perf/*` and
+`.github/workflows/ci.yml`. The follow-up Theme Check fix (same PR) made one behaviour-neutral
+edit to `snippets/product-variant-options.liquid` (`| escape` moved to an `assign`), so the
+lab/field numbers here still stand.
 
 ---
 
@@ -176,14 +179,12 @@ Sorted by impact ÷ effort. Every item is ≤ 2 hours.
   icon hidden ≥768 px, visible below.
 - **Depends on:** nothing.
 
-## P2-1 — Missing translation key in the header
-- **Problem/evidence:** `validate_theme` and `theme check` both flag
-  `sections/header.liquid`: `'accessibility.call_store'` has no entry in
+## P2-1 — Missing translation key in the header — ✅ DONE (PR #1)
+- **Problem/evidence:** `validate_theme` and `theme check` both flagged
+  `sections/header.liquid`: `'accessibility.call_store'` had no entry in
   `locales/en.default.json`. It is on the same phone-icon element as P1-2.
-- **Metric:** none (accessibility/correctness). Bundled here because it is the same element
-  and the same 5 minutes of work.
-- **Effort:** 15 min · **Risk:** none · **Revert:** trivial
-- **Depends on:** do it with P1-2.
+- **Resolution:** `accessibility.call_store` added to `locales/en.default.json` and
+  `locales/uk.json` in PR #1 (Theme Check errors fix). Theme Check is now green.
 
 ## P2-2 — Homepage category images ship at one fixed width, no `srcset`
 - **Problem/evidence:** `sections/popular-categories.liquid:180-183` calls
@@ -220,7 +221,7 @@ Sorted by impact ÷ effort. Every item is ≤ 2 hours.
 ## Quick wins (< 30 min, zero risk)
 
 1. **P1-2 Tailwind rebuild** — one pinned command, fixes a real visual bug.
-2. **P2-1 translation key** — same element, 15 minutes, do them together.
+   (~~P2-1 translation key~~ — done in PR #1.)
 
 ## Needs the store owner
 
@@ -246,7 +247,9 @@ Sorted by impact ÷ effort. Every item is ≤ 2 hours.
    `microsoft-clarity/clarity_js`, `microsoft-clarity/brandAgents_js`. Clarity registers two
    blocks — confirm both are wanted.
 
-5. **Create the CI secrets** — see below.
+5. **CI secrets** — the regression guard needs only `SHOP_ACCESS_TOKEN` (already set). The
+   other `SHOP_*` / `LHCI_*` secrets are unused — see *CI regression guard → Repository
+   secrets* below.
 
 ## Regression watch
 
@@ -326,12 +329,16 @@ it becomes a post-merge / scheduled guard, not pre-merge).
 
 `GitHub repo → Settings → Secrets and variables → Actions`
 
+`gh secret list --repo sergio-nezhigay/dawn`
+
 | Secret | Value | Status |
 |---|---|---|
-| `SHOP_ACCESS_TOKEN` | Theme Access app password (`shptka_…`) for `c2da09-15.myshopify.com` | **the only one the job uses** |
-| `SHOP_STORE_OS2` | was meant to be `c2da09-15.myshopify.com` | **held the wrong domain — caused the 401. Now unused (store is hardcoded).** |
-| `SHOP_PRODUCT_HANDLE` / `SHOP_COLLECTION_HANDLE` | product / collection handle | held stale values → `ERRORED_DOCUMENT_REQUEST`. Now unused (measure.js defaults). |
-| `SHOP_PULL_THEME`, `SHOP_PASSWORD_OS2`, `SHOP_CLIENT_ID` / `SHOP_CLIENT_SECRET` | — | unused, safe to delete |
+| `SHOP_ACCESS_TOKEN` | Theme Access app password (`shptka_…`) for `c2da09-15.myshopify.com` | **the only one the job uses — keep** |
+| `SHOP_STORE_OS2` | was meant to be `c2da09-15.myshopify.com` | held the wrong domain — caused the 401. Deleted (store is hardcoded). |
+| `SHOP_PRODUCT_HANDLE` / `SHOP_COLLECTION_HANDLE` | product / collection handle | held stale values → `ERRORED_DOCUMENT_REQUEST`. Deleted (measure.js defaults). |
+| `SHOP_CLIENT_ID` / `SHOP_CLIENT_SECRET` | Dev Dashboard app for the abandoned `lighthouse-ci-action` | Deleted. |
+| `SHOP_PASSWORD_OS2` | storefront password | unused by the job. Deleted. |
+| `LHCI_GITHUB_APP_TOKEN` | old Lighthouse-CI GitHub app token | action is gone. Deleted. |
 
 ### History — why the action was dropped
 
@@ -360,7 +367,7 @@ the ~780 ms 302 artifact; it is constant run-to-run, so a floor still works).
 
 | Week | Item | Why |
 |---|---|---|
-| **1** | **P1-2** Tailwind rebuild + **P2-1** translation key (45 min) | Quick, low risk, fixes a real visual bug. Same element. |
+| **1** | **P1-2** Tailwind rebuild (30 min) | Quick, low risk, fixes a real visual bug. (P2-1 already done in PR #1.) |
 | 2 | **P1-1** trace mobile INP on product | The only genuine field problem, on 75% of traffic. |
 | 3 | The fix P1-1 names | Sized once the culprit is known. |
 | 4 | Re-query `web_performance`; confirm product/mobile INP improved | Field verification needs a week of data. |
@@ -374,7 +381,8 @@ Two of them are also INP suspects, so handing them over early may partly resolve
 
 ## Week 1 slice
 
-**P1-2 — Rebuild Tailwind (30 min) · P2-1 — Add the missing translation key (15 min)**
+**P1-2 — Rebuild Tailwind (30 min).** (P2-1, the `accessibility.call_store` key, was done in
+PR #1.)
 
 ```bash
 cd C:/projects/informatica/dawn
@@ -382,13 +390,10 @@ npx @tailwindcss/cli@4.1.4 -i assets/tailwind.input.css -o assets/tailwind.outpu
 grep -F 'md\:hidden' assets/tailwind.output.css   # must now find a standalone rule
 ```
 
-Then add `accessibility.call_store` to `locales/en.default.json` (and the other locale files
-that carry the same keys), and check the header phone icon at `sections/header.liquid:320` is
-hidden ≥768 px and visible below.
+Then check the header phone icon at `sections/header.liquid:320` is hidden ≥768 px and
+visible below. Do it on its own branch → PR (the CI guard + branch protection now gate `main`).
 
-Revert: `git checkout assets/tailwind.output.css locales/`.
-
-> **Do not run `npm run dev` while editing theme files** — see the live-theme warning below.
+Revert: `git checkout assets/tailwind.output.css`.
 
 ---
 
@@ -416,6 +421,8 @@ shopify store execute --store c2da09-15.myshopify.com --json \
 `measure.js` holds the three tracked URLs. Changing them invalidates comparison with this
 baseline — if you must, say why in the commit message.
 
-> **Live-theme hazard.** `npm run dev` targets `--theme 186192232764`, which is the **live**
-> theme, so `shopify theme dev` syncs local edits straight to production. Do not run it while
-> editing theme files. Measurement does not need it — the tracked URLs are public.
+> **Dev theme.** `npm run dev` targets a dedicated **unpublished** dev theme (see
+> `package.json`), so `shopify theme dev` no longer syncs local edits to the live theme
+> (`186192232764`). `npm run push` / `npm run pull` still point at the live theme — those are
+> the deliberate deploy/read commands. Measurement does not need the dev server anyway; the
+> tracked URLs are public.
