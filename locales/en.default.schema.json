@@ -2285,6 +2285,10 @@
                 "label": "Vertical"
               }
             },
+            "content": {
+              "label": "Content",
+              "info": "Displayed above the icon/text pairings"
+            },
             "pairing_1": {
               "label": "Pairing 1",
               "info": "Choose an icon or add an image for each pairing"
