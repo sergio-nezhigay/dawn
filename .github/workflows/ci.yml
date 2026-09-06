@@ -1,5 +1,5 @@
 name: CI
-on: [push]
+on: [push, pull_request]
 jobs:
   #tailwindcss-update:
   #  name: Generate Tailwind CSS
@@ -20,23 +20,88 @@ jobs:
   #        git config user.email "noreply@github.com"
   #        git diff-index --quiet HEAD || git commit -m "ci: tailwindcss-update"
   #        git push
-  #lhci:
-  #  name: Lighthouse11
-  #  runs-on: ubuntu-latest
-  #  steps:
-  #    - uses: actions/checkout@v4
-  #    - name: Lighthouse
-  #      uses: shopify/lighthouse-ci-action@v1
-  #      with:
-  #        store: ${{ secrets.SHOP_STORE_OS2 }}
-  #        password: ${{ secrets.SHOP_PASSWORD_OS2 }}
-  #        access_token: ${{ secrets.SHOP_ACCESS_TOKEN }}
-  #        product_handle: ${{ secrets.SHOP_PRODUCT_HANDLE }}
-  #        collection_handle: ${{ secrets.SHOP_COLLECTION_HANDLE }}
-  #        lhci_github_app_token: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
-  #        pull_theme: ${{ secrets.SHOP_PULL_THEME }}
-  #        lhci_min_score_performance: 0.8
-  #        lhci_min_score_accessibility: 0.8
+  lhci:
+    name: Lighthouse
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    # Run once per change: on PR updates and on main. The workflow triggers on
+    # `push` too (for Theme Check), but a branch push with an open PR would
+    # otherwise run this store-hitting job twice.
+    if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
+    concurrency:
+      group: lhci-${{ github.ref }}
+      cancel-in-progress: true
+    # `shopify/lighthouse-ci-action` is not used: it always creates a scratch
+    # development theme (themeCreate) and mis-wires auth in CI. Instead we drive the
+    # CLI directly with a Theme Access token the way it works locally --
+    # `shopify theme dev` serves branch code on localhost, then Lighthouse audits it.
+    #
+    # The store is hardcoded on purpose: it is not secret (it is in CLAUDE.md /
+    # docs/perf/backlog.md) and the old SHOP_STORE_OS2 secret held the WRONG domain,
+    # which is what produced the publicApiVersions 401 -- a valid token pointed at the
+    # wrong store. Only SHOP_ACCESS_TOKEN (a shptka_ Theme Access password) is a secret.
+    #
+    # Gate = a render smoke test, NOT a score check. ci-gate.js fails only if a tracked
+    # template (home / product / collection) failed to produce a Lighthouse result --
+    # i.e. it 500'd, hit a Liquid error, or wouldn't load. Absolute scores are logged
+    # for eyeballing but not gated: on shared runners they swing 20+ pts run-to-run on
+    # identical code. Field data in baseline.json remains the real perf source of truth.
+    env:
+      STORE: c2da09-15.myshopify.com
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install Shopify CLI
+        run: npm install -g @shopify/cli
+      - name: Warm Lighthouse CLI cache
+        run: npx --yes lighthouse@13 --version
+      - name: Lighthouse against `shopify theme dev`
+        env:
+          SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOP_ACCESS_TOKEN }}
+          SHOPIFY_FLAG_STORE: ${{ env.STORE }}
+          # Only the base URL is overridden; product/collection paths fall back to
+          # measure.js's built-in defaults (the same handles baseline.json was measured
+          # on). The old SHOP_PRODUCT_HANDLE / SHOP_COLLECTION_HANDLE secrets held stale
+          # values -> ERRORED_DOCUMENT_REQUEST on those pages.
+          PERF_BASE_URL: http://127.0.0.1:9292
+        run: |
+          set -eo pipefail
+          # Strip any stray whitespace from the pasted token (cheap insurance).
+          SHOPIFY_CLI_THEME_TOKEN=$(printf '%s' "$SHOPIFY_CLI_THEME_TOKEN" | tr -d '[:space:]')
+          export SHOPIFY_CLI_THEME_TOKEN
+
+          echo "CLI: $(shopify version) | store: $SHOPIFY_FLAG_STORE"
+          # Fast auth check before the slower `theme dev` -- fail loudly on a bad token.
+          shopify theme list --store "$SHOPIFY_FLAG_STORE" >/dev/null \
+            || { echo "::error::Theme Access token rejected by $SHOPIFY_FLAG_STORE"; exit 1; }
+
+          echo "--- starting theme dev ---"
+          shopify theme dev --store "$SHOPIFY_FLAG_STORE" --port 9292 > theme-dev.log 2>&1 &
+          DEV_PID=$!
+          trap 'kill $DEV_PID 2>/dev/null || true' EXIT
+          up=""
+          for i in $(seq 1 60); do
+            if curl -sf -o /dev/null http://127.0.0.1:9292; then up=1; break; fi
+            kill -0 $DEV_PID 2>/dev/null || break
+            sleep 2
+          done
+          if [ -z "$up" ]; then
+            echo "::error::shopify theme dev did not come up"; cat theme-dev.log; exit 1
+          fi
+          echo "--- theme dev up ---"; head -n 40 theme-dev.log
+          node docs/perf/measure.js ci-perf
+          node docs/perf/ci-gate.js ci-perf
+      - name: Upload Lighthouse output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-${{ github.run_id }}
+          path: |
+            ci-perf/lh_summary.json
+            theme-dev.log
+          if-no-files-found: warn
   theme-check:
     name: Theme Check
     runs-on: ubuntu-latest
