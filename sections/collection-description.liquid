@@ -28,7 +28,7 @@
     {%- endif -%}
   {%- endstyle -%}
 
-  <div class="collection-description page-width section-{{ section.id }}-padding">
+  <div class="collection-description page-width section-{{ section.id }}-padding{% if section.settings.indent_past_filters %} collection-description--grid-aligned{% endif %}">
     <product-description-toggle class="collection-description__disclosure">
       <div
         class="collection-description__body rte js-collapse-content"
@@ -69,6 +69,13 @@
       "type": "checkbox",
       "id": "enable_collapse",
       "label": "Collapse behind a \"read more\" toggle",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "indent_past_filters",
+      "label": "Align with the filtered product grid",
+      "info": "On desktop, indent past the vertical filter sidebar so the text centres under the pagination. Turn off on collection pages that have no vertical filters.",
       "default": true
     },
     {
