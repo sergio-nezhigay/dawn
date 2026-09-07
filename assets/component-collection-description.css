@@ -1,0 +1,41 @@
+/*
+ * Below-grid collection description block (sections/collection-description.liquid).
+ * Neutral treatment: a hairline rule separates it from the product grid, the text
+ * runs at a readable measure, and long copy collapses behind a "read more" toggle.
+ * The collapse mechanics mirror the product description (assets/section-main-product.css).
+ */
+
+.collection-description {
+  border-top: 1px solid rgba(var(--color-foreground), 0.08);
+}
+
+.collection-description__disclosure {
+  display: block;
+}
+
+/* Scroll target when a collapse pulls the description start back into view: clear
+   the sticky header. No sticky sidebar here, so this stays far below the product
+   page's static 17rem. */
+.collection-description__disclosure {
+  scroll-margin-top: calc(var(--header-height, 10rem) + 2rem);
+}
+
+.collection-description__body {
+  max-width: 46rem;
+  overflow: hidden;
+}
+
+.collection-description__body.is-collapsible:not(.is-expanded) {
+  -webkit-mask-image: linear-gradient(to bottom, rgb(0 0 0) calc(100% - 2.5rem), transparent);
+  mask-image: linear-gradient(to bottom, rgb(0 0 0) calc(100% - 2.5rem), transparent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .collection-description__body.is-collapsible {
+    transition: max-height 0.45s cubic-bezier(0.33, 1, 0.68, 1);
+  }
+}
+
+.collection-description__toggle {
+  margin-top: 1.4rem;
+}

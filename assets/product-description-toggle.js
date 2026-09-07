@@ -22,11 +22,19 @@ class ProductDescriptionToggle extends HTMLElement {
 
     this.content =
       this.querySelector('.product__description-content') ||
-      this.querySelector('.product__wide-description-body');
-    this.button = this.querySelector('.product__description-toggle');
+      this.querySelector('.product__wide-description-body') ||
+      this.querySelector('.js-collapse-content');
+    this.button =
+      this.querySelector('.product__description-toggle') ||
+      this.querySelector('.js-collapse-toggle');
     if (!this.content || !this.button) return;
 
     this.dataset.ready = 'true';
+    // Progressive enhancement: the clamp and the toggle only exist once this runs.
+    // Inert for the product page (its CSS ignores .is-collapsible, its button is
+    // already shown).
+    this.content.classList.add('is-collapsible');
+    this.button.hidden = false;
     this.slop = 24;
     // Safety net for the max-height transition (0.45s in CSS) in case
     // transitionend does not fire; must comfortably exceed it.
