@@ -14,10 +14,11 @@
 }
 
 /* Scroll target when a collapse pulls the description start back into view: clear
-   the sticky header. No sticky sidebar here, so this stays far below the product
-   page's static 17rem. */
+   the sticky header. Static 17rem, matching the product description toggle — a
+   calc() on --header-height lands wrong here because that var oscillates as the
+   announcement bar scrolls away. */
 .collection-description__disclosure {
-  scroll-margin-top: calc(var(--header-height, 10rem) + 2rem);
+  scroll-margin-top: 17rem;
 }
 
 .collection-description__body {
