@@ -1,0 +1,122 @@
+{%- comment -%}
+  Renders collection.description below the product grid. Outputs the collection
+  resource field directly (NOT theme-setting text) so registered translations of
+  the collection body_html keep working. Removes itself when the description is
+  empty. Collapse reuses <product-description-toggle> from the product page.
+{%- endcomment -%}
+
+{%- if collection.description != blank -%}
+  {{ 'component-collection-description.css' | asset_url | stylesheet_tag }}
+
+  {%- style -%}
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    }
+
+    @media screen and (min-width: 750px) {
+      .section-{{ section.id }}-padding {
+        padding-top: {{ section.settings.padding_top }}px;
+        padding-bottom: {{ section.settings.padding_bottom }}px;
+      }
+    }
+
+    {%- if section.settings.enable_collapse -%}
+      #shopify-section-{{ section.id }} .collection-description__body.is-collapsible:not(.is-expanded) {
+        max-height: {{ section.settings.collapsed_height }}rem;
+      }
+    {%- endif -%}
+  {%- endstyle -%}
+
+  <div class="collection-description page-width section-{{ section.id }}-padding{% if section.settings.indent_past_filters %} collection-description--grid-aligned{% endif %}">
+    <product-description-toggle class="collection-description__disclosure">
+      <div
+        class="collection-description__body rte js-collapse-content"
+        id="CollectionDescription-{{ section.id }}"
+      >
+        {{ collection.description }}
+      </div>
+      {%- if section.settings.enable_collapse -%}
+        <button
+          type="button"
+          class="link collection-description__toggle js-collapse-toggle"
+          aria-expanded="false"
+          aria-controls="CollectionDescription-{{ section.id }}"
+          data-label-more="{{ 'products.product.description_read_more' | t | escape }}"
+          data-label-less="{{ 'products.product.description_read_less' | t | escape }}"
+          hidden
+        >
+          {{ 'products.product.description_read_more' | t }}
+        </button>
+      {%- endif -%}
+    </product-description-toggle>
+  </div>
+
+  <script src="{{ 'product-description-toggle.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Collection description",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Shows the collection description under the product grid. Hidden automatically when the collection has no description."
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_collapse",
+      "label": "Collapse behind a \"read more\" toggle",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "indent_past_filters",
+      "label": "Align with the filtered product grid",
+      "info": "On desktop, indent past the vertical filter sidebar so the text centres under the pagination. Turn off on collection pages that have no vertical filters.",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "collapsed_height",
+      "min": 6,
+      "max": 32,
+      "step": 1,
+      "unit": "rem",
+      "label": "Collapsed height",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection description"
+    }
+  ]
+}
+{% endschema %}

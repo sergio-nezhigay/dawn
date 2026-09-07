@@ -1,0 +1,57 @@
+/*
+ * Below-grid collection description block (sections/collection-description.liquid).
+ * Neutral treatment: a hairline rule separates it from the product grid, the text
+ * runs at a readable measure, and long copy collapses behind a "read more" toggle.
+ * The collapse mechanics mirror the product description (assets/section-main-product.css).
+ */
+
+/* Contain the block (rule + text) to a readable measure. The cap + rule sit on the
+   inner disclosure so the outer page-width div still governs horizontal position. */
+.collection-description__disclosure {
+  display: block;
+  max-width: 52rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(var(--color-foreground), 0.08);
+}
+
+/* Desktop: the vertical filter sidebar (26rem form + 2.4rem padding + 0.2rem border
+   + 1.6rem flex gap = 32.6rem) pushes the product grid and its pagination to the
+   right. Match that offset and centre the measure within the remaining column, so
+   the block lines up under the pagination instead of hanging off the page's left
+   edge. Below 750px the sidebar is a stacked drawer, so there is no offset. */
+@media screen and (min-width: 750px) {
+  .collection-description--grid-aligned {
+    padding-left: calc(5rem + 32.6rem);
+  }
+
+  .collection-description--grid-aligned .collection-description__disclosure {
+    margin-inline: auto;
+  }
+}
+
+/* Scroll target when a collapse pulls the description start back into view: clear
+   the sticky header. Static 17rem, matching the product description toggle — a
+   calc() on --header-height lands wrong here because that var oscillates as the
+   announcement bar scrolls away. */
+.collection-description__disclosure {
+  scroll-margin-top: 17rem;
+}
+
+.collection-description__body {
+  overflow: hidden;
+}
+
+.collection-description__body.is-collapsible:not(.is-expanded) {
+  -webkit-mask-image: linear-gradient(to bottom, rgb(0 0 0) calc(100% - 2.5rem), transparent);
+  mask-image: linear-gradient(to bottom, rgb(0 0 0) calc(100% - 2.5rem), transparent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .collection-description__body.is-collapsible {
+    transition: max-height 0.45s cubic-bezier(0.33, 1, 0.68, 1);
+  }
+}
+
+.collection-description__toggle {
+  margin-top: 1.4rem;
+}
