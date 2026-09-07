@@ -5,12 +5,16 @@
  * The collapse mechanics mirror the product description (assets/section-main-product.css).
  */
 
-.collection-description {
-  border-top: 1px solid rgba(var(--color-foreground), 0.08);
-}
-
+/* Contain the whole block (rule + text) to a readable measure, left-aligned inside
+   Dawn's centred+padded page-width box, so on wide screens the rule spans only the
+   text instead of framing empty space to its right. The cap goes on the inner
+   disclosure, not the page-width outer div, so the left edge stays aligned with the
+   product grid. */
 .collection-description__disclosure {
   display: block;
+  max-width: 52rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(var(--color-foreground), 0.08);
 }
 
 /* Scroll target when a collapse pulls the description start back into view: clear
@@ -22,7 +26,6 @@
 }
 
 .collection-description__body {
-  max-width: 46rem;
   overflow: hidden;
 }
 
