@@ -39,7 +39,9 @@
     },
     "collection-description": {
       "type": "collection-description",
-      "settings": {}
+      "settings": {
+        "indent_past_filters": false
+      }
     }
   },
   "order": [
