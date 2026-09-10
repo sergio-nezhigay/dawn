@@ -78,9 +78,21 @@ jobs:
             || { echo "::error::Theme Access token rejected by $SHOPIFY_FLAG_STORE"; exit 1; }
 
           echo "--- starting theme dev ---"
+          DEV_THEME_ID=""
           shopify theme dev --store "$SHOPIFY_FLAG_STORE" --port 9292 > theme-dev.log 2>&1 &
           DEV_PID=$!
-          trap 'kill $DEV_PID 2>/dev/null || true' EXIT
+          # On exit: stop `theme dev` and delete the throwaway development theme it
+          # creates. `shopify theme dev` spins up one dev theme per machine fingerprint;
+          # CI runners have unique throwaway hostnames, so without this every run leaks a
+          # `Development (<hash>-runnervm...)` theme that lingers ~7 days.
+          cleanup() {
+            kill $DEV_PID 2>/dev/null || true
+            if [ -n "$DEV_THEME_ID" ]; then
+              echo "--- deleting dev theme $DEV_THEME_ID ---"
+              shopify theme delete -d -f --store "$SHOPIFY_FLAG_STORE" -t "$DEV_THEME_ID" 2>/dev/null || true
+            fi
+          }
+          trap cleanup EXIT
           up=""
           for i in $(seq 1 60); do
             if curl -sf -o /dev/null http://127.0.0.1:9292; then up=1; break; fi
@@ -91,6 +103,9 @@ jobs:
             echo "::error::shopify theme dev did not come up"; cat theme-dev.log; exit 1
           fi
           echo "--- theme dev up ---"; head -n 40 theme-dev.log
+          # Capture the dev theme id from the startup banner so `cleanup` can delete it.
+          DEV_THEME_ID=$(grep -oE 'preview_theme_id=[0-9]+' theme-dev.log | head -1 | tr -cd '0-9' || true)
+          echo "dev theme id: ${DEV_THEME_ID:-<not found>}"
           node docs/perf/measure.js ci-perf
           node docs/perf/ci-gate.js ci-perf
       - name: Upload Lighthouse output
