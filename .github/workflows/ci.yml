@@ -89,7 +89,9 @@ jobs:
             kill $DEV_PID 2>/dev/null || true
             if [ -n "$DEV_THEME_ID" ]; then
               echo "--- deleting dev theme $DEV_THEME_ID ---"
-              shopify theme delete -d -f --store "$SHOPIFY_FLAG_STORE" -t "$DEV_THEME_ID" 2>/dev/null || true
+              # No `-d`: with `-d` the CLI targets "this machine's" development theme and
+              # ignores `-t`. `-f -t <id>` deletes the specific theme (works on dev themes).
+              shopify theme delete -f --store "$SHOPIFY_FLAG_STORE" -t "$DEV_THEME_ID" 2>/dev/null || true
             fi
           }
           trap cleanup EXIT
