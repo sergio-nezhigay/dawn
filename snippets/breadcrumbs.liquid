@@ -50,7 +50,7 @@
             <meta itemprop="position" content="3">
           </li>
 
-        {% when 'collection' and collection.handle %}
+        {% when 'collection' %}
           {% if current_tags %}
             <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
               <a href="{{ collection.url }}" itemprop="item">
