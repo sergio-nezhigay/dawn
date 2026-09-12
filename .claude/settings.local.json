@@ -86,5 +86,8 @@
     ],
     "deny": [],
     "ask": []
+  },
+  "skillOverrides": {
+    "gist": "off"
   }
 }
