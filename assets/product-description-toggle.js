@@ -24,9 +24,7 @@ class ProductDescriptionToggle extends HTMLElement {
       this.querySelector('.product__description-content') ||
       this.querySelector('.product__wide-description-body') ||
       this.querySelector('.js-collapse-content');
-    this.button =
-      this.querySelector('.product__description-toggle') ||
-      this.querySelector('.js-collapse-toggle');
+    this.button = this.querySelector('.product__description-toggle') || this.querySelector('.js-collapse-toggle');
     if (!this.content || !this.button) return;
 
     this.dataset.ready = 'true';
@@ -35,7 +33,10 @@ class ProductDescriptionToggle extends HTMLElement {
     // already shown).
     this.content.classList.add('is-collapsible');
     this.button.hidden = false;
-    this.slop = 24;
+    // Hide the button entirely unless expanding would reveal at least this much
+    // more content, relative to the clamped height. Relative (not a fixed px slop)
+    // so it scales with whichever clamp is in effect (320px compact vs 72vh wide).
+    this.revealThreshold = 0.5;
     // Safety net for the max-height transition (0.45s in CSS) in case
     // transitionend does not fire; must comfortably exceed it.
     this.transitionFallbackMs = 650;
@@ -76,13 +77,13 @@ class ProductDescriptionToggle extends HTMLElement {
     return Number.isFinite(parsed) ? parsed : 160;
   }
 
-  // Drop the clamp entirely when the description already fits, so no button is
+  // Drop the clamp entirely when expanding wouldn't reveal much, so no button is
   // shown. Skipped while this instance is hidden (the below-990px copy of the
   // wide card): scrollHeight / clientHeight would both be 0.
   fitCheck() {
     if (!this.content.offsetParent) return;
     if (this.content.classList.contains('is-expanded')) return;
-    if (this.content.scrollHeight <= this.content.clientHeight + this.slop) {
+    if (this.content.scrollHeight <= this.content.clientHeight * (1 + this.revealThreshold)) {
       this.content.classList.add('is-expanded');
       this.button.hidden = true;
       this.button.setAttribute('aria-expanded', 'true');
