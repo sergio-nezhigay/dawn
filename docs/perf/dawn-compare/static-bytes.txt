@@ -1,0 +1,60 @@
+animations.js                        3657 1184 | 3657 1184 | 3657 1170 | R3 R0
+base.css                             125946 21903 | 81445 13519 | 80382 13386 | R3 R0
+cart.js                              10779 2601 | 15748 3860 | 10779 2593 | R3
+cart-disclosure-modal.js             - - | 5787 1492 | - - |  R0
+cart-disclosure-tooltip.js           - - | 1648 680 | - - |  R0
+cart-drawer.js                       4222 1248 | 4599 1401 | 4222 1233 | R3
+cart-notification.js                 2284 848 | 3379 1341 | 2284 827 | R3 R0
+component-accordion.css              1145 467 | 1145 467 | 1145 443 | R3 R0
+component-card.css                   15560 3323 | 14067 2830 | 14067 2811 | R3 R0
+component-cart.css                   3355 1013 | 3339 1013 | 3339 994 | R3
+component-cart-drawer.css            8592 2104 | 7569 1824 | 7371 1763 | R3
+component-cart-items.css             6175 1532 | 12619 2709 | 5754 1459 | R3 R0
+component-cart-notification.css      2969 817 | 3393 914 | 2969 785 | R3 R0
+component-deferred-media.css         2559 735 | 2559 735 | 2559 706 | R3 R0
+component-discounts.css              562 314 | 562 314 | 562 290 | R3
+component-footer-reveal.css          1977 701 | - - | - - | R3
+component-list-menu.css              670 381 | 516 305 | 516 281 | R3 R0
+component-list-payment.css           362 236 | 362 236 | 362 209 |  R0
+component-list-social.css            504 301 | 504 301 | 504 275 |  R0
+component-localization-form.css      10594 2467 | 9758 2294 | 9758 2262 | R3 R0
+component-menu-drawer.css            5744 1570 | 4500 1278 | 5411 1413 | R3 R0
+component-newsletter.css             1408 486 | 1408 486 | 1408 461 |  R0
+component-pickup-availability.css    3511 1020 | 3511 1020 | 3511 986 | R3 R0
+component-predictive-search.css      7049 1885 | 5827 1492 | 5827 1460 | R3 R0
+component-price.css                  3285 960 | 1810 607 | 1839 602 | R3 R0
+component-product-info-block.css     5739 1601 | - - | - - | R3
+component-rating.css                 1196 495 | 1196 495 | 1196 474 | R3 R0
+component-search.css                 1489 521 | 1489 521 | 1489 500 | R3 R0
+component-slider.css                 9468 1657 | 9406 1642 | 9406 1621 | R3 R0
+component-slideshow.css              7075 1609 | 4222 1008 | 4222 984 |  R0
+component-totals.css                 646 357 | 501 283 | 501 262 | R3
+constants.js                         258 197 | 258 197 | 258 184 | R3 R0
+details-disclosure.js                1615 614 | 1615 614 | 1615 592 | R3 R0
+details-modal.js                     1683 607 | 1683 607 | 1683 590 | R3 R0
+footer-reveal.js                     1051 493 | - - | - - | R3
+global.js                            44721 10336 | 47484 11068 | 43835 10153 | R3 R0
+judgeme-enhancements.js              6653 2017 | - - | - - | R3
+localization-form.js                 8748 1988 | 7863 1811 | 7863 1790 | R3 R0
+magnify.js                           2132 789 | 2132 789 | 2132 778 | R3
+media-gallery.js                     7172 1932 | 4910 1413 | 4910 1396 | R3 R0
+pickup-availability.js               4198 1121 | 4198 1121 | 4198 1098 | R3 R0
+predictive-search.js                 9873 2881 | 9599 2728 | 8718 2490 | R3 R0
+product-description-toggle.js        6497 2267 | - - | - - | R3
+product-form.js                      5455 1517 | 7552 2020 | 5455 1501 | R3 R0
+product-info.js                      18832 4392 | 17468 4139 | 16054 3841 | R3 R0
+product-modal.js                     9062 2239 | 1306 517 | 1306 500 | R3 R0
+product-price-update.js              13928 4045 | - - | - - | R3
+pubsub.js                            598 258 | 598 258 | 598 248 | R3 R0
+quantity-popover.css                 3380 983 | 3380 983 | 3380 962 | R3
+quantity-popover.js                  3549 828 | 3549 828 | 3549 808 | R3
+recently-viewed-related.js           2085 871 | - - | - - | R3
+search-form.js                       1350 583 | 1350 583 | 1350 568 | R3 R0
+section-footer.css                   9475 2048 | 9474 2045 | 9474 2026 |  R0
+section-main-product.css             46447 8236 | 32327 5831 | 32327 5806 | R3 R0
+section-related-products.css         92 120 | 92 120 | 92 91 | R3 R0
+share.js                             2172 637 | 2172 637 | 2172 628 | R3 R0
+shared-backgrounds.css               2708 832 | - - | - - | R3
+standard-actions-override.js         - - | 5889 2454 | - - |  R0
+tailwind.output.css                  21031 4421 | - - | - - | R3
+vendor-motion-scroll.min.js          15330 6300 | - - | - - | R3
