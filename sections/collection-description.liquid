@@ -1,12 +1,20 @@
 {%- comment -%}
   Renders collection.description below the product grid. Outputs the collection
   resource field directly (NOT theme-setting text) so registered translations of
-  the collection body_html keep working. Removes itself when the description is
-  empty. Collapse reuses <product-description-toggle> from the product page.
+  the collection body_html keep working. Also renders the related-collections tag
+  row (snippets/collection-related-links.liquid), sourced from a metafield rather
+  than from links hand-written into the description. Removes itself when there is
+  neither a description nor related collections to show. Collapse reuses
+  <product-description-toggle> from the product page.
 {%- endcomment -%}
 
-{%- if collection.description != blank -%}
+{%- assign related_collections = collection.metafields.custom.related_collections.value -%}
+
+{%- if collection.description != blank or related_collections != blank -%}
   {{ 'component-collection-description.css' | asset_url | stylesheet_tag }}
+  {%- if related_collections != blank -%}
+    {{ 'component-collection-related-links.css' | asset_url | stylesheet_tag }}
+  {%- endif -%}
 
   {%- style -%}
     .section-{{ section.id }}-padding {
@@ -29,30 +37,36 @@
   {%- endstyle -%}
 
   <div class="collection-description page-width section-{{ section.id }}-padding{% if section.settings.indent_past_filters %} collection-description--grid-aligned{% endif %}">
-    <product-description-toggle class="collection-description__disclosure">
-      <div
-        class="collection-description__body rte js-collapse-content"
-        id="CollectionDescription-{{ section.id }}"
-      >
-        {{ collection.description }}
-      </div>
-      {%- if section.settings.enable_collapse -%}
-        <button
-          type="button"
-          class="link collection-description__toggle js-collapse-toggle"
-          aria-expanded="false"
-          aria-controls="CollectionDescription-{{ section.id }}"
-          data-label-more="{{ 'products.product.description_read_more' | t | escape }}"
-          data-label-less="{{ 'products.product.description_read_less' | t | escape }}"
-          hidden
+    {%- if collection.description != blank -%}
+      <product-description-toggle class="collection-description__disclosure">
+        <div
+          class="collection-description__body rte js-collapse-content"
+          id="CollectionDescription-{{ section.id }}"
         >
-          {{ 'products.product.description_read_more' | t }}
-        </button>
-      {%- endif -%}
-    </product-description-toggle>
+          {{ collection.description }}
+        </div>
+        {%- if section.settings.enable_collapse -%}
+          <button
+            type="button"
+            class="link collection-description__toggle js-collapse-toggle"
+            aria-expanded="false"
+            aria-controls="CollectionDescription-{{ section.id }}"
+            data-label-more="{{ 'products.product.description_read_more' | t | escape }}"
+            data-label-less="{{ 'products.product.description_read_less' | t | escape }}"
+            hidden
+          >
+            {{ 'products.product.description_read_more' | t }}
+          </button>
+        {%- endif -%}
+      </product-description-toggle>
+    {%- endif -%}
+
+    {%- render 'collection-related-links', related_collections: related_collections -%}
   </div>
 
-  <script src="{{ 'product-description-toggle.js' | asset_url }}" defer="defer"></script>
+  {%- if collection.description != blank -%}
+    <script src="{{ 'product-description-toggle.js' | asset_url }}" defer="defer"></script>
+  {%- endif -%}
 {%- endif -%}
 
 {% schema %}
@@ -63,7 +77,7 @@
   "settings": [
     {
       "type": "paragraph",
-      "content": "Shows the collection description under the product grid. Hidden automatically when the collection has no description."
+      "content": "Shows the collection description and related-collections links under the product grid. Hidden automatically when the collection has neither."
     },
     {
       "type": "checkbox",

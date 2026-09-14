@@ -1,0 +1,44 @@
+/*
+ * Related-collections tag row (snippets/collection-related-links.liquid).
+ * Sourced from a list.collection_reference metafield rather than links
+ * hand-written into collection.description, so it gets its own structured
+ * treatment: neutral bordered tags, not the rich-text link colour used for
+ * prose in .rte. Shares --buttons-radius so the corner rounding stays in
+ * step with the rest of the theme's clickable controls.
+ */
+
+.collection-related-links {
+  max-width: 52rem;
+}
+
+.collection-description__disclosure + .collection-related-links {
+  margin-top: 4rem;
+}
+
+.collection-related-links__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.collection-related-links__tag {
+  font-size: 1.4rem;
+  line-height: 1;
+  color: rgb(var(--color-foreground));
+  text-decoration: none;
+  background: transparent;
+  border: 0.1rem solid rgba(var(--color-foreground), 0.2);
+  border-radius: var(--buttons-radius, 0.4rem);
+  padding: 0.9rem 1.3rem;
+  transition: border-color var(--duration-short) ease, background-color var(--duration-short) ease;
+}
+
+.collection-related-links__tag:hover {
+  border-color: rgba(var(--color-foreground), 0.45);
+  background: rgba(var(--color-foreground), 0.04);
+}
+
+.collection-related-links__tag:focus-visible {
+  outline: 0.2rem solid rgb(var(--color-foreground));
+  outline-offset: 0.2rem;
+}
