@@ -24,7 +24,8 @@
     padding-left: calc(5rem + 32.6rem);
   }
 
-  .collection-description--grid-aligned .collection-description__disclosure {
+  .collection-description--grid-aligned .collection-description__disclosure,
+  .collection-description--grid-aligned .collection-related-links {
     margin-inline: auto;
   }
 }

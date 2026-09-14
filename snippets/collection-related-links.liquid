@@ -1,0 +1,18 @@
+{%- comment -%}
+  Renders a related-collections tag row. Self-hides when related_collections is
+  blank -- pairs with a list.collection_reference metafield, not links
+  hand-written into collection.description.
+
+  Accepts:
+  - related_collections: array of collection objects to link to
+{%- endcomment -%}
+
+{%- if related_collections != blank -%}
+  <div class="collection-related-links">
+    <div class="collection-related-links__row">
+      {%- for related in related_collections -%}
+        <a href="{{ related.url }}" class="collection-related-links__tag">{{ related.title }}</a>
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endif -%}
