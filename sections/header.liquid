@@ -235,11 +235,11 @@
 
       <div class="flex gap-4 items-center">
         <a
-          href="tel:+380980059236"
+          href="tel:{% render 'phone-number', format: 'href' %}"
           class="header__phone-link"
         >
           {{- 'icon-phone.svg' | inline_asset_content -}}
-          (098) 005-9236</a
+          {%- render 'phone-number', format: 'display' -%}</a
         >
 
         {%- if localization.available_languages.size > 1 -%}
@@ -316,7 +316,7 @@
 
       {%- comment -%} Mobile Phone/Call Button {%- endcomment -%}
       <a
-        href="tel:+380980059236"
+        href="tel:{% render 'phone-number', format: 'href' %}"
         class="header__icon header__icon--phone link focus-inset md:hidden"
         aria-label="{{ 'accessibility.call_store' | t | default: 'Call store' }}"
       >

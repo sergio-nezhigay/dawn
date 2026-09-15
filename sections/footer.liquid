@@ -8,8 +8,8 @@
       </div>
       <div class="footer-text">
         <span>{{ 'sections.footer.phone_label' | t }}</span>
-        <a href="tel:+380980059236" itemprop="telephone">
-          (098) 005-9236
+        <a href="tel:{% render 'phone-number', format: 'href' %}" itemprop="telephone">
+          {%- render 'phone-number', format: 'display' -%}
         </a>
       </div>
     </li>

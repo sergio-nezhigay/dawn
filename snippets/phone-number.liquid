@@ -1,0 +1,19 @@
+{%- doc -%}
+  Renders the store phone number (from shop.phone, set in Admin > Settings > General > Store details) as either a tel: href value or a formatted display string.
+  @param {string} format - 'href' or 'display'
+  @example
+  <a href="tel:{% render 'phone-number', format: 'href' %}">{% render 'phone-number', format: 'display' %}</a>
+{%- enddoc -%}
+{%- liquid
+  assign digits = shop.phone | remove: '+' | remove: ' ' | remove: '(' | remove: ')' | remove: '-'
+  assign local9 = digits | slice: -9, 9
+  if format == 'href'
+    echo '+380' | append: local9
+  else
+    assign local10 = '0' | append: local9
+    assign part1 = local10 | slice: 0, 3
+    assign part2 = local10 | slice: 3, 3
+    assign part3 = local10 | slice: 6, 4
+    echo '(' | append: part1 | append: ') ' | append: part2 | append: '-' | append: part3
+  endif
+-%}
