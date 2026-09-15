@@ -739,7 +739,7 @@
         "title": "Дякуємо за вашу покупку",
         "shipping_method_title": "Доставка",
         "billing_address_title": "Платник",
-        "contact_us_html": "Потрібна допомога? <a href=\"tel:+380980059236\">+380980059236</a>",
+        "contact_us_html": "Потрібна допомога? <a href=\"tel:+380980059236\">+38(098)005-9236</a>",
         "return_to_store_link_label": "Продовжити перегляд товарів",
         "page_title": "Дякуємо, {{ display_name }}!",
         "page_title_no_name": "Дякуємо!",
