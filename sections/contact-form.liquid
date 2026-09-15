@@ -34,7 +34,7 @@
         </div>
         <div class="contact-info-text">
           <span class="contact-info-label">{{ 'sections.footer.phone_label' | t }}</span>
-          <a href="tel:+380980059236" class="contact-info-value"> (098) 005-9236 </a>
+          <a href="tel:{% render 'phone-number', format: 'href' %}" class="contact-info-value"> {%- render 'phone-number', format: 'display' -%} </a>
         </div>
       </div>
 
