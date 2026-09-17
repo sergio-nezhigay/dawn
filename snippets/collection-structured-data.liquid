@@ -1,0 +1,46 @@
+{% comment %}
+  Renders CollectionPage/ItemList JSON-LD for the current page of a collection listing, with each
+  item's price/availability so search results can show a price for the collection URL (collection
+  pages otherwise carry no product-level schema at all).
+
+  Accepts:
+  - collection: {Object} Collection Liquid object (required)
+  - products: {Array} Products on the current page (required, e.g. collection.products inside a
+    {% paginate %} block)
+{% endcomment %}
+{%- if products.size > 0 -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": {{ collection.title | json }},
+      "url": {{ request.origin | append: collection.url | json }},
+      "mainEntity": {
+        "@type": "ItemList",
+        "numberOfItems": {{ collection.products_count | json }},
+        "itemListElement": [
+          {%- for product in products -%}
+            {
+              "@type": "ListItem",
+              "position": {{ forloop.index }},
+              "item": {
+                "@type": "Product",
+                "name": {{ product.title | json }},
+                "url": {{ request.origin | append: product.url | json }},
+                {%- if product.featured_image -%}
+                  "image": {{ product.featured_image | image_url: width: 800 | prepend: "https:" | json }},
+                {%- endif -%}
+                "offers": {
+                  "@type": "Offer",
+                  "price": {{ product.price_min | money_without_currency | strip_html | json }},
+                  "priceCurrency": {{ cart.currency.iso_code | json }},
+                  "availability": "https://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}"
+                }
+              }
+            }{% unless forloop.last %},{% endunless %}
+          {%- endfor -%}
+        ]
+      }
+    }
+  </script>
+{%- endif -%}

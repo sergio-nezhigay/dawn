@@ -461,6 +461,17 @@
   customElements.define('sticky-header', StickyHeader);
 {% endjavascript %}
 
+{%- liquid
+  assign social_links_raw = settings.social_twitter_link | append: '|' | append: settings.social_facebook_link | append: '|' | append: settings.social_pinterest_link | append: '|' | append: settings.social_instagram_link | append: '|' | append: settings.social_tiktok_link | append: '|' | append: settings.social_tumblr_link | append: '|' | append: settings.social_snapchat_link | append: '|' | append: settings.social_youtube_link | append: '|' | append: settings.social_vimeo_link
+  assign social_links = social_links_raw | split: '|'
+  assign same_as = ''
+  for link in social_links
+    unless link == blank
+      assign same_as = same_as | append: link | append: ','
+    endunless
+  endfor
+  assign same_as = same_as | split: ','
+-%}
 <script type="application/ld+json">
   {
     "@context": "http://schema.org",
@@ -469,17 +480,9 @@
     {% if settings.logo %}
       "logo": {{ settings.logo | image_url: width: 500 | prepend: "https:" | json }},
     {% endif %}
-    "sameAs": [
-      {{ settings.social_twitter_link | json }},
-      {{ settings.social_facebook_link | json }},
-      {{ settings.social_pinterest_link | json }},
-      {{ settings.social_instagram_link | json }},
-      {{ settings.social_tiktok_link | json }},
-      {{ settings.social_tumblr_link | json }},
-      {{ settings.social_snapchat_link | json }},
-      {{ settings.social_youtube_link | json }},
-      {{ settings.social_vimeo_link | json }}
-    ],
+    {% if same_as.size > 0 %}
+      "sameAs": {{ same_as | json }},
+    {% endif %}
     "url": {{ request.origin | append: page.url | json }}
   }
 </script>

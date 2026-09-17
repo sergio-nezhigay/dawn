@@ -193,6 +193,8 @@
               {%- endfor -%}
             </ul>
 
+            {%- render 'collection-structured-data', collection: collection, products: collection.products -%}
+
             {%- if paginate.pages > 1 -%}
               {% render 'pagination', paginate: paginate, anchor: '' %}
             {%- endif -%}

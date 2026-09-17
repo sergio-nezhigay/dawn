@@ -894,9 +894,7 @@
       endif
     -%}
 
-    <script type="application/ld+json">
-      {{ product | structured_data }}
-    </script>
+    {%- render 'product-structured-data', product: product -%}
     <script>
       document.addEventListener('DOMContentLoaded', function () {
         function addCartAttribute(attributeKey, attributeValue) {
