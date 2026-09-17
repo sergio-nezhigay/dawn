@@ -1,0 +1,34 @@
+{% comment %}
+  Renders Product JSON-LD via Shopify's built-in structured_data filter, splicing in
+  aggregateRating from the reviews.rating / reviews.rating_count metafields when present
+  (the built-in filter does not emit aggregateRating on its own).
+
+  Accepts:
+  - product: {Object} Product Liquid object (required)
+{% endcomment %}
+{%- liquid
+  assign structured_data_json = product | structured_data | strip
+  assign rating = product.metafields.reviews.rating.value
+  assign rating_count = product.metafields.reviews.rating_count
+
+  if rating != blank and rating_count > 0
+    assign json_length = structured_data_json.size
+    assign closing_index = json_length | minus: 1
+    assign structured_data_json = structured_data_json | slice: 0, closing_index
+    capture aggregate_rating_json
+      echo '"aggregateRating":{"@type":"AggregateRating","ratingValue":'
+      echo rating.rating | json
+      echo ',"bestRating":'
+      echo rating.scale_max | json
+      echo ',"worstRating":'
+      echo rating.scale_min | json
+      echo ',"reviewCount":'
+      echo rating_count | json
+      echo '}}'
+    endcapture
+    assign structured_data_json = structured_data_json | append: ',' | append: aggregate_rating_json
+  endif
+-%}
+<script type="application/ld+json">
+  {{ structured_data_json }}
+</script>
