@@ -140,3 +140,37 @@
     padding-top: 1rem;
     margin-top: auto;
 }
+
+/* Real policy text (Shopify Admin content) below the cards */
+.shopify-policy__body .rte {
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.shopify-policy__body .rte .section {
+    padding: 1.5rem 0;
+    border-top: 1px solid #f3f4f6;
+}
+
+.shopify-policy__body .rte .section:first-child {
+    border-top: none;
+    padding-top: 0;
+}
+
+.shopify-policy__body .rte .section h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 1rem;
+}
+
+.shopify-policy__body .rte .section p {
+    font-size: 1.5rem;
+    line-height: 1.6;
+    color: #374151;
+    margin: 0 0 1rem;
+}
+
+.shopify-policy__body .rte .section p:last-child {
+    margin-bottom: 0;
+}
