@@ -485,6 +485,7 @@
   "localization": {
     "country_label": "Country/region",
     "language_label": "Language",
+    "language_short_code": "ENG",
     "update_language": "Update language",
     "update_country": "Update country/region",
     "search": "Search",

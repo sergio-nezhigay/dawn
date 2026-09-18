@@ -13,7 +13,7 @@
     aria-controls="{{ localPosition }}List"
     aria-describedby="{{ localPosition }}Label"
   >
-    <span class="localization-form__trigger-text">{{ localization.language.iso_code }}</span>
+    <span class="localization-form__trigger-text">{{ 'localization.language_short_code' | t }}</span>
     {{ 'icon-caret.svg' | inline_asset_content }}
   </button>
   <div class="disclosure__list-wrapper language-selector" hidden>
@@ -23,6 +23,7 @@
           <a
             class="link link--text disclosure__link caption-large focus-inset items-center content-center"
             href="#"
+            role="button"
             hreflang="{{ language.iso_code }}"
             lang="{{ language.iso_code }}"
             {% if language.iso_code == localization.language.iso_code %}

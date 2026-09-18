@@ -485,6 +485,7 @@
   "localization": {
     "country_label": "Країна/регіон",
     "language_label": "Мова",
+    "language_short_code": "УКР",
     "update_language": "Змінити мову",
     "update_country": "Змінити дані про країну/регіон",
     "search": "Пошук",

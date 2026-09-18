@@ -484,6 +484,7 @@
   "localization": {
     "country_label": "Страна/регион",
     "language_label": "Язык",
+    "language_short_code": "РУС",
     "update_language": "Изменить язык",
     "update_country": "Изменить данные о стране/регионе",
     "search": "Поиск",
