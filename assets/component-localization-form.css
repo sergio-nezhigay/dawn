@@ -466,6 +466,7 @@ background-color: white;
   background-color: initial;
   margin-top: 0;
   padding: 1rem;
+  width: max-content;
 }
 
 .menu-drawer__localization .localization-form__select .icon-caret {
