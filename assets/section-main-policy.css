@@ -32,6 +32,12 @@
         grid-template-columns: repeat(2, 1fr);
         gap: 2rem;
     }
+
+    /* Keep a trailing odd card (e.g. 5th card on refund policy) from
+       looking lopsided by letting it span the full row. */
+    .policy-cards-grid .policy-card:last-child:nth-child(odd) {
+        grid-column: 1 / -1;
+    }
 }
 
 .policy-card {

@@ -473,7 +473,13 @@
       "payment_period_desc": "Usually, refunds take 2-3 business days after receiving and inspecting the product by our service department.",
       "exceptions_title": "Exceptions",
       "non_returnable_title": "Non-returnable items",
-      "non_returnable_desc": "Please note that some categories of properly-conditioned products are non-returnable according to the Resolution of the Cabinet of Ministers of Ukraine No. 172 (e.g., consumables if the packaging has been opened)."
+      "non_returnable_desc": "Please note that some categories of properly-conditioned products are non-returnable according to the Resolution of the Cabinet of Ministers of Ukraine No. 172 (e.g., consumables if the packaging has been opened).",
+      "warranty_title": "Product Warranty",
+      "warranty_term_title": "Warranty period",
+      "warranty_term_desc": "Products are covered by the manufacturer's warranty; its term and conditions are specified on the packaging or in the warranty card.",
+      "warranty_contact_title": "Found a defect?",
+      "warranty_contact_desc": "Contact us by phone at (099) 381-5288 or email info@informatica.com.ua — we will accept the product and forward it for warranty service to the manufacturer or an authorized service center.",
+      "warranty_exclusions": "The warranty does not cover damage caused by the buyer's fault (mechanical, thermal, or moisture-related), or cases of self-repair or opening the housing."
     }
   },
   "localization": {
