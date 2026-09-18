@@ -11,6 +11,13 @@
     margin-bottom: 2rem;
 }
 
+/* Shopify's own policy title (inside content_for_layout, which also carries
+   .shopify-policy__body) duplicates the title already shown by this section
+   above — keep only the one heading. */
+.shopify-policy__container:has(.shopify-policy__body) .shopify-policy__title {
+    display: none;
+}
+
 /* Card-based layout for shipping and payment */
 .policy-cards-grid {
     display: flex;
