@@ -468,6 +468,11 @@ background-color: white;
   padding: 1rem 3.6rem 1rem 1rem;
 }
 
+.menu-drawer__localization .localization-form__select .icon-caret {
+  position: static;
+  margin-left: 0.5rem;
+}
+
 .menu-drawer__localization .localization-form {
   padding: 0;
 }
