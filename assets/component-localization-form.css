@@ -465,11 +465,14 @@ background-color: white;
 .menu-drawer__localization .localization-form__select {
   background-color: initial;
   margin-top: 0;
-  padding: 1rem 3.6rem 1rem 1rem;
+  padding: 1rem;
 }
 
 .menu-drawer__localization .localization-form__select .icon-caret {
   position: static;
+  flex-shrink: 0;
+  width: 1rem;
+  height: 0.6rem;
   margin-left: 0.5rem;
 }
 
