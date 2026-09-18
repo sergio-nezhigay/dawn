@@ -107,6 +107,33 @@
       or policy.title contains 'Возврат'
     -%}
       <div class="policy-cards-grid">
+        {%- comment -%} Warranty Card {%- endcomment -%}
+        <div class="policy-card policy-card--featured">
+          <div class="policy-card__header">
+            {% render 'icon-with-wrapper', icon_name: 'icon-shield-check.svg' %}
+            <h2 class="policy-card__title">{{ 'sections.main_policy.warranty_title' | t }}</h2>
+          </div>
+          <div class="policy-card__content">
+            <div class="policy-card__list">
+              <div class="policy-card__item">
+                <span class="policy-card__item-title">{{ 'sections.main_policy.warranty_term_title' | t }}</span>
+                <span class="policy-card__item-desc"
+                  >{{ 'sections.main_policy.warranty_term_desc' | t }}</span
+                >
+              </div>
+              <div class="policy-card__item">
+                <span class="policy-card__item-title">{{ 'sections.main_policy.warranty_contact_title' | t }}</span>
+                <span class="policy-card__item-desc"
+                  >{{ 'sections.main_policy.warranty_contact_desc' | t }}</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="policy-card__footer">
+            {{ 'sections.main_policy.warranty_exclusions' | t }}
+          </div>
+        </div>
+
         {%- comment -%} Return Conditions Card {%- endcomment -%}
         <div class="policy-card">
           <div class="policy-card__header">
@@ -200,33 +227,6 @@
                 >
               </div>
             </div>
-          </div>
-        </div>
-
-        {%- comment -%} Warranty Card {%- endcomment -%}
-        <div class="policy-card">
-          <div class="policy-card__header">
-            {% render 'icon-with-wrapper', icon_name: 'icon-shield-check.svg' %}
-            <h2 class="policy-card__title">{{ 'sections.main_policy.warranty_title' | t }}</h2>
-          </div>
-          <div class="policy-card__content">
-            <div class="policy-card__list">
-              <div class="policy-card__item">
-                <span class="policy-card__item-title">{{ 'sections.main_policy.warranty_term_title' | t }}</span>
-                <span class="policy-card__item-desc"
-                  >{{ 'sections.main_policy.warranty_term_desc' | t }}</span
-                >
-              </div>
-              <div class="policy-card__item">
-                <span class="policy-card__item-title">{{ 'sections.main_policy.warranty_contact_title' | t }}</span>
-                <span class="policy-card__item-desc"
-                  >{{ 'sections.main_policy.warranty_contact_desc' | t }}</span
-                >
-              </div>
-            </div>
-          </div>
-          <div class="policy-card__footer">
-            {{ 'sections.main_policy.warranty_exclusions' | t }}
           </div>
         </div>
       </div>
