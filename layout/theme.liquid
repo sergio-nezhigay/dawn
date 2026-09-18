@@ -33,8 +33,8 @@
       <meta name="description" content="{{ collection.description | strip_html | truncate: 155 | escape }}">
     {%- elsif template contains 'collection' -%}
       <meta name="description" content="{{ 'general.meta.collection_description_fallback' | t: title: collection.title | escape }}">
-    {%- elsif request.page_type == 'policy' and policy.body != blank -%}
-      <meta name="description" content="{{ policy.body | strip_html | truncate: 155 | escape }}">
+    {%- elsif request.page_type == 'policy' and content_for_layout != blank -%}
+      <meta name="description" content="{{ content_for_layout | strip_html | truncate: 155 | escape }}">
     {%- elsif template contains 'page' and page.content != blank -%}
       <meta name="description" content="{{ page.content | strip_html | truncate: 155 | escape }}">
     {%- else -%}
@@ -329,9 +329,8 @@
     <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
       {%- if request.page_type == 'policy' -%}
         {%- section 'main-policy' -%}
-      {%- else -%}
-        {{ content_for_layout }}
       {%- endif -%}
+      {{ content_for_layout }}
     </main>
 
     {% sections 'footer-group' %}
