@@ -29,6 +29,16 @@
       <meta name="description" content="{{ page_description | escape }}">
     {%- elsif template contains 'product' -%}
       <meta name="description" content="{{ 'general.meta.product_description_fallback' | t: title: product.title | escape }}">
+    {%- elsif template contains 'collection' and collection.description != blank -%}
+      <meta name="description" content="{{ collection.description | strip_html | truncate: 155 | escape }}">
+    {%- elsif template contains 'collection' -%}
+      <meta name="description" content="{{ 'general.meta.collection_description_fallback' | t: title: collection.title | escape }}">
+    {%- elsif request.page_type == 'policy' and policy.body != blank -%}
+      <meta name="description" content="{{ policy.body | strip_html | truncate: 155 | escape }}">
+    {%- elsif template contains 'page' and page.content != blank -%}
+      <meta name="description" content="{{ page.content | strip_html | truncate: 155 | escape }}">
+    {%- else -%}
+      <meta name="description" content="{{ 'general.meta.default_description_fallback' | t | escape }}">
     {%- endif -%}
 
     {% render 'meta-tags' %}
@@ -319,7 +329,6 @@
     <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
       {%- if request.page_type == 'policy' -%}
         {%- section 'main-policy' -%}
-        <div style="display:none">{{ content_for_layout }}</div>
       {%- else -%}
         {{ content_for_layout }}
       {%- endif -%}

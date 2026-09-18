@@ -20,7 +20,9 @@
       "powered_by_shopify_html": "Этот магазин работает на платформе {{ shopify }}"
     },
     "meta": {
-      "product_description_fallback": "Купить {{ title }} ✓ Официальная гарантия ✓ Доставка по Украине"
+      "product_description_fallback": "Купить {{ title }} ✓ Официальная гарантия ✓ Доставка по Украине",
+      "collection_description_fallback": "{{ title }} ✓ Широкий выбор ✓ Официальная гарантия ✓ Доставка по Украине",
+      "default_description_fallback": "Informatica ✓ Компьютерные комплектующие и электроника ✓ Официальная гарантия ✓ Доставка по Украине"
     },
     "social": {
       "alt_text": {

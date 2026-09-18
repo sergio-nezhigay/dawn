@@ -20,7 +20,9 @@
       "powered_by_shopify_html": "This shop will be powered by {{ shopify }}"
     },
     "meta": {
-      "product_description_fallback": "Buy {{ title }} ✓ Official warranty ✓ Delivery across Ukraine"
+      "product_description_fallback": "Buy {{ title }} ✓ Official warranty ✓ Delivery across Ukraine",
+      "collection_description_fallback": "{{ title }} ✓ Wide selection ✓ Official warranty ✓ Delivery across Ukraine",
+      "default_description_fallback": "Informatica ✓ Computer components and electronics ✓ Official warranty ✓ Delivery across Ukraine"
     },
     "social": {
       "alt_text": {

@@ -203,7 +203,9 @@
           </div>
         </div>
       </div>
-    {%- else -%}
+    {%- endif -%}
+
+    {%- if policy.body != blank -%}
       <div class="shopify-policy__body rte">
         {{ policy.body }}
       </div>
