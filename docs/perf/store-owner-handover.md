@@ -78,7 +78,6 @@ behaviour. It doesn't compete with page rendering and there is no theme or admin
    `node --max-old-space-size=6144 docs/perf/compare-themes.mjs load <outDir>` with
    `PERF_VARIANTS=NOW=188294955324 PERF_RUNS=5` shows Google Tag / web pixels KB, request counts and
    script ms directly. Google Tag should shrink from 516 KB / 15 requests if item 1 removes a duplicate.
-   (Lab wins here are real but small in the field — see below.)
 2. **3–4 weeks later, field:** `node docs/perf/field-weekly.mjs --since <change date>`. Judge on
    **product/mobile INP** (needs ≥ 200 loads/week) against the 128–240 ms historical weekly band. One
    week inside the band is *not* evidence of change — weekly INP moves ±50 ms on its own.
