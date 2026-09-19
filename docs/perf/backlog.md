@@ -11,6 +11,54 @@ lab/field numbers here still stand.
 
 ---
 
+## Status 2026-09-19 — shipped, measured, paused
+
+**Theme perf work is paused until field data shows a problem.** Every Core Web Vital is "good"
+for real users; what remains is third-party code that lives in the Shopify admin →
+[`store-owner-handover.md`](./store-owner-handover.md). Re-check the field on/after **2026-10-10**:
+`node docs/perf/field-weekly.mjs --since 2026-09-13` (see *Reproducing this baseline*).
+
+**What shipped 2026-09-12 (all live on `dawn/main` #188294955324):** #9 ladder comparison ·
+#10 Tailwind rebuild pinned to 4.1.4 (P1-2) · #11 footer-reveal Motion effect rolled back ·
+#12 mobile lightbox gated on `[open]`. Detail: [`dawn-compare/REPORT.md`](./dawn-compare/REPORT.md).
+
+**Measured a week later** (raw data: [`ab-2026-09-19/`](./ab-2026-09-19/)):
+
+| | Result |
+|---|---|
+| Deploy on production | ✅ `Shopify.theme.id` 188294955324; no `footer-reveal`/`vendor-motion-scroll` in the HTML; `.md\:hidden{` in the served `tailwind.output.css` |
+| **Field** (2026-09-13→19) | **No detectable change.** product/mobile LCP 1602 ms (base 1624), INP 164 ms (base 160), CLS 0.00 · product/desktop 1764 / 48 / 0.03. The week before deploy read INP 238 ms, the week after 144 ms — but 144 is inside the 13-week band (128–240) and equals 2026-07-13 and 07-27, so one week can't be told apart from regression to the mean. n was also low (175–198 vs typical 240–300). |
+| Lab, #11 footer-reveal | theme-owned script time 400–570 ms → **below Lighthouse's 50 ms reporting floor** (not literally 0); theme asset files 59→56, −9.4 KB |
+| Lab, #12 lightbox | mobile images 542/469/525 KB → **182/164/199 KB** (−305…−360 KB; more than the −270 KB predicted); mobile total −284…−346 KB, beyond IQR on 3/3 products |
+| Lab, main thread / TBT | **not distinguishable from noise** (desktop +111/+139/−52 ms, mobile +197/+273/−119, all inside IQR). Last week's "desktop −94…−217 ms" did **not** reproduce. |
+
+**Caveat on the lab A/B:** BEFORE (theme #186192232764, the unpublished `PRE-GITHUB rollback`) is the
+2026-09-10 snapshot. Non-perf work merged since (`theme.liquid`, header, `main-product`, structured
+data, language switcher, policy pages, related-collections widget), so the small DOM (−8 nodes),
+HTML (−3.4 KB) and Speed Index deltas can't be attributed to #9–#12. Only the script-time and
+mobile-image deltas are mechanistically attributable.
+
+**Watch items (not tasks):**
+- **Gallery CLS.** Mobile lab CLS 0.0658 from an intermittent shift of `slider-component#GalleryViewer`
+  (main product gallery). Pre-existing (REPORT §8, 2026-09-10; 1 of 21 runs on BEFORE); frequency
+  7 of 21 on AFTER — plausibly the lightbox fix removing an eager-image warm-up. Field CLS p75 is
+  0.00 and 0.066 is under the 0.1 threshold. Revisit only if field CLS moves.
+- **25 unique render-blocking stylesheets** on the product page (`base.css` 126 KB,
+  `section-main-product.css` 46 KB, `tailwind.output.css` 13.5 KB + 22 `component-*.css`; only 2
+  deferred; several linked more than once). REPORT sized the whole CSS delta at +7…+16 ms desktop
+  FCP — hygiene, not a win.
+- One extra 11.5 KB font request on one product page (P1 desktop, AFTER only) — unexplained, tiny.
+
+**Every remaining theme-side item — REPORT follow-ups #3 (CSS trim) and #4 (DOM size), P2-2, P3-1,
+P3-2, P3-3 below — is hygiene with no field problem behind it.** Do not treat them as a queue.
+
+**Correction to the regression history below:** Shopify revises recent weeks after the fact. Running
+`field-weekly.mjs --write` corrected the last two weeks recorded at the 2026-09-05 snapshot (e.g.
+`index/mobile 2026-08-31` was `3890 ms n=7`, now `194 ms n=13`; `collection/mobile 2026-08-24`
+`344 → 284 ms`), so the "known INP excursions" for those weeks were partly partial-week artefacts.
+
+---
+
 ## Headline: real users are fine. Fix INP, not LCP.
 
 Field data (Shopify's own RUM, 90 days, 7 997 page loads) says **every Core Web Vital is
@@ -76,10 +124,11 @@ roughly a fifth of the same win on product.
 ### Lab measurement conditions (and one trap)
 
 Tracked URL pattern is `https://informatica.com.ua/<path>?pb=0` — the **plain storefront
-URL**, because theme `186192232764` is the **live** theme, so the public URL already renders
-this repo's code.
+URL**, because the live theme renders this repo's code. (At baseline time the live theme was
+`186192232764`; since 2026-09-10 it is `dawn/main` **#188294955324**, and `186192232764` is the
+unpublished `PRE-GITHUB rollback` — see `docs/theme-deploy-audit.md`.)
 
-`?preview_theme_id=186192232764` is **wrong for measurement**: it adds a 302 worth ~780 ms of
+`?preview_theme_id=<id>` is **wrong for measurement**: it adds a 302 worth ~780 ms of
 pure artifact per LCP. Measured both ways:
 
 | Home / mobile | Score | LCP |
@@ -130,7 +179,11 @@ Per-page transferred bytes on mobile, by owner:
 
 Sorted by impact ÷ effort. Every item is ≤ 2 hours.
 
-## P1-1 — Mobile INP: the only real field problem
+## P1-1 — Mobile INP: the only real field problem — ⏸ diagnosis never run; paused (2026-09-19)
+- **Status 2026-09-19:** product/mobile INP has been 128–240 ms weekly (median ≈ 160) and read 144 ms
+  in the first week after #11/#12 — inside that band, so no conclusion. The trace diagnosis below
+  was not done. Resume it only if `field-weekly.mjs` shows product/mobile INP above 200 ms in
+  consecutive weeks with n ≥ 200. Lab add-to-cart INP is 42–59 ms on every theme (REPORT §5).
 - **Problem/evidence:** INP p75 is the sole CWV outside "good": index/mobile **272 ms**
   (needs-improvement), with collection/mobile 174 ms and product/mobile 160 ms close to the
   200 ms line. Weekly history shows repeated excursions above it —
@@ -156,7 +209,9 @@ Sorted by impact ÷ effort. Every item is ≤ 2 hours.
   "verify in the field" step of Shopify's method and cannot be rushed with a lab run.
 - **Depends on:** nothing.
 
-## P1-2 — Tailwind build is 12 months stale and ships broken classes
+## P1-2 — Tailwind build is 12 months stale and ships broken classes — ✅ DONE (PR #10, live)
+- **Resolution:** rebuilt with the pinned v4.1.4; production serves `.md:hidden{` (verified 2026-09-19).
+  The original problem statement follows for the record.
 - **Problem/evidence:** `assets/tailwind.output.css` was last built **2025-08-30**. Rebuilding
   with the repo's pinned v4.1.4 and diffing selectors shows the shipped CSS is missing classes
   Liquid uses today:
@@ -186,7 +241,7 @@ Sorted by impact ÷ effort. Every item is ≤ 2 hours.
 - **Resolution:** `accessibility.call_store` added to `locales/en.default.json` and
   `locales/uk.json` in PR #1 (Theme Check errors fix). Theme Check is now green.
 
-## P2-2 — Homepage category images ship at one fixed width, no `srcset`
+## P2-2 — Homepage category images ship at one fixed width, no `srcset` — hygiene, no field problem
 - **Problem/evidence:** `sections/popular-categories.liquid:180-183` calls
   `image_url: width: 500 | image_tag: loading: 'lazy'` with **no `widths:` and no `sizes:`** —
   every viewport gets the same 500 px asset. Lighthouse image-delivery flags ~208 KB of
@@ -198,18 +253,18 @@ Sorted by impact ÷ effort. Every item is ≤ 2 hours.
 - **Effort:** 45 min · **Risk:** low · **Revert:** one-line
 - **Depends on:** nothing.
 
-## P3-1 — `component-facets.css` blocks collection render for 305 ms (lab)
+## P3-1 — `component-facets.css` blocks collection render for 305 ms (lab) — hygiene, no field problem
 - **Problem/evidence:** largest render-blocking cost measured — 33 958 B raw / ~5 KB gzipped.
 - **Metric:** FCP/LCP on collection *in the lab*. **Demoted:** collection field LCP is
   1599 ms (good) and collection is 14.4% of traffic. Do not spend two hours here until
   P1-1 is resolved.
 - **Effort:** 2 h · **Risk:** medium (flash of unstyled filters) · **Depends on:** nothing.
 
-## P3-2 — `section-main-product.css` blocks product render for 454 ms (lab)
+## P3-2 — `section-main-product.css` blocks product render for 454 ms (lab) — hygiene, no field problem
 - Same shape as P3-1: 46 447 B raw / ~7 KB gzipped, largest theme CSS file. Same demotion —
   product field LCP is 1624 ms (good). **Effort:** 2 h · **Depends on:** P1-1.
 
-## P3-3 — Collection server render is the slowest of the three
+## P3-3 — Collection server render is the slowest of the three — hygiene, no field problem
 - **Problem/evidence:** `theme profile`: collection **232 ms** vs product 132 ms, home 190 ms.
   Widest frames: `render 'facets'` 11.1%, `unless results.filters == empty` 5.7%,
   `render 'card-product'` 6.3%. `products_per_page` is 36.
@@ -224,6 +279,10 @@ Sorted by impact ÷ effort. Every item is ≤ 2 hours.
    (~~P2-1 translation key~~ — done in PR #1.)
 
 ## Needs the store owner
+
+> **Full checklist with 2026-09-19 evidence, risks and verification: [`store-owner-handover.md`](./store-owner-handover.md).**
+> Google Tag is still 516 KB / 15 requests; web pixels 146 KB. These are the largest remaining
+> main-thread cost (≈1.5 s script per mobile load in the lab) and the theme cannot fix them.
 
 1. **De-duplicate Google Tag.** Product and collection each load `gtag/js` 190 KB +
    `gtag/destination` 161 KB + `gtm.js` 156 KB = **510 KB**. That is a duplicate-install
@@ -253,7 +312,8 @@ Sorted by impact ÷ effort. Every item is ≤ 2 hours.
 
 ## Regression watch
 
-Now populated from 13 weeks of field data (`baseline.json.field.weekly_inp_history_mobile`).
+Now populated from 15 weeks of field data (`baseline.json.field.weekly_inp_history_mobile`, updated
+2026-09-19 with `field-weekly.mjs --write`). To re-check: `node docs/perf/field-weekly.mjs --since <date>`.
 
 **What has actually moved:** only INP. LCP p75 sat in a stable 1440–1830 ms band on
 product/mobile across every week measured, and CLS never left "good". There is no LCP or CLS
@@ -263,14 +323,15 @@ regression history to speak of.
 
 | Week | Template | INP p75 | Loads | Trustworthy? |
 |---|---|---|---|---|
-| 2026-08-24 | collection/mobile | 344 ms | 65 | yes |
+| 2026-08-24 | collection/mobile | 284 ms (was 344; revised 2026-09-19) | 69 | yes |
 | 2026-07-13 | collection/mobile | 270 ms | 56 | yes |
 | 2026-06-22 | product/mobile | 240 ms | 174 | yes |
 | 2026-08-03 | collection/mobile | 208 ms | 64 | yes |
 | 2026-08-03 | product/mobile | 206 ms | 273 | yes |
-| 2026-08-31 | index/mobile | 3890 ms | **7** | **no — sample too small** |
+| 2026-08-31 | index/mobile | ~~3890 ms~~ → 194 ms (revised 2026-09-19) | 13 | **no — not an excursion after all** |
 | 2026-08-03 | index/mobile | 584 ms | **15** | **no** |
-| 2026-08-24 | index/mobile | 532 ms | **8** | **no** |
+| 2026-09-07 | product/mobile | 238 ms | 273 | yes — the week before #11/#12 deployed; the following week read 144 ms (in band, see Status) |
+| 2026-08-24 | index/mobile | 320 ms (was 532; revised) | 11 | **no** |
 
 **No cause can be attributed yet.** Correlating these dates with app installs or theme
 deploys requires the RUM *event annotations*, which the `performanceMetrics` query would have
@@ -363,37 +424,16 @@ the ~780 ms 302 artifact; it is constant run-to-run, so a floor still works).
 
 ---
 
-# Suggested sequence
+# Sequence (retired 2026-09-19)
 
-| Week | Item | Why |
-|---|---|---|
-| **1** | **P1-2** Tailwind rebuild (30 min) | Quick, low risk, fixes a real visual bug. (P2-1 already done in PR #1.) |
-| 2 | **P1-1** trace mobile INP on product | The only genuine field problem, on 75% of traffic. |
-| 3 | The fix P1-1 names | Sized once the culprit is known. |
-| 4 | Re-query `web_performance`; confirm product/mobile INP improved | Field verification needs a week of data. |
-| 5 | **P2-2** category image `srcset` | Hygiene. |
-| 6 | **P3-1/P3-2** CSS splits | Only if field data still justifies it. |
+The old week-by-week sequence (Tailwind rebuild → INP trace → INP fix → …) is retired: P1-2 shipped,
+the footer-reveal and lightbox fixes shipped from the ladder comparison instead, and the field
+shows no problem. What is left is the store-owner handover and one re-check:
 
-Store-owner items (Google Tag, pixels, Judge.me) are unblocked now and don't consume a week.
-Two of them are also INP suspects, so handing them over early may partly resolve P1-1.
-
----
-
-## Week 1 slice
-
-**P1-2 — Rebuild Tailwind (30 min).** (P2-1, the `accessibility.call_store` key, was done in
-PR #1.)
-
-```bash
-cd C:/projects/informatica/dawn
-npx @tailwindcss/cli@4.1.4 -i assets/tailwind.input.css -o assets/tailwind.output.css --minify
-grep -F 'md\:hidden' assets/tailwind.output.css   # must now find a standalone rule
-```
-
-Then check the header phone icon at `sections/header.liquid:320` is hidden ≥768 px and
-visible below. Do it on its own branch → PR (the CI guard + branch protection now gate `main`).
-
-Revert: `git checkout assets/tailwind.output.css`.
+1. Store owner works through [`store-owner-handover.md`](./store-owner-handover.md) at their pace.
+2. **On/after 2026-10-10:** `node docs/perf/field-weekly.mjs --since 2026-09-13`. Judge product/mobile
+   INP against the 128–240 ms weekly band with n ≥ 200; ignore anything under 30 loads.
+3. Reopen theme work (P1-1 INP trace first) only if INP is above 200 ms in consecutive weeks.
 
 ---
 
@@ -405,6 +445,8 @@ node docs/perf/measure.js    <outDir>   # 18 runs -> lh_*.json + lh_summary.json
 shopify theme check --output=json > <outDir>/themecheck.json
 node docs/perf/mkbaseline.js <outDir>   # -> docs/perf/baseline.json
 ```
+
+**Weekly re-check (no baseline regeneration needed):** `node docs/perf/field-weekly.mjs [--since D] [--until D] [--write]`.
 
 Field data (regenerate `<outDir>/field.json` before `mkbaseline.js`):
 
@@ -423,6 +465,6 @@ baseline — if you must, say why in the commit message.
 
 > **Dev theme.** `npm run dev` targets a dedicated **unpublished** dev theme (see
 > `package.json`), so `shopify theme dev` no longer syncs local edits to the live theme
-> (`186192232764`). `npm run push` / `npm run pull` still point at the live theme — those are
-> the deliberate deploy/read commands. Measurement does not need the dev server anyway; the
+> (then `186192232764`, now `188294955324`). `npm run push` / `npm run pull` point at the live theme
+> — the deliberate deploy/read commands; merges to `main` also auto-deploy via the GitHub integration. Measurement does not need the dev server anyway; the
 > tracked URLs are public.
