@@ -4,3 +4,7 @@ TemplateLength:
   enabled: false
 PreconnectLinks:
   enabled: false
+
+ignore:
+  - usecase-image-out/*
+  - seo-title-fix-out/*
