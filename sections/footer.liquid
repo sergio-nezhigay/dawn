@@ -1,4 +1,8 @@
 <section class="footer-custom" itemscope itemtype="http://schema.org/LocalBusiness">
+  <meta itemprop="name" content="{{ shop.name }}">
+  {%- if settings.logo != blank -%}
+    <meta itemprop="image" content="{{ settings.logo | image_url: width: 500 | prepend: 'https:' }}">
+  {%- endif -%}
   <ul class="footer-content page-width-narrow space-y-6">
     <li class="footer-item">
       <div class="footer-icon">
