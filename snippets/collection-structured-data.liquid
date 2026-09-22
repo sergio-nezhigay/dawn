@@ -32,7 +32,7 @@
                 {%- endif -%}
                 "offers": {
                   "@type": "Offer",
-                  "price": {{ product.price_min | money_without_currency | strip_html | json }},
+                  "price": {{ product.price_min | divided_by: 100.0 | json }},
                   "priceCurrency": {{ cart.currency.iso_code | json }},
                   "availability": "https://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}"
                 }
