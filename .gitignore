@@ -14,6 +14,12 @@ nul
 
 # perf testing
 perf-reports/
+ci-perf/
+theme-dev.log
 
-# scripts/ output
-usecase-image-out/
+# local Shopify CLI state (regenerates automatically)
+.shopify-appdata/
+.shopify-theme-dev*.log
+
+# local Claude Code permissions (personal, not shared)
+.claude/settings.local.json
