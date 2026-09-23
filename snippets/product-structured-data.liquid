@@ -3,11 +3,49 @@
   aggregateRating from the reviews.rating / reviews.rating_count metafields when present
   (the built-in filter does not emit aggregateRating on its own).
 
+  Also patches merchant-listing fields the filter gets wrong or omits:
+  - barcode holds the manufacturer part number on most products, which the filter emits
+    as "gtin" (Google: "Invalid GTIN"). Non-numeric / wrong-length barcodes become "mpn".
+  - every Offer gets shippingDetails (UA, 1-2 days) and hasMerchantReturnPolicy (14 days).
+
   Accepts:
   - product: {Object} Product Liquid object (required)
 {% endcomment %}
 {%- liquid
   assign structured_data_json = product | structured_data | strip
+  for variant in product.variants
+    assign barcode = variant.barcode | strip
+    if barcode == blank
+      continue
+    endif
+    assign non_digits = barcode | remove: '0' | remove: '1' | remove: '2' | remove: '3' | remove: '4' | remove: '5' | remove: '6' | remove: '7' | remove: '8' | remove: '9'
+    assign is_gtin = false
+    if non_digits == blank
+      if barcode.size == 8 or barcode.size == 12 or barcode.size == 13 or barcode.size == 14
+        assign is_gtin = true
+      endif
+    endif
+    unless is_gtin
+      assign barcode_json = variant.barcode | json
+      assign gtin_pair = '"gtin":' | append: barcode_json
+      assign mpn_pair = '"mpn":' | append: barcode_json
+      assign structured_data_json = structured_data_json | replace: gtin_pair, mpn_pair
+    endunless
+  endfor
+
+  capture offer_extras
+    echo '"@type":"Offer",'
+    echo '"shippingDetails":{"@type":"OfferShippingDetails",'
+    echo '"shippingDestination":{"@type":"DefinedRegion","addressCountry":"UA"},'
+    echo '"deliveryTime":{"@type":"ShippingDeliveryTime",'
+    echo '"handlingTime":{"@type":"QuantitativeValue","minValue":0,"maxValue":1,"unitCode":"DAY"},'
+    echo '"transitTime":{"@type":"QuantitativeValue","minValue":1,"maxValue":1,"unitCode":"DAY"}}},'
+    echo '"hasMerchantReturnPolicy":{"@type":"MerchantReturnPolicy","applicableCountry":"UA",'
+    echo '"returnPolicyCategory":"https://schema.org/MerchantReturnFiniteReturnWindow",'
+    echo '"merchantReturnDays":14,"returnMethod":"https://schema.org/ReturnByMail"},'
+  endcapture
+  assign structured_data_json = structured_data_json | replace: '"@type":"Offer",', offer_extras
+
   assign rating = product.metafields.reviews.rating.value
   assign rating_count = product.metafields.reviews.rating_count
 
