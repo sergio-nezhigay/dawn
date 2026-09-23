@@ -96,6 +96,10 @@
   justify-self: start;
 }
 
+.product-info-block__inventory--sold-out {
+  color: #4b5563;
+}
+
 /* When no badge present, inventory is first child - span both columns */
 .product-info-block__inventory:first-child {
   grid-column: 1 / -1;

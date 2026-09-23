@@ -1,0 +1,35 @@
+{%- comment -%}
+  Sold-out product: replaces the disabled buy button with the store phone, so the page
+  is not a dead end. Wording depends on whether memory-alternatives shows a replacement.
+
+  Accepts:
+  - product: {Object} Product Liquid object (required)
+{%- endcomment -%}
+{%- liquid
+  assign has_alternatives = false
+  for alt in product.metafields.memory.alternatives.value
+    if alt.available
+      assign has_alternatives = true
+      break
+    endif
+  endfor
+
+  capture phone_link
+    echo '<a href="tel:'
+    render 'phone-number', format: 'href'
+    echo '" class="sold-out-contact__phone">'
+    render 'phone-number', format: 'display'
+    echo '</a>'
+  endcapture
+-%}
+<p class="sold-out-contact">
+  {%- if has_alternatives -%}
+    {{ 'products.product.sold_out_contact_alternatives_html' | t: phone: phone_link }}
+  {%- else -%}
+    {{ 'products.product.sold_out_contact_html' | t: phone: phone_link }}
+  {%- endif -%}
+</p>
+<style>
+  .sold-out-contact { flex-grow: 1; margin: 0; padding: 1.2rem 1.4rem; border: 1px dashed #d6d6d6; border-radius: 0.8rem; font-size: 1.4rem; line-height: 1.4; }
+  .sold-out-contact__phone { font-weight: 700; color: #0b6fd6; white-space: nowrap; }
+</style>

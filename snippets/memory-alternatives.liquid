@@ -1,52 +1,171 @@
 {%- comment -%}
   Out-of-stock memory: in-stock modules that fit the same slot, from the
   memory.alternatives product metafield (list.product_reference, filled and refreshed
-  by seo-2303/build_alternatives.py). Skips alternatives that sold out since the refresh;
-  renders nothing when none are left.
+  by seo-2303/build_alternatives.py, ordered closest match first). Skips alternatives
+  that sold out since the refresh; renders nothing when none are left.
+
+  The first available alternative is shown as the recommended replacement with its own
+  add-to-cart form (Dawn's <product-form>, so it opens the cart drawer); the rest are links.
 
   Accepts:
   - product: {Object} Product Liquid object (required)
+  - section_id: {String} id of the section rendering the snippet (required)
+  - layout: {String} 'jump' renders only the mobile link to the block, placed under the title (optional)
 {%- endcomment -%}
 {%- liquid
   assign alts = product.metafields.memory.alternatives.value
-  assign shown = 0
+  assign best = null
+  assign others_count = 0
   for alt in alts
     if alt.available
-      assign shown = shown | plus: 1
+      if best == null
+        assign best = alt
+      else
+        assign others_count = others_count | plus: 1
+      endif
     endif
   endfor
 -%}
-{%- if shown > 0 -%}
-  <div class="memory-alternatives">
-    <p class="memory-alternatives__heading">{{ 'products.product.memory_alternatives_heading' | t }}</p>
-    <ul class="memory-alternatives__list" role="list">
-      {%- for alt in alts -%}
-        {%- if alt.available -%}
-          <li>
-            <a href="{{ alt.url }}" class="memory-alternatives__item">
-              {%- if alt.featured_image -%}
-                {{
-                  alt.featured_image
-                  | image_url: width: 120
-                  | image_tag: loading: 'lazy', width: 60, height: 60, alt: alt.title, class: 'memory-alternatives__img'
-                }}
-              {%- endif -%}
-              <span class="memory-alternatives__title">{{ alt.title }}</span>
-              <span class="memory-alternatives__price">{{ alt.price | money }}</span>
-            </a>
-          </li>
-        {%- endif -%}
-      {%- endfor -%}
-    </ul>
-  </div>
-  <style>
-    .memory-alternatives { margin-top: 1.2rem; padding: 1.2rem 1.4rem; border: 1px solid rgba(var(--color-foreground), 0.15); border-radius: 0.8rem; }
-    .memory-alternatives__heading { margin: 0 0 0.8rem; font-weight: 600; }
-    .memory-alternatives__list { margin: 0; padding: 0; list-style: none; display: grid; gap: 0.8rem; }
-    .memory-alternatives__item { display: grid; grid-template-columns: 60px 1fr auto; gap: 1rem; align-items: center; color: inherit; text-decoration: none; }
-    .memory-alternatives__item:hover .memory-alternatives__title { text-decoration: underline; }
-    .memory-alternatives__img { width: 60px; height: 60px; object-fit: contain; }
-    .memory-alternatives__title { font-size: 1.4rem; line-height: 1.3; }
-    .memory-alternatives__price { font-weight: 600; white-space: nowrap; }
-  </style>
+{%- if best -%}
+  {%- if layout == 'jump' -%}
+    {%- comment -%}
+      Mobile only: status + recommended replacement with its own buy button above the gallery,
+      so the call to action is on the first screen. Replaces the status line in the price block.
+    {%- endcomment -%}
+    {%- liquid
+      assign best_variant = best.selected_or_first_available_variant
+      assign form_id = 'memory-alternative-jump-form-' | append: section_id
+    -%}
+    <div class="memory-alternatives-jump">
+      <p class="memory-alternatives-jump__status">
+        <strong>{{ 'products.product.inventory_out_of_stock' | t }}</strong>
+        &middot; {{ 'products.product.memory_alternatives_recommended' | t }}:
+      </p>
+      <a href="{{ best.url }}" class="memory-alternatives-jump__title">{{ best.title }}</a>
+      <product-form class="memory-alternatives-jump__buy" data-section-id="{{ section_id }}">
+        {%- form 'product', best, id: form_id, novalidate: 'novalidate', class: 'memory-alternatives-jump__form' -%}
+          <input type="hidden" name="id" value="{{ best_variant.id }}">
+          <span class="memory-alternatives-jump__price">
+            {{- best_variant.price | money_without_currency }}
+            {{ cart.currency.symbol -}}
+          </span>
+          <button type="submit" name="add" class="button button--primary memory-alternatives-jump__submit">
+            <span>{{ 'products.product.memory_alternatives_buy' | t }}</span>
+            {%- render 'loading-spinner' -%}
+          </button>
+        {%- endform -%}
+      </product-form>
+    </div>
+    <style>
+      .product__title > .memory-alternatives-jump { display: grid; gap: 0.6rem; margin-top: 1rem; padding: 1rem 1.2rem; border: 1px solid #cfe0f5; border-radius: 0.8rem; background: #eef4fc; color: #0f2744; font-size: 1.3rem; }
+      .memory-alternatives-jump__status { margin: 0; }
+      .memory-alternatives-jump__title { overflow: hidden; color: inherit; font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
+      .memory-alternatives-jump__form { display: flex; align-items: center; gap: 1rem; }
+      .memory-alternatives-jump__price { font-family: var(--font-heading-family); font-size: 2rem; font-weight: 700; white-space: nowrap; }
+      .memory-alternatives-jump .memory-alternatives-jump__submit { flex: 1; min-height: 4.2rem; border-radius: 0.8rem; background-color: #ffc220; color: #001e3c; font-family: 'Chakra Petch', sans-serif; font-size: 1.5rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+      .memory-alternatives-jump .memory-alternatives-jump__submit::before,
+      .memory-alternatives-jump .memory-alternatives-jump__submit::after { box-shadow: none; }
+      @media screen and (max-width: 749px) { #Inventory-{{ section_id }} { display: none; } }
+      @media screen and (min-width: 750px) { .product__title > .memory-alternatives-jump { display: none; } }
+    </style>
+  {%- else -%}
+    {%- liquid
+      assign best_variant = best.selected_or_first_available_variant
+      assign specs = best.metafields.memory
+      assign form_id = 'memory-alternative-form-' | append: section_id
+    -%}
+    <div class="memory-alternatives" id="MemoryAlternatives-{{ section_id }}">
+      <div class="memory-alternatives__hero">
+        <span class="memory-alternatives__tag">{{ 'products.product.memory_alternatives_recommended' | t }}</span>
+        <a href="{{ best.url }}" class="memory-alternatives__main">
+          {%- if best.featured_image -%}
+            {{
+              best.featured_image
+              | image_url: width: 200
+              | image_tag:
+                loading: 'lazy',
+                width: 96,
+                height: 96,
+                widths: '96, 192',
+                sizes: '96px',
+                alt: best.title,
+                class: 'memory-alternatives__img'
+            }}
+          {%- endif -%}
+          <span class="memory-alternatives__info">
+            <span class="memory-alternatives__title">{{ best.title }}</span>
+            {%- if specs.capacity_gb.value != blank or specs.generation.value != blank or specs.form_factor.value != blank -%}
+              <span class="memory-alternatives__chips">
+                {%- if specs.capacity_gb.value != blank -%}<span>{{ specs.capacity_gb.value }} GB</span>{%- endif -%}
+                {%- if specs.generation.value != blank -%}
+                  <span>{{ specs.generation.value }}{% if specs.speed_mhz.value != blank %}-{{ specs.speed_mhz.value }}{% endif %}</span>
+                {%- endif -%}
+                {%- if specs.form_factor.value != blank -%}<span>{{ specs.form_factor.value }}</span>{%- endif -%}
+              </span>
+            {%- endif -%}
+          </span>
+        </a>
+        <product-form class="memory-alternatives__buy" data-section-id="{{ section_id }}">
+          {%- form 'product', best, id: form_id, novalidate: 'novalidate', class: 'memory-alternatives__form' -%}
+            <input type="hidden" name="id" value="{{ best_variant.id }}">
+            <span class="memory-alternatives__price">
+              {{- best_variant.price | money_without_currency }}
+              {{ cart.currency.symbol -}}
+            </span>
+            <button type="submit" name="add" class="button button--primary memory-alternatives__submit">
+              <span>{{ 'products.product.memory_alternatives_buy' | t }}</span>
+              {%- render 'loading-spinner' -%}
+            </button>
+          {%- endform -%}
+        </product-form>
+      </div>
+
+      {%- if others_count > 0 -%}
+        <p class="memory-alternatives__heading">
+          {{ 'products.product.memory_alternatives_others' | t }} ({{ others_count }})
+        </p>
+        <ul class="memory-alternatives__list" role="list">
+          {%- for alt in alts -%}
+            {%- if alt.available and alt.id != best.id -%}
+              <li>
+                <a href="{{ alt.url }}" class="memory-alternatives__item">
+                  <span class="memory-alternatives__item-title">{{ alt.title }}</span>
+                  <span class="memory-alternatives__item-price">
+                    {{- alt.price | money_without_currency }}
+                    {{ cart.currency.symbol -}}
+                  </span>
+                  <span class="memory-alternatives__chevron" aria-hidden="true">&#8250;</span>
+                </a>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+    <style>
+      .memory-alternatives { display: grid; gap: 1.2rem; margin-top: 1.2rem; }
+      .memory-alternatives__hero { display: grid; gap: 1.2rem; padding: 1.4rem; border: 2px solid #0b6fd6; border-radius: 1rem; background: #fff; }
+      .memory-alternatives__tag { justify-self: start; padding: 0.5rem 0.8rem; border-radius: 0.4rem; background: #0b6fd6; color: #fff; font-size: 1.1rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+      .memory-alternatives__main { display: grid; grid-template-columns: 96px 1fr; gap: 1.2rem; align-items: center; color: inherit; text-decoration: none; }
+      .memory-alternatives__main:hover .memory-alternatives__title { text-decoration: underline; }
+      .memory-alternatives__img { width: 96px; height: 96px; object-fit: contain; }
+      .memory-alternatives__info { display: grid; gap: 0.6rem; }
+      .memory-alternatives__title { font-size: 1.5rem; font-weight: 600; line-height: 1.3; }
+      .memory-alternatives__chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+      .memory-alternatives__chips span { padding: 0.2rem 0.7rem; border: 1px solid #d6dde6; border-radius: 99px; font-size: 1.2rem; color: #374151; }
+      .memory-alternatives__form { display: flex; align-items: center; gap: 1.2rem; }
+      .memory-alternatives__price { font-family: var(--font-heading-family); font-size: 2.4rem; font-weight: 700; white-space: nowrap; }
+      .memory-alternatives .memory-alternatives__submit { flex: 1; min-height: 4.6rem; border-radius: 0.8rem; background-color: #ffc220; color: #001e3c; font-family: 'Chakra Petch', sans-serif; font-size: 1.6rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+      .memory-alternatives .memory-alternatives__submit::before,
+      .memory-alternatives .memory-alternatives__submit::after { box-shadow: none; }
+      .memory-alternatives__heading { margin: 0; font-size: 1.4rem; font-weight: 600; }
+      .memory-alternatives__list { margin: 0; padding: 0; list-style: none; }
+      .memory-alternatives__item { display: grid; grid-template-columns: 1fr auto 1.4rem; gap: 1rem; align-items: center; padding: 0.9rem 0; border-top: 1px solid #efefef; color: inherit; font-size: 1.4rem; line-height: 1.3; text-decoration: none; }
+      .memory-alternatives__item:hover .memory-alternatives__item-title { text-decoration: underline; }
+      .memory-alternatives__item-price { font-weight: 700; white-space: nowrap; }
+      .memory-alternatives__chevron { color: #9a9a9a; font-size: 1.8rem; line-height: 1; }
+      {%- comment -%} On mobile the recommended replacement is already in the banner under the title {%- endcomment -%}
+      @media screen and (max-width: 749px) { .memory-alternatives__hero { display: none; } }
+    </style>
+  {%- endif -%}
 {%- endif -%}

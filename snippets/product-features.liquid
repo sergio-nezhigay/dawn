@@ -1,7 +1,7 @@
 <div class="fulfillment-wrapper">
   <table class="fulfillment-table">
-    {% assign warranty_months = product.metafields.custom.warranty %}
-    {% if warranty_months %}
+    {% assign warranty_months = product.metafields.custom.warranty.value | default: 0 | plus: 0 %}
+    {% if warranty_months > 0 %}
     <tr class="fulfillment-row">
       <td class="fulfillment-icon-cell">
         <a href="/policies/refund-policy" class="fulfillment-icon-link" aria-label="{{ 'products.product.features.warranty' | t }}" target="_blank" rel="noopener noreferrer">
