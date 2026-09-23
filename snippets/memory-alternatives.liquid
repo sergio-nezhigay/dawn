@@ -1,0 +1,52 @@
+{%- comment -%}
+  Out-of-stock memory: in-stock modules that fit the same slot, from the
+  memory.alternatives product metafield (list.product_reference, filled and refreshed
+  by seo-2303/build_alternatives.py). Skips alternatives that sold out since the refresh;
+  renders nothing when none are left.
+
+  Accepts:
+  - product: {Object} Product Liquid object (required)
+{%- endcomment -%}
+{%- liquid
+  assign alts = product.metafields.memory.alternatives.value
+  assign shown = 0
+  for alt in alts
+    if alt.available
+      assign shown = shown | plus: 1
+    endif
+  endfor
+-%}
+{%- if shown > 0 -%}
+  <div class="memory-alternatives">
+    <p class="memory-alternatives__heading">{{ 'products.product.memory_alternatives_heading' | t }}</p>
+    <ul class="memory-alternatives__list" role="list">
+      {%- for alt in alts -%}
+        {%- if alt.available -%}
+          <li>
+            <a href="{{ alt.url }}" class="memory-alternatives__item">
+              {%- if alt.featured_image -%}
+                {{
+                  alt.featured_image
+                  | image_url: width: 120
+                  | image_tag: loading: 'lazy', width: 60, height: 60, alt: alt.title, class: 'memory-alternatives__img'
+                }}
+              {%- endif -%}
+              <span class="memory-alternatives__title">{{ alt.title }}</span>
+              <span class="memory-alternatives__price">{{ alt.price | money }}</span>
+            </a>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  </div>
+  <style>
+    .memory-alternatives { margin-top: 1.2rem; padding: 1.2rem 1.4rem; border: 1px solid rgba(var(--color-foreground), 0.15); border-radius: 0.8rem; }
+    .memory-alternatives__heading { margin: 0 0 0.8rem; font-weight: 600; }
+    .memory-alternatives__list { margin: 0; padding: 0; list-style: none; display: grid; gap: 0.8rem; }
+    .memory-alternatives__item { display: grid; grid-template-columns: 60px 1fr auto; gap: 1rem; align-items: center; color: inherit; text-decoration: none; }
+    .memory-alternatives__item:hover .memory-alternatives__title { text-decoration: underline; }
+    .memory-alternatives__img { width: 60px; height: 60px; object-fit: contain; }
+    .memory-alternatives__title { font-size: 1.4rem; line-height: 1.3; }
+    .memory-alternatives__price { font-weight: 600; white-space: nowrap; }
+  </style>
+{%- endif -%}

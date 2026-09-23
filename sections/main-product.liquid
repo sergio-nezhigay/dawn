@@ -205,6 +205,10 @@
                       <span>{{ 'products.product.volume_pricing.note' | t }}</span>
                     </div>
                   {%- endif -%}
+
+                  {%- unless product.available -%}
+                    {%- render 'memory-alternatives', product: product -%}
+                  {%- endunless -%}
                 </div>
 
                 {%- comment -%} Share Button removed from here - moved to buy_buttons row {%- endcomment -%}

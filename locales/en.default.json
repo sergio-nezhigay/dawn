@@ -135,6 +135,7 @@
       "inventory_low_stock": "Low stock",
       "inventory_low_stock_show_count": "Low stock: {{ quantity }} left",
       "inventory_out_of_stock": "Out of stock",
+      "memory_alternatives_heading": "Out of stock — compatible modules in stock:",
       "inventory_out_of_stock_continue_selling": "In stock",
       "sku": "SKU",
       "barcode_label": "Part number",

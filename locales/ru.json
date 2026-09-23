@@ -182,6 +182,7 @@
       "inventory_low_stock": "Заканчивается",
       "inventory_low_stock_show_count": "Заканчивается. Осталось: {{ quantity }}",
       "inventory_out_of_stock": "Нет в наличии",
+      "memory_alternatives_heading": "Нет в наличии — подходящие модули в наличии:",
       "inventory_out_of_stock_continue_selling": "В наличии",
       "sku": "Артикул",
       "barcode_label": "Парт-номер",

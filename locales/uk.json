@@ -185,6 +185,7 @@
       "inventory_low_stock": "Закінчується",
       "inventory_low_stock_show_count": "Закінчується. Залишилося: {{ quantity }}",
       "inventory_out_of_stock": "Немає в наявності",
+      "memory_alternatives_heading": "Немає в наявності — сумісні модулі в наявності:",
       "inventory_out_of_stock_continue_selling": "В наявності",
       "sku": "Артикул",
       "barcode_label": "Парт-номер",
