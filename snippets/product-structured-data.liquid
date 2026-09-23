@@ -5,7 +5,8 @@
 
   Also patches merchant-listing fields the filter gets wrong or omits:
   - barcode holds the manufacturer part number on most products, which the filter emits
-    as "gtin" (Google: "Invalid GTIN"). Non-numeric / wrong-length barcodes become "mpn".
+    as "gtin" (Google: "Invalid GTIN"). Alphanumeric barcodes become "mpn"; short numeric
+    internal codes are dropped; valid 8/12/13/14-digit barcodes stay "gtin".
   - every Offer gets shippingDetails (UA, 1-2 days) and hasMerchantReturnPolicy (14 days).
 
   Accepts:
@@ -19,18 +20,18 @@
       continue
     endif
     assign non_digits = barcode | remove: '0' | remove: '1' | remove: '2' | remove: '3' | remove: '4' | remove: '5' | remove: '6' | remove: '7' | remove: '8' | remove: '9'
-    assign is_gtin = false
+    assign barcode_json = variant.barcode | json
+    assign gtin_pair = '"gtin":' | append: barcode_json
     if non_digits == blank
-      if barcode.size == 8 or barcode.size == 12 or barcode.size == 13 or barcode.size == 14
-        assign is_gtin = true
-      endif
-    endif
-    unless is_gtin
-      assign barcode_json = variant.barcode | json
-      assign gtin_pair = '"gtin":' | append: barcode_json
+      unless barcode.size == 8 or barcode.size == 12 or barcode.size == 13 or barcode.size == 14
+        # Short numeric codes are internal store codes, not GTINs or manufacturer MPNs: drop.
+        assign gtin_pair_comma = gtin_pair | append: ','
+        assign structured_data_json = structured_data_json | remove: gtin_pair_comma
+      endunless
+    else
       assign mpn_pair = '"mpn":' | append: barcode_json
       assign structured_data_json = structured_data_json | replace: gtin_pair, mpn_pair
-    endunless
+    endif
   endfor
 
   capture offer_extras
