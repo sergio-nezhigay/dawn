@@ -129,18 +129,24 @@
                       {{ product.title | escape }}
                     </h2>
                   </a>
+                  {%- unless product.available -%}
+                    {%- render 'memory-alternatives', product: product, section_id: section.id, layout: 'jump' -%}
+                  {%- endunless -%}
                 </div>
               {%- when 'price' -%}
                 <div class="product-info-block" {{ block.shopify_attributes }}>
                   {%- comment -%} Row 1: Price + SKU (Horizontal) {%- endcomment -%}
                   <div class="product-info-block__price-row">
                     <div id="price-{{ section.id }}" role="status" class="product-info-block__price">
-                      {%- render 'price',
-                        product: product,
-                        use_variant: true,
-                        show_badges: false,
-                        price_class: 'price--large'
-                      -%}
+                      {%- comment -%} Sold-out products left at price 0 show no price (reads as broken/free) {%- endcomment -%}
+                      {%- unless product.available == false and product.price_max == 0 -%}
+                        {%- render 'price',
+                          product: product,
+                          use_variant: true,
+                          show_badges: false,
+                          price_class: 'price--large'
+                        -%}
+                      {%- endunless -%}
                     </div>
 
                     {%- comment -%} SKU / Article Number (Right Side) {%- endcomment -%}
@@ -165,7 +171,7 @@
 
                     {%- comment -%} Inventory Status {%- endcomment -%}
                     <p
-                      class="product-info-block__inventory{% if product.selected_or_first_available_variant.inventory_management != 'shopify' %} visibility-hidden{% endif %}"
+                      class="product-info-block__inventory{% if product.selected_or_first_available_variant.inventory_management != 'shopify' %} visibility-hidden{% endif %}{% unless product.available %} product-info-block__inventory--sold-out{% endunless %}"
                       id="Inventory-{{ section.id }}"
                       role="status"
                     >
@@ -207,7 +213,7 @@
                   {%- endif -%}
 
                   {%- unless product.available -%}
-                    {%- render 'memory-alternatives', product: product -%}
+                    {%- render 'memory-alternatives', product: product, section_id: section.id -%}
                   {%- endunless -%}
                 </div>
 
@@ -520,13 +526,17 @@
               {%- when 'buy_buttons' -%}
                 {% comment %} {% render 'my-first-ajax' %} {% endcomment %}
                 <div class="product-form__row">
-                  {%- render 'buy-buttons',
-                    block: block,
-                    product: product,
-                    product_form_id: product_form_id,
-                    section_id: section.id,
-                    show_pickup_availability: true
-                  -%}
+                  {%- if product.available -%}
+                    {%- render 'buy-buttons',
+                      block: block,
+                      product: product,
+                      product_form_id: product_form_id,
+                      section_id: section.id,
+                      show_pickup_availability: true
+                    -%}
+                  {%- else -%}
+                    {%- render 'sold-out-contact', product: product -%}
+                  {%- endif -%}
 
                   {%- liquid
                     assign share_block = section.blocks | where: 'type', 'share' | first

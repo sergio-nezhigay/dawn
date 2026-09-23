@@ -9,6 +9,9 @@
     internal codes are dropped; valid 8/12/13/14-digit barcodes stay "gtin".
   - every Offer gets shippingDetails (UA, 1-2 days) and hasMerchantReturnPolicy (14 days).
 
+  Products with every variant priced 0 (legacy sold-out items) get no Product markup:
+  a 0 price reads as "free", and Product markup without an offer is flagged by Google.
+
   Accepts:
   - product: {Object} Product Liquid object (required)
 {% endcomment %}
@@ -70,6 +73,8 @@
     assign structured_data_json = structured_data_json | append: ',' | append: aggregate_rating_json
   endif
 -%}
-<script type="application/ld+json">
-  {{ structured_data_json }}
-</script>
+{%- if product.price_max > 0 -%}
+  <script type="application/ld+json">
+    {{ structured_data_json }}
+  </script>
+{%- endif -%}
