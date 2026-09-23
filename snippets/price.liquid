@@ -51,6 +51,14 @@
   endif
 -%}
 
+{%- comment -%}
+  Legacy sold-out products with every variant priced 0: no price, a 0 reads as "free".
+  Cards still show the sold-out badge.
+{%- endcomment -%}
+{%- if product.available == false and product.price_max == 0 -%}
+  {%- assign target = null -%}
+  {%- assign placeholder = null -%}
+{%- endif -%}
 {%- unless target == null and placeholder == null -%}
   <div
     class="
