@@ -1,7 +1,9 @@
 <link rel="stylesheet" href="{{ 'component-list-menu.css' | asset_url }}">
 <link rel="stylesheet" href="{{ 'component-search.css' | asset_url }}">
 <link rel="stylesheet" href="{{ 'component-menu-drawer.css' | asset_url }}">
-<link rel="stylesheet" href="{{ 'component-cart-notification.css' | asset_url }}">
+{%- if settings.cart_type == 'notification' -%}
+  <link rel="stylesheet" href="{{ 'component-cart-notification.css' | asset_url }}">
+{%- endif -%}
 
 {%- if settings.predictive_search_enabled -%}
   <link rel="stylesheet" href="{{ 'component-price.css' | asset_url }}">
@@ -188,7 +190,9 @@
   }
 {%- endstyle -%}
 
-<script src="{{ 'cart-notification.js' | asset_url }}" defer="defer"></script>
+{%- if settings.cart_type == 'notification' -%}
+  <script src="{{ 'cart-notification.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
 
 {%- liquid
   for block in section.blocks
