@@ -127,11 +127,7 @@
         "products_source": "recommendations",
         "collection": "",
         "recommendations_intent": "related",
-        "heading_size": "h2",
-        "products_to_show": 6,
-        "color_scheme": "scheme-1",
-        "image_ratio": "square",
-        "show_secondary_image": true
+        "products_to_show": 6
       }
     },
     "related_products_FUNdGf": {
@@ -143,11 +139,7 @@
         "products_source": "recommendations",
         "collection": "",
         "recommendations_intent": "complementary",
-        "heading_size": "h1",
-        "products_to_show": 6,
-        "color_scheme": "",
-        "image_ratio": "adapt",
-        "show_secondary_image": false
+        "products_to_show": 6
       }
     },
     "related-products": {

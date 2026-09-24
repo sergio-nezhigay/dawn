@@ -263,11 +263,7 @@
         "products_source": "collection",
         "collection": "popular",
         "recommendations_intent": "related",
-        "heading_size": "h1",
-        "products_to_show": 18,
-        "color_scheme": "",
-        "image_ratio": "square",
-        "show_secondary_image": true
+        "products_to_show": 18
       }
     },
     "174643254122ccb34f": {

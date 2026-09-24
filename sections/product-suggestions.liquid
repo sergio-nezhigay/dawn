@@ -22,7 +22,7 @@
 
 {%- if section.settings.products_source == 'recommendations' -%}
   {%- if recommendations.performed == false or recommendations.products_count > 0 -%}
-    <div class="color-{{ section.settings.color_scheme }} gradient bg-transparent">
+    <div class="color-scheme-1 gradient bg-transparent">
       <product-recommendations
         class="related-products {{ section.settings.container_width }} section-{{ section.id }}-padding isolate"
         data-url="{{ routes.product_recommendations_url }}?limit={{ section.settings.products_to_show }}&intent={{ section.settings.recommendations_intent }}"
@@ -30,7 +30,7 @@
         data-product-id="{{ product.id }}"
       >
         {%- if recommendations.performed and recommendations.products_count > 0 -%}
-          <h2 class="section-title inline-richtext {{ section.settings.heading_size }}">
+          <h2 class="section-title inline-richtext h2">
             {{ section.settings.heading }}
           </h2>
           <ul
@@ -42,9 +42,9 @@
               <li class="grid__item">
                 {%- render 'card-product',
                   card_product: recommendation,
-                  media_aspect_ratio: section.settings.image_ratio,
+                  media_aspect_ratio: 'square',
                   image_shape: 'default',
-                  show_secondary_image: section.settings.show_secondary_image,
+                  show_secondary_image: true,
                   show_vendor: false,
                   show_rating: false,
                   skip_styles: skip_card_product_styles
@@ -60,9 +60,9 @@
 {%- elsif section.settings.products_source == 'collection' -%}
   {%- assign collection = section.settings.collection -%}
   {%- if collection != blank and collection.products_count > 0 -%}
-    <div class="color-{{ section.settings.color_scheme }} gradient bg-transparent">
+    <div class="color-scheme-1 gradient bg-transparent">
       <div class="related-products {{ section.settings.container_width }} section-{{ section.id }}-padding isolate">
-        <h2 class="section-title inline-richtext {{ section.settings.heading_size }}">
+        <h2 class="section-title inline-richtext h2">
           {{ section.settings.heading }}
         </h2>
         <ul
@@ -74,9 +74,9 @@
             <li class="grid__item">
               {%- render 'card-product',
                 card_product: product,
-                media_aspect_ratio: section.settings.image_ratio,
+                media_aspect_ratio: 'square',
                 image_shape: 'default',
-                show_secondary_image: section.settings.show_secondary_image,
+                show_secondary_image: true,
                 show_vendor: false,
                 show_rating: false,
                 skip_styles: skip_card_product_styles
@@ -162,34 +162,6 @@
       "info": "Used when Products source is set to \"Recommendations\""
     },
     {
-      "type": "select",
-      "id": "heading_size",
-      "options": [
-        {
-          "value": "h2",
-          "label": "t:sections.all.heading_size.options__1.label"
-        },
-        {
-          "value": "h1",
-          "label": "t:sections.all.heading_size.options__2.label"
-        },
-        {
-          "value": "h0",
-          "label": "t:sections.all.heading_size.options__3.label"
-        },
-        {
-          "value": "hxl",
-          "label": "t:sections.all.heading_size.options__4.label"
-        },
-        {
-          "value": "hxxl",
-          "label": "t:sections.all.heading_size.options__5.label"
-        }
-      ],
-      "default": "h1",
-      "label": "t:sections.all.heading_size.label"
-    },
-    {
       "type": "range",
       "id": "products_to_show",
       "min": 2,
@@ -197,43 +169,6 @@
       "step": 1,
       "default": 4,
       "label": "Products to show"
-    },
-    {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:sections.all.colors.label",
-      "info": "t:sections.all.colors.has_cards_info",
-      "default": "scheme-1"
-    },
-    {
-      "type": "header",
-      "content": "Product card"
-    },
-    {
-      "type": "select",
-      "id": "image_ratio",
-      "options": [
-        {
-          "value": "adapt",
-          "label": "Adapt to image"
-        },
-        {
-          "value": "portrait",
-          "label": "Portrait"
-        },
-        {
-          "value": "square",
-          "label": "Square"
-        }
-      ],
-      "default": "adapt",
-      "label": "Image ratio"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_secondary_image",
-      "default": false,
-      "label": "Show secondary image on hover"
     }
   ],
   "presets": [
