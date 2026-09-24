@@ -1,0 +1,104 @@
+{%- comment -%}
+  Recently viewed products. Stores the current product in localStorage, then
+  recently-viewed-related.js fetches /search?section_id=<this section> with the
+  stored handles; the search.performed branch below renders those cards.
+{%- endcomment -%}
+{%- if search.performed -%}
+  {%- assign skip_card_product_styles = false -%}
+  {%- for result in search.results -%}
+    <li class="grid__item">
+      {%- render 'card-product',
+        card_product: result,
+        media_aspect_ratio: 'square',
+        image_shape: 'default',
+        show_secondary_image: true,
+        show_vendor: false,
+        show_rating: false,
+        section_id: section.id,
+        skip_styles: skip_card_product_styles
+      -%}
+    </li>
+    {%- assign skip_card_product_styles = true -%}
+  {%- endfor -%}
+{%- else -%}
+  {{ 'component-card.css' | asset_url | stylesheet_tag }}
+  {{ 'component-price.css' | asset_url | stylesheet_tag }}
+  {{ 'section-related-products.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'recently-viewed-related.js' | asset_url }}" defer></script>
+
+  {%- style -%}
+    .section-{{ section.id }}-padding {
+      padding-top: 27px;
+      padding-bottom: 27px;
+    }
+    @media screen and (min-width: 750px) {
+      .section-{{ section.id }}-padding {
+        padding-top: 36px;
+        padding-bottom: 36px;
+      }
+    }
+  {%- endstyle -%}
+
+  <div class="recently-viewed-related-section color-scheme-1 gradient" style="background-color: transparent;">
+    <recently-viewed-related-products
+      class="related-products page-width-narrow section-{{ section.id }}-padding isolate"
+      data-product-handle="{{ product.handle }}"
+      data-section-id="{{ section.id }}"
+    >
+      <h2 class="section-title inline-richtext h2">{{ section.settings.heading }}</h2>
+      <ul class="grid product-grid grid--6-col-desktop grid--2-col-tablet-down" role="list"></ul>
+    </recently-viewed-related-products>
+  </div>
+
+  {%- if product -%}
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const productData = {
+          productHandle: '{{ product.handle }}',
+          productTitle: '{{ product.title | escape }}',
+          productImg: '{% if product.featured_media %}{{ product.featured_media | image_url: width: 533 }}{% endif %}',
+          productPrice: '{{ product.price | money }}',
+          productUrl: '{{ product.url }}',
+          productImageAltText: '{{ product.featured_media.alt | escape }}'
+        };
+        const max = {{ section.settings.products_to_show }} + 1;
+        let products = [];
+        try { products = JSON.parse(localStorage.getItem('recentlyViewedProduct') || '[]'); } catch (e) {}
+        products = products.filter(function(p) { return p.productHandle !== productData.productHandle; });
+        products.push(productData);
+        if (products.length > max) products = products.slice(-max);
+        localStorage.setItem('recentlyViewedProduct', JSON.stringify(products));
+      });
+    </script>
+  {%- endif -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Recently viewed",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "default": "Recently viewed",
+      "label": "Heading"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 6,
+      "label": "Products to show"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Recently viewed"
+    }
+  ]
+}
+{% endschema %}

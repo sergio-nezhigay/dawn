@@ -1,29 +1,7 @@
-{%- if search.performed -%}
-  {%- assign skip_card_product_styles = false -%}
-  {%- for result in search.results -%}
-    <li class="grid__item">
-      {%- render 'card-product',
-        card_product: result,
-        media_aspect_ratio: section.settings.image_ratio,
-        image_shape: section.settings.image_shape,
-        show_secondary_image: section.settings.show_secondary_image,
-        show_vendor: section.settings.show_vendor,
-        show_rating: section.settings.show_rating,
-        section_id: section.id,
-        skip_styles: skip_card_product_styles
-      -%}
-    </li>
-    {%- assign skip_card_product_styles = true -%}
-  {%- endfor -%}
-{%- else -%}
 
 {{ 'component-card.css' | asset_url | stylesheet_tag }}
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
 {{ 'section-related-products.css' | asset_url | stylesheet_tag }}
-
-{%- if section.settings.products_source == 'recently_viewed' -%}
-  <script src="{{ 'recently-viewed-related.js' | asset_url }}" defer></script>
-{%- endif -%}
 
 {% if section.settings.image_shape == 'blob' %}
   {{ 'mask-blobs.css' | asset_url | stylesheet_tag }}
@@ -120,49 +98,6 @@
       {%- endif -%}
     </div>
   {%- endif -%}
-{%- elsif section.settings.products_source == 'recently_viewed' -%}
-  <div class="recently-viewed-related-section color-{{ section.settings.color_scheme }} gradient bg-transparent">
-    <recently-viewed-related-products
-      class="related-products {{ section.settings.container_width }} section-{{ section.id }}-padding isolate{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-      data-product-handle="{{ product.handle }}"
-      data-section-id="{{ section.id }}"
-    >
-      <h2 class="section-title inline-richtext {{ section.settings.heading_size }}">
-        {{ section.settings.heading }}
-      </h2>
-      <ul
-        class="grid product-grid grid--{{ section.settings.columns_desktop }}-col-desktop grid--{{ section.settings.columns_mobile }}-col-tablet-down"
-        role="list"
-      ></ul>
-    </recently-viewed-related-products>
-    {%- if section.settings.image_shape == 'arch' -%}
-      {{ 'mask-arch.svg' | inline_asset_content }}
-    {%- endif -%}
-  </div>
-{%- endif -%}
-
-{%- if section.settings.products_source == 'recently_viewed' and product -%}
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const productData = {
-      productHandle: '{{ product.handle }}',
-      productTitle: '{{ product.title | escape }}',
-      productImg: '{% if product.featured_media %}{{ product.featured_media | image_url: width: 533 }}{% endif %}',
-      productPrice: '{{ product.price | money }}',
-      productUrl: '{{ product.url }}',
-      productImageAltText: '{{ product.featured_media.alt | escape }}'
-    };
-    const max = {{ section.settings.products_to_show | default: 6 }} + 1;
-    let products = [];
-    try { products = JSON.parse(localStorage.getItem('recentlyViewedProduct') || '[]'); } catch (e) {}
-    products = products.filter(function(p) { return p.productHandle !== productData.productHandle; });
-    products.push(productData);
-    if (products.length > max) products = products.slice(-max);
-    localStorage.setItem('recentlyViewedProduct', JSON.stringify(products));
-  });
-</script>
-{%- endif -%}
-
 {%- endif -%}
 
 {% schema %}
@@ -173,7 +108,7 @@
   "settings": [
     {
       "type": "paragraph",
-      "content": "Shows related, complementary, or recently-viewed products depending on the source selected below."
+      "content": "Shows related or complementary recommendations, or products from a collection."
     },
     {
       "type": "inline_richtext",
@@ -209,10 +144,6 @@
         {
           "value": "collection",
           "label": "Collection"
-        },
-        {
-          "value": "recently_viewed",
-          "label": "Recently viewed products"
         }
       ],
       "default": "recommendations"

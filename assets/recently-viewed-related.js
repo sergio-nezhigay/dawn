@@ -1,6 +1,15 @@
 class RecentlyViewedRelatedProducts extends HTMLElement {
   connectedCallback() {
-    setTimeout(() => this.render(), 100);
+    this.observer = new IntersectionObserver((entries) => {
+      if (!entries[0].isIntersecting) return;
+      this.observer.disconnect();
+      this.render();
+    }, { rootMargin: '0px 0px 400px 0px' });
+    this.observer.observe(this);
+  }
+
+  disconnectedCallback() {
+    this.observer?.disconnect();
   }
 
   render() {
