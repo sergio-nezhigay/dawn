@@ -233,6 +233,27 @@ Sorted by impact ÷ effort. Every item is ≤ 2 hours.
    - `Apps` — check for a Google & YouTube / GTM app injecting a second tag.
    - Keep one. Record which container ID was removed, and the date.
    - **Also an INP suspect** (P1-1) — less tag JS means less main-thread contention.
+   - **✅ RESOLVED 2026-09-24 — not a duplicate install.**
+     - The three scripts are one GTM container (`GTM-WRQRP5RF`), which loads the GA4
+       `G-SYK80YG1G2` Google tag plus the Ads `AW-955116498` destination. The container is loaded by
+       the custom pixel "Google Tag Manager FeedArmy 2" (Customer events).
+     - That pixel runs in a sandboxed iframe, but it still costs **~900–1,000 ms of mobile main
+       thread** in Lighthouse.
+     - **G0 A/B** (168 runs, live vs Google hosts blocked, 3 products):
+       - mobile TBT −480…−640 ms
+       - mobile score +13…+17
+       - −500 KB
+       - LCP unchanged
+     - **Container clean-up (GTM v83):** removed the placeholder conversions AW-1234 and AW-1324,
+       a paused tag, the never-firing `search_submitted` conversion, the phone-click conversion (its
+       link-click listener can't see storefront clicks from the sandbox), and the ipify IP-capture
+       tag together with its `user_ip_address` GA4 parameter.
+     - **Pixel v6:** GTM loads **5 s after the pixel starts** (`setTimeout(loadGTM, 5000)`). Queued
+       `dataLayer` events are sent when it loads. Measured with `PERF_QUERY_<variant>` (126 runs):
+       - 3 s delay: no change (GTM still inside the Lighthouse window)
+       - 5 s delay: mobile score 70–72 → 82–86, TBT ~700 → 116–299 ms
+     - **Trade-off:** visitors who leave within 5 s go unrecorded in GA4 and Ads on that page.
+     - **Field check:** `node docs/perf/field-weekly.mjs` on or after 2026-10-10 (INP).
 
 2. **Prune Shopify Web Pixels** (`cdn/wpm/*.js`, 72–124 KB, 40% unused, **252 ms long task**
    on home and 97 + 82 ms on product — a direct INP suspect).

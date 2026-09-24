@@ -9,7 +9,10 @@
 //
 // Env: PERF_VARIANTS="R0=<themeId>,R1=<themeId>,..." (ladder order), PERF_RUNS (default 7),
 //      PERF_PRODUCTS="P1=/products/<handle>,..." (overrides the default products),
-//      PERF_RUNS_INTERACTION (5), PERF_RUNS_PROFILE (5), CHROME_PATH, LH_NODE_MODULES.
+//      PERF_RUNS_INTERACTION (5), PERF_RUNS_PROFILE (5), CHROME_PATH, LH_NODE_MODULES,
+//      PERF_BLOCK_<variant>="*pattern*,..." (Lighthouse blockedUrlPatterns for that variant only; two
+//      variants may share a theme id to A/B a third party), PERF_QUERY_<variant>="k=v&..." (appended to
+//      that variant's URL), PERF_CHROME_FLAGS (extra Chrome args, all runs).
 // Each mode appends one JSON line per run and skips runs already recorded, so an interrupted
 // run resumes where it stopped.
 //
@@ -81,7 +84,7 @@ async function previewCookie(themeId) {
 async function openBrowser(puppeteer, themeId) {
   const browser = await puppeteer.launch({
     executablePath: CHROME, headless: true, defaultViewport: null,
-    args: ['--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage'],
+    args: ['--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage', ...(process.env.PERF_CHROME_FLAGS || '').split(' ').filter(Boolean)],
   });
   const page = await browser.newPage();
   const cookie = await previewCookie(themeId);
@@ -217,9 +220,11 @@ async function modeLoad() {
   await runPlan('load', schedule('load', Object.keys(PRODUCTS), ['desktop', 'mobile']), async (job) => {
     const { browser, page } = await openBrowser(tools.puppeteer, job.theme_id);
     try {
-      const url = `${ORIGIN}${PRODUCTS[job.product]}?pb=0`;
+      const query = process.env[`PERF_QUERY_${job.variant}`];
+      const url = `${ORIGIN}${PRODUCTS[job.product]}?pb=0${query ? `&${query}` : ''}`;
       const config = job.ff === 'desktop' ? tools.desktopConfig : undefined;
-      const { lhr } = await tools.lighthouse(url, { output: 'json', onlyCategories: ['performance'], logLevel: 'error', maxWaitForLoad: 60000 }, config, page);
+      const blockedUrlPatterns = (process.env[`PERF_BLOCK_${job.variant}`] || '').split(',').filter(Boolean);
+      const { lhr } = await tools.lighthouse(url, { output: 'json', onlyCategories: ['performance'], logLevel: 'error', maxWaitForLoad: 60000, blockedUrlPatterns }, config, page);
       if (lhr.runtimeError) throw new Error(`runtimeError ${lhr.runtimeError.code}`);
       await assertTheme(page, job.theme_id);
       const m = extractLoad(lhr, url);
