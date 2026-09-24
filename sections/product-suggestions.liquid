@@ -3,23 +3,19 @@
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
 {{ 'section-related-products.css' | asset_url | stylesheet_tag }}
 
-{% if section.settings.image_shape == 'blob' %}
-  {{ 'mask-blobs.css' | asset_url | stylesheet_tag }}
-{%- endif -%}
-
 {%- style -%}
   .bg-transparent{
     background-color: transparent !important;
   }
   .section-{{ section.id }}-padding {
-    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
-    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    padding-top: 27px;
+    padding-bottom: 27px;
   }
 
   @media screen and (min-width: 750px) {
     .section-{{ section.id }}-padding {
-      padding-top: {{ section.settings.padding_top }}px;
-      padding-bottom: {{ section.settings.padding_bottom }}px;
+      padding-top: 36px;
+      padding-bottom: 36px;
     }
   }
 {%- endstyle -%}
@@ -28,7 +24,7 @@
   {%- if recommendations.performed == false or recommendations.products_count > 0 -%}
     <div class="color-{{ section.settings.color_scheme }} gradient bg-transparent">
       <product-recommendations
-        class="related-products {{ section.settings.container_width }} section-{{ section.id }}-padding isolate{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+        class="related-products {{ section.settings.container_width }} section-{{ section.id }}-padding isolate"
         data-url="{{ routes.product_recommendations_url }}?limit={{ section.settings.products_to_show }}&intent={{ section.settings.recommendations_intent }}"
         data-section-id="{{ section.id }}"
         data-product-id="{{ product.id }}"
@@ -38,7 +34,7 @@
             {{ section.settings.heading }}
           </h2>
           <ul
-            class="grid product-grid grid--{{ section.settings.columns_desktop }}-col-desktop grid--{{ section.settings.columns_mobile }}-col-tablet-down"
+            class="grid product-grid grid--6-col-desktop grid--2-col-tablet-down"
             role="list"
           >
             {%- assign skip_card_product_styles = false -%}
@@ -47,10 +43,10 @@
                 {%- render 'card-product',
                   card_product: recommendation,
                   media_aspect_ratio: section.settings.image_ratio,
-                  image_shape: section.settings.image_shape,
+                  image_shape: 'default',
                   show_secondary_image: section.settings.show_secondary_image,
-                  show_vendor: section.settings.show_vendor,
-                  show_rating: section.settings.show_rating,
+                  show_vendor: false,
+                  show_rating: false,
                   skip_styles: skip_card_product_styles
                 -%}
               </li>
@@ -59,21 +55,18 @@
           </ul>
         {%- endif -%}
       </product-recommendations>
-      {%- if section.settings.image_shape == 'arch' -%}
-        {{ 'mask-arch.svg' | inline_asset_content }}
-      {%- endif -%}
     </div>
   {%- endif -%}
 {%- elsif section.settings.products_source == 'collection' -%}
   {%- assign collection = section.settings.collection -%}
   {%- if collection != blank and collection.products_count > 0 -%}
     <div class="color-{{ section.settings.color_scheme }} gradient bg-transparent">
-      <div class="related-products {{ section.settings.container_width }} section-{{ section.id }}-padding isolate{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      <div class="related-products {{ section.settings.container_width }} section-{{ section.id }}-padding isolate">
         <h2 class="section-title inline-richtext {{ section.settings.heading_size }}">
           {{ section.settings.heading }}
         </h2>
         <ul
-          class="grid product-grid grid--{{ section.settings.columns_desktop }}-col-desktop grid--{{ section.settings.columns_mobile }}-col-tablet-down"
+          class="grid product-grid grid--6-col-desktop grid--2-col-tablet-down"
           role="list"
         >
           {%- assign skip_card_product_styles = false -%}
@@ -82,10 +75,10 @@
               {%- render 'card-product',
                 card_product: product,
                 media_aspect_ratio: section.settings.image_ratio,
-                image_shape: section.settings.image_shape,
+                image_shape: 'default',
                 show_secondary_image: section.settings.show_secondary_image,
-                show_vendor: section.settings.show_vendor,
-                show_rating: section.settings.show_rating,
+                show_vendor: false,
+                show_rating: false,
                 skip_styles: skip_card_product_styles
               -%}
             </li>
@@ -93,9 +86,6 @@
           {%- endfor -%}
         </ul>
       </div>
-      {%- if section.settings.image_shape == 'arch' -%}
-        {{ 'mask-arch.svg' | inline_asset_content }}
-      {%- endif -%}
     </div>
   {%- endif -%}
 {%- endif -%}
@@ -209,31 +199,6 @@
       "label": "Products to show"
     },
     {
-      "type": "range",
-      "id": "columns_desktop",
-      "min": 1,
-      "max": 6,
-      "step": 1,
-      "default": 4,
-      "label": "Number of columns on desktop"
-    },
-    {
-      "type": "select",
-      "id": "columns_mobile",
-      "default": "2",
-      "label": "Number of columns on mobile",
-      "options": [
-        {
-          "value": "1",
-          "label": "1 column"
-        },
-        {
-          "value": "2",
-          "label": "2 columns"
-        }
-      ]
-    },
-    {
       "type": "color_scheme",
       "id": "color_scheme",
       "label": "t:sections.all.colors.label",
@@ -265,87 +230,10 @@
       "label": "Image ratio"
     },
     {
-      "type": "select",
-      "id": "image_shape",
-      "options": [
-        {
-          "value": "default",
-          "label": "t:sections.all.image_shape.options__1.label"
-        },
-        {
-          "value": "arch",
-          "label": "t:sections.all.image_shape.options__2.label"
-        },
-        {
-          "value": "blob",
-          "label": "t:sections.all.image_shape.options__3.label"
-        },
-        {
-          "value": "chevronleft",
-          "label": "t:sections.all.image_shape.options__4.label"
-        },
-        {
-          "value": "chevronright",
-          "label": "t:sections.all.image_shape.options__5.label"
-        },
-        {
-          "value": "diamond",
-          "label": "t:sections.all.image_shape.options__6.label"
-        },
-        {
-          "value": "parallelogram",
-          "label": "t:sections.all.image_shape.options__7.label"
-        },
-        {
-          "value": "round",
-          "label": "t:sections.all.image_shape.options__8.label"
-        }
-      ],
-      "default": "default",
-      "label": "t:sections.all.image_shape.label"
-    },
-    {
       "type": "checkbox",
       "id": "show_secondary_image",
       "default": false,
       "label": "Show secondary image on hover"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_vendor",
-      "default": false,
-      "label": "Show vendor"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_rating",
-      "default": false,
-      "label": "Show product rating",
-      "info": "To display a rating, add a product rating app to your store."
-    },
-    {
-      "type": "header",
-      "content": "t:sections.all.padding.section_padding_heading"
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "label": "t:sections.all.padding.padding_top",
-      "default": 36
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "label": "t:sections.all.padding.padding_bottom",
-      "default": 36
     }
   ],
   "presets": [
