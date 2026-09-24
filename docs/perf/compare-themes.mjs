@@ -8,6 +8,7 @@
 //   node docs/perf/compare-themes.mjs summarize   <out>  # -> <out>/results.json (every run + per-cell stats + ladder deltas)
 //
 // Env: PERF_VARIANTS="R0=<themeId>,R1=<themeId>,..." (ladder order), PERF_RUNS (default 7),
+//      PERF_PRODUCTS="P1=/products/<handle>,..." (overrides the default products),
 //      PERF_RUNS_INTERACTION (5), PERF_RUNS_PROFILE (5), CHROME_PATH, LH_NODE_MODULES.
 // Each mode appends one JSON line per run and skips runs already recorded, so an interrupted
 // run resumes where it stopped.
@@ -28,11 +29,13 @@ fs.mkdirSync(OUT, { recursive: true });
 const ORIGIN = 'https://informatica.com.ua';
 const STORE_HOST = 'informatica.com.ua';
 const SHOP = 'c2da09-15.myshopify.com';
-const PRODUCTS = {
-  P1: '/products/kvr32s22d816',
-  P2: '/products/ustroystvo-videozakhvata-easycap-usb-20',
-  P3: '/products/perekhodnik-audio-optikakoaksial-to-2rca-35mm-blok-pitaniy',
-};
+const PRODUCTS = process.env.PERF_PRODUCTS
+  ? Object.fromEntries(process.env.PERF_PRODUCTS.split(',').map((p) => p.split('=')))
+  : {
+      P1: '/products/kvr32s22d816',
+      P2: '/products/ustroystvo-videozakhvata-easycap-usb-20',
+      P3: '/products/perekhodnik-audio-optikakoaksial-to-2rca-35mm-blok-pitaniy',
+    };
 const VARIANTS = Object.fromEntries(
   (process.env.PERF_VARIANTS || 'R0=188293415228,R3=188294955324').split(',').map((p) => p.split('='))
 );
@@ -154,6 +157,9 @@ function extractLoad(lhr, docUrl) {
     tbt_ms: Math.round(num(a, 'total-blocking-time')),
     cls: +(num(a, 'cumulative-layout-shift') || 0).toFixed(4),
     si_ms: Math.round(num(a, 'speed-index')),
+    lcp_subparts_ms: Object.fromEntries(
+      (items('lcp-breakdown-insight').find((t) => t.type === 'table')?.items || []).map((it) => [it.subpart, Math.round(it.duration)])
+    ),
     ttfb_ms: Math.round(num(a, 'server-response-time')),
     total_kb: Math.round(num(a, 'total-byte-weight') / 1024),
     requests: reqs.length,
