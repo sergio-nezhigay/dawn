@@ -29,12 +29,10 @@ deploy pipeline moved to the Shopify GitHub integration 2026-09-10 (see
   `main`. Merging to `main` is the deploy. There is no manual step in the routine path.
 - `npm run push` / `npm run pull` (in `package.json`) remain as a **manual escape hatch** —
   e.g. to force-sync the theme after a botched merge, or to pull editor-set JSON back into a
-  branch. They are no longer the routine deploy path. Note `push` targets whatever theme id
-  is set in `package.json`; update it if the connected theme's id differs from
-  `186192232764`.
-- The previous live theme `rolledback gallery zoom` (renamed
-  `PRE-GITHUB rollback (186192232764)`) is kept **unpublished** as a rollback for ~1–2 weeks,
-  then deleted.
+  branch. They are no longer the routine deploy path. Both target the live, GitHub-connected
+  theme `188294955324` (set in `package.json`).
+- The previous live theme `PRE-GITHUB rollback (186192232764)` is kept **unpublished** as a
+  rollback. Delete it once it's no longer needed.
 
 ## JSON ownership — do not hand-edit
 
@@ -71,16 +69,11 @@ Only secret used: `SHOP_ACCESS_TOKEN` (a `shptka_…` Theme Access password for
 | Command | Target | Notes |
 |---|---|---|
 | `npm run dev` | unpublished theme **`188186001724`** ("DEV informatica (do not publish)") | Safe — local edits never touch the live storefront. |
-| `npm run push` | live theme `186192232764` | **Escape hatch only.** Routine deploys go through merge-to-`main`. |
-| `npm run pull` | live theme `186192232764` | Read-only pull of live settings/templates (e.g. to sync editor-set JSON into a branch). |
+| `npm run push` | live theme `188294955324` | **Escape hatch only.** Routine deploys go through merge-to-`main`. |
+| `npm run pull` | live theme `188294955324` | Read-only pull of live settings/templates (e.g. to sync editor-set JSON into a branch). |
 
 ## Open follow-ups
 
-- **Finish the GitHub connect** (one-time, admin panel): Online Store → Themes → Add theme →
-  Connect from GitHub → authorize `sergio-nezhigay/dawn`, branch `main` → verify the built
-  theme renders → **Publish** it. Keep `PRE-GITHUB rollback (186192232764)` unpublished as
-  rollback. If the connected theme's id ≠ `186192232764`, update `package.json`'s `push` /
-  `pull` scripts.
 - **Sweep the stale theme copies** once the connected theme is proven live — see the
   "stale copies (15)" table in [`theme-deploy-audit.md`](./theme-deploy-audit.md). Keep one
   recent `Copy of live` as a safety net.
