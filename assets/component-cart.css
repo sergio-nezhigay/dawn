@@ -317,6 +317,11 @@ cart-items {
   list-style: none;
   font-size: 1.4rem;
   color: #0071dc;
+  text-decoration: none;
+}
+
+/* Underline only the words, not the +/− sign. */
+.cart__note-summary-text {
   text-decoration: underline;
   text-underline-offset: 0.3rem;
 }
@@ -327,9 +332,12 @@ cart-items {
 
 .cart__note-summary::before {
   content: '+';
-  font-size: 1.8rem;
+  display: inline-block;
+  width: 1.2rem;
+  font-size: 2rem;
+  font-weight: 400;
   line-height: 1;
-  text-decoration: none;
+  text-align: center;
 }
 
 .cart__note-toggle[open] .cart__note-summary::before {
