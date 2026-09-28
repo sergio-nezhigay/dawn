@@ -311,21 +311,65 @@ cart-items {
 .cart__note-summary {
   display: inline-flex;
   align-items: center;
+  gap: 0.6rem;
   min-height: 4.4rem;
   cursor: pointer;
+  list-style: none;
   font-size: 1.4rem;
-  color: rgba(var(--color-foreground), 0.75);
+  color: #0071dc;
   text-decoration: underline;
   text-underline-offset: 0.3rem;
 }
 
+.cart__note-summary::-webkit-details-marker {
+  display: none;
+}
+
+.cart__note-summary::before {
+  content: '+';
+  font-size: 1.8rem;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.cart__note-toggle[open] .cart__note-summary::before {
+  content: '−';
+}
+
+/* Plain bordered box: drop Dawn's .field outline pseudo-elements and the old absolute-label offsets. */
 .cart__note-toggle .cart__note {
-  position: static;
+  position: relative;
+  top: 0;
+  height: auto;
   margin-top: 0.4rem;
 }
 
+.cart__note-toggle .cart__note::before,
+.cart__note-toggle .cart__note::after {
+  content: none;
+}
+
 .cart__note-toggle .cart__note .field__input {
-  min-height: 8rem;
+  min-height: 9rem;
+  padding: 1.2rem 1.4rem;
+  border: 1px solid #b8bfcc;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 1.5rem;
+  line-height: 1.4;
+  box-shadow: none;
+}
+
+.cart__note-toggle .cart__note .field__input::placeholder {
+  opacity: 1;
+  color: rgba(var(--color-foreground), 0.5);
+}
+
+.cart__note-toggle .cart__note .field__input:focus,
+.cart__note-toggle .cart__note .field__input:focus-visible {
+  border-color: #0071dc;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 113, 220, 0.2);
 }
 
 /* Room below the summary so the fixed chat bubble never sits on top of it at the end of the page.
