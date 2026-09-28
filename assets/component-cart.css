@@ -408,8 +408,15 @@ cart-items.is-empty .cart__warnings {
     margin: 2.4rem 0 1.6rem;
   }
 
+  /* Column headings: readable muted labels instead of Dawn's 10px spaced capitals. */
   #main-cart-items .cart-items th {
     padding-bottom: 1rem;
+    font-size: 1.4rem;
+    letter-spacing: 0;
+    text-transform: none;
+    line-height: 1.3;
+    color: rgba(var(--color-foreground), 0.6);
+    opacity: 1;
   }
 
   #main-cart-items .cart-items td {
