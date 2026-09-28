@@ -24,19 +24,6 @@
 >
   <div class="page-width">
     <div class="cart__footer isolate section-{{ section.id }}-padding">
-      {%- if settings.show_cart_note -%}
-        <cart-note class="cart__note field">
-          <label for="Cart-note">{{ 'sections.cart.note' | t }}</label>
-          <textarea
-            class="text-area field__input"
-            name="note"
-            form="cart"
-            id="Cart-note"
-            placeholder="{{ 'sections.cart.note' | t }}"
-          >{{ cart.note }}</textarea>
-        </cart-note>
-      {%- endif -%}
-
       <div class="cart__blocks">
         {% for block in section.blocks %}
           {%- case block.type -%}
@@ -126,6 +113,24 @@
               {%- endif -%}
           {%- endcase -%}
         {% endfor %}
+
+        {% render 'cart-reassurance' %}
+
+        {%- if settings.show_cart_note -%}
+          <details class="cart__note-toggle"{% if cart.note != blank %} open{% endif %}>
+            <summary class="cart__note-summary">{{ 'sections.cart.note' | t }}</summary>
+            <cart-note class="cart__note field">
+              <label class="visually-hidden" for="Cart-note">{{ 'sections.cart.note' | t }}</label>
+              <textarea
+                class="text-area field__input"
+                name="note"
+                form="cart"
+                id="Cart-note"
+                rows="3"
+              >{{ cart.note }}</textarea>
+            </cart-note>
+          </details>
+        {%- endif -%}
 
         <div id="cart-errors"></div>
       </div>

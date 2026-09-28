@@ -222,3 +222,178 @@ cart-items {
     gap: 1rem;
   }
 }
+
+/* Cart page summary: the checkout button, reassurance lines and the collapsible note.
+   Colours match the cart drawer (component-cart-drawer.css) because the scheme button colour is empty. */
+.cart__footer .cart__checkout-button,
+.cart__warnings .button {
+  min-height: 4.8rem;
+  padding: 1.2rem 2.4rem;
+  background: #0071dc;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: 0.02rem;
+  transition: background 0.2s;
+}
+
+.cart__footer .cart__checkout-button::before,
+.cart__footer .cart__checkout-button::after,
+.cart__warnings .button::before,
+.cart__warnings .button::after {
+  content: none;
+}
+
+.cart__footer .cart__checkout-button:not([disabled]):hover,
+.cart__warnings .button:hover {
+  background: #005ec4;
+}
+
+.cart__footer .cart__checkout-button:focus-visible,
+.cart__warnings .button:focus-visible {
+  outline: 2px solid #0071dc;
+  outline-offset: 3px;
+}
+
+.cart__footer .cart__checkout-button {
+  width: 100%;
+  max-width: none;
+}
+
+.cart-reassurance {
+  display: grid;
+  gap: 0.8rem;
+  margin: 1.6rem 0 0;
+  padding: 1.4rem 1.6rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 1.4rem;
+  line-height: 1.4;
+  text-align: left;
+  color: rgba(var(--color-foreground), 0.85);
+}
+
+.cart-reassurance__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.cart-reassurance__item .svg-wrapper {
+  flex: 0 0 2rem;
+  width: 2rem;
+  height: 2rem;
+  color: #0071dc;
+}
+
+.cart-reassurance__item .svg-wrapper svg {
+  width: 100%;
+  height: 100%;
+}
+
+.cart-reassurance__link {
+  color: inherit;
+  text-underline-offset: 0.3rem;
+}
+
+.cart-reassurance__link[href^='tel:'] {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.cart__note-toggle {
+  margin-top: 1.6rem;
+  text-align: left;
+}
+
+.cart__note-summary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 4.4rem;
+  cursor: pointer;
+  font-size: 1.4rem;
+  color: rgba(var(--color-foreground), 0.75);
+  text-decoration: underline;
+  text-underline-offset: 0.3rem;
+}
+
+.cart__note-toggle .cart__note {
+  position: static;
+  margin-top: 0.4rem;
+}
+
+.cart__note-toggle .cart__note .field__input {
+  min-height: 8rem;
+}
+
+/* Room below the summary so the fixed chat bubble never sits on top of it at the end of the page.
+   Two classes to beat the section's inline padding rule. */
+.cart__footer.isolate {
+  padding-bottom: 8rem;
+}
+
+/* Total row: label left, amount right, same width as the button below it. */
+.cart__footer .totals {
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 1.2rem;
+}
+
+.cart__footer .totals__total {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: rgba(var(--color-foreground), 0.75);
+}
+
+.cart__footer .totals__total-value {
+  font-size: 2.4rem;
+}
+
+/* Keep "3 968 ₴" on one line. */
+#main-cart-items .cart-item__price-wrapper .price,
+#main-cart-items .cart-item__details > .product-option {
+  white-space: nowrap;
+}
+
+/* Title and "continue shopping" on one row. */
+cart-items .title-wrapper-with-link {
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+cart-items .title-wrapper-with-link .underlined-link {
+  font-size: 1.4rem;
+  white-space: nowrap;
+}
+
+cart-items .title-wrapper-with-link .title--primary {
+  margin: 0;
+}
+
+cart-items .title-wrapper-with-link {
+  margin-bottom: 3rem;
+}
+
+/* Empty cart: a full, intentional block instead of a short strip above the page background. */
+cart-items.is-empty .cart__warnings {
+  padding: 8rem 0 10rem;
+}
+
+@media screen and (max-width: 749px) {
+  #main-cart-items thead {
+    display: none;
+  }
+
+  cart-items .title-wrapper-with-link {
+    margin: 2rem 0;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .cart__footer > .cart__blocks {
+    width: 40rem;
+  }
+}

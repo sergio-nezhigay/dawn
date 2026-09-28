@@ -1,0 +1,33 @@
+{%- doc -%}
+  Renders short reassurance lines (dispatch, payment, warranty/returns, phone) under the cart checkout button.
+  Wording rule: never promise a delivery date; dispatch time only.
+  @example
+  {% render 'cart-reassurance' %}
+{%- enddoc -%}
+<ul class="cart-reassurance list-unstyled" role="list">
+  <li class="cart-reassurance__item">
+    <span class="svg-wrapper" aria-hidden="true">{{- 'icon-truck.svg' | inline_asset_content -}}</span>
+    <span>{{ 'sections.cart.reassurance.dispatch' | t }}</span>
+  </li>
+  <li class="cart-reassurance__item">
+    <span class="svg-wrapper" aria-hidden="true">{{- 'icon-credit-card.svg' | inline_asset_content -}}</span>
+    <span>{{ 'sections.cart.reassurance.payment' | t }}</span>
+  </li>
+  <li class="cart-reassurance__item">
+    <span class="svg-wrapper" aria-hidden="true">{{- 'icon-shield-check.svg' | inline_asset_content -}}</span>
+    <a href="{{ shop.refund_policy.url | default: '/policies/refund-policy' }}" class="cart-reassurance__link">
+      {{- 'sections.cart.reassurance.returns' | t -}}
+    </a>
+  </li>
+  {%- if shop.phone != blank -%}
+    <li class="cart-reassurance__item">
+      <span class="svg-wrapper" aria-hidden="true">{{- 'icon-phone.svg' | inline_asset_content -}}</span>
+      <span>
+        {{ 'sections.cart.reassurance.help' | t }}
+        <a href="tel:{% render 'phone-number', format: 'href' %}" class="cart-reassurance__link">
+          {%- render 'phone-number', format: 'display' -%}
+        </a>
+      </span>
+    </li>
+  {%- endif -%}
+</ul>
