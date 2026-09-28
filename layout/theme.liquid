@@ -20,7 +20,12 @@
     {% render 'custom-fonts' %}
 
     <title>
-      {{ page_title }}
+      {%- comment -%} Shopify's cart page_title is English-only ("Your Shopping Cart"); use the theme's translated title. {%- endcomment -%}
+      {%- if request.page_type == 'cart' -%}
+        {{ 'sections.cart.title' | t }} &ndash; {{ shop.name }}
+      {%- else -%}
+        {{ page_title }}
+      {%- endif -%}
       {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
       {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
     </title>
