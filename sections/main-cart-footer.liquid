@@ -138,40 +138,6 @@
   </div>
 </div>
 
-<script>
-  // The chat app's floating bubble is fixed to the screen corner and can land on top of the checkout
-  // button. Fade the bubble out only while the two actually overlap; it comes back on scroll.
-  (function () {
-    var pending = false;
-    function update() {
-      pending = false;
-      var bubble = document.getElementById('chatToggle');
-      var checkout = document.getElementById('checkout');
-      if (!bubble || !checkout) return;
-      bubble.classList.remove('is-over-checkout');
-      var a = bubble.getBoundingClientRect();
-      var b = checkout.getBoundingClientRect();
-      var gap = 8;
-      var overlaps =
-        a.left < b.right + gap && a.right > b.left - gap && a.top < b.bottom + gap && a.bottom > b.top - gap;
-      bubble.classList.toggle('is-over-checkout', overlaps);
-    }
-    function schedule() {
-      if (pending) return;
-      pending = true;
-      requestAnimationFrame(update);
-    }
-    window.addEventListener('scroll', schedule, { passive: true });
-    window.addEventListener('resize', schedule);
-    // The chat app injects its bubble after load.
-    window.addEventListener('load', function () {
-      schedule();
-      setTimeout(schedule, 1500);
-      setTimeout(schedule, 4000);
-    });
-  })();
-</script>
-
 {% schema %}
 {
   "name": "t:sections.main-cart-footer.name",

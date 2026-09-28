@@ -391,14 +391,12 @@ cart-items .title-wrapper-with-link .underlined-link:hover {
   color: #fff;
 }
 
-/* Chat bubble fades while it would sit on the checkout button (script in main-cart-footer.liquid). */
-#chatToggle {
-  transition: opacity 0.2s;
-}
-
-#chatToggle.is-over-checkout {
-  opacity: 0;
-  pointer-events: none;
+/* Phones, cart page only: hide the chat app's floating bubble so it never covers the checkout button.
+   The phone number sits right under the button in .cart-reassurance. */
+@media screen and (max-width: 749px) {
+  .template-cart .shop-chat-interface {
+    display: none;
+  }
 }
 
 cart-items .title-wrapper-with-link .title--primary {
