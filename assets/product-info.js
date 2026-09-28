@@ -83,6 +83,7 @@ if (!customElements.get('product-info')) {
         const productForm = this.productForm;
         productForm?.toggleSubmitButton(true);
         productForm?.handleErrorMessage();
+        this.sidebarProductForm?.toggleSubmitButton(true);
       }
 
       handleSwapProduct(productUrl, updateFullPage) {
@@ -261,10 +262,11 @@ if (!customElements.get('product-info')) {
           this.querySelector(`#Quantity-Rules-${this.dataset.section}`)?.classList.remove('hidden');
           this.querySelector(`#Volume-Note-${this.dataset.section}`)?.classList.remove('hidden');
 
-          this.productForm?.toggleSubmitButton(
-            html.getElementById(`ProductSubmitButton-${this.sectionId}`)?.hasAttribute('disabled') ?? true,
-            window.variantStrings.soldOut
-          );
+          const soldOut =
+            html.getElementById(`ProductSubmitButton-${this.sectionId}`)?.hasAttribute('disabled') ?? true;
+          this.productForm?.toggleSubmitButton(soldOut, window.variantStrings.soldOut);
+          // The wide-description sidebar has its own <product-form>; keep its button in step with the main one.
+          this.sidebarProductForm?.toggleSubmitButton(soldOut, window.variantStrings.soldOut);
 
           publish(PUB_SUB_EVENTS.variantChange, {
             data: {
@@ -278,7 +280,7 @@ if (!customElements.get('product-info')) {
 
       updateVariantInputs(variantId) {
         this.querySelectorAll(
-          `#product-form-${this.dataset.section}, #product-form-installment-${this.dataset.section}`
+          `#product-form-${this.dataset.section}, #product-form-installment-${this.dataset.section}, #product-form-${this.dataset.section}-sidebar`
         ).forEach((productForm) => {
           const input = productForm.querySelector('input[name="id"]');
           input.value = variantId ?? '';
@@ -297,6 +299,7 @@ if (!customElements.get('product-info')) {
 
       setUnavailable() {
         this.productForm?.toggleSubmitButton(true, window.variantStrings.unavailable);
+        this.sidebarProductForm?.toggleSubmitButton(true, window.variantStrings.unavailable);
 
         const selectors = ['price', 'Inventory', 'Sku', 'Price-Per-Item', 'Volume-Note', 'Volume', 'Quantity-Rules']
           .map((id) => `#${id}-${this.dataset.section}`)
@@ -439,6 +442,10 @@ if (!customElements.get('product-info')) {
             current.innerHTML = updated.innerHTML;
           }
         }
+      }
+
+      get sidebarProductForm() {
+        return this.querySelector('.product__wide-desc-sidebar product-form');
       }
 
       get productForm() {
