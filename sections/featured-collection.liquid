@@ -1,3 +1,5 @@
+{% comment %} On the storefront, render nothing when the collection is missing or empty instead of Dawn's demo placeholder cards. {% endcomment %}
+{%- if section.settings.collection.products.size > 0 or request.design_mode -%}
 {{ 'component-card.css' | asset_url | stylesheet_tag }}
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
 
@@ -213,6 +215,7 @@
     {%- endif -%}
   </div>
 </div>
+{%- endif -%}
 
 {% schema %}
 {

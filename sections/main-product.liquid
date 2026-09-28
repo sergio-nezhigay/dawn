@@ -817,31 +817,43 @@
             </p>
 
             {%- assign sidebar_form_id = product_form_id | append: '-sidebar' -%}
-            {%- form 'product', product,
-              id: sidebar_form_id,
-              class: 'product-form product-form--sidebar',
-              novalidate: 'novalidate'
-            -%}
-              <input
-                type="hidden"
-                name="id"
-                value="{{ product.selected_or_first_available_variant.id }}"
-                class="product-variant-id"
-                data-product-form-id="{{ sidebar_form_id }}"
-              >
-              <button
-                id="ProductSubmitButton-{{ section.id }}-sidebar"
-                type="submit"
-                class="product-form__submit button button--full-width button--primary"
-                {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}
-              >
-                {%- if product.selected_or_first_available_variant.available -%}
-                  {{ 'products.product.add_to_cart' | t }}
-                {%- else -%}
-                  {{ 'products.product.sold_out' | t }}
-                {%- endif -%}
-              </button>
-            {%- endform -%}
+            {% comment %} <product-form> submits via AJAX and opens the cart drawer; a bare form redirects to /cart. {% endcomment %}
+            <product-form data-section-id="{{ section.id }}">
+              <div class="product-form__error-message-wrapper" role="alert" hidden>
+                <span class="svg-wrapper">
+                  {{- 'icon-error.svg' | inline_asset_content -}}
+                </span>
+                <span class="product-form__error-message"></span>
+              </div>
+              {%- form 'product', product,
+                id: sidebar_form_id,
+                class: 'product-form product-form--sidebar',
+                novalidate: 'novalidate'
+              -%}
+                <input
+                  type="hidden"
+                  name="id"
+                  value="{{ product.selected_or_first_available_variant.id }}"
+                  class="product-variant-id"
+                  data-product-form-id="{{ sidebar_form_id }}"
+                >
+                <button
+                  id="ProductSubmitButton-{{ section.id }}-sidebar"
+                  type="submit"
+                  class="product-form__submit button button--full-width button--primary"
+                  {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}
+                >
+                  <span>
+                    {%- if product.selected_or_first_available_variant.available -%}
+                      {{ 'products.product.add_to_cart' | t }}
+                    {%- else -%}
+                      {{ 'products.product.sold_out' | t }}
+                    {%- endif -%}
+                  </span>
+                  {%- render 'loading-spinner' -%}
+                </button>
+              {%- endform -%}
+            </product-form>
 
           </div>
         </div>
@@ -947,10 +959,6 @@
   </div>
   <script src="{{ 'product-price-update.js' | asset_url }}" defer></script>
 </product-info>
-
-{%- if section.settings.enable_sticky_buy_desktop or section.settings.enable_sticky_buy_mobile -%}
-  {% render 'sticky-buy-button', product: product, section: section %}
-{%- endif -%}
 
 {% schema %}
 {
@@ -1480,22 +1488,6 @@
       "id": "enable_sticky_info",
       "default": true,
       "label": "t:sections.main-product.settings.enable_sticky_info.label"
-    },
-    {
-      "type": "header",
-      "content": "Sticky Buy Button"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_sticky_buy_desktop",
-      "default": true,
-      "label": "Enable on desktop"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_sticky_buy_mobile",
-      "default": true,
-      "label": "Enable on mobile"
     },
     {
       "type": "color_scheme",

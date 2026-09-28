@@ -222,3 +222,298 @@ cart-items {
     gap: 1rem;
   }
 }
+
+/* Cart page summary: the checkout button, reassurance lines and the collapsible note.
+   Colours match the cart drawer (component-cart-drawer.css) because the scheme button colour is empty. */
+.cart__footer .cart__checkout-button,
+.cart__warnings .button {
+  min-height: 4.8rem;
+  padding: 1.2rem 2.4rem;
+  background: #0071dc;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: 0.02rem;
+  transition: background 0.2s;
+}
+
+.cart__footer .cart__checkout-button::before,
+.cart__footer .cart__checkout-button::after,
+.cart__warnings .button::before,
+.cart__warnings .button::after {
+  content: none;
+}
+
+.cart__footer .cart__checkout-button:not([disabled]):hover,
+.cart__warnings .button:hover {
+  background: #005ec4;
+}
+
+.cart__footer .cart__checkout-button:focus-visible,
+.cart__warnings .button:focus-visible {
+  outline: 2px solid #0071dc;
+  outline-offset: 3px;
+}
+
+.cart__footer .cart__checkout-button {
+  width: 100%;
+  max-width: none;
+}
+
+.cart-reassurance {
+  display: grid;
+  gap: 0.8rem;
+  margin: 1.6rem 0 0;
+  padding: 1.4rem 1.6rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 1.4rem;
+  line-height: 1.4;
+  text-align: left;
+  color: rgba(var(--color-foreground), 0.85);
+}
+
+.cart-reassurance__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.cart-reassurance__item .svg-wrapper {
+  flex: 0 0 2rem;
+  width: 2rem;
+  height: 2rem;
+  color: #0071dc;
+}
+
+.cart-reassurance__item .svg-wrapper svg {
+  width: 100%;
+  height: 100%;
+}
+
+.cart-reassurance__link {
+  color: inherit;
+  text-underline-offset: 0.3rem;
+}
+
+.cart-reassurance__link[href^='tel:'] {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.cart__note-toggle {
+  margin-top: 1.6rem;
+  text-align: left;
+}
+
+.cart__note-summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 4.4rem;
+  cursor: pointer;
+  list-style: none;
+  font-size: 1.4rem;
+  color: #0071dc;
+  text-decoration: none;
+}
+
+/* Underline only the words, not the +/− sign. */
+.cart__note-summary-text {
+  text-decoration: underline;
+  text-underline-offset: 0.3rem;
+}
+
+.cart__note-summary::-webkit-details-marker {
+  display: none;
+}
+
+.cart__note-summary::before {
+  content: '+';
+  display: inline-block;
+  width: 1.2rem;
+  font-size: 2rem;
+  font-weight: 400;
+  line-height: 1;
+  text-align: center;
+}
+
+.cart__note-toggle[open] .cart__note-summary::before {
+  content: '−';
+}
+
+/* Plain bordered box: drop Dawn's .field outline pseudo-elements and the old absolute-label offsets. */
+.cart__note-toggle .cart__note {
+  position: relative;
+  top: 0;
+  height: auto;
+  margin-top: 0.4rem;
+}
+
+.cart__note-toggle .cart__note::before,
+.cart__note-toggle .cart__note::after {
+  content: none;
+}
+
+.cart__note-toggle .cart__note .field__input {
+  min-height: 9rem;
+  padding: 1.2rem 1.4rem;
+  border: 1px solid #b8bfcc;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 1.5rem;
+  line-height: 1.4;
+  box-shadow: none;
+}
+
+.cart__note-toggle .cart__note .field__input::placeholder {
+  opacity: 1;
+  color: rgba(var(--color-foreground), 0.5);
+}
+
+.cart__note-toggle .cart__note .field__input:focus,
+.cart__note-toggle .cart__note .field__input:focus-visible {
+  border-color: #0071dc;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 113, 220, 0.2);
+}
+
+/* Room below the summary so the fixed chat bubble never sits on top of it at the end of the page.
+   Two classes to beat the section's inline padding rule. */
+.cart__footer.isolate {
+  padding-bottom: 8rem;
+}
+
+/* Total row: label left, amount right, same width as the button below it. */
+.cart__footer .totals {
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 1.2rem;
+}
+
+.cart__footer .totals__total {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: rgba(var(--color-foreground), 0.75);
+}
+
+.cart__footer .totals__total-value {
+  font-size: 2.4rem;
+}
+
+/* Keep "3 968 ₴" on one line. */
+#main-cart-items .cart-item__price-wrapper .price,
+#main-cart-items .cart-item__details > .product-option {
+  white-space: nowrap;
+}
+
+/* Title and "continue shopping" on one row. */
+cart-items .title-wrapper-with-link {
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+/* "Продовжити покупки": a small outlined button so it reads as clickable. */
+cart-items .title-wrapper-with-link .underlined-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 4rem;
+  padding: 0 1.4rem;
+  border: 1px solid #0071dc;
+  border-radius: 6px;
+  color: #0071dc;
+  font-size: 1.4rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s, color 0.2s;
+}
+
+cart-items .title-wrapper-with-link .underlined-link::before {
+  content: '←';
+  font-weight: 400;
+}
+
+cart-items .title-wrapper-with-link .underlined-link:hover {
+  background: #0071dc;
+  color: #fff;
+}
+
+/* Phones, cart page only: hide the chat app's floating bubble so it never covers the checkout button.
+   The phone number sits right under the button in .cart-reassurance. */
+@media screen and (max-width: 749px) {
+  .template-cart .shop-chat-interface {
+    display: none;
+  }
+}
+
+cart-items .title-wrapper-with-link .title--primary {
+  margin: 0;
+}
+
+cart-items .title-wrapper-with-link {
+  margin-bottom: 3rem;
+}
+
+/* Empty cart: a full, intentional block instead of a short strip above the page background. */
+cart-items.is-empty .cart__warnings {
+  padding: 8rem 0 10rem;
+}
+
+@media screen and (max-width: 749px) {
+  #main-cart-items thead {
+    display: none;
+  }
+
+  cart-items .title-wrapper-with-link {
+    margin: 2rem 0;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .cart__footer > .cart__blocks {
+    width: 40rem;
+  }
+
+  /* Desktop: tighter vertical rhythm so the total and checkout button sit higher on the first screen. */
+  cart-items.isolate:not(.is-empty) {
+    padding-top: 1.6rem;
+    padding-bottom: 0;
+  }
+
+  cart-items .title-wrapper-with-link {
+    align-items: baseline;
+    margin: 2.4rem 0 1.6rem;
+  }
+
+  /* Column headings: readable muted labels instead of Dawn's 10px spaced capitals. */
+  #main-cart-items .cart-items th {
+    padding-bottom: 1rem;
+    font-size: 1.4rem;
+    letter-spacing: 0;
+    text-transform: none;
+    line-height: 1.3;
+    color: rgba(var(--color-foreground), 0.6);
+    opacity: 1;
+  }
+
+  #main-cart-items .cart-items td {
+    padding-top: 2rem;
+  }
+
+  #main-cart-items .cart-item__image-container {
+    max-width: 10rem;
+  }
+
+  cart-items .cart__items {
+    padding-bottom: 2rem;
+  }
+
+  .cart__footer.isolate {
+    padding-top: 2rem;
+  }
+}

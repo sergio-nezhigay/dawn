@@ -342,6 +342,13 @@
       "new_estimated_total": "New estimated total",
       "note": "Order special instructions",
       "checkout": "Check out",
+      "reassurance": {
+        "dispatch": "Ships within 1–2 business days",
+        "payment": "Pay on delivery or prepay to a PrivatBank card",
+        "returns": "Warranty. Return or exchange within 14 days",
+        "help": "Questions? Call:",
+        "note_placeholder": "For example: a good time to call or delivery wishes"
+      },
       "empty": "Your cart is empty",
       "cart_error": "There was an error while updating your cart. Please try again.",
       "cart_quantity_error_html": "You can only add {{ quantity }} of this item to your cart.",
