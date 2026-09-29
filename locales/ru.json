@@ -177,6 +177,7 @@
       "choose_product_options": "Выберите варианты для {{ product_name }}",
       "value_unavailable": "{{ option_value }} — Недоступно",
       "variant_sold_out_or_unavailable": "Вариант распродан или недоступен",
+      "dispatch_time": "Отправка в течение 1–2 рабочих дней",
       "inventory_in_stock": "В наличии",
       "inventory_in_stock_show_count": "В наличии: {{ quantity }}",
       "inventory_low_stock": "Заканчивается",

@@ -1,0 +1,28 @@
+{% comment %}
+  "Ships within 1-2 business days" line for the product price card.
+  Shown only for tracked, available variants (in stock or backorder); the owner allows no delivery dates.
+
+  Accepts:
+  - variant: {Object} the selected variant
+  - id: {String} optional element id (product-info.js swaps #Dispatch-<section id> on variant change)
+{% endcomment %}
+{%- liquid
+  assign show_dispatch = false
+  if variant.available and variant.inventory_management == 'shopify'
+    assign show_dispatch = true
+  endif
+-%}
+<p
+  {% if id %}
+    id="{{ id }}"
+  {% endif %}
+  class="product-info-block__dispatch"
+  {% unless show_dispatch %}
+    hidden
+  {% endunless %}
+>
+  {%- if show_dispatch -%}
+    <span class="svg-wrapper" aria-hidden="true">{{- 'icon-truck.svg' | inline_asset_content -}}</span>
+    {{- 'products.product.dispatch_time' | t -}}
+  {%- endif -%}
+</p>

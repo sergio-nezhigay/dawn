@@ -180,6 +180,7 @@
       "choose_product_options": "Виберіть варіанти для {{ product_name }}",
       "value_unavailable": "{{ option_value }} — Недоступно",
       "variant_sold_out_or_unavailable": "Варіант розпроданий або недоступний",
+      "dispatch_time": "Відправка протягом 1–2 робочих днів",
       "inventory_in_stock": "В наявності",
       "inventory_in_stock_show_count": "В наявності: {{ quantity }}",
       "inventory_low_stock": "Закінчується",

@@ -78,6 +78,17 @@ product-info {
   margin: 0;
 }
 
+/* Dispatch line sits tight under the availability line */
+.product__wide-desc-sidebar .product-info-block__dispatch {
+  margin: -1rem 0 0;
+  align-items: flex-start;
+  font-size: 1.3rem;
+}
+
+.product__wide-desc-sidebar .product-info-block__dispatch .svg-wrapper {
+  margin-top: 0.1rem;
+}
+
 @media screen and (max-width: 989px) {
   .product__wide-description-card--split {
     grid-template-columns: 1fr;
@@ -349,6 +360,60 @@ product-info {
   display: none;
 }
 
+/* Rating row: review stars + small share icon */
+
+.product__rating-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.product__rating-row .share-button__button {
+  width: 3.2rem;
+  height: 3.2rem;
+  min-height: 0;
+  margin: -0.4rem 0;
+  padding: 0;
+  justify-content: center;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.8rem;
+  background-color: #fff;
+  color: rgb(var(--color-foreground));
+  list-style: none;
+}
+
+.product__rating-row .share-button__button::-webkit-details-marker {
+  display: none;
+}
+
+.product__rating-row .share-button__button:hover {
+  text-decoration: none;
+  border-color: #bfdbfe;
+}
+
+.product__rating-row .share-button__button .svg-wrapper,
+.product__rating-row .share-button__button .icon-wrap {
+  display: flex;
+  width: 1.8rem;
+  height: 1.8rem;
+  margin: 0;
+}
+
+.product__rating-row .share-button__label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.product__rating-row .share-button__fallback {
+  left: auto;
+  right: 0;
+}
+
 /* Product form */
 
 .product-form {
@@ -535,8 +600,13 @@ a.product__text {
     margin: 0.5rem 0;
   }
 
+  /* Small top gap: the buy button sits right at the fold on most Android phones. */
   .product__info-container .product-form {
-    margin: 1.5rem 0;
+    margin: 0.4rem 0 1.5rem;
+  }
+
+  .product__info-container .product__rating-row {
+    order: -1;
   }
 }
 

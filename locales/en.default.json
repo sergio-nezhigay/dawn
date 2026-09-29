@@ -130,6 +130,7 @@
       "description": "Description",
       "description_read_more": "Read more",
       "description_read_less": "Show less",
+      "dispatch_time": "Ships within 1–2 business days",
       "inventory_in_stock": "In stock",
       "inventory_in_stock_show_count": "{{ quantity }} in stock",
       "inventory_low_stock": "Low stock",

@@ -108,12 +108,31 @@
           id="ProductInfo-{{ section.id }}"
           class="product__info-container{% if section.settings.enable_sticky_info %} product__column-sticky{% endif %}"
         >
-          {%- assign product_form_id = 'product-form-' | append: section.id -%}
+          {%- liquid
+            assign product_form_id = 'product-form-' | append: section.id
+            # Disabled blocks are absent from section.blocks, so the editor's Share toggle controls this.
+            assign share_block = section.blocks | where: 'type', 'share' | first
+            assign share_url = product.selected_variant.url | default: product.url | prepend: request.origin
+            assign has_rating_badge = false
+            for b in section.blocks
+              if b.type contains '/blocks/preview_badge/'
+                assign has_rating_badge = true
+              endif
+            endfor
+          -%}
 
           {%- for block in section.blocks -%}
             {%- case block.type -%}
               {%- when '@app' -%}
-                {% render block %}
+                {%- if block.type contains '/blocks/preview_badge/' and share_block -%}
+                  {% comment %} Share sits on the rating row, away from the buy button. {% endcomment %}
+                  <div class="product__rating-row">
+                    {% render block %}
+                    {%- render 'share-button', block: share_block, share_link: share_url -%}
+                  </div>
+                {%- else -%}
+                  {% render block %}
+                {%- endif -%}
               {%- when 'text' -%}
                 <p
                   class="product__text inline-richtext{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}"
@@ -204,6 +223,12 @@
                       {%- endif -%}
                     </p>
                   </div>
+
+                  {%- assign dispatch_id = 'Dispatch-' | append: section.id -%}
+                  {%- render 'product-dispatch-line',
+                    variant: product.selected_or_first_available_variant,
+                    id: dispatch_id
+                  -%}
 
                   {%- comment -%} Volume Pricing Note {%- endcomment -%}
                   {%- if product.quantity_price_breaks_configured? -%}
@@ -517,9 +542,10 @@
                   </button>
                 </modal-opener>
               {%- when 'share' -%}
-                {%- comment -%}
-                  Share button is now integrated into the buy_buttons row
-                {%- endcomment -%}
+                {%- comment -%} Normally rendered on the rating row; this is the fallback when there is no rating badge. {%- endcomment -%}
+                {%- unless has_rating_badge -%}
+                  {%- render 'share-button', block: block, share_link: share_url -%}
+                {%- endunless -%}
 
               {%- when 'variant_picker' -%}
                 {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
@@ -537,15 +563,6 @@
                   {%- else -%}
                     {%- render 'sold-out-contact', product: product -%}
                   {%- endif -%}
-
-                  {%- liquid
-                    assign share_block = section.blocks | where: 'type', 'share' | first
-                    if share_block == null
-                      assign share_block = block
-                    endif
-                    assign share_url = product.selected_variant.url | default: product.url | prepend: request.origin
-                    render 'share-button', block: share_block, share_link: share_url
-                  -%}
                 </div>
                 {% render 'product-features' %}
               {%- when 'rating' -%}
@@ -815,6 +832,7 @@
                 {%- endif -%}
               {%- endif -%}
             </p>
+            {%- render 'product-dispatch-line', variant: _v -%}
 
             {%- assign sidebar_form_id = product_form_id | append: '-sidebar' -%}
             {% comment %} <product-form> submits via AJAX and opens the cart drawer; a bare form redirects to /cart. {% endcomment %}
