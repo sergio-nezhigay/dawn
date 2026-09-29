@@ -371,10 +371,10 @@ product-info {
 
 .product__rating-row .share-button__button,
 .product__media-share .share-button__button {
-  width: 3.2rem;
-  height: 3.2rem;
+  width: 2.8rem;
+  height: 2.8rem;
   min-height: 0;
-  margin: -0.4rem 0;
+  margin: -0.2rem 0;
   padding: 0;
   justify-content: center;
   border: 1px solid #e5e7eb;
@@ -434,8 +434,27 @@ media-gallery {
   z-index: 3; /* above the full-image zoom overlay (.product__media-toggle::after, z-index 2) */
 }
 
+/* Same look as the zoom icon it mirrors (.product__media-icon) */
 .product__media-share .share-button__button {
+  width: 3rem;
+  height: 3rem;
   margin: 0;
+  border: 0.1rem solid rgba(var(--color-foreground), 0.1);
+  border-radius: 50%;
+  background-color: rgb(var(--color-background));
+}
+
+.product__media-share .share-button__button .svg-wrapper,
+.product__media-share .share-button__button .icon-wrap {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+/* Desktop: the empty reviews row has nothing to show (share is on the photo) */
+@media screen and (min-width: 750px) {
+  .product__rating-row--no-reviews {
+    display: none;
+  }
 }
 
 /* Product form */
@@ -633,6 +652,28 @@ a.product__text {
   .product__info-container .product__rating-row {
     order: -1;
     margin: 0.9rem 0 1rem;
+  }
+
+  /* No reviews: the badge is empty and share is on the photo, so keep only a small title-to-photo gap */
+  .product__info-container .product__rating-row--no-reviews {
+    margin: 0 0 0.8rem;
+  }
+
+  /* Same square frame for every photo (as on desktop): no height jumps between slides or products */
+  .product__media-list .product-media-container {
+    --aspect-ratio: 1 !important;
+    --ratio-percent: 100% !important;
+  }
+
+  /*
+    Anchor the icon to the photo frame, not the gallery. The slide is the gallery width minus a 4px
+    gutter; on short screens the frame shrinks to the theme's constrained height and is centred.
+  */
+  .product__media-share {
+    --slide-width: calc(100% - 4px);
+    --frame-width: min(max(300px, 100vh - 400px), var(--slide-width));
+    top: 1.7rem;
+    right: calc(4px + (var(--slide-width) - var(--frame-width)) / 2 + 1.2rem);
   }
 }
 
