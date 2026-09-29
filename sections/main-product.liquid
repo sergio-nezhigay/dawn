@@ -100,8 +100,31 @@
       class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}"
       data-delta="{{ product.metafields.custom.delta | escape }}"
     >
+      {%- liquid
+        # Share goes on the review-stars row when there are reviews; otherwise on the photo's corner,
+        # so it never adds a line of its own. Disabled blocks are absent from section.blocks,
+        # so the editor's Share toggle controls it.
+        assign share_block = section.blocks | where: 'type', 'share' | first
+        assign share_url = product.selected_variant.url | default: product.url | prepend: request.origin
+        assign share_on_rating_row = false
+        if share_block and product.metafields.reviews.rating_count.value > 0
+          for b in section.blocks
+            if b.type == '@app' and b.id contains 'preview_badge'
+              assign share_on_rating_row = true
+            endif
+          endfor
+        endif
+      -%}
       <div class="grid__item product__media-wrapper">
-        {% render 'product-media-gallery', variant_images: variant_images %}
+        {%- liquid
+          assign media_share = blank
+          if share_block and share_on_rating_row == false and product.media.size > 0
+            capture media_share
+              render 'share-button', block: share_block, share_link: share_url
+            endcapture
+          endif
+        -%}
+        {% render 'product-media-gallery', variant_images: variant_images, corner_html: media_share %}
       </div>
       <div class="product__info-wrapper grid__item {% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         <section
@@ -113,7 +136,15 @@
           {%- for block in section.blocks -%}
             {%- case block.type -%}
               {%- when '@app' -%}
-                {% render block %}
+                {%- if block.id contains 'preview_badge' and share_on_rating_row -%}
+                  {% comment %} Share sits on the rating row, away from the buy button. {% endcomment %}
+                  <div class="product__rating-row">
+                    {% render block %}
+                    {%- render 'share-button', block: share_block, share_link: share_url -%}
+                  </div>
+                {%- else -%}
+                  {% render block %}
+                {%- endif -%}
               {%- when 'text' -%}
                 <p
                   class="product__text inline-richtext{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}"
@@ -204,6 +235,12 @@
                       {%- endif -%}
                     </p>
                   </div>
+
+                  {%- assign dispatch_id = 'Dispatch-' | append: section.id -%}
+                  {%- render 'product-dispatch-line',
+                    variant: product.selected_or_first_available_variant,
+                    id: dispatch_id
+                  -%}
 
                   {%- comment -%} Volume Pricing Note {%- endcomment -%}
                   {%- if product.quantity_price_breaks_configured? -%}
@@ -517,9 +554,10 @@
                   </button>
                 </modal-opener>
               {%- when 'share' -%}
-                {%- comment -%}
-                  Share button is now integrated into the buy_buttons row
-                {%- endcomment -%}
+                {%- comment -%} Rendered on the rating row or the photo corner (above); here only for products without media. {%- endcomment -%}
+                {%- if share_on_rating_row == false and product.media.size == 0 -%}
+                  {%- render 'share-button', block: block, share_link: share_url -%}
+                {%- endif -%}
 
               {%- when 'variant_picker' -%}
                 {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
@@ -537,15 +575,6 @@
                   {%- else -%}
                     {%- render 'sold-out-contact', product: product -%}
                   {%- endif -%}
-
-                  {%- liquid
-                    assign share_block = section.blocks | where: 'type', 'share' | first
-                    if share_block == null
-                      assign share_block = block
-                    endif
-                    assign share_url = product.selected_variant.url | default: product.url | prepend: request.origin
-                    render 'share-button', block: share_block, share_link: share_url
-                  -%}
                 </div>
                 {% render 'product-features' %}
               {%- when 'rating' -%}
@@ -815,6 +844,7 @@
                 {%- endif -%}
               {%- endif -%}
             </p>
+            {%- render 'product-dispatch-line', variant: _v -%}
 
             {%- assign sidebar_form_id = product_form_id | append: '-sidebar' -%}
             {% comment %} <product-form> submits via AJAX and opens the cart drawer; a bare form redirects to /cart. {% endcomment %}

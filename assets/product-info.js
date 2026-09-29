@@ -235,6 +235,15 @@ if (!customElements.get('product-info')) {
                 );
               }
 
+              // Update dispatch line (a sibling of inventory, so it needs its own swap)
+              const destDispatch = unifiedBlock.querySelector(`#Dispatch-${this.dataset.section}`);
+              const srcDispatch = sourceBlock.querySelector(`#Dispatch-${this.sectionId}`);
+
+              if (destDispatch && srcDispatch) {
+                destDispatch.innerHTML = srcDispatch.innerHTML;
+                destDispatch.hidden = srcDispatch.hidden;
+              }
+
               // Update SKU
               const destSku = unifiedBlock.querySelector(`#Sku-${this.dataset.section}`);
               const srcSku = sourceBlock.querySelector(`#Sku-${this.sectionId}`);

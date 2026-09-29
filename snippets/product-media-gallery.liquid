@@ -6,6 +6,7 @@
   - product: {Object} Product liquid object
   - variant_images: {Array} Product images associated with a variant
   - limit: {Number} (optional) When passed, limits the number of media items to render
+  - corner_html: {String} (optional) Markup overlaid on the top-right corner of the gallery (e.g. the share button)
 
   Usage:
   {% render 'product-media-gallery' %}
@@ -52,6 +53,9 @@
   data-desktop-layout="{{ section.settings.gallery_layout }}"
 >
   <div id="GalleryStatus-{{ section.id }}" class="visually-hidden" role="status"></div>
+  {%- if corner_html != blank -%}
+    <div class="product__media-share">{{ corner_html }}</div>
+  {%- endif -%}
   <slider-component id="GalleryViewer-{{ section.id }}" class="slider-mobile-gutter">
     <a class="skip-to-content-link button visually-hidden quick-add-hidden" href="#ProductInfo-{{ section.id }}">
       {{ 'accessibility.skip_to_product_info' | t }}
