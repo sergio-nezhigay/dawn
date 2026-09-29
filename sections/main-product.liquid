@@ -100,31 +100,43 @@
       class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}"
       data-delta="{{ product.metafields.custom.delta | escape }}"
     >
+      {%- liquid
+        # Share goes on the review-stars row when there are reviews; otherwise on the photo's corner,
+        # so it never adds a line of its own. Disabled blocks are absent from section.blocks,
+        # so the editor's Share toggle controls it.
+        assign share_block = section.blocks | where: 'type', 'share' | first
+        assign share_url = product.selected_variant.url | default: product.url | prepend: request.origin
+        assign share_on_rating_row = false
+        if share_block and product.metafields.reviews.rating_count.value > 0
+          for b in section.blocks
+            if b.type == '@app' and b.id contains 'preview_badge'
+              assign share_on_rating_row = true
+            endif
+          endfor
+        endif
+      -%}
       <div class="grid__item product__media-wrapper">
-        {% render 'product-media-gallery', variant_images: variant_images %}
+        {%- liquid
+          assign media_share = blank
+          if share_block and share_on_rating_row == false and product.media.size > 0
+            capture media_share
+              render 'share-button', block: share_block, share_link: share_url
+            endcapture
+          endif
+        -%}
+        {% render 'product-media-gallery', variant_images: variant_images, corner_html: media_share %}
       </div>
       <div class="product__info-wrapper grid__item {% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         <section
           id="ProductInfo-{{ section.id }}"
           class="product__info-container{% if section.settings.enable_sticky_info %} product__column-sticky{% endif %}"
         >
-          {%- liquid
-            assign product_form_id = 'product-form-' | append: section.id
-            # Disabled blocks are absent from section.blocks, so the editor's Share toggle controls this.
-            assign share_block = section.blocks | where: 'type', 'share' | first
-            assign share_url = product.selected_variant.url | default: product.url | prepend: request.origin
-            assign has_rating_badge = false
-            for b in section.blocks
-              if b.type contains '/blocks/preview_badge/'
-                assign has_rating_badge = true
-              endif
-            endfor
-          -%}
+          {%- assign product_form_id = 'product-form-' | append: section.id -%}
 
           {%- for block in section.blocks -%}
             {%- case block.type -%}
               {%- when '@app' -%}
-                {%- if block.type contains '/blocks/preview_badge/' and share_block -%}
+                {%- if block.id contains 'preview_badge' and share_on_rating_row -%}
                   {% comment %} Share sits on the rating row, away from the buy button. {% endcomment %}
                   <div class="product__rating-row">
                     {% render block %}
@@ -542,10 +554,10 @@
                   </button>
                 </modal-opener>
               {%- when 'share' -%}
-                {%- comment -%} Normally rendered on the rating row; this is the fallback when there is no rating badge. {%- endcomment -%}
-                {%- unless has_rating_badge -%}
+                {%- comment -%} Rendered on the rating row or the photo corner (above); here only for products without media. {%- endcomment -%}
+                {%- if share_on_rating_row == false and product.media.size == 0 -%}
                   {%- render 'share-button', block: block, share_link: share_url -%}
-                {%- endunless -%}
+                {%- endif -%}
 
               {%- when 'variant_picker' -%}
                 {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
