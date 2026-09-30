@@ -1,0 +1,92 @@
+{%- doc -%}
+  "Not sure it fits?" row for the fulfillment table, on in-stock memory and laptop charger-adapter products.
+  Memory wording follows the memory.form_factor metafield (SODIMM = laptop, DIMM = PC). Links to Telegram
+  (everywhere) and Viber (touch devices only: viber:// does nothing on desktops without the app), each with
+  a pre-typed message naming the product and SKU. Renders nothing for other products.
+
+  @param {object} product - Product Liquid object
+{%- enddoc -%}
+{%- liquid
+  assign group = blank
+  comment
+    Product types are Cyrillic, which .liquid files can't hold, so compare their url_encode forms.
+    Types are translated per locale, so each line lists the uk, ru and en names: memory
+    ("Pam'yat operatyvna" / "Pamyat operativnaya" / "RAM") and charger adapters ("Perekhidnyky dlya
+    zaryadky noutbukiv ta routeriv" / "Perekhodniki ... i routerov" / "Adapters for charging laptops and routers").
+  endcomment
+  if product.available
+    assign type_encoded = product.type | url_encode
+    case type_encoded
+      when '%D0%9F%D0%B0%D0%BC%27%D1%8F%D1%82%D1%8C+%D0%BE%D0%BF%D0%B5%D1%80%D0%B0%D1%82%D0%B8%D0%B2%D0%BD%D0%B0', '%D0%9F%D0%B0%D0%BC%D1%8F%D1%82%D1%8C+%D0%BE%D0%BF%D0%B5%D1%80%D0%B0%D1%82%D0%B8%D0%B2%D0%BD%D0%B0%D1%8F', 'RAM'
+        case product.metafields.memory.form_factor.value
+          when 'SODIMM'
+            assign group = 'memory_sodimm'
+          when 'DIMM'
+            assign group = 'memory_dimm'
+          else
+            assign group = 'memory'
+        endcase
+      when '%D0%9F%D0%B5%D1%80%D0%B5%D1%85%D1%96%D0%B4%D0%BD%D0%B8%D0%BA%D0%B8+%D0%B4%D0%BB%D1%8F+%D0%B7%D0%B0%D1%80%D1%8F%D0%B4%D0%BA%D0%B8+%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA%D1%96%D0%B2+%D1%82%D0%B0+%D1%80%D0%BE%D1%83%D1%82%D0%B5%D1%80%D1%96%D0%B2', '%D0%9F%D0%B5%D1%80%D0%B5%D1%85%D0%BE%D0%B4%D0%BD%D0%B8%D0%BA%D0%B8+%D0%B4%D0%BB%D1%8F+%D0%B7%D0%B0%D1%80%D1%8F%D0%B4%D0%BA%D0%B8+%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA%D0%BE%D0%B2+%D0%B8+%D1%80%D0%BE%D1%83%D1%82%D0%B5%D1%80%D0%BE%D0%B2', 'Adapters+for+charging+laptops+and+routers'
+        assign group = 'adapter'
+    endcase
+  endif
+-%}
+{%- if group != blank -%}
+  {%- capture newline %}
+{% endcapture -%}
+  {%- comment -%} draft_* keys are _html so t doesn't HTML-escape them (the apostrophe in the uk text, quotes in titles); the result is only used url-encoded {%- endcomment -%}
+  {%- liquid
+    assign sku = product.selected_or_first_available_variant.sku | split: '^' | first
+    if sku != blank
+      assign draft = 'products.product.fit_check.draft_intro_sku_html' | t: title: product.title, sku: sku
+    else
+      assign draft = 'products.product.fit_check.draft_intro_html' | t: title: product.title
+    endif
+    assign draft_model_key = 'products.product.fit_check.draft_model_' | append: group | append: '_html'
+    assign draft_model = draft_model_key | t
+    assign draft = draft | append: newline | append: draft_model | append: ' '
+    if group contains 'memory'
+      assign draft_installed = 'products.product.fit_check.draft_installed_html' | t
+      assign draft = draft | append: newline | append: draft_installed | append: ' '
+    endif
+    comment
+      url_encode writes spaces as "+"; messengers may show them literally, so use %20 (a literal "+" is already %2B)
+    endcomment
+    assign draft_encoded = draft | url_encode | replace: '+', '%20'
+    assign title_key = 'products.product.fit_check.title_' | append: group
+    assign text_key = 'products.product.fit_check.text_' | append: group
+  -%}
+  <tr class="fulfillment-row fit-check">
+    <td class="fulfillment-icon-cell">
+      <span class="svg-wrapper">{{- 'icon-question-mark.svg' | inline_asset_content -}}</span>
+    </td>
+    <td class="fulfillment-label-cell">
+      <span class="fulfillment-title">{{ title_key | t }}</span>
+      <span class="fulfillment-description">
+        {{- text_key | t }}:
+        <a
+          href="https://t.me/NSergiy?text={{ draft_encoded }}"
+          class="fit-check__link"
+          target="_blank"
+          rel="noopener"
+          data-fit-check="telegram"
+          >Telegram</a
+        ><span class="fit-check__viber">
+          &#183;
+          <a
+            href="viber://chat?number=+380507025777&draft={{ draft_encoded }}"
+            class="fit-check__link"
+            data-fit-check="viber"
+            >Viber</a
+          ></span
+        >
+      </span>
+    </td>
+  </tr>
+  <style>
+    .fit-check .fit-check__link { color: #0b6fd6; font-weight: 700; text-decoration: none; white-space: nowrap; }
+    .fit-check .fit-check__link:hover { text-decoration: underline; }
+    .fit-check__viber { display: none; }
+    @media (hover: none) and (pointer: coarse) { .fit-check__viber { display: inline; } }
+  </style>
+{%- endif -%}
