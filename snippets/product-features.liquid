@@ -1,5 +1,6 @@
 <div class="fulfillment-wrapper">
   <table class="fulfillment-table">
+    {% render 'fit-check-help', product: product %}
     {% assign warranty_months = product.metafields.custom.warranty.value | default: 0 | plus: 0 %}
     {% if warranty_months > 0 %}
     <tr class="fulfillment-row">

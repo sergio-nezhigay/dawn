@@ -205,6 +205,23 @@
       "taxes_included": "Податки включено.",
       "duties_included": "Мита включено.",
       "duties_and_taxes_included": "Мита та податки включено.",
+      "fit_check": {
+        "title_memory_sodimm": "Не впевнені, що підійде?",
+        "title_memory_dimm": "Не впевнені, що підійде?",
+        "title_memory": "Не впевнені, що підійде?",
+        "title_adapter": "Не впевнені, що підійде штекер?",
+        "text_memory_sodimm": "Напишіть модель ноутбука — перевіримо сумісність",
+        "text_memory_dimm": "Напишіть модель ПК або материнської плати — перевіримо сумісність",
+        "text_memory": "Напишіть модель ноутбука або ПК — перевіримо сумісність",
+        "text_adapter": "Напишіть модель ноутбука — перевіримо",
+        "draft_intro_html": "Вітаю! Чи підійде {{ title }}?",
+        "draft_intro_sku_html": "Вітаю! Чи підійде {{ title }} (арт. {{ sku }})?",
+        "draft_model_memory_sodimm_html": "Модель ноутбука:",
+        "draft_model_memory_dimm_html": "Модель ПК або материнської плати:",
+        "draft_model_memory_html": "Модель ноутбука або ПК:",
+        "draft_model_adapter_html": "Модель ноутбука:",
+        "draft_installed_html": "Яка пам'ять стоїть зараз (якщо знаєте):"
+      },
       "features": {
         "warranty": "Гарантія",
         "months": "місяців",

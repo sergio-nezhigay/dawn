@@ -205,6 +205,23 @@
       "duties_included": "Duties included.",
       "duties_and_taxes_included": "Duties and taxes included.",
       "shipping_policy_html": "<a href=\"{{ link }}\">Shipping</a> calculated at checkout.",
+      "fit_check": {
+        "title_memory_sodimm": "Not sure it fits?",
+        "title_memory_dimm": "Not sure it fits?",
+        "title_memory": "Not sure it fits?",
+        "title_adapter": "Not sure the plug fits?",
+        "text_memory_sodimm": "Send us your laptop model and we'll check compatibility",
+        "text_memory_dimm": "Send us your PC or motherboard model and we'll check compatibility",
+        "text_memory": "Send us your laptop or PC model and we'll check compatibility",
+        "text_adapter": "Send us your laptop model and we'll check",
+        "draft_intro_html": "Hello! Will {{ title }} fit?",
+        "draft_intro_sku_html": "Hello! Will {{ title }} (SKU {{ sku }}) fit?",
+        "draft_model_memory_sodimm_html": "Laptop model:",
+        "draft_model_memory_dimm_html": "PC or motherboard model:",
+        "draft_model_memory_html": "Laptop or PC model:",
+        "draft_model_adapter_html": "Laptop model:",
+        "draft_installed_html": "Memory installed now (if you know):"
+      },
       "features": {
         "warranty": "Warranty",
         "months": "months",
