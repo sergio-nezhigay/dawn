@@ -189,7 +189,7 @@
       "memory_alternatives_recommended": "Рекомендована заміна",
       "memory_alternatives_buy": "Купити замість",
       "memory_alternatives_others": "Інші сумісні в наявності",
-      "sold_out_contact_alternatives_html": "Потрібен саме цей модуль? Телефонуйте {{ phone }} — підкажемо, коли надійде.",
+      "sold_out_contact_alternatives_html": "Потрібен саме цей товар? Телефонуйте {{ phone }} — підкажемо, коли надійде.",
       "sold_out_contact_html": "Товар тимчасово відсутній. Телефонуйте {{ phone }} — підкажемо, коли надійде, або підберемо аналог.",
       "inventory_out_of_stock_continue_selling": "В наявності",
       "sku": "Артикул",
