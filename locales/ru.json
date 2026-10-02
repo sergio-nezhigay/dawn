@@ -186,7 +186,7 @@
       "memory_alternatives_recommended": "Рекомендуемая замена",
       "memory_alternatives_buy": "Купить вместо",
       "memory_alternatives_others": "Другие совместимые в наличии",
-      "sold_out_contact_alternatives_html": "Нужен именно этот модуль? Звоните {{ phone }} — подскажем, когда поступит.",
+      "sold_out_contact_alternatives_html": "Нужен именно этот товар? Звоните {{ phone }} — подскажем, когда поступит.",
       "sold_out_contact_html": "Товар временно отсутствует. Звоните {{ phone }} — подскажем, когда поступит, или подберём аналог.",
       "inventory_out_of_stock_continue_selling": "В наличии",
       "sku": "Артикул",

@@ -7,7 +7,7 @@
 {%- endcomment -%}
 {%- liquid
   assign has_alternatives = false
-  for alt in product.metafields.memory.alternatives.value
+  for alt in product.metafields.alternatives.products.value
     if alt.available
       assign has_alternatives = true
       break

@@ -1,7 +1,7 @@
 {%- comment -%}
-  Out-of-stock memory: in-stock modules that fit the same slot, from the
-  memory.alternatives product metafield (list.product_reference, filled and refreshed
-  by seo-2303/build_alternatives.py, ordered closest match first). Skips alternatives
+  Out-of-stock products (memory, cables, adapters, SSDs ...): in-stock replacements from the
+  alternatives.products product metafield (list.product_reference, filled and refreshed
+  by the seo-2303 scripts, ordered closest match first). Skips alternatives
   that sold out since the refresh; renders nothing when none are left.
 
   The first available alternative is shown as the recommended replacement with its own
@@ -13,7 +13,7 @@
   - layout: {String} 'jump' renders only the mobile link to the block, placed under the title (optional)
 {%- endcomment -%}
 {%- liquid
-  assign alts = product.metafields.memory.alternatives.value
+  assign alts = product.metafields.alternatives.products.value
   assign best = null
   assign others_count = 0
   for alt in alts
