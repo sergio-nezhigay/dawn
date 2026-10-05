@@ -124,6 +124,13 @@
   "products": {
     "product": {
       "add_to_cart": "Додати в кошик",
+      "rating_label": "Рейтинг {{ rating }} з {{ max }}",
+      "review_count": {
+        "one": "{{ count }} відгук",
+        "few": "{{ count }} відгуки",
+        "many": "{{ count }} відгуків",
+        "other": "{{ count }} відгуку"
+      },
       "buy": "Купити",
       "description": "Опис",
       "description_read_more": "Читати повністю",

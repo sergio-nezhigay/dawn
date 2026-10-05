@@ -4911,11 +4911,26 @@ button[id^="ProductSubmitButton-"]:active {
   border-bottom: none !important;
 }
 
+/* Own review badge (snippets/review-badge.liquid): mirror what Judge.me's CSS gives its own badge
+   (.jdgm-widget * line-height, star colour) and undo its "text hidden until JS" rule. */
+.review-badge,
+.review-badge * {
+  line-height: 1.4;
+}
+
+.review-badge .jdgm-star {
+  color: var(--jdgm-star-color, #ffc220);
+}
+
+.review-badge .jdgm-prev-badge__text {
+  visibility: visible;
+}
+
 .card-wrapper .jdgm-star {
   font-size: 10px;
 }
 
-.card-wrapper .jdgm-widget {
+.card-wrapper .review-badge {
   margin-top: -2px;
 }
 

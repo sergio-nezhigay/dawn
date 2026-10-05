@@ -123,6 +123,13 @@
   "products": {
     "product": {
       "add_to_cart": "Добавить в корзину",
+      "rating_label": "Рейтинг {{ rating }} из {{ max }}",
+      "review_count": {
+        "one": "{{ count }} отзыв",
+        "few": "{{ count }} отзыва",
+        "many": "{{ count }} отзывов",
+        "other": "{{ count }} отзыва"
+      },
       "buy": "Купить",
       "description": "Описание",
       "on_sale": "Распродажа",

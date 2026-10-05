@@ -143,7 +143,8 @@
                 {%- if block.id contains 'preview_badge' -%}
                   {% comment %} Without reviews the badge is empty; its wrapper only keeps a small title-to-photo gap. {% endcomment %}
                   <div class="product__rating-row{% unless has_reviews %} product__rating-row--no-reviews{% endunless %}">
-                    {% render block %}
+                    {%- comment -%} Own stars instead of the app block: Judge.me JS now loads only near the reviews widget. {%- endcomment -%}
+                    {% render 'review-badge', product: product, link: true %}
                     {%- if share_on_rating_row -%}
                       {%- render 'share-button', block: share_block, share_link: share_url -%}
                     {%- endif -%}

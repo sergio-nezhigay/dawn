@@ -1,0 +1,48 @@
+{% comment %}
+  Review stars + count from the reviews.rating / reviews.rating_count metafields (kept in sync by Judge.me),
+  so they render without Judge.me JS and with proper UA/RU plural forms.
+  Reuses Judge.me's star classes (font + colour come from its inline "miracle" styles), but the root class
+  is our own so Judge.me's widget script never picks it up and rewrites it.
+  Renders nothing when the product has no reviews.
+
+  Accepts:
+  - product: {Object} Product
+  - link: {Boolean} Wrap the count in a link to the reviews widget (product page only; cards are links already)
+
+  Usage:
+  {% render 'review-badge', product: product, link: true %}
+{% endcomment %}
+{%- liquid
+  assign rating = product.metafields.reviews.rating.value
+  assign rating_count = product.metafields.reviews.rating_count.value | default: 0
+-%}
+{%- if rating != blank and rating_count > 0 -%}
+  {%- liquid
+    assign score = rating.rating | times: 1.0
+    assign scale_max = rating.scale_max | round
+    assign count_text = 'products.product.review_count' | t: count: rating_count
+    assign rating_text = score | round: 1
+    assign label = 'products.product.rating_label' | t: rating: rating_text, max: scale_max
+  -%}
+  <div class="review-badge">
+    <span class="jdgm-prev-badge__stars" role="img" aria-label="{{ label | escape }}">
+      {%- for i in (1..scale_max) -%}
+        {%- assign half_at = i | minus: 0.5 -%}
+        {%- if score >= i -%}
+          <span class="jdgm-star jdgm--on"></span>
+        {%- elsif score >= half_at -%}
+          <span class="jdgm-star jdgm--half"></span>
+        {%- else -%}
+          <span class="jdgm-star jdgm--off"></span>
+        {%- endif -%}
+      {%- endfor -%}
+    </span>
+    {% if link -%}
+      <a href="#judgeme_product_reviews" class="jdgm-prev-badge__text">
+        {{- count_text -}}
+      </a>
+    {%- else -%}
+      <span class="jdgm-prev-badge__text">{{ count_text }}</span>
+    {%- endif -%}
+  </div>
+{%- endif -%}
