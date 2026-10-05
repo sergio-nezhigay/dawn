@@ -24,13 +24,6 @@
           "type": "title",
           "settings": {}
         },
-        "sku_T9zB3W": {
-          "type": "sku",
-          "disabled": true,
-          "settings": {
-            "text_style": "body"
-          }
-        },
         "judge_me_reviews_preview_badge_DhpJYN": {
           "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
           "settings": {}
@@ -70,33 +63,17 @@
         "description": {
           "type": "description",
           "settings": {}
-        },
-        "complementary_WLq9ME": {
-          "type": "complementary",
-          "disabled": true,
-          "settings": {
-            "block_heading": "Також вас можуть зацікавити",
-            "make_collapsible_row": true,
-            "icon": "none",
-            "product_list_limit": 10,
-            "products_per_page": 3,
-            "pagination_style": "dots",
-            "image_ratio": "square",
-            "enable_quick_add": false
-          }
         }
       },
       "block_order": [
         "title",
-        "sku_T9zB3W",
         "judge_me_reviews_preview_badge_DhpJYN",
         "variant_picker",
         "share",
         "inventory_UzTnRe",
         "price",
         "buy_buttons",
-        "description",
-        "complementary_WLq9ME"
+        "description"
       ],
       "settings": {
         "enable_sticky_info": true,
@@ -111,7 +88,6 @@
         "mobile_lightbox_style": "fullscreen",
         "hide_variants": false,
         "desktop_description_threshold": 900,
-        "enable_video_looping": false,
         "padding_top": 4,
         "padding_bottom": 36
       }
