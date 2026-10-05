@@ -3,20 +3,16 @@
 
   Accepts:
   - media: {Object} Product Media object
-  - loop: {Boolean} Enable video looping (optional)
-  - variant_image: {Boolean} Whether or not media is associated with a variant
 
   Usage:
   {% render 'product-media',
-    media: media,
-    loop: section.settings.enable_video_looping,
-    variant_image: true
+    media: media
   %}
 {% endcomment %}
 
 {%- if media.media_type == 'image' -%}
   <img
-    class="global-media-settings global-media-settings--no-shadow{% if variant_image %} product__media-item--variant{% endif %}"
+    class="global-media-settings global-media-settings--no-shadow"
     srcset="
       {%- if media.preview_image.width >= 550 -%}{{ media.preview_image | image_url: width: 550 }} 550w,{%- endif -%}
       {%- if media.preview_image.width >= 1100 -%}{{ media.preview_image | image_url: width: 1100 }} 1100w,{%- endif -%}
@@ -85,18 +81,18 @@
         {%- if media.host == 'youtube' -%}
           {{
             media
-            | external_video_url: autoplay: true, loop: loop, playlist: media.external_id
+            | external_video_url: autoplay: true, playlist: media.external_id
             | external_video_tag: class: video_class, loading: 'lazy'
           }}
         {%- else -%}
           {{
             media
-            | external_video_url: autoplay: true, loop: loop
+            | external_video_url: autoplay: true
             | external_video_tag: class: video_class, loading: 'lazy'
           }}
         {%- endif -%}
       {%- when 'video' -%}
-        {{ media | media_tag: image_size: '2048x', autoplay: true, loop: loop, controls: true, preload: 'none' }}
+        {{ media | media_tag: image_size: '2048x', autoplay: true, controls: true, preload: 'none' }}
       {%- when 'model' -%}
         {{ media | media_tag: image_size: '2048x', toggleable: true }}
     {%- endcase -%}

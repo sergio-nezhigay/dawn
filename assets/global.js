@@ -1221,10 +1221,6 @@ class ProductRecommendations extends HTMLElement {
           this.innerHTML = recommendations.innerHTML;
         }
 
-        if (!this.querySelector('slideshow-component') && this.classList.contains('complementary-products')) {
-          this.remove();
-        }
-
         if (html.querySelector('.grid__item')) {
           this.classList.add('product-recommendations--loaded');
         } else {
