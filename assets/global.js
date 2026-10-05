@@ -429,11 +429,11 @@ class MenuDrawer extends HTMLElement {
     this.bindEvents();
   }
 
-  bindEvents() {
-    this.querySelectorAll('summary').forEach((summary) =>
+  bindEvents(root = this) {
+    root.querySelectorAll('summary').forEach((summary) =>
       summary.addEventListener('click', this.onSummaryClick.bind(this))
     );
-    this.querySelectorAll(
+    root.querySelectorAll(
       'button:not(.localization-selector):not(.country-selector__close-button):not(.country-filter__reset-button)'
     ).forEach((button) => button.addEventListener('click', this.onCloseButtonClick.bind(this)));
   }
@@ -557,9 +557,54 @@ customElements.define('menu-drawer', MenuDrawer);
 class HeaderDrawer extends MenuDrawer {
   constructor() {
     super();
+
+    // The menu links are not in the page HTML; fetch them as soon as the visitor reaches for the button.
+    const summary = this.mainDetailsToggle.querySelector('summary');
+    ['pointerenter', 'touchstart', 'focusin'].forEach((type) =>
+      summary.addEventListener(type, () => this.loadMenu(), { once: true, passive: true })
+    );
+  }
+
+  loadMenu() {
+    const drawer = this.querySelector('#menu-drawer');
+    if (this.menuRequest || drawer.childElementCount) return this.menuRequest;
+
+    this.menuRequest = fetch(`${window.location.pathname}?section_id=header-drawer-menu`)
+      .then((response) => response.text())
+      .then((text) => {
+        const content = new DOMParser()
+          .parseFromString(text, 'text/html')
+          .querySelector('.menu-drawer__inner-container');
+        if (!content) throw new Error('Menu drawer contents missing');
+
+        // The language form was rendered for the ?section_id URL; send the visitor back to this page instead.
+        content.querySelectorAll('input[name="return_to"]').forEach((input) => {
+          input.value = window.location.pathname + window.location.search;
+        });
+
+        content.querySelectorAll('[id^="Details-"] summary').forEach((summary) => {
+          summary.setAttribute('role', 'button');
+          summary.setAttribute('aria-expanded', 'false');
+          if (summary.nextElementSibling.id) summary.setAttribute('aria-controls', summary.nextElementSibling.id);
+          summary.addEventListener('click', (event) => {
+            event.currentTarget.setAttribute('aria-expanded', !event.currentTarget.closest('details').hasAttribute('open'));
+          });
+        });
+        drawer.append(content);
+        this.bindEvents(content);
+        if (this.mainDetailsToggle.hasAttribute('open')) {
+          trapFocus(this.mainDetailsToggle, this.mainDetailsToggle.querySelector('summary'));
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        this.menuRequest = null;
+      });
+    return this.menuRequest;
   }
 
   openMenuDrawer(summaryElement) {
+    this.loadMenu();
     this.header = this.header || document.querySelector('.section-header');
     this.borderOffset =
       this.borderOffset || this.closest('.header-wrapper').classList.contains('header-wrapper--border-bottom') ? 1 : 0;

@@ -1,0 +1,12 @@
+{% comment %}
+  Mobile menu contents, fetched on demand by HeaderDrawer (assets/global.js) through
+  the Section Rendering API. Not placed in any template. Uses the same menu as the header.
+{% endcomment %}
+{%- render 'header-drawer-menu', menu: linklists['main-menu'] -%}
+
+{% schema %}
+{
+  "name": "Header drawer menu",
+  "settings": []
+}
+{% endschema %}
