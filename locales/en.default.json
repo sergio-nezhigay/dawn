@@ -124,6 +124,11 @@
   "products": {
     "product": {
       "add_to_cart": "Add to cart",
+      "rating_label": "Rated {{ rating }} out of {{ max }}",
+      "review_count": {
+        "one": "{{ count }} review",
+        "other": "{{ count }} reviews"
+      },
       "buy": "Buy",
       "choose_options": "Choose options",
       "choose_product_options": "Choose options for {{ product_name }}",

@@ -1,4 +1,32 @@
 (function () {
+  // Judge.me on demand: layout/theme.liquid stops its loader at page load and leaves the src in
+  // window.jdgmLazySrc. Re-inject it once, when the reviews widget nears the viewport or is used.
+  const loadJudgeme = () => {
+    if (!window.jdgmLazySrc || window.jdgmLazyLoaded) return;
+    window.jdgmLazyLoaded = true;
+    window.jdgm._loaderExecuted = false;
+    const script = document.createElement('script');
+    script.src = window.jdgmLazySrc;
+    document.head.appendChild(script);
+  };
+
+  const initLazyLoad = (widget) => {
+    if (!window.jdgmLazySrc) return;
+    // About one screen ahead: it fills in before the shopper gets there, but not at page load on phones.
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          io.disconnect();
+          loadJudgeme();
+        }
+      },
+      { rootMargin: '0px 0px 100% 0px' },
+    );
+    io.observe(widget);
+    widget.addEventListener('pointerdown', loadJudgeme, { once: true });
+    widget.addEventListener('focusin', loadJudgeme, { once: true });
+  };
+
   const hideRedundantReviews = () => {
     const reviews = document.querySelectorAll('.jdgm-rev');
     reviews.forEach((rev) => {
@@ -104,28 +132,13 @@
   };
 
   const interceptBadgeScroll = () => {
-    document
-      .querySelectorAll('.jdgm-prev-badge__text, .jdgm-prev-badge a[href*="judgeme_product_reviews"]')
-      .forEach((el) => {
-        el.addEventListener(
-          'click',
-          (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            scrollToReviews();
-          },
-          true,
-        );
+    document.querySelectorAll('.review-badge a[href="#judgeme_product_reviews"]').forEach((el) => {
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        loadJudgeme();
+        scrollToReviews();
       });
-  };
-
-  const initBadgeScroll = () => {
-    const badge = document.querySelector('.jdgm-prev-badge__text');
-    if (badge) {
-      interceptBadgeScroll();
-    } else {
-      setTimeout(initBadgeScroll, 500);
-    }
+    });
   };
 
   const handleHashNavigation = () => {
@@ -178,13 +191,11 @@
   const init = () => {
     const target = document.querySelector('#judgeme_product_reviews');
     if (target) {
+      initLazyLoad(target);
       observer.observe(target, { childList: true, subtree: true });
       hideRedundantReviews();
-    } else {
-      // Retry if the widget container isn't in the DOM yet
-      setTimeout(init, 500);
     }
-    initBadgeScroll();
+    interceptBadgeScroll();
   };
 
   if (document.readyState === 'loading') {

@@ -602,8 +602,7 @@ a.product__text {
     font-size: 18px;
   }
 
-  .product__info-container [id*='judge_me_reviews_preview_badge'] {
-    order: -1;
+  .product__info-container .review-badge {
     zoom: 0.8;
   }
 

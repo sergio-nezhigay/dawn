@@ -150,16 +150,7 @@
       </div>
       <div class="card__content">
         <div class="card__information">
-          <!-- Start of Judge.me code -->
-          <div
-            style="{{ jm_style }}"
-            class="jdgm-widget jdgm-preview-badge"
-            data-id="{{ card_product.id }}"
-            data-auto-install="false"
-          >
-            {{ card_product.metafields.judgeme.badge }}
-          </div>
-          <!-- End of Judge.me code -->
+          {% render 'review-badge', product: card_product %}
           <h3
             class="card__heading{% if card_product.featured_media or settings.card_style == 'standard' %} h5{% endif %}"
             {% if card_product.featured_media or settings.card_style == 'card' %}

@@ -321,6 +321,24 @@
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %} template-{{ request.page_type }}">
+    {%- if template.name == 'product' -%}
+      {%- comment -%}
+        Judge.me on demand: stop its deferred loader.js from running at page load (its own
+        jdgm._loaderExecuted guard); assets/judgeme-enhancements.js re-injects it near the reviews widget.
+        Here in <body> because the app embed prints the loader tag at the end of <head>.
+        Review-email links (judgeme_* params, #judgeme hash) load it right away. No loader tag = no-op.
+      {%- endcomment -%}
+      <script>
+        (function () {
+          if (/judgeme/i.test(location.search + location.hash)) return;
+          var s = document.querySelector('script[src*="judgeme"][src*="loader.js"]');
+          if (!s) return;
+          window.jdgm = window.jdgm || {};
+          window.jdgmLazySrc = s.src;
+          jdgm._loaderExecuted = true;
+        })();
+      </script>
+    {%- endif -%}
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}
     </a>
