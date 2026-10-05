@@ -12,21 +12,9 @@
 {% endcomment %}
 <div class="product-form-container" {{ block.shopify_attributes }}>
   {%- if product != blank -%}
-    {%- liquid
-      assign gift_card_recipient_feature_active = false
-      if block.settings.show_gift_card_recipient and product.gift_card?
-        assign gift_card_recipient_feature_active = true
-      endif
-
-      assign show_dynamic_checkout = false
-      if block.settings.show_dynamic_checkout and gift_card_recipient_feature_active == false
-        assign show_dynamic_checkout = true
-      endif
-    -%}
-
     <product-form
       class="product-form"
-      data-hide-errors="{{ gift_card_recipient_feature_active }}"
+      data-hide-errors="false"
       data-section-id="{{ section.id }}"
     >
       <div class="product-form__error-message-wrapper" role="alert" hidden>
@@ -56,10 +44,6 @@
           class="product-variant-id"
         >
 
-        {%- if gift_card_recipient_feature_active -%}
-          {%- render 'gift-card-recipient-form', product: product, form: form, section: section -%}
-        {%- endif -%}
-
         <div class="product-form__buttons">
           {%- liquid
             assign check_against_inventory = true
@@ -74,7 +58,7 @@
             id="ProductSubmitButton-{{ section_id }}"
             type="submit"
             name="add"
-            class="product-form__submit button button--full-width {% if show_dynamic_checkout %}button--secondary{% else %}button--primary{% endif %}"
+            class="product-form__submit button button--full-width button--primary"
             {% if product.selected_or_first_available_variant.available == false
               or quantity_rule_soldout
               or product.selected_or_first_available_variant == null
@@ -100,9 +84,6 @@
             </span>
             {%- render 'loading-spinner' -%}
           </button>
-          {%- if show_dynamic_checkout -%}
-            {{ form | payment_button }}
-          {%- endif -%}
         </div>
         <input
           type="hidden"
@@ -141,7 +122,7 @@
       data-root-url="{{ routes.root_url }}"
       data-variant-id="{{ product.selected_or_first_available_variant.id }}"
       data-has-only-default-variant="{{ product.has_only_default_variant }}"
-      data-product-page-color-scheme="gradient color-{{ section.settings.color_scheme }}"
+      data-product-page-color-scheme="gradient color-scheme-1"
     >
       <template>
         <pickup-availability-preview class="pickup-availability-preview">

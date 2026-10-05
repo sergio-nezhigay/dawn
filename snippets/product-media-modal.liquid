@@ -4,7 +4,6 @@
 
   Accepts:
   - product: {Object} Product liquid object
-  - variant_images: {Array} Product images associated with a variant
 
   Usage:
   {% render 'product-media-modal' %}
@@ -13,10 +12,10 @@
 <product-modal
   id="ProductModal-{{ section.id }}"
   class="product-media-modal media-modal"
-  data-mobile-style="{{ section.settings.mobile_lightbox_style | default: 'fullscreen' }}"
+  data-mobile-style="fullscreen"
 >
   <div
-    class="product-media-modal__dialog color-{{ section.settings.color_scheme }} gradient"
+    class="product-media-modal__dialog color-scheme-1 gradient"
     role="dialog"
     aria-label="{{ 'products.modal.label' | t }}"
     aria-modal="true"
@@ -31,16 +30,14 @@
       {{ 'icon-close.svg' | inline_asset_content }}
     </button>
 
-    {%- if section.settings.mobile_lightbox_style != 'classic' -%}
       <button class="product-media-modal__prev" type="button" aria-label="Previous image">&#8249;</button>
       <button class="product-media-modal__next" type="button" aria-label="Next image">&#8250;</button>
       <div class="product-media-modal__counter" aria-live="polite" aria-atomic="true">
         <span class="product-media-modal__index">1</span>&thinsp;/&thinsp;<span class="product-media-modal__total">{{ product.media.size }}</span>
       </div>
-    {%- endif -%}
 
     <div
-      class="product-media-modal__content color-{{ section.settings.color_scheme }} gradient"
+      class="product-media-modal__content color-scheme-1 gradient"
       role="document"
       aria-label="{{ 'products.modal.label' | t }}"
       tabindex="0"
@@ -48,22 +45,14 @@
       {%- liquid
         if product.selected_or_first_available_variant.featured_media != null
           assign media = product.selected_or_first_available_variant.featured_media
-          render 'product-media', media: media, loop: section.settings.enable_video_looping, variant_image: section.settings.hide_variants
+          render 'product-media', media: media
         endif
       -%}
 
       {%- for media in product.media -%}
-        {%- liquid
-          if section.settings.hide_variants and variant_images contains media.src or variant_images contains media.id
-            assign variant_image = true
-          else
-            assign variant_image = false
-          endif
-
-          unless media.id == product.selected_or_first_available_variant.featured_media.id
-            render 'product-media', media: media, loop: section.settings.enable_video_looping, variant_image: variant_image
-          endunless
-        -%}
+        {%- unless media.id == product.selected_or_first_available_variant.featured_media.id -%}
+          {%- render 'product-media', media: media -%}
+        {%- endunless -%}
       {%- endfor -%}
     </div>
   </div>
