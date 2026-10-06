@@ -92,7 +92,8 @@
     "total_reviews": "всего отзывов",
     "star_reviews_info": "{{ rating_value }} из {{ rating_max }} звезд",
     "collapsible_content_title": "Контент, который можно свернуть",
-    "complementary_products": "Дополнительные товары"
+    "complementary_products": "Дополнительные товары",
+    "call_store": "Звонить в магазин"
   },
   "blogs": {
     "article": {
@@ -856,4 +857,3 @@
     }
   }
 }
-
