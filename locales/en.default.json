@@ -127,7 +127,9 @@
       "rating_label": "Rated {{ rating }} out of {{ max }}",
       "review_count": {
         "one": "{{ count }} review",
-        "other": "{{ count }} reviews"
+        "other": "{{ count }} reviews",
+        "few": "{{ count }} reviews",
+        "many": "{{ count }} reviews"
       },
       "buy": "Buy",
       "choose_options": "Choose options",
@@ -809,4 +811,3 @@
     }
   }
 }
-
