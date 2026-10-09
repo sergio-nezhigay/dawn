@@ -6,18 +6,18 @@
   # Each path starts at its pin on the chip edge.
   assign traces = 'M118 118 L118 50 L50 50|M150 118 L150 50|M182 118 L182 50 L250 50|M118 150 L50 150|M182 150 L250 150|M118 182 L118 250 L50 250|M150 182 L150 250|M182 182 L182 250 L250 250' | split: '|'
 
-  # Copy lives in locales so RU/EN translate; settings override it
-  assign heading = section.settings.heading
+  # Copy lives in locales so RU/EN translate; settings override it. `t` output is already escaped, so escape settings here
+  assign heading = section.settings.heading | escape
   if heading == blank
     assign heading = 'sections.home_board.heading' | t
   endif
-  assign lead = section.settings.lead
+  assign lead = section.settings.lead | escape
   if lead == blank
     assign lead = 'sections.home_board.lead' | t
   endif
   assign search_placeholder = 'sections.home_board.search_placeholder' | t
   if section.settings.chips != blank
-    assign chips = section.settings.chips | newline_to_br | split: '<br />'
+    assign chips = section.settings.chips | escape | newline_to_br | split: '<br />'
   else
     assign chips = 'sections.home_board.chips' | t | split: '|'
   endif
@@ -37,8 +37,8 @@
 <div class="home-board">
   <div class="page-width home-board__wrap">
     <div class="home-board__intro">
-      <h2 class="home-board__heading">{{ heading | escape }}</h2>
-      <p class="home-board__lead">{{ lead | escape }}</p>
+      <h2 class="home-board__heading">{{ heading }}</h2>
+      <p class="home-board__lead">{{ lead }}</p>
 
       <form class="home-board__search" action="{{ routes.search_url }}" method="get" role="search">
         <input
@@ -68,7 +68,7 @@
         {%- for chip in chips -%}
           {%- assign term = chip | strip -%}
           {%- if term != blank -%}
-            <a href="{{ routes.search_url }}?q={{ term | url_encode }}&options%5Bprefix%5D=last">{{ term | escape }}</a>
+            <a href="{{ routes.search_url }}?q={{ term | url_encode }}&options%5Bprefix%5D=last">{{ term }}</a>
           {%- endif -%}
         {%- endfor -%}
       </div>
