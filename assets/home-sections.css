@@ -69,3 +69,128 @@
     padding-top: 0;
   }
 }
+
+/* Homepage product cards (snippets/home-card.liquid): price + Buy in one row, in-stock line under it */
+.home-cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.home-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 100%;
+  padding: 12px;
+  border: 1px solid var(--home-line);
+  border-radius: var(--home-radius);
+  background: #fff;
+}
+
+.home-card__image {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+}
+
+.home-card__image img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.home-card__title {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 3.9em;
+  font-size: 14px;
+  line-height: 1.35;
+  color: inherit;
+  text-decoration: none;
+}
+
+.home-card__title:hover {
+  text-decoration: underline;
+}
+
+.home-card__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.home-card__price {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.home-section .home-card__buy {
+  position: relative;
+  min-height: 44px;
+  padding: 0 14px;
+  font-size: 14px;
+}
+
+.home-card__buy.loading > span {
+  visibility: hidden;
+}
+
+.home-card__buy .loading__spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.home-card__stock {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--home-blue-deep);
+}
+
+.home-card__stock::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+@media screen and (max-width: 989px) {
+  .home-cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .home-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .home-card__row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .home-section .home-card__buy {
+    width: 100%;
+  }
+}

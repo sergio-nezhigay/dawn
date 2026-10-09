@@ -1,0 +1,48 @@
+{%- comment -%}
+  Homepage product card (C2 draft): image, title, price with a Buy button, in-stock line.
+  Buy adds single-variant products to the cart drawer (Dawn product-form); other products link to the product page.
+  Styles live in assets/home-sections.css.
+
+  Accepts:
+  - product: {Object} Product Liquid object
+  - section_id: {String} ID of the section that renders the card
+{%- endcomment -%}
+{%- liquid
+  assign variant = product.selected_or_first_available_variant
+  assign form_id = 'HomeCard-' | append: section_id | append: '-' | append: product.id
+  assign quick_buy = false
+  if product.available and product.has_only_default_variant and variant.quantity_rule.min <= 1 and variant.quantity_rule.increment <= 1
+    assign quick_buy = true
+  endif
+-%}
+<div class="home-card">
+  <a class="home-card__image" href="{{ product.url }}" tabindex="-1" aria-hidden="true">
+    {%- if product.featured_media -%}
+      {{
+        product.featured_media
+        | image_url: width: 533
+        | image_tag: widths: '165, 330, 533', sizes: '(min-width: 990px) 280px, (min-width: 750px) 30vw, 45vw', loading: 'lazy', alt: ''
+      }}
+    {%- endif -%}
+  </a>
+  <a class="home-card__title" href="{{ product.url }}">{{ product.title | escape }}</a>
+  <div class="home-card__row">
+    <span class="home-card__price">{{ product.price | money }}</span>
+    {%- if quick_buy -%}
+      <product-form data-section-id="{{ section_id }}" data-hide-errors="true">
+        {%- form 'product', product, id: form_id, novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+          <input type="hidden" name="id" value="{{ variant.id }}">
+          <button type="submit" name="add" class="home-btn home-btn--buy home-card__buy">
+            <span>{{ 'products.product.buy' | t }}</span>
+            {%- render 'loading-spinner' -%}
+          </button>
+        {%- endform -%}
+      </product-form>
+    {%- else -%}
+      <a class="home-btn home-btn--buy home-card__buy" href="{{ product.url }}">{{ 'products.product.buy' | t }}</a>
+    {%- endif -%}
+  </div>
+  {%- if product.available -%}
+    <p class="home-card__stock">{{ 'products.product.inventory_in_stock' | t }}</p>
+  {%- endif -%}
+</div>
