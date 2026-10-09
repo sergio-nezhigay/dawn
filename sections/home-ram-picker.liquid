@@ -1,0 +1,103 @@
+{{ 'home-sections.css' | asset_url | stylesheet_tag }}
+{{ 'section-home-ram-picker.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'home-ram-picker.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign types = 'DDR3,DDR3L,DDR4,DDR5' | split: ','
+  assign sizes = '4,8,16,32' | split: ','
+  assign default_type = 'DDR4'
+  assign default_size = '8'
+  assign fallback_url = collections['pamyat'].url | default: routes.all_products_collection_url
+  assign fallback_label = 'sections.home_ram_picker.show_all_html' | t
+
+  # Type/size pair -> SODIMM collection (in-stock-only smart collections, so products_count = in stock); else all memory
+  capture links
+    for type in types
+      for size in sizes
+        assign handle = 'sodimm-' | append: type | append: '-' | append: size | append: 'gb' | downcase
+        assign ram = collections[handle]
+        if ram.handle == handle and ram.products_count > 0
+          assign url = ram.url
+          assign label = 'sections.home_ram_picker.show_html' | t: type: type, size: size, count: ram.products_count
+        else
+          assign url = fallback_url
+          assign label = fallback_label
+        endif
+        if type == default_type and size == default_size
+          assign current_url = url
+          assign current_label = label
+        endif
+        echo ','
+        echo handle | json
+        echo ':['
+        echo url | json
+        echo ','
+        echo label | json
+        echo ']'
+      endfor
+    endfor
+  endcapture
+-%}
+
+<div class="home-section home-ram">
+  <div class="page-width">
+    <div class="home-ram__box" data-ram-picker>
+      <div>
+        <h2 class="home-heading">{{ 'sections.home_ram_picker.heading' | t }}</h2>
+        <p class="home-ram__text">
+          {{ 'sections.home_ram_picker.text' | t }}
+          <a href="#fit" data-goal="memory">{{ 'sections.home_ram_picker.fit_link' | t }}</a>
+        </p>
+      </div>
+      <div class="home-ram__grid">
+        <div class="home-ram__row" role="group" aria-labelledby="RamType-{{ section.id }}">
+          <span id="RamType-{{ section.id }}">{{ 'sections.home_ram_picker.type_label' | t }}</span>
+          {%- for type in types -%}
+            <button
+              type="button"
+              class="home-ram__seg"
+              data-group="type"
+              data-value="{{ type | downcase }}"
+              aria-pressed="{% if type == default_type %}true{% else %}false{% endif %}"
+            >
+              {{ type }}
+            </button>
+          {%- endfor -%}
+        </div>
+        <div class="home-ram__row" role="group" aria-labelledby="RamSize-{{ section.id }}">
+          <span id="RamSize-{{ section.id }}">{{ 'sections.home_ram_picker.size_label' | t }}</span>
+          {%- for size in sizes -%}
+            <button
+              type="button"
+              class="home-ram__seg"
+              data-group="size"
+              data-value="{{ size }}"
+              aria-pressed="{% if size == default_size %}true{% else %}false{% endif %}"
+            >
+              {{ 'sections.home_ram_picker.size' | t: size: size }}
+            </button>
+          {%- endfor -%}
+        </div>
+        <div>
+          <a class="home-btn home-btn--buy" href="{{ current_url }}" data-ram-go>{{ current_label | escape }}</a>
+        </div>
+      </div>
+      <script type="application/json" data-ram-links>
+        { {{- links | remove_first: ',' -}} }
+      </script>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "RAM picker",
+  "tag": "section",
+  "class": "section",
+  "presets": [
+    {
+      "name": "RAM picker"
+    }
+  ]
+}
+{% endschema %}

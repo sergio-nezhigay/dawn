@@ -1,0 +1,253 @@
+/* Fit check (AI answer first, a manager as the fallback) next to the terms sheet */
+.home-fit__split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.home-fit__form {
+  background: var(--home-blue);
+  color: #fff;
+  border-radius: var(--home-radius);
+  padding: 24px;
+  scroll-margin-top: 20px;
+}
+
+.home-fit__text {
+  margin: 0 0 18px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.home-fit__form .home-heading {
+  margin-bottom: 8px;
+}
+
+.home-fit__fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0 0 14px;
+}
+
+.home-fit__form legend,
+.home-fit__form label {
+  display: block;
+  padding: 0;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.home-fit__goals {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.home-fit__form .home-fit__goal {
+  position: relative;
+  margin: 0;
+}
+
+.home-fit__goal input {
+  position: absolute;
+  opacity: 0;
+}
+
+.home-fit__goal span {
+  display: grid;
+  place-items: center;
+  min-height: 48px;
+  padding: 6px 8px;
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.2;
+  text-align: center;
+  cursor: pointer;
+}
+
+.home-fit__goal input:checked + span {
+  background: #fff;
+  border-color: #fff;
+  color: var(--home-navy);
+}
+
+.home-fit__goal input:focus-visible + span {
+  outline: 3px solid var(--home-yellow);
+  outline-offset: 2px;
+}
+
+.home-fit__form input[type='text'] {
+  display: block;
+  width: 100%;
+  height: 48px;
+  margin: 0 0 12px;
+  padding: 0 14px;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  background: #fff;
+  font-family: inherit;
+  font-size: 16px;
+  color: var(--home-navy);
+}
+
+.home-fit__form input[aria-invalid='true'] {
+  border-color: var(--home-yellow);
+}
+
+.home-fit__error {
+  margin: -6px 0 12px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: var(--home-navy);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.home-fit__form .home-btn {
+  width: 100%;
+}
+
+.home-fit__note {
+  display: block;
+  margin-top: 8px;
+  font-size: 13px;
+  text-align: center;
+}
+
+.home-fit__alt {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  align-items: center;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  font-size: 15px;
+}
+
+.home-fit__alt a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.home-fit__alt a:hover {
+  background: #fff;
+  color: var(--home-blue);
+}
+
+/* No chat API on the page (bot not deployed or blocked): Telegram becomes the main button */
+.home-fit__form--noai .home-fit__ai {
+  display: none;
+}
+
+.home-fit__form--noai .home-fit__alt {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.home-fit__form--noai .home-fit__alt a[data-channel='telegram'] {
+  flex: 1 1 100%;
+  justify-content: center;
+  background: var(--home-yellow);
+  color: var(--home-navy);
+}
+
+/* Viber links only open on phones and tablets */
+.home-fit__alt .home-fit__viber {
+  display: none;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .home-fit__alt .home-fit__viber {
+    display: inline-flex;
+  }
+}
+
+.home-fit__sheet {
+  width: 100%;
+  border: 1px solid var(--home-line);
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: var(--home-radius);
+  overflow: hidden;
+  background: #fff;
+  box-shadow: none;
+  table-layout: auto;
+}
+
+.home-fit__sheet th,
+.home-fit__sheet td {
+  padding: 14px 20px;
+  border: 0;
+  border-top: 1px solid var(--home-line);
+  text-align: left;
+  vertical-align: top;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.home-fit__sheet tr:first-child th,
+.home-fit__sheet tr:first-child td {
+  border-top: 0;
+}
+
+.home-fit__sheet th {
+  width: 32%;
+  background: var(--home-blue-tint);
+  color: var(--home-blue-deep);
+  font-family: 'Chakra Petch', 'Tektur', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.home-fit__sheet td b {
+  display: block;
+}
+
+.home-fit__sheet td span {
+  font-size: 14px;
+  color: var(--home-muted);
+}
+
+@media screen and (max-width: 989px) {
+  .home-fit__split {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .home-fit__form {
+    padding: 20px 16px;
+  }
+
+  .home-fit__goal span {
+    font-size: 13px;
+  }
+
+  .home-fit__sheet th,
+  .home-fit__sheet td {
+    display: block;
+    width: 100%;
+    padding: 10px 16px;
+  }
+
+  .home-fit__sheet td {
+    border-top: 0;
+    padding-top: 0;
+  }
+}

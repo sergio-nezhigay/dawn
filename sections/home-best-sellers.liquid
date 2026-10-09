@@ -1,0 +1,66 @@
+{%- assign best = section.settings.collection -%}
+{%- comment -%} Hidden until the owner picks a collection with products {%- endcomment -%}
+{%- if best != blank and best.products_count > 0 -%}
+{{ 'home-sections.css' | asset_url | stylesheet_tag }}
+{{ 'section-home-best-sellers.css' | asset_url | stylesheet_tag }}
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'quick-add.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
+
+<div class="home-section home-section--flush home-best">
+  <div class="page-width">
+    <div class="home-best__head">
+      <h2 class="home-heading">{{ 'sections.home_best_sellers.heading' | t }}</h2>
+      <a class="home-best__all" href="{{ best.url }}">{{ 'sections.home_best_sellers.view_all' | t }}</a>
+    </div>
+    <ul
+      class="home-best__grid grid product-grid contains-card contains-card--product{% if settings.card_style == 'standard' %} contains-card--standard{% endif %} grid--4-col-desktop grid--2-col-tablet-down"
+      role="list"
+    >
+      {%- assign skip_card_product_styles = false -%}
+      {%- for product in best.products limit: 8 -%}
+        <li class="grid__item">
+          {% render 'card-product',
+            card_product: product,
+            media_aspect_ratio: 'square',
+            show_secondary_image: false,
+            skip_styles: skip_card_product_styles,
+            quick_add: 'standard',
+            section_id: section.id,
+            show_stock: true
+          %}
+          {%- assign skip_card_product_styles = true -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+    <div class="home-best__more">
+      <a class="home-btn home-btn--ghost" href="{{ best.url }}">
+        {{- 'sections.home_best_sellers.view_all_mobile' | t -}}
+      </a>
+    </div>
+  </div>
+</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Best sellers",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection",
+      "info": "Shows the first 8 products (4 on phones) with an in-stock line and a Buy button."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Best sellers"
+    }
+  ]
+}
+{% endschema %}

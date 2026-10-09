@@ -1,0 +1,100 @@
+/* RAM picker: memory is 55% of revenue, so it gets the first slot after the hero */
+.home-ram__box {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr);
+  gap: 28px;
+  align-items: center;
+  background: #fff;
+  border: 1px solid var(--home-line);
+  border-radius: var(--home-radius);
+  padding: 22px 24px 22px 40px;
+}
+
+/* The yellow contact strip of a memory module */
+.home-ram__box::before {
+  content: '';
+  position: absolute;
+  left: 14px;
+  top: 18px;
+  bottom: 18px;
+  width: 8px;
+  background: repeating-linear-gradient(var(--home-yellow) 0 6px, transparent 6px 12px);
+  border-radius: 2px;
+}
+
+.home-ram .home-heading {
+  margin-bottom: 6px;
+}
+
+.home-ram__text {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--home-muted);
+}
+
+.home-ram__text a {
+  color: var(--home-blue);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.home-ram__grid {
+  display: grid;
+  gap: 10px;
+}
+
+.home-ram__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.home-ram__row > span {
+  width: 92px;
+  font-size: 13px;
+  color: var(--home-muted);
+}
+
+.home-ram__seg {
+  min-height: 44px;
+  padding: 8px 14px;
+  border: 1.5px solid var(--home-line);
+  border-radius: 8px;
+  background: #fff;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--home-navy);
+  cursor: pointer;
+}
+
+.home-ram__seg[aria-pressed='true'] {
+  border-color: var(--home-navy);
+  background: var(--home-navy);
+  color: #fff;
+}
+
+@media screen and (max-width: 749px) {
+  .home-ram__box {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+    padding: 18px 16px 18px 32px;
+  }
+
+  .home-ram__box::before {
+    left: 12px;
+    width: 6px;
+  }
+
+  .home-ram__row > span {
+    width: 100%;
+  }
+
+  .home-ram .home-btn {
+    width: 100%;
+  }
+}

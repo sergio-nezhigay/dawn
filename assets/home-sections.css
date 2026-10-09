@@ -1,0 +1,71 @@
+/* Shared by the homepage content sections (RAM picker, best sellers, fit check): tokens, heading and buttons from the C2 draft */
+.home-section {
+  --home-navy: #001e3c;
+  --home-blue: #0071dc;
+  --home-blue-deep: #0058ad;
+  --home-blue-tint: #f6f9fd;
+  --home-yellow: #ffc220;
+  --home-yellow-deep: #f2ae00;
+  --home-line: #e5e7eb;
+  --home-muted: #5b6573;
+  --home-radius: 12px;
+  color: var(--home-navy);
+  padding: 40px 0;
+}
+
+.home-section--flush {
+  padding-top: 0;
+}
+
+.home-section .home-heading {
+  font-family: 'Chakra Petch', 'Tektur', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  line-height: 1.1;
+  font-size: clamp(20px, 2.4vw, 26px);
+  color: inherit;
+  margin: 0 0 20px;
+}
+
+.home-section .home-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.home-section .home-btn--buy {
+  background: var(--home-yellow);
+  color: var(--home-navy);
+}
+
+.home-section .home-btn--buy:hover {
+  background: var(--home-yellow-deep);
+}
+
+.home-section .home-btn--ghost {
+  background: transparent;
+  color: var(--home-blue);
+  box-shadow: inset 0 0 0 1.5px var(--home-blue);
+}
+
+@media screen and (max-width: 749px) {
+  .home-section {
+    padding: 28px 0;
+  }
+
+  .home-section--flush {
+    padding-top: 0;
+  }
+}

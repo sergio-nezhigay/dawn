@@ -1,0 +1,174 @@
+{{ 'home-sections.css' | asset_url | stylesheet_tag }}
+{{ 'section-home-fit-check.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'home-fit-check.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign goals = 'memory,charger,adapter' | split: ','
+  assign phone = '(099) 381-5288'
+  assign phone_href = 'tel:+380993815288'
+  assign model_id = 'FitModel-' | append: section.id
+  assign error_id = 'FitError-' | append: section.id
+  assign installed_id = 'FitInstalled-' | append: section.id
+-%}
+
+<div class="home-section home-section--flush home-fit">
+  <div class="page-width home-fit__split">
+    {%- comment -%}
+      Starts without the AI button: home-fit-check.js shows it once the chat exposes window.ShopAIChat.open
+    {%- endcomment -%}
+    <form class="home-fit__form home-fit__form--noai" id="fit" novalidate data-fit>
+      <h2 class="home-heading">{{ 'sections.home_fit_check.heading' | t }}</h2>
+      <p class="home-fit__text">{{ 'sections.home_fit_check.text' | t }}</p>
+
+      <fieldset class="home-fit__fieldset">
+        <legend>{{ 'sections.home_fit_check.goal_legend' | t }}</legend>
+        <div class="home-fit__goals">
+          {%- for goal in goals -%}
+            {%- assign goal_key = 'sections.home_fit_check.goal_' | append: goal -%}
+            <label class="home-fit__goal">
+              <input type="radio" name="goal" value="{{ goal }}" {% if forloop.first %}checked{% endif %}>
+              <span>{{ goal_key | t }}</span>
+            </label>
+          {%- endfor -%}
+        </div>
+      </fieldset>
+
+      <label for="{{ model_id }}" data-fit-label>{{ 'sections.home_fit_check.label_memory_html' | t }}</label>
+      <input
+        type="text"
+        id="{{ model_id }}"
+        name="model"
+        required
+        autocomplete="off"
+        aria-describedby="{{ error_id }}"
+        placeholder="{{ 'sections.home_fit_check.placeholder_memory_html' | t | escape }}"
+      >
+      <p class="home-fit__error" id="{{ error_id }}" role="alert" hidden>{{ 'sections.home_fit_check.error' | t }}</p>
+
+      <div data-fit-installed>
+        <label for="{{ installed_id }}">{{ 'sections.home_fit_check.installed_label' | t }}</label>
+        <input
+          type="text"
+          id="{{ installed_id }}"
+          name="installed"
+          autocomplete="off"
+          placeholder="{{ 'sections.home_fit_check.installed_placeholder' | t }}"
+        >
+      </div>
+
+      <button type="submit" class="home-btn home-btn--buy home-fit__ai">
+        {{- 'sections.home_fit_check.ai_button' | t -}}
+      </button>
+      <small class="home-fit__note home-fit__ai">{{ 'sections.home_fit_check.ai_note' | t }}</small>
+
+      <div class="home-fit__alt">
+        {{ 'sections.home_fit_check.manager' | t }}
+        <a href="https://t.me/NSergiy?text=" target="_blank" rel="noopener" data-channel="telegram">Telegram</a>
+        <a href="viber://chat?number=+380507025777&amp;draft=" class="home-fit__viber" data-channel="viber">Viber</a>
+        <a href="{{ phone_href }}" data-channel="phone">{{ phone }}</a>
+      </div>
+
+      {%- comment -%} Strings for the pre-typed message; the %goal%/%installed% slots are filled in by JS {%- endcomment -%}
+      <script type="application/json" data-fit-strings>
+        {
+          "intro": {{ 'sections.home_fit_check.draft_intro_html' | t | json }},
+          "goal": {{ 'sections.home_fit_check.draft_goal_html' | t: goal: '%goal%' | json }},
+          "installed": {{ 'sections.home_fit_check.draft_installed_html' | t: installed: '%installed%' | json }},
+          "goals": {
+            {%- for goal in goals -%}
+              {%- liquid
+                assign name_key = 'sections.home_fit_check.goal_name_' | append: goal | append: '_html'
+                assign label_key = 'sections.home_fit_check.label_' | append: goal | append: '_html'
+                assign placeholder_key = 'sections.home_fit_check.placeholder_' | append: goal | append: '_html'
+              -%}
+              {{ goal | json }}: {
+                "name": {{ name_key | t | json }},
+                "label": {{ label_key | t | json }},
+                "placeholder": {{ placeholder_key | t | json }}
+              }
+              {%- unless forloop.last %},{% endunless -%}
+            {%- endfor -%}
+          }
+        }
+      </script>
+    </form>
+
+    <div class="home-fit__conditions">
+      <h2 class="home-heading">{{ 'sections.home_fit_check.conditions_heading' | t }}</h2>
+      <table class="home-fit__sheet">
+        <tbody>
+          {%- for block in section.blocks -%}
+            <tr {{ block.shopify_attributes }}>
+              <th scope="row">{{ block.settings.title | escape }}</th>
+              <td>
+                <b>{{ block.settings.value | escape }}</b>
+                <span>{{ block.settings.note | escape }}</span>
+              </td>
+            </tr>
+          {%- else -%}
+            {%- comment -%} No rows added in the editor: the default terms from the language files {%- endcomment -%}
+            {%- assign rows = 'shipping,payment,warranty,help' | split: ',' -%}
+            {%- for row in rows -%}
+              {%- assign row_key = 'sections.home_fit_check.' | append: row -%}
+              <tr>
+                <th scope="row">{{ row_key | append: '_title' | t }}</th>
+                <td>
+                  <b>
+                    {%- if row == 'help' -%}
+                      {{ phone }}
+                    {%- else -%}
+                      {{ row_key | append: '_value' | t }}
+                    {%- endif -%}
+                  </b>
+                  <span>{{ row_key | append: '_note' | t }}</span>
+                </td>
+              </tr>
+            {%- endfor -%}
+          {%- endfor -%}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Fit check and terms",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "The form copy comes from the theme language files. Without rows, the terms table shows the default dispatch, payment, warranty and help rows."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Terms row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value"
+        },
+        {
+          "type": "text",
+          "id": "note",
+          "label": "Note"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Fit check and terms"
+    }
+  ]
+}
+{% endschema %}
