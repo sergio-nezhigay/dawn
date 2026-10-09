@@ -528,6 +528,18 @@
       "show_html": "Показать SODIMM {{ type }} {{ size }} ГБ ({{ count }})",
       "show_all_html": "Показать всю память"
     },
+    "home_deals": {
+      "heading": "Выгодно сейчас",
+      "view_all": "Все товары",
+      "tab_hotline": "Память: лучшая цена на Hotline",
+      "tab_500": "До 500 ₴",
+      "note_hotline": "Цена не выше, чем у других продавцов на Hotline.",
+      "note_checked": "Проверено {{ date }}",
+      "note_500": "Недорогие товары, которые покупают чаще всего за последние 90 дней.",
+      "badge": "Дешевле всех на Hotline",
+      "previous": "Назад",
+      "next": "Вперёд"
+    },
     "home_best_sellers": {
       "heading": "Чаще всего покупают",
       "view_all": "Смотреть все",

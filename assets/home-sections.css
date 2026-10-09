@@ -61,6 +61,10 @@
 }
 
 @media screen and (max-width: 749px) {
+  .home-section__all {
+    display: none;
+  }
+
   .home-section {
     padding: 28px 0;
   }
@@ -68,6 +72,30 @@
   .home-section--flush {
     padding-top: 0;
   }
+}
+
+/* Section head: heading on the left, "view all" link on the right (hidden on phones) */
+.home-section__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.home-section__head .home-heading {
+  margin: 0;
+}
+
+.home-section__all {
+  color: var(--home-blue);
+  font-weight: 600;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.home-section__all:hover {
+  text-decoration: underline;
 }
 
 /* Homepage product cards (snippets/home-card.liquid): price + Buy in one row, in-stock line under it */
@@ -92,9 +120,23 @@
 }
 
 .home-card__image {
+  position: relative;
   display: grid;
   place-items: center;
   aspect-ratio: 1;
+}
+
+.home-card__badge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: var(--home-navy);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.3;
 }
 
 .home-card__image img {

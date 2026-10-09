@@ -1,36 +1,9 @@
 /* Best sellers: 8 cards on desktop, 4 on phones (keeps the fit check close) */
-.home-best__head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 20px;
-}
-
-.home-best__head .home-heading {
-  margin: 0;
-}
-
-.home-best__all {
-  color: var(--home-blue);
-  font-weight: 600;
-  white-space: nowrap;
-  text-decoration: none;
-}
-
-.home-best__all:hover {
-  text-decoration: underline;
-}
-
 .home-best__more {
   display: none;
 }
 
 @media screen and (max-width: 749px) {
-  .home-best__all {
-    display: none;
-  }
-
   .home-best__grid > li:nth-child(n + 5) {
     display: none;
   }
