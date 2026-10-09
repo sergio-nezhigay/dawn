@@ -11,7 +11,8 @@
   color: #fff;
   border-radius: var(--home-radius);
   padding: 24px;
-  scroll-margin-top: 20px;
+  /* Clears the sticky header (its height is set by sections/header.liquid) when the hero links jump to #fit */
+  scroll-margin-top: calc(var(--header-height, 60px) + 20px);
 }
 
 .home-fit__text {

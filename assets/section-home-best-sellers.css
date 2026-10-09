@@ -45,6 +45,17 @@
   min-height: 44px;
 }
 
+/* The card's gradient transform traps .quick-add under the full-card product link, so lift the card above the link
+   but let taps fall through to it everywhere except the Buy button */
+.home-best .card {
+  z-index: 3;
+  pointer-events: none;
+}
+
+.home-best .quick-add {
+  pointer-events: auto;
+}
+
 .home-best__more {
   display: none;
 }
