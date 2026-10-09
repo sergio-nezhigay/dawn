@@ -342,6 +342,27 @@
     }
   },
   "sections": {
+    "home_board": {
+      "heading": "Детали, которых не хватает вашей технике",
+      "lead": "Память для ноутбуков, переходники и конвертеры на любой разъём. Назовите модель устройства, и мы подскажем, что подойдёт.",
+      "search_placeholder": "Модель, название или код товара",
+      "fit_button": "Проверить совместимость",
+      "catalog_button": "Весь каталог",
+      "chips_label": "Часто ищут:",
+      "chips": "SSD|USB hub|DDR3L 8 ГБ|Type-C|Кабель COM|USB-LAN|Блок питания|RS232",
+      "promise_dispatch": "Отправка 1–2 рабочих дня",
+      "promise_payment": "Оплата при получении",
+      "promise_exchange": "Обмен 14 дней",
+      "reviews_count": {
+        "one": "{{ number }} отзыв",
+        "few": "{{ number }} отзыва",
+        "many": "{{ number }} отзывов",
+        "other": "{{ number }} отзыва"
+      },
+      "price_from": "от {{ price }} ₴",
+      "chip_title_html": "Проверим<br>совместимость",
+      "chip_text": "по модели устройства"
+    },
     "header": {
       "announcement": "Объявление",
       "menu": "Меню",

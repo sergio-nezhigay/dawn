@@ -1,0 +1,453 @@
+/* Board hero: the logo's chip becomes a circuit board of categories; the chip itself is the fit-check entry */
+.home-board {
+  --home-board-navy: #001e3c;
+  --home-board-yellow: #ffc220;
+  --home-board-trace: #2c5d8f;
+  background: var(--home-board-navy);
+  background-image: linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
+  color: #fff;
+  padding: 36px 0 44px;
+  overflow: hidden;
+}
+
+.home-board__wrap {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+  gap: 40px;
+  align-items: center;
+}
+
+.home-board__heading {
+  font-family: 'Chakra Petch', 'Tektur', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: clamp(28px, 3.4vw, 44px);
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+  color: #fff;
+  margin: 0 0 14px;
+}
+
+.home-board__lead {
+  font-size: 18px;
+  line-height: 1.5;
+  color: #c9d6e4;
+  margin: 0 0 22px;
+  max-width: 30em;
+}
+
+.home-board__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.home-board__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 22px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1;
+  color: #fff;
+  text-decoration: none;
+}
+
+.home-board__btn--fit {
+  background: var(--home-board-yellow);
+  color: var(--home-board-navy);
+}
+
+.home-board__btn--fit:hover {
+  background: #f2ae00;
+}
+
+.home-board__btn--ghost {
+  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.6);
+}
+
+.home-board__search {
+  display: none;
+  background: #fff;
+  border-radius: 10px;
+  height: 52px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.home-board__search input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  padding: 0 14px;
+  font: inherit;
+  font-size: 16px;
+  color: var(--home-board-navy);
+  background: transparent;
+}
+
+.home-board__search button {
+  margin: 4px;
+  min-height: 44px;
+  width: 46px;
+  border: 0;
+  border-radius: 7px;
+  background: var(--home-board-yellow);
+  color: var(--home-board-navy);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.home-board__search svg {
+  width: 20px;
+  height: 20px;
+}
+
+.home-board__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+  align-items: center;
+  font-size: 14px;
+}
+
+.home-board__chips > span {
+  color: #c9d6e4;
+}
+
+.home-board__chips a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 22px;
+  padding: 6px 14px;
+  white-space: nowrap;
+  color: #fff;
+  text-decoration: none;
+}
+
+.home-board__chips a:hover {
+  background: #fff;
+  color: var(--home-board-navy);
+}
+
+.home-board__promises {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.home-board__promises li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.home-board__promises li::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--home-board-yellow);
+  border-radius: 2px;
+}
+
+.home-board__promises .home-board__rating::before {
+  content: '\2605';
+  width: auto;
+  height: auto;
+  border: 0;
+  color: var(--home-board-yellow);
+  font-size: 16px;
+  line-height: 1;
+}
+
+/* Taller hit area (44px+) without growing the promises row */
+.home-board__rating a {
+  display: inline-block;
+  padding: 11px 0;
+  margin: -11px 0;
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.home-board__board {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(3, 1fr);
+  gap: 18px;
+  aspect-ratio: 1.3;
+}
+
+.home-board__traces {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.home-board__traces g {
+  color: var(--home-board-trace);
+  transition: color 0.15s;
+}
+
+.home-board__traces path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+.home-board__traces circle {
+  fill: currentColor;
+}
+
+.home-board__traces .is-on {
+  color: var(--home-board-yellow);
+}
+
+.home-board__traces .is-on path {
+  stroke-width: 3;
+}
+
+.home-board__pad {
+  position: relative;
+  z-index: 1;
+  background: #fff;
+  color: var(--home-board-navy);
+  border-radius: 10px;
+  padding: 10px 8px 8px;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto auto;
+  gap: 2px;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: 0 0 0 3px #0b3a68;
+  transition: box-shadow 0.15s;
+}
+
+.home-board__pad img {
+  width: 100%;
+  height: 100%;
+  max-height: 96px;
+  min-height: 0;
+  object-fit: contain;
+}
+
+.home-board__pad b {
+  font-size: 13px;
+  line-height: 1.2;
+  margin-top: 4px;
+}
+
+.home-board__pad small {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #5b6573;
+}
+
+.home-board__pad:hover,
+.home-board__pad:focus-visible {
+  box-shadow: 0 0 0 3px var(--home-board-yellow);
+  outline: none;
+}
+
+.home-board__chip {
+  position: relative;
+  text-decoration: none;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+}
+
+.home-board__chip-body {
+  width: 84%;
+  aspect-ratio: 1;
+  background: var(--home-board-yellow);
+  color: var(--home-board-navy);
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 6px;
+  text-align: center;
+  padding: 8px;
+  box-shadow: 0 0 0 6px var(--home-board-navy), 0 0 0 8px var(--home-board-yellow);
+  transition: transform 0.15s;
+}
+
+.home-board__chip-body b {
+  font-family: 'Chakra Petch', 'Tektur', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 14px;
+  line-height: 1.15;
+}
+
+.home-board__chip-body small {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.home-board__chip:hover .home-board__chip-body,
+.home-board__chip:focus-visible .home-board__chip-body {
+  transform: scale(1.04);
+}
+
+.home-board__chip:focus-visible {
+  outline: none;
+}
+
+.home-board__chip:focus-visible .home-board__chip-body {
+  box-shadow: 0 0 0 6px var(--home-board-navy), 0 0 0 9px #fff;
+}
+
+@media screen and (max-width: 989px) {
+  .home-board__wrap {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .home-board__board {
+    max-width: 640px;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .home-board {
+    padding: 20px 0 24px;
+  }
+
+  .home-board__heading {
+    font-size: 26px;
+    margin-bottom: 14px;
+  }
+
+  .home-board__lead,
+  .home-board__ctas {
+    display: none;
+  }
+
+  .home-board__search {
+    display: flex;
+  }
+
+  .home-board__chips {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin: 0 -1.5rem;
+    padding: 0 1.5rem;
+    scrollbar-width: none;
+  }
+
+  .home-board__chips > span {
+    display: none;
+  }
+
+  .home-board__promises {
+    margin-top: 12px;
+    gap: 6px 16px;
+    font-size: 13px;
+  }
+
+  .home-board__board {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: none;
+    aspect-ratio: auto;
+    gap: 10px;
+  }
+
+  .home-board__traces {
+    display: none;
+  }
+
+  /* Pads keep the board language on phones: a yellow contact strip + pin */
+  .home-board__pad {
+    grid-template-columns: 44px minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    column-gap: 10px;
+    text-align: left;
+    align-items: center;
+    padding: 8px 8px 8px 10px;
+    min-height: 64px;
+    box-shadow: inset 3px 0 0 var(--home-board-yellow);
+  }
+
+  .home-board__pad img {
+    grid-row: 1 / 3;
+    max-height: 44px;
+  }
+
+  .home-board__pad b {
+    font-size: 14px;
+    margin: 0;
+    align-self: end;
+  }
+
+  .home-board__pad small {
+    align-self: start;
+  }
+
+  .home-board__pad::before {
+    content: '';
+    position: absolute;
+    left: -6px;
+    top: 50%;
+    width: 6px;
+    height: 2px;
+    background: var(--home-board-yellow);
+  }
+
+  /* The chip spans the board as a full-width "fit check" contact */
+  .home-board__chip {
+    grid-column: 1 / -1;
+  }
+
+  .home-board__chip-body {
+    width: 100%;
+    aspect-ratio: auto;
+    grid-template-columns: auto 1fr auto;
+    text-align: left;
+    padding: 12px 14px;
+    gap: 12px;
+    box-shadow: 0 0 0 3px var(--home-board-navy), 0 0 0 5px var(--home-board-yellow);
+  }
+
+  .home-board__chip-body::before {
+    content: '';
+    width: 26px;
+    height: 26px;
+    border: 2.5px solid var(--home-board-navy);
+    border-radius: 5px;
+    box-shadow: inset 0 0 0 4px var(--home-board-yellow), inset 0 0 0 9px var(--home-board-navy);
+  }
+
+  .home-board__chip-body::after {
+    content: '\2192';
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  .home-board__chip-body b {
+    font-size: 15px;
+  }
+
+  .home-board__chip-body small {
+    font-weight: 400;
+  }
+}
