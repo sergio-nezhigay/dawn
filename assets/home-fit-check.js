@@ -61,7 +61,6 @@ const sendFit = (form, channel) => {
     showFitError(form, false);
   }
 
-  (window.dataLayer = window.dataLayer || []).push({ event: 'fit_check_submit', goal: fitGoal(form), channel });
   if (channel === 'ai') window.ShopAIChat.open(fitDraft(form));
   return true;
 };
