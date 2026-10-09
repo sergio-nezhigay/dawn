@@ -27,7 +27,15 @@
   </a>
   <a class="home-card__title" href="{{ product.url }}">{{ product.title | escape }}</a>
   <div class="home-card__row">
-    <span class="home-card__price">{{ product.price | money }}</span>
+    {%- comment -%} The shop's money format has no symbol; append it like snippets/price.liquid {%- endcomment -%}
+    {%- capture price -%}{{ product.price | money_without_currency }}&nbsp;{{ cart.currency.symbol }}{%- endcapture -%}
+    <span class="home-card__price">
+      {%- if product.price_varies -%}
+        {{ 'products.product.price.from_price_html' | t: price: price }}
+      {%- else -%}
+        {{ price }}
+      {%- endif -%}
+    </span>
     {%- if quick_buy -%}
       <product-form data-section-id="{{ section_id }}" data-hide-errors="true">
         {%- form 'product', product, id: form_id, novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
