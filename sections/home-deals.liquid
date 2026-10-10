@@ -22,6 +22,7 @@
 {{ 'home-sections.css' | asset_url | stylesheet_tag }}
 {{ 'section-home-deals.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'home-rail.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'home-deals.js' | asset_url }}" defer="defer"></script>
 
 <home-deals class="home-section home-section--flush home-deals">
@@ -55,8 +56,8 @@
         </button>
       {%- endfor -%}
     </div>
-    <div class="home-deals__box">
-      <button type="button" class="home-deals__arrow home-deals__arrow--prev" aria-label="{{ 'sections.home_deals.previous' | t }}" disabled>&lsaquo;</button>
+    <div class="home-rail__box">
+      <button type="button" class="home-rail__arrow home-rail__arrow--prev" aria-label="{{ 'sections.home_deals.previous' | t }}" disabled>&lsaquo;</button>
       {%- for tab in tabs -%}
         {%- if tab == 'hotline' -%}
           {%- assign tab_collection = section.settings.collection_hotline -%}
@@ -64,7 +65,7 @@
           {%- assign tab_collection = section.settings.collection_500 -%}
         {%- endif -%}
         <ul
-          class="home-cards home-deals__rail"
+          class="home-cards home-rail__list"
           role="tabpanel"
           id="HomeDealsPanel-{{ section.id }}-{{ tab }}"
           aria-labelledby="HomeDealsTab-{{ section.id }}-{{ tab }}"
@@ -88,7 +89,7 @@
           {%- endfor -%}
         </ul>
       {%- endfor -%}
-      <button type="button" class="home-deals__arrow home-deals__arrow--next" aria-label="{{ 'sections.home_deals.next' | t }}">&rsaquo;</button>
+      <button type="button" class="home-rail__arrow home-rail__arrow--next" aria-label="{{ 'sections.home_deals.next' | t }}">&rsaquo;</button>
     </div>
     <p class="home-deals__note">
       {%- for tab in tabs -%}

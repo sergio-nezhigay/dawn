@@ -1,4 +1,4 @@
-/* Deals: two tabs, a card rail with arrows on desktop and a peeking card on phones */
+/* Deals: two tabs and a note; the card rail itself is in home-sections.css */
 .home-deals__tabs {
   display: flex;
   flex-wrap: wrap;
@@ -25,83 +25,8 @@
   color: #fff;
 }
 
-.home-deals__box {
-  position: relative;
-}
-
-.home-deals__rail {
-  grid-auto-flow: column;
-  grid-template-columns: none;
-  grid-auto-columns: calc((100% - 48px) / 4);
-  align-items: start;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-}
-
-.home-deals__rail[hidden] {
-  display: none;
-}
-
-.home-deals__rail::-webkit-scrollbar {
-  display: none;
-}
-
-.home-deals__rail > li {
-  scroll-snap-align: start;
-}
-
-.home-deals__arrow {
-  position: absolute;
-  top: 34%;
-  z-index: 2;
-  width: 44px;
-  height: 44px;
-  border: 1px solid var(--home-line);
-  border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(0, 30, 60, 0.15);
-  color: var(--home-navy);
-  font-size: 20px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.home-deals__arrow--prev {
-  left: -18px;
-}
-
-.home-deals__arrow--next {
-  right: -18px;
-}
-
-.home-deals__arrow[disabled] {
-  opacity: 0;
-  pointer-events: none;
-}
-
 .home-deals__note {
   margin: 10px 0 0;
   font-size: 13px;
   color: var(--home-muted);
-}
-
-@media screen and (max-width: 989px) {
-  .home-deals__rail {
-    grid-auto-columns: calc((100% - 32px) / 3);
-  }
-}
-
-@media screen and (max-width: 749px) {
-  .home-deals__arrow {
-    display: none;
-  }
-
-  .home-deals__rail {
-    grid-auto-columns: 46%;
-    gap: 10px;
-    margin: 0 calc(-1 * 1.5rem);
-    padding: 0 1.5rem;
-    scroll-padding: 0 1.5rem;
-  }
 }

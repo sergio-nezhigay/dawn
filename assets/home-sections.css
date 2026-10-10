@@ -1,4 +1,4 @@
-/* Shared by the homepage content sections (RAM picker, best sellers, fit check): tokens, heading and buttons from the C2 draft */
+/* Shared by the homepage sections (RAM picker, best sellers, fit check, deals, reviews): tokens, heading, buttons, cards and the card rail from the C2 draft */
 .home-section {
   --home-navy: #001e3c;
   --home-blue: #0071dc;
@@ -15,6 +15,12 @@
 
 .home-section--flush {
   padding-top: 0;
+}
+
+/* Custom elements are inline by default, which would drop the section padding */
+home-rail.home-section,
+home-deals.home-section {
+  display: block;
 }
 
 .home-section .home-heading {
@@ -234,5 +240,81 @@
 
   .home-section .home-card__buy {
     width: 100%;
+  }
+}
+
+/* Card rail (deals, reviews): one row of cards with arrows on desktop and a peeking card on phones */
+.home-rail__box {
+  position: relative;
+}
+
+.home-rail__list {
+  grid-auto-flow: column;
+  grid-template-columns: none;
+  grid-auto-columns: calc((100% - 48px) / 4);
+  align-items: start;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.home-rail__list[hidden] {
+  display: none;
+}
+
+.home-rail__list::-webkit-scrollbar {
+  display: none;
+}
+
+.home-rail__list > li {
+  scroll-snap-align: start;
+}
+
+.home-rail__arrow {
+  position: absolute;
+  top: 34%;
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--home-line);
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 30, 60, 0.15);
+  color: var(--home-navy);
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.home-rail__arrow--prev {
+  left: -18px;
+}
+
+.home-rail__arrow--next {
+  right: -18px;
+}
+
+.home-rail__arrow[disabled] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media screen and (max-width: 989px) {
+  .home-rail__list {
+    grid-auto-columns: calc((100% - 32px) / 3);
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .home-rail__arrow {
+    display: none;
+  }
+
+  .home-rail__list {
+    grid-auto-columns: 46%;
+    gap: 10px;
+    margin: 0 calc(-1 * 1.5rem);
+    padding: 0 1.5rem;
+    scroll-padding: 0 1.5rem;
   }
 }

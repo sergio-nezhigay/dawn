@@ -1,0 +1,94 @@
+{%- liquid
+  assign grid = shop.metafields.judgeme.reviews_grid.value.product_reviews.reviews | sort: 'created_at' | reverse
+  assign total = shop.metafields.judgeme.all_reviews_count.value | plus: 0
+  assign rating = shop.metafields.judgeme.all_reviews_rating.value | times: 1.0 | round: 1
+
+  comment
+    Rating with the locale decimal mark; the count is spaced by thousands (1 732)
+  endcomment
+  assign rating_text = rating | append: ''
+  if request.locale.iso_code != 'en'
+    assign rating_text = rating_text | replace: '.', ','
+  endif
+  assign count_text = 'products.product.review_count' | t: count: total
+  if total >= 1000
+    assign rest = total | modulo: 1000 | plus: 1000 | append: '' | slice: 1, 3
+    assign spaced = total | divided_by: 1000 | append: '&nbsp;' | append: rest
+    assign count_text = count_text | replace: total, spaced
+  endif
+-%}
+{%- capture cards -%}
+  {%- assign shown = 0 -%}
+  {%- comment -%} Newest 4-5 star reviews with at least 20 characters of text, 8 at most {%- endcomment -%}
+  {%- for review in grid -%}
+    {%- assign body = review.body | strip -%}
+    {%- if review.rating >= 4 and body.size >= 20 -%}
+      <li>
+        <article class="home-review">
+          <span class="home-review__stars" role="img" aria-label="{{ 'sections.home_reviews.stars_label' | t: rating: review.rating }}">
+            {%- for i in (1..5) -%}
+              <span{% if i > review.rating %} class="home-review__star--off"{% endif %}>&#9733;</span>
+            {%- endfor -%}
+          </span>
+          <p class="home-review__body">{{ body | escape }}</p>
+          {%- if review.product_url != blank and review.product_title != blank -%}
+            <a class="home-review__product" href="{{ review.product_url }}">{{ review.product_title | escape }}</a>
+          {%- endif -%}
+          <footer class="home-review__by">
+            <b>{{ review.reviewer_name | escape }}</b> &middot; {{ review.created_at | date: '%d.%m.%Y' }}
+          </footer>
+        </article>
+      </li>
+      {%- assign shown = shown | plus: 1 -%}
+      {%- if shown == 8 -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+{%- comment -%} Renders nothing without Judge.me data {%- endcomment -%}
+{%- if shown > 0 and total > 0 -%}
+{{ 'home-sections.css' | asset_url | stylesheet_tag }}
+{{ 'section-home-reviews.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'home-rail.js' | asset_url }}" defer="defer"></script>
+
+<home-rail id="reviews" class="home-section home-section--flush home-reviews">
+  <div class="page-width">
+    <div class="home-section__head">
+      <h2 class="home-heading">{{ 'sections.home_reviews.heading' | t }}</h2>
+    </div>
+    <p class="home-reviews__summary">
+      <b>{{ rating_text }}</b>
+      <span class="home-review__stars" role="img" aria-label="{{ 'sections.home_reviews.stars_label' | t: rating: rating_text }}">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+      <span>{{ 'sections.home_reviews.out_of' | t }} &middot; {{ count_text }}</span>
+    </p>
+    <div class="home-rail__box">
+      <button type="button" class="home-rail__arrow home-rail__arrow--prev" aria-label="{{ 'sections.home_reviews.previous' | t }}" disabled>&lsaquo;</button>
+      <ul class="home-cards home-rail__list home-reviews__list" role="list">
+        {{- cards -}}
+      </ul>
+      <button type="button" class="home-rail__arrow home-rail__arrow--next" aria-label="{{ 'sections.home_reviews.next' | t }}">&rsaquo;</button>
+    </div>
+    <p class="home-reviews__note">{{ 'sections.home_reviews.note' | t }}</p>
+  </div>
+</home-rail>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Reviews",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Shows the newest 4-5 star Judge.me reviews with text. Data comes from the Judge.me shop metafields, no Judge.me script runs on the homepage. The section is hidden when there is no data."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Reviews"
+    }
+  ]
+}
+{% endschema %}
