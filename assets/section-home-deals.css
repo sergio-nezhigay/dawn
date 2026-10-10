@@ -52,10 +52,6 @@
   scroll-snap-align: start;
 }
 
-.home-deals .home-card {
-  position: relative;
-}
-
 .home-deals__arrow {
   position: absolute;
   top: 34%;
