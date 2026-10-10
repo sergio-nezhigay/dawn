@@ -58,6 +58,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
   min-height: 48px;
   padding: 0 22px;
   border-radius: 8px;
@@ -94,11 +95,13 @@
   flex: 1;
   min-width: 0;
   border: 0;
+  border-radius: 0;
   padding: 0 14px;
   font: inherit;
   font-size: 16px;
+  line-height: normal;
   color: var(--home-board-navy);
-  background: transparent;
+  background: #fff;
 }
 
 .home-board__search button {
@@ -168,6 +171,8 @@
 
 .home-board__promises li::before {
   content: '';
+  /* Border outside the 10px box, as in the draft (14px total) */
+  box-sizing: content-box;
   width: 10px;
   height: 10px;
   border: 2px solid var(--home-board-yellow);
