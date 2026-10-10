@@ -16,6 +16,7 @@
   font-family: inherit;
   font-size: 15px;
   font-weight: 600;
+  line-height: normal;
   cursor: pointer;
 }
 
@@ -51,6 +52,10 @@
   scroll-snap-align: start;
 }
 
+.home-deals .home-card {
+  position: relative;
+}
+
 .home-deals__arrow {
   position: absolute;
   top: 34%;
@@ -62,8 +67,10 @@
   background: #fff;
   box-shadow: 0 2px 8px rgba(0, 30, 60, 0.15);
   color: var(--home-navy);
+  font-family: inherit;
   font-size: 20px;
   font-weight: 700;
+  line-height: normal;
   cursor: pointer;
 }
 
@@ -84,12 +91,6 @@
   margin: 10px 0 0;
   font-size: 13px;
   color: var(--home-muted);
-}
-
-@media screen and (max-width: 989px) {
-  .home-deals__rail {
-    grid-auto-columns: calc((100% - 32px) / 3);
-  }
 }
 
 @media screen and (max-width: 749px) {
