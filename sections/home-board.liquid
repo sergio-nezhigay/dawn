@@ -1,0 +1,237 @@
+{{ 'section-home-board.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'home-board.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  # Trace from the chip to each cell of the 3x3 board (viewBox 300x300), in pad order; the centre cell is the chip.
+  # Each path starts at its pin on the chip edge.
+  assign traces = 'M118 118 L118 50 L50 50|M150 118 L150 50|M182 118 L182 50 L250 50|M118 150 L50 150|M182 150 L250 150|M118 182 L118 250 L50 250|M150 182 L150 250|M182 182 L182 250 L250 250' | split: '|'
+
+  # Copy lives in locales so RU/EN translate; settings override it. `t` output is already escaped, so escape settings here
+  assign heading = section.settings.heading | escape
+  if heading == blank
+    assign heading = 'sections.home_board.heading' | t
+  endif
+  assign lead = section.settings.lead | escape
+  if lead == blank
+    assign lead = 'sections.home_board.lead' | t
+  endif
+  assign search_placeholder = 'sections.home_board.search_placeholder' | t
+  if section.settings.chips != blank
+    assign chips = section.settings.chips | escape | newline_to_br | split: '<br />'
+  else
+    assign chips = 'sections.home_board.chips' | t | split: '|'
+  endif
+
+  assign rating = shop.metafields.judgeme.all_reviews_rating.value | plus: 0
+  assign reviews_count = shop.metafields.judgeme.all_reviews_count.value | plus: 0
+  assign rating_text = rating | round: 1 | append: ''
+  if request.locale.iso_code != 'en'
+    assign rating_text = rating_text | replace: '.', ','
+  endif
+  # Liquid has no number formatting: 1732 -> "1 732" (counts below a million)
+  if reviews_count >= 1000
+    assign thousands = reviews_count | divided_by: 1000
+    assign rest = reviews_count | modulo: 1000 | plus: 1000 | append: '' | slice: 1, 3
+    assign reviews_number = thousands | append: '&nbsp;' | append: rest
+  else
+    assign reviews_number = reviews_count
+  endif
+-%}
+
+<div class="home-board">
+  <div class="home-board__wrap">
+    <div class="home-board__intro">
+      <h1 class="home-board__heading">{{ heading }}</h1>
+      <p class="home-board__lead">{{ lead }}</p>
+
+      <form class="home-board__search" action="{{ routes.search_url }}" method="get" role="search">
+        <input
+          type="search"
+          name="q"
+          placeholder="{{ search_placeholder }}"
+          aria-label="{{ search_placeholder }}"
+        >
+        <input type="hidden" name="options[prefix]" value="last">
+        <button type="submit" aria-label="{{ 'general.search.search' | t }}">
+          {{- 'icon-search.svg' | inline_asset_content -}}
+        </button>
+      </form>
+
+      <div class="home-board__ctas">
+        <a class="home-board__btn home-board__btn--fit" href="#fit">{{ 'sections.home_board.fit_button' | t }}</a>
+        <a
+          class="home-board__btn home-board__btn--ghost"
+          href="{{ section.settings.catalog_url | default: routes.all_products_collection_url }}"
+        >
+          {{- 'sections.home_board.catalog_button' | t -}}
+        </a>
+      </div>
+
+      <div class="home-board__chips">
+        <span>{{ 'sections.home_board.chips_label' | t }}</span>
+        {%- for chip in chips -%}
+          {%- assign term = chip | strip -%}
+          {%- if term != blank -%}
+            <a href="{{ routes.search_url }}?q={{ term | url_encode }}&options%5Bprefix%5D=last">{{ term }}</a>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      <ul class="home-board__promises">
+        <li>{{ 'sections.home_board.promise_dispatch' | t }}</li>
+        <li>{{ 'sections.home_board.promise_payment' | t }}</li>
+        <li>{{ 'sections.home_board.promise_exchange' | t }}</li>
+        {%- if rating > 0 and reviews_count > 0 -%}
+          <li class="home-board__rating">
+            <a href="#reviews">
+              {{- rating_text }} &middot; {{ 'sections.home_board.reviews_count' | t: count: reviews_count, number: reviews_number -}}
+            </a>
+          </li>
+        {%- endif -%}
+      </ul>
+    </div>
+
+    <div class="home-board__board">
+      <svg class="home-board__traces" viewBox="0 0 300 300" preserveAspectRatio="none" aria-hidden="true">
+        {%- for block in section.blocks -%}
+          {%- assign pin = traces[forloop.index0] | remove_first: 'M' | split: ' ' -%}
+          <g data-index="{{ forloop.index0 }}">
+            <path d="{{ traces[forloop.index0] }}" vector-effect="non-scaling-stroke"/>
+            <circle cx="{{ pin[0] }}" cy="{{ pin[1] }}" r="3"/>
+          </g>
+        {%- endfor -%}
+      </svg>
+
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign pad_collection = block.settings.collection
+          assign pad_image = block.settings.image | default: pad_collection.products.first.featured_media
+          assign price = block.settings.price
+          if price == blank
+            # Lowest in-stock price among the first 50 products: an exact minimum over 400+ is too slow
+            assign min_price = nil
+            for product in pad_collection.products limit: 50
+              if product.available
+                if min_price == nil or product.price < min_price
+                  assign min_price = product.price
+                endif
+              endif
+            endfor
+            assign price = min_price | money_without_currency
+          endif
+          if forloop.index <= 4
+            assign loading = 'eager'
+          else
+            assign loading = 'lazy'
+          endif
+        -%}
+        <a
+          class="home-board__pad"
+          href="{{ pad_collection.url | default: '#' }}"
+          data-index="{{ forloop.index0 }}"
+          {{ block.shopify_attributes }}
+        >
+          {%- if pad_image != blank -%}
+            {{ pad_image | image_url: width: 200 | image_tag: width: 96, height: 96, alt: '', loading: loading }}
+          {%- endif -%}
+          <b>{{ block.settings.label | default: pad_collection.title | escape }}</b>
+          {%- if price != blank -%}
+            <small>{{ 'sections.home_board.price_from' | t: price: price }}</small>
+          {%- endif -%}
+        </a>
+        {%- if forloop.index == 4 or forloop.length < 4 and forloop.last -%}
+          <a class="home-board__chip" href="#fit">
+            <span class="home-board__chip-body">
+              <span>
+                <b>{{ 'sections.home_board.chip_title_html' | t }}</b>
+                <small>{{ 'sections.home_board.chip_text' | t }}</small>
+              </span>
+            </span>
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Board hero",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Empty fields use the default text from the theme language files."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "lead",
+      "label": "Lead"
+    },
+    {
+      "type": "url",
+      "id": "catalog_url",
+      "label": "Catalog button link"
+    },
+    {
+      "type": "textarea",
+      "id": "chips",
+      "label": "Popular searches",
+      "info": "One search term per line."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "pad",
+      "name": "Category pad",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "info": "Defaults to the collection title."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "Defaults to the first product image of the collection."
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Price from",
+          "info": "Number only, e.g. 249. Empty: the lowest in-stock price among the first 50 products."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Board hero",
+      "blocks": [
+        { "type": "pad" },
+        { "type": "pad" },
+        { "type": "pad" },
+        { "type": "pad" },
+        { "type": "pad" },
+        { "type": "pad" },
+        { "type": "pad" },
+        { "type": "pad" }
+      ]
+    }
+  ]
+}
+{% endschema %}

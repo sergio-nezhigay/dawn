@@ -342,6 +342,27 @@
     }
   },
   "sections": {
+    "home_board": {
+      "heading": "Деталі, яких бракує вашій техніці",
+      "lead": "Пам'ять для ноутбуків, перехідники й конвертери на будь-який роз'єм. Скажіть модель пристрою, і ми підкажемо, що підійде.",
+      "search_placeholder": "Модель, назва або код товару",
+      "fit_button": "Перевірити сумісність",
+      "catalog_button": "Увесь каталог",
+      "chips_label": "Часто шукають:",
+      "chips": "SSD|USB hub|DDR3L 8 ГБ|Type-C|Кабель COM|USB-LAN|Блок живлення|RS232",
+      "promise_dispatch": "Відправка 1–2 робочі дні",
+      "promise_payment": "Оплата при отриманні",
+      "promise_exchange": "Обмін 14 днів",
+      "reviews_count": {
+        "one": "{{ number }} відгук",
+        "few": "{{ number }} відгуки",
+        "many": "{{ number }} відгуків",
+        "other": "{{ number }} відгуку"
+      },
+      "price_from": "від {{ price }} ₴",
+      "chip_title_html": "Перевіримо<br>сумісність",
+      "chip_text": "за моделлю пристрою"
+    },
     "header": {
       "announcement": "Оголошення",
       "menu": "Меню",
