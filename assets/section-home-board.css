@@ -10,17 +10,27 @@
   color: #fff;
   padding: 36px 0 44px;
   overflow: hidden;
+  /* Draft type, not the theme body font */
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: normal;
 }
 
+/* Draft column: 1200px with 20px gutters (15px on phones, like the theme) */
 .home-board__wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
   gap: 40px;
   align-items: center;
 }
 
-.home-board__heading {
-  font-family: 'Chakra Petch', 'Tektur', sans-serif;
+/* Two classes: beats Dawn's `:lang(en) h1` weight */
+.home-board .home-board__heading {
+  font-family: 'Chakra Petch', 'Tektur', system-ui, sans-serif;
   font-weight: 600;
   text-transform: uppercase;
   font-size: clamp(28px, 3.4vw, 44px);
@@ -291,7 +301,7 @@
 }
 
 .home-board__chip-body b {
-  font-family: 'Chakra Petch', 'Tektur', sans-serif;
+  font-family: 'Chakra Petch', 'Tektur', system-ui, sans-serif;
   font-weight: 600;
   text-transform: uppercase;
   font-size: 14px;
@@ -333,7 +343,11 @@
     padding: 20px 0 24px;
   }
 
-  .home-board__heading {
+  .home-board__wrap {
+    padding: 0 15px;
+  }
+
+  .home-board .home-board__heading {
     font-size: 26px;
     margin-bottom: 14px;
   }
