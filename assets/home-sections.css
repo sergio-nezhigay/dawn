@@ -11,6 +11,18 @@
   --home-radius: 12px;
   color: var(--home-navy);
   padding: 40px 0;
+  /* Draft type, not the theme body font */
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: normal;
+}
+
+/* Draft column: 1200px with 20px gutters (15px on phones, like the theme) */
+.home-section__wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 .home-section--flush {
@@ -24,7 +36,7 @@ home-deals.home-section {
 }
 
 .home-section .home-heading {
-  font-family: 'Chakra Petch', 'Tektur', sans-serif;
+  font-family: 'Chakra Petch', 'Tektur', system-ui, sans-serif;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.03em;
@@ -77,6 +89,10 @@ home-deals.home-section {
 
   .home-section--flush {
     padding-top: 0;
+  }
+
+  .home-section__wrap {
+    padding: 0 15px;
   }
 }
 
