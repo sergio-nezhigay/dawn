@@ -7,9 +7,9 @@
 
 <div class="home-section home-section--flush home-best">
   <div class="home-section__wrap">
-    <div class="home-best__head">
+    <div class="home-section__head">
       <h2 class="home-heading">{{ 'sections.home_best_sellers.heading' | t }}</h2>
-      <a class="home-best__all" href="{{ best.url }}">{{ 'sections.home_best_sellers.view_all' | t }}</a>
+      <a class="home-section__all" href="{{ best.url }}">{{ 'sections.home_best_sellers.view_all' | t }}</a>
     </div>
     <ul class="home-cards home-best__grid" role="list">
       {%- for product in best.products limit: 8 -%}

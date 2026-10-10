@@ -528,6 +528,19 @@
       "show_html": "Show SODIMM {{ type }} {{ size }} GB ({{ count }})",
       "show_all_html": "Show all memory"
     },
+    "home_deals": {
+      "heading": "Deals right now",
+      "view_all": "View all",
+      "tab_hotline": "Memory: best price on Hotline",
+      "tab_500": "Up to 500 UAH",
+      "note_hotline": "No higher than other sellers on Hotline.",
+      "note_checked": "Checked {{ date }}.",
+      "note_badge": "The «Cheapest on Hotline» label appears only where we beat every seller.",
+      "note_500": "Affordable items bought most often in the last 90 days.",
+      "badge": "Cheapest on Hotline",
+      "previous": "Previous",
+      "next": "Next"
+    },
     "home_best_sellers": {
       "heading": "Best sellers",
       "view_all": "View all",

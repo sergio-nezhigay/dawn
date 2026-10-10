@@ -6,6 +6,7 @@
   Accepts:
   - product: {Object} Product Liquid object
   - section_id: {String} ID of the section that renders the card
+  - badge: {String} (optional) Label shown over the image
 {%- endcomment -%}
 {%- liquid
   assign variant = product.selected_or_first_available_variant
@@ -25,6 +26,9 @@
       }}
     {%- endif -%}
   </a>
+  {%- if badge != blank -%}
+    <span class="home-card__badge">{{ badge }}</span>
+  {%- endif -%}
   <a class="home-card__title" href="{{ product.url }}">{{ product.title | escape }}</a>
   <div class="home-card__row">
     {%- comment -%} The shop's money format has no symbol; append it like snippets/price.liquid {%- endcomment -%}

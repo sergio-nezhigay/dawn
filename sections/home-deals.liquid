@@ -1,0 +1,141 @@
+{%- liquid
+  assign skip = ','
+  for product in section.settings.exclude.products limit: 8
+    assign skip = skip | append: product.id | append: ','
+  endfor
+  assign checked_at = shop.metafields.custom.hotline_checked_at.value | date: '%d.%m.%Y %H:%M'
+
+  comment
+    Tabs that have products, as "key,key": a tab with an empty collection is skipped
+  endcomment
+  assign active = ''
+  if section.settings.collection_hotline != blank and section.settings.collection_hotline.products_count > 0
+    assign active = active | append: 'hotline,'
+  endif
+  if section.settings.collection_500 != blank and section.settings.collection_500.products_count > 0
+    assign active = active | append: '500,'
+  endif
+  assign tabs = active | split: ','
+-%}
+{%- comment -%} Hidden until at least one tab has a collection with products {%- endcomment -%}
+{%- if tabs.size > 0 -%}
+{{ 'home-sections.css' | asset_url | stylesheet_tag }}
+{{ 'section-home-deals.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'home-deals.js' | asset_url }}" defer="defer"></script>
+
+<home-deals class="home-section home-section--flush home-deals">
+  <div class="home-section__wrap">
+    <div class="home-section__head">
+      <h2 class="home-heading">{{ 'sections.home_deals.heading' | t }}</h2>
+      <a class="home-section__all" href="#" data-all>{{ 'sections.home_deals.view_all' | t }}</a>
+    </div>
+    <div class="home-deals__tabs" role="tablist">
+      {%- for tab in tabs -%}
+        {%- if tab == 'hotline' -%}
+          {%- assign tab_collection = section.settings.collection_hotline -%}
+        {%- else -%}
+          {%- assign tab_collection = section.settings.collection_500 -%}
+        {%- endif -%}
+        <button
+          type="button"
+          role="tab"
+          class="home-deals__tab"
+          id="HomeDealsTab-{{ section.id }}-{{ tab }}"
+          aria-controls="HomeDealsPanel-{{ section.id }}-{{ tab }}"
+          aria-selected="{{ forloop.first }}"
+          data-url="{{ tab_collection.url }}"
+          data-note="{{ tab }}"
+        >
+          {%- if tab == 'hotline' -%}
+            {{- 'sections.home_deals.tab_hotline' | t -}}
+          {%- else -%}
+            {{- 'sections.home_deals.tab_500' | t -}}
+          {%- endif -%}
+        </button>
+      {%- endfor -%}
+    </div>
+    <div class="home-deals__box">
+      <button type="button" class="home-deals__arrow home-deals__arrow--prev" aria-label="{{ 'sections.home_deals.previous' | t }}" disabled>&lsaquo;</button>
+      {%- for tab in tabs -%}
+        {%- if tab == 'hotline' -%}
+          {%- assign tab_collection = section.settings.collection_hotline -%}
+        {%- else -%}
+          {%- assign tab_collection = section.settings.collection_500 -%}
+        {%- endif -%}
+        <ul
+          class="home-cards home-deals__rail"
+          role="tabpanel"
+          id="HomeDealsPanel-{{ section.id }}-{{ tab }}"
+          aria-labelledby="HomeDealsTab-{{ section.id }}-{{ tab }}"
+          {% unless forloop.first %}hidden{% endunless %}
+        >
+          {%- assign count = 0 -%}
+          {%- for product in tab_collection.products limit: 16 -%}
+            {%- assign token = ',' | append: product.id | append: ',' -%}
+            {%- if skip contains token -%}
+              {%- continue -%}
+            {%- endif -%}
+            {%- assign badge = '' -%}
+            {%- if tab == 'hotline' and product.tags contains 'deal-hotline-cheapest' -%}
+              {%- assign badge = 'sections.home_deals.badge' | t -%}
+            {%- endif -%}
+            <li>{% render 'home-card', product: product, section_id: section.id, badge: badge %}</li>
+            {%- assign count = count | plus: 1 -%}
+            {%- if count == 8 -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      {%- endfor -%}
+      <button type="button" class="home-deals__arrow home-deals__arrow--next" aria-label="{{ 'sections.home_deals.next' | t }}">&rsaquo;</button>
+    </div>
+    <p class="home-deals__note">
+      {%- for tab in tabs -%}
+        {%- if tab == 'hotline' -%}
+          <span data-note="hotline">
+            {{- 'sections.home_deals.note_hotline' | t -}}
+            {%- if checked_at != blank %} {{ 'sections.home_deals.note_checked' | t: date: checked_at }}{% endif %}
+            {{ 'sections.home_deals.note_badge' | t -}}
+          </span>
+        {%- else -%}
+          <span data-note="500">{{ 'sections.home_deals.note_500' | t }}</span>
+        {%- endif -%}
+      {%- endfor -%}
+    </p>
+  </div>
+</home-deals>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Deals",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection_hotline",
+      "label": "Tab: best price on Hotline",
+      "info": "Shows the first 8 products. The tab is hidden while the collection is empty. The badge shows on products tagged deal-hotline-cheapest."
+    },
+    {
+      "type": "collection",
+      "id": "collection_500",
+      "label": "Tab: up to 500 UAH",
+      "info": "Shows the first 8 products. The tab is hidden while the collection is empty."
+    },
+    {
+      "type": "collection",
+      "id": "exclude",
+      "label": "Skip products from this collection",
+      "info": "Pick the best sellers collection to avoid showing the same products twice."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Deals"
+    }
+  ]
+}
+{% endschema %}
