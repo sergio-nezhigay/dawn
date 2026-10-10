@@ -26,7 +26,7 @@
 <script src="{{ 'home-deals.js' | asset_url }}" defer="defer"></script>
 
 <home-deals class="home-section home-section--flush home-deals">
-  <div class="page-width">
+  <div class="home-section__wrap">
     <div class="home-section__head">
       <h2 class="home-heading">{{ 'sections.home_deals.heading' | t }}</h2>
       <a class="home-section__all" href="#" data-all>{{ 'sections.home_deals.view_all' | t }}</a>
@@ -97,6 +97,7 @@
           <span data-note="hotline">
             {{- 'sections.home_deals.note_hotline' | t -}}
             {%- if checked_at != blank %} {{ 'sections.home_deals.note_checked' | t: date: checked_at }}{% endif -%}
+            {{ ' ' }}{{- 'sections.home_deals.note_badge' | t -}}
           </span>
         {%- else -%}
           <span data-note="500">{{ 'sections.home_deals.note_500' | t }}</span>

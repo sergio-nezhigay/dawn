@@ -16,6 +16,7 @@
   font-family: inherit;
   font-size: 15px;
   font-weight: 600;
+  line-height: normal;
   cursor: pointer;
 }
 
@@ -23,6 +24,10 @@
   border-color: var(--home-navy);
   background: var(--home-navy);
   color: #fff;
+}
+
+.home-deals .home-card {
+  position: relative;
 }
 
 .home-deals__note {

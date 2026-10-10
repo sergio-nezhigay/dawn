@@ -150,17 +150,18 @@ home-deals.home-section {
   overflow: hidden;
 }
 
+/* Sits on the card corner like the draft; .home-deals .home-card is the positioned box */
 .home-card__badge {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 10px;
+  left: 10px;
   padding: 4px 8px;
   border-radius: 6px;
   background: var(--home-navy);
   color: #fff;
   font-size: 12px;
   font-weight: 600;
-  line-height: 1.3;
+  line-height: 1.5;
 }
 
 .home-card__image img {
@@ -297,8 +298,10 @@ home-deals.home-section {
   background: #fff;
   box-shadow: 0 2px 8px rgba(0, 30, 60, 0.15);
   color: var(--home-navy);
+  font-family: inherit;
   font-size: 20px;
   font-weight: 700;
+  line-height: normal;
   cursor: pointer;
 }
 
@@ -313,12 +316,6 @@ home-deals.home-section {
 .home-rail__arrow[disabled] {
   opacity: 0;
   pointer-events: none;
-}
-
-@media screen and (max-width: 989px) {
-  .home-rail__list {
-    grid-auto-columns: calc((100% - 32px) / 3);
-  }
 }
 
 @media screen and (max-width: 749px) {
