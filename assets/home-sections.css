@@ -146,6 +146,8 @@ home-deals.home-section {
   display: grid;
   place-items: center;
   aspect-ratio: 1;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .home-card__badge {
@@ -162,10 +164,8 @@ home-deals.home-section {
 }
 
 .home-card__image img {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
 }
 
@@ -203,8 +203,6 @@ home-deals.home-section {
 .home-section .home-card__buy {
   position: relative;
   min-height: 44px;
-  padding: 0 14px;
-  font-size: 14px;
 }
 
 .home-card__buy.loading > span {
