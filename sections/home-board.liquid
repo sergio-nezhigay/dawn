@@ -24,6 +24,10 @@
 
   assign rating = shop.metafields.judgeme.all_reviews_rating.value | plus: 0
   assign reviews_count = shop.metafields.judgeme.all_reviews_count.value | plus: 0
+  assign rating_text = rating | round: 1 | append: ''
+  if request.locale.iso_code != 'en'
+    assign rating_text = rating_text | replace: '.', ','
+  endif
   # Liquid has no number formatting: 1732 -> "1 732" (counts below a million)
   if reviews_count >= 1000
     assign thousands = reviews_count | divided_by: 1000
@@ -80,7 +84,7 @@
         {%- if rating > 0 and reviews_count > 0 -%}
           <li class="home-board__rating">
             <a href="#reviews">
-              {{- rating | round: 1 | append: '' | replace: '.', ',' }} &middot; {{ 'sections.home_board.reviews_count' | t: count: reviews_count, number: reviews_number -}}
+              {{- rating_text }} &middot; {{ 'sections.home_board.reviews_count' | t: count: reviews_count, number: reviews_number -}}
             </a>
           </li>
         {%- endif -%}
