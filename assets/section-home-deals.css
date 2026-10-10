@@ -65,6 +65,7 @@
   border: 1px solid var(--home-line);
   border-radius: 50%;
   background: #fff;
+  padding: 1px 6px;
   box-shadow: 0 2px 8px rgba(0, 30, 60, 0.15);
   color: var(--home-navy);
   font-family: inherit;
@@ -88,7 +89,7 @@
 }
 
 .home-deals__note {
-  margin: 10px 0 0;
+  margin: 10px 0 13px;
   font-size: 13px;
   color: var(--home-muted);
 }
