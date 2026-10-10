@@ -95,38 +95,40 @@
 
     <div class="home-fit__conditions">
       <h2 class="home-heading">{{ 'sections.home_fit_check.conditions_heading' | t }}</h2>
-      <table class="home-fit__sheet">
-        <tbody>
-          {%- for block in section.blocks -%}
-            <tr {{ block.shopify_attributes }}>
-              <th scope="row">{{ block.settings.title | escape }}</th>
-              <td>
-                <b>{{ block.settings.value | escape }}</b>
-                <span>{{ block.settings.note | escape }}</span>
-              </td>
-            </tr>
-          {%- else -%}
-            {%- comment -%} No rows added in the editor: the default terms from the language files {%- endcomment -%}
-            {%- assign rows = 'shipping,payment,warranty,help' | split: ',' -%}
-            {%- for row in rows -%}
-              {%- assign row_key = 'sections.home_fit_check.' | append: row -%}
-              <tr>
-                <th scope="row">{{ row_key | append: '_title' | t }}</th>
+      <div class="home-fit__sheet">
+        <table class="home-fit__table">
+          <tbody>
+            {%- for block in section.blocks -%}
+              <tr {{ block.shopify_attributes }}>
+                <th scope="row">{{ block.settings.title | escape }}</th>
                 <td>
-                  <b>
-                    {%- if row == 'help' -%}
-                      {{ phone }}
-                    {%- else -%}
-                      {{ row_key | append: '_value' | t }}
-                    {%- endif -%}
-                  </b>
-                  <span>{{ row_key | append: '_note' | t }}</span>
+                  <b>{{ block.settings.value | escape }}</b>
+                  <span>{{ block.settings.note | escape }}</span>
                 </td>
               </tr>
+            {%- else -%}
+              {%- comment -%} No rows added in the editor: the default terms from the language files {%- endcomment -%}
+              {%- assign rows = 'shipping,payment,warranty,help' | split: ',' -%}
+              {%- for row in rows -%}
+                {%- assign row_key = 'sections.home_fit_check.' | append: row -%}
+                <tr>
+                  <th scope="row">{{ row_key | append: '_title' | t }}</th>
+                  <td>
+                    <b>
+                      {%- if row == 'help' -%}
+                        {{ phone }}
+                      {%- else -%}
+                        {{ row_key | append: '_value' | t }}
+                      {%- endif -%}
+                    </b>
+                    <span>{{ row_key | append: '_note' | t }}</span>
+                  </td>
+                </tr>
+              {%- endfor -%}
             {%- endfor -%}
-          {%- endfor -%}
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
