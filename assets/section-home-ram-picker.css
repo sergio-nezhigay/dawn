@@ -23,7 +23,8 @@
   border-radius: 2px;
 }
 
-.home-ram .home-heading {
+/* Three classes: home-sections.css loads again lower on the page and would win a tie */
+.home-section.home-ram .home-heading {
   margin-bottom: 6px;
 }
 
