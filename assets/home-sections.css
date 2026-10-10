@@ -37,7 +37,8 @@
   line-height: 1.1;
   font-size: clamp(20px, 2.4vw, 26px);
   color: inherit;
-  margin: 0 0 20px;
+  /* Sections set --home-heading-gap: a variable survives this file being linked again lower on the page */
+  margin: 0 0 var(--home-heading-gap, 20px);
 }
 
 .home-section .home-btn {
