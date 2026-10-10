@@ -37,10 +37,10 @@
 
   .home-best__more {
     display: block;
-    margin-top: 12px;
   }
 
   .home-best__more .home-btn {
     width: 100%;
+    margin-top: 12px;
   }
 }
