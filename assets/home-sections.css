@@ -1,0 +1,213 @@
+/* Shared by the homepage content sections (RAM picker, best sellers, fit check): tokens, heading and buttons from the C2 draft */
+.home-section {
+  --home-navy: #001e3c;
+  --home-blue: #0071dc;
+  --home-blue-deep: #0058ad;
+  --home-blue-tint: #f6f9fd;
+  --home-yellow: #ffc220;
+  --home-yellow-deep: #f2ae00;
+  --home-line: #e5e7eb;
+  --home-muted: #5b6573;
+  --home-radius: 12px;
+  color: var(--home-navy);
+  padding: 40px 0;
+  /* Draft type, not the theme body font */
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: normal;
+}
+
+/* Draft column: 1200px with 20px gutters (15px on phones, like the theme) */
+.home-section__wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.home-section--flush {
+  padding-top: 0;
+}
+
+.home-section .home-heading {
+  font-family: 'Chakra Petch', 'Tektur', system-ui, sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  line-height: 1.1;
+  font-size: clamp(20px, 2.4vw, 26px);
+  color: inherit;
+  /* Sections set --home-heading-gap: a variable survives this file being linked again lower on the page */
+  margin: 0 0 var(--home-heading-gap, 20px);
+}
+
+.home-section .home-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.home-section .home-btn--buy {
+  background: var(--home-yellow);
+  color: var(--home-navy);
+}
+
+.home-section .home-btn--buy:hover {
+  background: var(--home-yellow-deep);
+}
+
+.home-section .home-btn--ghost {
+  background: transparent;
+  color: var(--home-blue);
+  box-shadow: inset 0 0 0 1.5px var(--home-blue);
+}
+
+@media screen and (max-width: 749px) {
+  .home-section {
+    padding: 28px 0;
+  }
+
+  .home-section--flush {
+    padding-top: 0;
+  }
+
+  .home-section__wrap {
+    padding: 0 15px;
+  }
+}
+
+/* Homepage product cards (snippets/home-card.liquid): price + Buy in one row, in-stock line under it */
+.home-cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.home-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 100%;
+  padding: 12px;
+  border: 1px solid var(--home-line);
+  border-radius: var(--home-radius);
+  background: #fff;
+}
+
+.home-card__image {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.home-card__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.home-card__title {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 3.9em;
+  font-size: 14px;
+  line-height: 1.35;
+  color: inherit;
+  text-decoration: none;
+}
+
+.home-card__title:hover {
+  text-decoration: underline;
+}
+
+.home-card__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.home-card__price {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.home-section .home-card__buy {
+  position: relative;
+  min-height: 44px;
+  padding: 0 14px;
+  font-size: 14px;
+}
+
+.home-card__buy.loading > span {
+  visibility: hidden;
+}
+
+.home-card__buy .loading__spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.home-card__stock {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--home-blue-deep);
+}
+
+.home-card__stock::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+@media screen and (max-width: 989px) {
+  .home-cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .home-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .home-card__row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .home-section .home-card__buy {
+    width: 100%;
+  }
+}
