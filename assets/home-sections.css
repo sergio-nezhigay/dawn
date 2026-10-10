@@ -296,6 +296,7 @@ home-deals.home-section {
   border: 1px solid var(--home-line);
   border-radius: 50%;
   background: #fff;
+  padding: 1px 6px;
   box-shadow: 0 2px 8px rgba(0, 30, 60, 0.15);
   color: var(--home-navy);
   font-family: inherit;

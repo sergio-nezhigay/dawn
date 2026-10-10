@@ -31,7 +31,7 @@
 }
 
 .home-deals__note {
-  margin: 10px 0 0;
+  margin: 10px 0 13px;
   font-size: 13px;
   color: var(--home-muted);
 }

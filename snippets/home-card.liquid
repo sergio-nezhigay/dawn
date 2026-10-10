@@ -25,10 +25,10 @@
         | image_tag: widths: '165, 330, 533', sizes: '(min-width: 990px) 280px, (min-width: 750px) 30vw, 45vw', loading: 'lazy', alt: ''
       }}
     {%- endif -%}
-    {%- if badge != blank -%}
-      <span class="home-card__badge">{{ badge }}</span>
-    {%- endif -%}
   </a>
+  {%- if badge != blank -%}
+    <span class="home-card__badge">{{ badge }}</span>
+  {%- endif -%}
   <a class="home-card__title" href="{{ product.url }}">{{ product.title | escape }}</a>
   <div class="home-card__row">
     {%- comment -%} The shop's money format has no symbol; append it like snippets/price.liquid {%- endcomment -%}
