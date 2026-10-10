@@ -21,9 +21,8 @@
   line-height: 1.5;
 }
 
-/* Three classes: home-sections.css loads again lower on the page and would win a tie */
-.home-section .home-fit__form .home-heading {
-  margin-bottom: 8px;
+.home-fit__form {
+  --home-heading-gap: 8px;
 }
 
 .home-fit__fieldset {
@@ -188,16 +187,12 @@
 
 .home-fit__table {
   width: 100%;
-  border: 0;
   border-collapse: collapse;
-  box-shadow: none;
-  table-layout: auto;
 }
 
 .home-fit__sheet th,
 .home-fit__sheet td {
   padding: 14px 20px;
-  border: 0;
   border-top: 1px solid var(--home-line);
   text-align: left;
   vertical-align: top;

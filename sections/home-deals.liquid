@@ -96,8 +96,8 @@
         {%- if tab == 'hotline' -%}
           <span data-note="hotline">
             {{- 'sections.home_deals.note_hotline' | t -}}
-            {%- if checked_at != blank %} {{ 'sections.home_deals.note_checked' | t: date: checked_at }}{% endif -%}
-            {{ ' ' }}{{- 'sections.home_deals.note_badge' | t -}}
+            {%- if checked_at != blank %} {{ 'sections.home_deals.note_checked' | t: date: checked_at }}{% endif %}
+            {{ 'sections.home_deals.note_badge' | t -}}
           </span>
         {%- else -%}
           <span data-note="500">{{ 'sections.home_deals.note_500' | t }}</span>
