@@ -118,7 +118,7 @@
 /* Homepage product cards (snippets/home-card.liquid): price + Buy in one row, in-stock line under it */
 .home-cards {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 16px;
   margin: 0;
   padding: 0;
@@ -179,6 +179,30 @@
   font-weight: 700;
   line-height: 1;
   white-space: nowrap;
+}
+
+.home-card__price:has(.home-card__old) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 6px;
+}
+
+.home-card__old {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--home-muted);
+}
+
+.home-card__sold {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--home-muted);
+}
+
+.home-card .review-badge {
+  margin-top: -2px;
 }
 
 .home-section .home-card__buy {

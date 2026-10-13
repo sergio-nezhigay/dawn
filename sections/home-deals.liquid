@@ -70,14 +70,14 @@
           {% unless forloop.first %}hidden{% endunless %}
         >
           {%- assign count = 0 -%}
-          {%- for product in tab_collection.products limit: 16 -%}
+          {%- for product in tab_collection.products limit: 20 -%}
             {%- assign token = ',' | append: product.id | append: ',' -%}
             {%- if skip contains token -%}
               {%- continue -%}
             {%- endif -%}
             <li>{% render 'home-card', product: product, section_id: section.id %}</li>
             {%- assign count = count | plus: 1 -%}
-            {%- if count == 8 -%}
+            {%- if count == 10 -%}
               {%- break -%}
             {%- endif -%}
           {%- endfor -%}
@@ -104,13 +104,13 @@
       "type": "collection",
       "id": "collection_hotline",
       "label": "Tab: best price on Hotline",
-      "info": "Shows the first 8 products. The tab is hidden while the collection is empty."
+      "info": "Shows the first 10 products. The tab is hidden while the collection is empty."
     },
     {
       "type": "collection",
       "id": "collection_500",
       "label": "Tab: up to 500 UAH",
-      "info": "Shows the first 8 products. The tab is hidden while the collection is empty."
+      "info": "Shows the first 10 products. The tab is hidden while the collection is empty."
     },
     {
       "type": "collection",

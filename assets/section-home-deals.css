@@ -95,6 +95,13 @@
   display: none;
 }
 
+/* Desktop: 5 cards visible, like the best sellers grid (tablets keep 4) */
+@media screen and (min-width: 990px) {
+  .home-deals__rail {
+    grid-auto-columns: calc((100% - 64px) / 5);
+  }
+}
+
 @media screen and (max-width: 749px) {
   .home-deals__arrow {
     display: none;

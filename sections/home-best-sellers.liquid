@@ -12,7 +12,7 @@
       <a class="home-section__all" href="{{ best.url }}">{{ 'sections.home_best_sellers.view_all' | t }}</a>
     </div>
     <ul class="home-cards home-best__grid" role="list">
-      {%- for product in best.products limit: 8 -%}
+      {%- for product in best.products limit: 10 -%}
         <li>{% render 'home-card', product: product, section_id: section.id %}</li>
       {%- endfor -%}
     </ul>
@@ -35,7 +35,7 @@
       "type": "collection",
       "id": "collection",
       "label": "Collection",
-      "info": "Shows the first 8 products (4 on phones) with an in-stock line and a Buy button."
+      "info": "Shows the first 10 products (9 on tablets, 4 on phones) with an in-stock line and a Buy button."
     }
   ],
   "presets": [
