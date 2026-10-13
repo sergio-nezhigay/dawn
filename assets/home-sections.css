@@ -18,11 +18,11 @@
   letter-spacing: normal;
 }
 
-/* Draft column: 1200px with 20px gutters (15px on phones, like the theme) */
+/* Same column as the header (.page-width-narrow): 1340px with 50px gutters (15px on phones) */
 .home-section__wrap {
-  max-width: 1200px;
+  max-width: 1340px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 50px;
 }
 
 .home-section--flush {
