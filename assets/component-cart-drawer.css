@@ -46,7 +46,7 @@
 
 .cart-drawer__empty-content .button {
   margin-top: 1.5rem;
-  background: #0071dc;
+  background: var(--ui-blue);
   color: white;
   border: none;
   border-radius: 6px;
@@ -374,7 +374,7 @@ cart-drawer-items {
   max-width: none;
   width: 100%;
   padding: 16px;
-  background: #0071dc;
+  background: var(--ui-blue);
   color: white;
   border: none;
   border-radius: 6px;

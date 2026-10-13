@@ -1,10 +1,10 @@
 /* Product card (snippets/product-card.liquid), shared by the homepage, collection, search and product-page rails.
    Own tokens and type so it looks the same inside the homepage sections and the Dawn catalog pages. */
 .product-card {
-  --card-navy: #001e3c;
-  --card-blue: #0071dc;
-  --card-line: #e5e7eb;
-  --card-muted: #5b6573;
+  --card-navy: var(--ui-navy);
+  --card-blue: var(--ui-blue);
+  --card-line: var(--ui-line);
+  --card-muted: var(--ui-muted);
   position: relative;
   display: flex;
   flex-direction: column;
