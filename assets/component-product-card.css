@@ -40,30 +40,14 @@
   object-fit: contain;
 }
 
-.product-card__second,
-.product-card__dots {
-  opacity: 0;
+.product-card__image img {
   transition: opacity 0.25s ease;
 }
 
-.product-card__dots {
-  position: absolute;
-  bottom: 2px;
-  left: 50%;
-  display: flex;
-  gap: 4px;
-  transform: translateX(-50%);
-}
-
-.product-card__dots i {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #c5ccd6;
-}
-
-.product-card__dots i:last-child {
-  background: var(--card-blue);
+/* White backing so a transparent second photo never shows the first one through it */
+.product-card__second {
+  opacity: 0;
+  background: #fff;
 }
 
 .product-card__title {
@@ -200,7 +184,7 @@
   background: currentColor;
 }
 
-/* Hover (mouse only): blue frame, light shadow, blue title, second image with dots. Nothing moves. */
+/* Hover (mouse only): blue frame, light shadow, blue title, second image replaces the first. Nothing moves. */
 @media (hover: hover) and (pointer: fine) {
   .product-card:hover {
     border-color: var(--card-blue);
@@ -211,8 +195,11 @@
     color: var(--card-blue);
   }
 
-  .product-card--second:hover .product-card__second,
-  .product-card--second:hover .product-card__dots {
+  .product-card--second:hover .product-card__image img {
+    opacity: 0;
+  }
+
+  .product-card--second:hover .product-card__image .product-card__second {
     opacity: 1;
   }
 }
@@ -220,8 +207,7 @@
 @media (prefers-reduced-motion: reduce) {
   .product-card,
   .product-card__title,
-  .product-card__second,
-  .product-card__dots {
+  .product-card__image img {
     transition: none;
   }
 }
