@@ -36,3 +36,10 @@
 .home-deals__note:not(:has([data-note]:not([hidden]))) {
   display: none;
 }
+
+/* Desktop: 5 cards visible, like the best sellers grid (tablets keep 4) */
+@media screen and (min-width: 990px) {
+  .home-deals .home-rail__list {
+    grid-auto-columns: calc((100% - 64px) / 5);
+  }
+}
