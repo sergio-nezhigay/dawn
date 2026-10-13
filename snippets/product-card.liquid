@@ -1,6 +1,6 @@
 {%- comment -%}
   Product card used everywhere (homepage, collection, search, product-page rails, recently viewed):
-  image (second image on hover, desktop), title, review stars, price (+ old price), optional Buy button, in-stock line.
+  image (second image on hover, desktop), title, review stars, price (+ old price), optional Buy button.
   The whole card is a link (stretched title link); the Buy button sits above it.
   Buy adds single-variant products to the cart drawer (Dawn product-form); other products link to the product page.
   Sold-out products show "Sold out" instead of the price (never a 0 price) and a Details link instead of Buy.
@@ -97,7 +97,4 @@
       </a>
     {%- endif -%}
   </div>
-  {%- if product.available -%}
-    <p class="product-card__stock">{{ 'products.product.inventory_in_stock' | t }}</p>
-  {%- endif -%}
 </div>

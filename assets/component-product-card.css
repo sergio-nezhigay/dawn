@@ -3,7 +3,6 @@
 .product-card {
   --card-navy: #001e3c;
   --card-blue: #0071dc;
-  --card-blue-deep: #0058ad;
   --card-line: #e5e7eb;
   --card-muted: #5b6573;
   position: relative;
@@ -163,25 +162,6 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-}
-
-.product-card__stock {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  margin: 0;
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 1.5;
-  color: var(--card-blue-deep);
-}
-
-.product-card__stock::before {
-  content: '';
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: currentColor;
 }
 
 /* Hover (mouse only): blue frame, light shadow, blue title, second image replaces the first. Nothing moves. */
