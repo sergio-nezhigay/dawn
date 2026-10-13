@@ -50,6 +50,7 @@
 .home-fit__form .home-fit__goal {
   position: relative;
   margin: 0;
+  cursor: pointer;
 }
 
 .home-fit__goal input {
@@ -76,8 +77,9 @@
   color: var(--home-navy);
 }
 
+/* The radio is invisible, so its span carries the kit's focus ring */
 .home-fit__goal input:focus-visible + span {
-  outline: 3px solid var(--home-yellow);
+  outline: 2px solid var(--ui-ring);
   outline-offset: 2px;
 }
 
@@ -144,9 +146,17 @@
   text-decoration: none;
 }
 
-.home-fit__alt a:hover {
-  background: #fff;
-  color: var(--home-blue);
+/* Hover recipe (mouse only; transition and focus ring come from the interaction kit in base.css) */
+@media (hover: hover) {
+  .home-fit__goal input:not(:checked) + span:hover {
+    border-color: #fff;
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  .home-fit__alt a:hover {
+    background: #fff;
+    color: var(--home-blue);
+  }
 }
 
 /* No chat API on the page (bot not deployed or blocked): Telegram becomes the main button */
