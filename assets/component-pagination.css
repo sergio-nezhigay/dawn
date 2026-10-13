@@ -47,15 +47,16 @@
 }
 
 .pagination__item--current {
-  background-color: #fec602; /* Judge.me yellow */
-  border-color: #fec602;
+  background-color: var(--ui-yellow);
+  border-color: var(--ui-yellow);
+  border-radius: var(--ui-radius-sm);
   color: rgb(var(--color-background)); /* Ensure contrast, usually white or dark depending on theme, standard for this yellow is often dark text but let's check base styling. Assuming foreground color is blackish, keeping it might be better? Let's assume black text on yellow is good. */
   color: rgb(var(--color-foreground));
   font-weight: bold;
 }
 
 .pagination__item--current:hover {
-  background-color: #e5b202; /* Slightly darker on hover */
+  background-color: var(--ui-yellow-deep);
 }
 
 /* Remove old underline styles */

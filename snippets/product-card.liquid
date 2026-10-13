@@ -75,7 +75,7 @@
         {%- endif -%}
       </span>
     {%- else -%}
-      <span class="product-card__sold">{{ 'products.product.sold_out' | t }}</span>
+      <span class="product-card__sold">{{ 'products.product.inventory_out_of_stock' | t }}</span>
     {%- endif -%}
     {%- if quick_buy -%}
       <product-form data-section-id="{{ section_id }}" data-hide-errors="true">
