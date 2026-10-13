@@ -74,6 +74,10 @@
 }
 
 @media screen and (max-width: 749px) {
+  .home-section__all {
+    display: none;
+  }
+
   .home-section {
     padding: 28px 0;
   }
@@ -85,6 +89,30 @@
   .home-section__wrap {
     padding: 0 15px;
   }
+}
+
+/* Section head: heading on the left, "view all" link on the right (hidden on phones) */
+.home-section__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.home-section__head .home-heading {
+  margin: 0;
+}
+
+.home-section__all {
+  color: var(--home-blue);
+  font-weight: 600;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.home-section__all:hover {
+  text-decoration: underline;
 }
 
 /* Homepage product cards (snippets/home-card.liquid): price + Buy in one row, in-stock line under it */
