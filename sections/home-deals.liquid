@@ -1,6 +1,6 @@
 {%- liquid
   assign skip = ','
-  for product in section.settings.exclude.products limit: 8
+  for product in section.settings.exclude.products limit: 10
     assign skip = skip | append: product.id | append: ','
   endfor
 
