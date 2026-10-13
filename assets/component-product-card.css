@@ -1,0 +1,254 @@
+/* Product card (snippets/product-card.liquid), shared by the homepage, collection, search and product-page rails.
+   Own tokens and type so it looks the same inside the homepage sections and the Dawn catalog pages. */
+.product-card {
+  --card-navy: #001e3c;
+  --card-blue: #0071dc;
+  --card-blue-deep: #0058ad;
+  --card-line: #e5e7eb;
+  --card-muted: #5b6573;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 100%;
+  padding: 12px;
+  border: 1px solid var(--card-line);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--card-navy);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: left;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-card__image {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.product-card__image img {
+  grid-area: 1 / 1;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.product-card__second,
+.product-card__dots {
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.product-card__dots {
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  display: flex;
+  gap: 4px;
+  transform: translateX(-50%);
+}
+
+.product-card__dots i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #c5ccd6;
+}
+
+.product-card__dots i:last-child {
+  background: var(--card-blue);
+}
+
+.product-card__title {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 3.9em;
+  font-size: 14px;
+  line-height: 1.35;
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+/* The title link covers the whole card; the Buy button sits above it */
+.product-card__title::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+}
+
+.product-card__title:focus-visible {
+  outline: none;
+}
+
+.product-card:has(.product-card__title:focus-visible) {
+  outline: 2px solid var(--card-blue);
+  outline-offset: 2px;
+}
+
+/* One star size on every page (Judge.me's own size is too big for the 193px catalog card and wraps the count).
+   The count trims with an ellipsis if a narrow card still has no room. */
+.product-card .review-badge {
+  display: flex;
+  align-items: center;
+  margin-top: -2px;
+  white-space: nowrap;
+}
+
+.product-card .review-badge .jdgm-prev-badge__stars {
+  flex: none;
+  line-height: 1;
+}
+
+.product-card .review-badge .jdgm-star,
+.product-card .review-badge .jdgm-prev-badge__text {
+  font-size: 12px;
+  line-height: 1.3;
+}
+
+.product-card .review-badge .jdgm-prev-badge__text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.product-card__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.product-card__price {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.product-card__price:has(.product-card__old) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 6px;
+}
+
+.product-card__old {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--card-muted);
+}
+
+.product-card__sold {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--card-muted);
+}
+
+.product-card product-form,
+.product-card__buy {
+  position: relative;
+  z-index: 2;
+}
+
+.product-card .home-btn.product-card__buy {
+  min-height: 44px;
+  padding: 0 14px;
+  font-size: 14px;
+}
+
+.product-card__buy.loading > span {
+  visibility: hidden;
+}
+
+.product-card__buy .loading__spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.product-card__stock {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--card-blue-deep);
+}
+
+.product-card__stock::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* Hover (mouse only): blue frame, light shadow, blue title, second image with dots. Nothing moves. */
+@media (hover: hover) and (pointer: fine) {
+  .product-card:hover {
+    border-color: var(--card-blue);
+    box-shadow: 0 4px 14px rgba(0, 30, 60, 0.12);
+  }
+
+  .product-card:hover .product-card__title {
+    color: var(--card-blue);
+  }
+
+  .product-card--second:hover .product-card__second,
+  .product-card--second:hover .product-card__dots {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .product-card,
+  .product-card__title,
+  .product-card__second,
+  .product-card__dots {
+    transition: none;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .product-card .review-badge .jdgm-star,
+  .product-card .review-badge .jdgm-prev-badge__text {
+    font-size: 11px;
+  }
+
+  /* Tighter star and separator spacing so "35 reviews" fits a 145px card
+     (Judge.me sets the star padding with !important) */
+  .product-card .review-badge .jdgm-prev-badge__stars .jdgm-star:not(:last-of-type) {
+    padding: 0 1px 0 0 !important;
+  }
+
+  .product-card .review-badge .jdgm-prev-badge__text {
+    margin-left: 5px;
+    padding-left: 5px;
+  }
+
+  .product-card__row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .product-card .home-btn.product-card__buy {
+    width: 100%;
+  }
+}

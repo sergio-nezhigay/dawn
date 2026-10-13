@@ -19,6 +19,7 @@
 {%- comment -%} Hidden until at least one tab has a collection with products {%- endcomment -%}
 {%- if tabs.size > 0 -%}
 {{ 'home-sections.css' | asset_url | stylesheet_tag }}
+{{ 'component-product-card.css' | asset_url | stylesheet_tag }}
 {{ 'section-home-deals.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'home-rail.js' | asset_url }}" defer="defer"></script>
@@ -76,7 +77,9 @@
             {%- if skip contains token -%}
               {%- continue -%}
             {%- endif -%}
-            <li>{% render 'home-card', product: product, section_id: section.id %}</li>
+            <li>{% render 'product-card', product: product, section_id: section.id, buy: true %}</li>
+            {%- comment -%} A product in both deal collections shows only in the first tab {%- endcomment -%}
+            {%- assign skip = skip | append: product.id | append: ',' -%}
             {%- assign count = count | plus: 1 -%}
             {%- if count == 10 -%}
               {%- break -%}
@@ -117,7 +120,7 @@
       "type": "collection",
       "id": "exclude",
       "label": "Skip products from this collection",
-      "info": "Pick the best sellers collection to avoid showing the same products twice."
+      "info": "Pick the best sellers collection to avoid showing the same products twice. A product in both tabs shows only in the first one."
     }
   ],
   "presets": [
