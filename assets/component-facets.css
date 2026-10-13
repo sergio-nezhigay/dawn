@@ -108,7 +108,7 @@
   transition: all 0.2s ease;
   height: 40px;
   padding: 8px 32px 8px 12px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--ui-line);
   background-color: #ffffff;
   font-size: 1.4rem;
   color: #121212;
@@ -282,7 +282,7 @@
 
 .facets__summary:hover .facets__summary-label,
 a.active-facets__button-remove:hover {
-  color: #0071dc !important;
+  color: var(--ui-blue) !important;
 }
 
 a.active-facets__button-remove {
@@ -291,7 +291,7 @@ a.active-facets__button-remove {
   padding: 8px 16px;
   border-radius: 8px;
   background-color: transparent;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--ui-line);
   color: #6b7280;
   font-size: 1.4rem;
   font-weight: 500;
@@ -560,7 +560,7 @@ a.active-facets__button-remove:focus-visible {
 .facets__label:hover .facet-checkbox__text,
 .facets__label:hover .facet-checkbox__count,
 .facets__label:hover svg {
-  color: #0071dc;
+  color: var(--ui-blue);
 }
 
 /* Disabled state */
@@ -637,7 +637,7 @@ a.active-facets__button-remove:focus-visible {
 }
 
 .facet-checkbox > input[type='checkbox']:checked ~ svg {
-  background-color: #0071dc;
+  background-color: var(--ui-blue);
 }
 
 .facet-checkbox > input[type='checkbox']:checked ~ .svg-wrapper > .icon-checkmark path {
@@ -706,7 +706,7 @@ button.facets__button {
 
 span.active-facets__button-inner {
   background-color: #f9fafb;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--ui-line);
   border-radius: 8px;
   font-size: 1rem;
   min-height: 0;
@@ -753,7 +753,7 @@ span.active-facets__button-inner .svg-wrapper svg {
 }
 
 .active-facets__button:hover span.active-facets__button-inner .svg-wrapper svg {
-  color: #0071dc;
+  color: var(--ui-blue);
 }
 
 .active-facets__button-wrapper {
@@ -830,7 +830,7 @@ span.active-facets__button-inner .svg-wrapper svg {
 
 .active-facets__button--light .active-facets__button-inner {
   background-color: #ffffff;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--ui-line);
 }
 
 .active-facets__button--light:hover .active-facets__button-inner {
@@ -1140,7 +1140,7 @@ details.menu-opening .mobile-facets__close .svg-wrapper {
 }
 
 .mobile-facets__details {
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--ui-line);
 }
 
 .mobile-facets__details[open] > .mobile-facets__summary {
@@ -1283,8 +1283,8 @@ input.mobile-facets__checkbox {
 
 
 .mobile-facets__label > input[type='checkbox']:checked ~ svg {
-  background-color: #0071dc;
-  border-color: #0071dc;
+  background-color: var(--ui-blue);
+  border-color: var(--ui-blue);
 }
 
 .mobile-facets__label > .facet-checkbox__text,
@@ -1358,7 +1358,7 @@ input.mobile-facets__checkbox {
   align-items: center;
   padding: 1.6rem 2rem;
   background-color: #ffffff;
-  /*border-bottom: 1px solid #e5e7eb;*/
+  /*border-bottom: 1px solid var(--ui-line);*/
 }
 
 .mobile-facets__sort label {
@@ -1378,7 +1378,7 @@ input.mobile-facets__checkbox {
 
 .mobile-facets__sort .select__select {
   background-color: #f9fafb;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--ui-line);
   border-radius: 8px;
   box-shadow: none;
   filter: none;
@@ -1387,7 +1387,7 @@ input.mobile-facets__checkbox {
   padding: 0.8rem 3rem 0.8rem 1.2rem;
   font-size: 1.5rem;
   font-weight: 500;
-  color: #0071dc;
+  color: var(--ui-blue);
   min-width: auto;
 }
 
@@ -1472,7 +1472,7 @@ input.mobile-facets__checkbox {
     background-color: #ffffff;
     padding: 24px;
     border-radius: 12px;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--ui-line);
     height: fit-content;
   }
 

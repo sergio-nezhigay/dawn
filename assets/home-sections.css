@@ -1,14 +1,14 @@
 /* Shared by the homepage sections (RAM picker, best sellers, fit check, deals, reviews): tokens, heading, buttons, cards and the card rail from the C2 draft */
 .home-section {
-  --home-navy: #001e3c;
-  --home-blue: #0071dc;
-  --home-blue-deep: #0058ad;
-  --home-blue-tint: #f6f9fd;
-  --home-yellow: #ffc220;
-  --home-yellow-deep: #f2ae00;
-  --home-line: #e5e7eb;
-  --home-muted: #5b6573;
-  --home-radius: 12px;
+  --home-navy: var(--ui-navy);
+  --home-blue: var(--ui-blue);
+  --home-blue-deep: var(--ui-blue-deep);
+  --home-blue-tint: var(--ui-tint);
+  --home-yellow: var(--ui-yellow);
+  --home-yellow-deep: var(--ui-yellow-deep);
+  --home-line: var(--ui-line);
+  --home-muted: var(--ui-muted);
+  --home-radius: var(--ui-radius-md);
   color: var(--home-navy);
   padding: 40px 0;
   /* Draft type, not the theme body font */

@@ -1,7 +1,7 @@
 /* Board hero: the logo's chip becomes a circuit board of categories; the chip itself is the fit-check entry */
 .home-board {
-  --home-board-navy: #001e3c;
-  --home-board-yellow: #ffc220;
+  --home-board-navy: var(--ui-navy);
+  --home-board-yellow: var(--ui-yellow);
   --home-board-trace: #2c5d8f;
   background: var(--home-board-navy);
   background-image: linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
