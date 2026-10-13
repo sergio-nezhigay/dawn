@@ -31,3 +31,8 @@
   font-size: 13px;
   color: var(--home-muted);
 }
+
+/* The memory-deals tab has no note: collapse the empty line */
+.home-deals__note:not(:has([data-note]:not([hidden]))) {
+  display: none;
+}

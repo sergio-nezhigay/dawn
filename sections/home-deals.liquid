@@ -3,7 +3,6 @@
   for product in section.settings.exclude.products limit: 8
     assign skip = skip | append: product.id | append: ','
   endfor
-  assign checked_at = shop.metafields.custom.hotline_checked_at.value | date: '%d.%m.%Y %H:%M'
 
   comment
     Tabs that have products, as "key,key": a tab with an empty collection is skipped
@@ -77,11 +76,7 @@
             {%- if skip contains token -%}
               {%- continue -%}
             {%- endif -%}
-            {%- assign badge = '' -%}
-            {%- if tab == 'hotline' and product.tags contains 'deal-hotline-cheapest' -%}
-              {%- assign badge = 'sections.home_deals.badge' | t -%}
-            {%- endif -%}
-            <li>{% render 'home-card', product: product, section_id: section.id, badge: badge %}</li>
+            <li>{% render 'home-card', product: product, section_id: section.id %}</li>
             {%- assign count = count | plus: 1 -%}
             {%- if count == 8 -%}
               {%- break -%}
@@ -92,17 +87,9 @@
       <button type="button" class="home-rail__arrow home-rail__arrow--next" aria-label="{{ 'sections.home_deals.next' | t }}">&rsaquo;</button>
     </div>
     <p class="home-deals__note">
-      {%- for tab in tabs -%}
-        {%- if tab == 'hotline' -%}
-          <span data-note="hotline">
-            {{- 'sections.home_deals.note_hotline' | t -}}
-            {%- if checked_at != blank %} {{ 'sections.home_deals.note_checked' | t: date: checked_at }}{% endif %}
-            {{ 'sections.home_deals.note_badge' | t -}}
-          </span>
-        {%- else -%}
-          <span data-note="500">{{ 'sections.home_deals.note_500' | t }}</span>
-        {%- endif -%}
-      {%- endfor -%}
+      {%- if tabs contains '500' -%}
+        <span data-note="500">{{ 'sections.home_deals.note_500' | t }}</span>
+      {%- endif -%}
     </p>
   </div>
 </home-deals>
@@ -118,7 +105,7 @@
       "type": "collection",
       "id": "collection_hotline",
       "label": "Tab: best price on Hotline",
-      "info": "Shows the first 8 products. The tab is hidden while the collection is empty. The badge shows on products tagged deal-hotline-cheapest."
+      "info": "Shows the first 8 products. The tab is hidden while the collection is empty."
     },
     {
       "type": "collection",
