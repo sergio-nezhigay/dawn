@@ -559,6 +559,13 @@
       "previous": "Назад",
       "next": "Вперёд"
     },
+    "home_reviews": {
+      "heading": "Отзывы покупателей",
+      "out_of": "из 5",
+      "stars_label": "{{ rating }} из 5",
+      "previous": "Предыдущие отзывы",
+      "next": "Следующие отзывы"
+    },
     "home_best_sellers": {
       "heading": "Чаще всего покупают",
       "view_all": "Смотреть все",

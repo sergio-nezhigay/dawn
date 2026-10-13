@@ -559,6 +559,13 @@
       "previous": "Попередні",
       "next": "Наступні"
     },
+    "home_reviews": {
+      "heading": "Відгуки покупців",
+      "out_of": "з 5",
+      "stars_label": "{{ rating }} з 5",
+      "previous": "Попередні відгуки",
+      "next": "Наступні відгуки"
+    },
     "home_best_sellers": {
       "heading": "Найчастіше купують",
       "view_all": "Дивитися всі",
