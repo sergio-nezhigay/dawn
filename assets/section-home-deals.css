@@ -90,6 +90,11 @@
   color: var(--home-muted);
 }
 
+/* The memory-deals tab has no note: collapse the empty line */
+.home-deals__note:not(:has([data-note]:not([hidden]))) {
+  display: none;
+}
+
 @media screen and (max-width: 749px) {
   .home-deals__arrow {
     display: none;

@@ -134,8 +134,6 @@
   border: 1px solid var(--home-line);
   border-radius: var(--home-radius);
   background: #fff;
-  /* Positioned box for the badge */
-  position: relative;
 }
 
 .home-card__image {
@@ -144,20 +142,6 @@
   aspect-ratio: 1;
   min-height: 0;
   overflow: hidden;
-}
-
-/* Sits on the card corner like the draft */
-.home-card__badge {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  padding: 4px 8px;
-  border-radius: 6px;
-  background: var(--home-navy);
-  color: #fff;
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 1.5;
 }
 
 .home-card__image img {
