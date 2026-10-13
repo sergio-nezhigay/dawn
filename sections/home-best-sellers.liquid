@@ -2,6 +2,7 @@
 {%- comment -%} Hidden until the owner picks a collection with products {%- endcomment -%}
 {%- if best != blank and best.products_count > 0 -%}
 {{ 'home-sections.css' | asset_url | stylesheet_tag }}
+{{ 'component-product-card.css' | asset_url | stylesheet_tag }}
 {{ 'section-home-best-sellers.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
 
@@ -13,7 +14,7 @@
     </div>
     <ul class="home-cards home-best__grid" role="list">
       {%- for product in best.products limit: 10 -%}
-        <li>{% render 'home-card', product: product, section_id: section.id %}</li>
+        <li>{% render 'product-card', product: product, section_id: section.id, buy: true %}</li>
       {%- endfor -%}
     </ul>
     <div class="home-best__more">
