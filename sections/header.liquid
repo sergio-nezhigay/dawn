@@ -269,8 +269,9 @@
       endif
     -%}
 
+    {%- comment -%} On the homepage the hero heading is the h1 {%- endcomment -%}
     {%- if request.page_type == 'index' -%}
-      <h1 class="header__heading">
+      <div class="header__heading">
     {%- endif -%}
     <a href="{{ routes.root_url }}" class="header-logo focus-inset">
       <span class="header-logo__icon-wrapper">
@@ -300,7 +301,7 @@
       <span class="header-logo__text font-heading">INFORMATIKA</span>
     </a>
     {%- if request.page_type == 'index' -%}
-      </h1>
+      </div>
     {%- endif -%}
 
     <div class="max-md:hidden header-search-navigation" style="grid-area: navigation;">

@@ -342,6 +342,25 @@
     }
   },
   "sections": {
+    "home_board": {
+      "heading": "The parts your devices are missing",
+      "lead": "Laptop memory, adapters and converters for any port. Tell us the device model and we'll tell you what fits.",
+      "search_placeholder": "Model, name or product code",
+      "fit_button": "Check compatibility",
+      "catalog_button": "Full catalog",
+      "chips_label": "Popular searches:",
+      "chips": "SSD|USB hub|DDR3L 8 GB|Type-C|COM cable|USB-LAN|Power supply|RS232",
+      "promise_dispatch": "Ships in 1–2 business days",
+      "promise_payment": "Pay on delivery",
+      "promise_exchange": "14-day exchange",
+      "reviews_count": {
+        "one": "{{ number }} review",
+        "other": "{{ number }} reviews"
+      },
+      "price_from": "from {{ price }} ₴",
+      "chip_title_html": "Check<br>compatibility",
+      "chip_text": "by device model"
+    },
     "announcements": {
       "previous_announcement": "Previous announcement",
       "next_announcement": "Next announcement",

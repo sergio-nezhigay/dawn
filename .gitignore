@@ -23,3 +23,8 @@ theme-dev.log
 
 # local Claude Code permissions (personal, not shared)
 .claude/settings.local.json
+
+# browser automation output and local design/dev notes (never commit)
+.playwright-mcp/
+docs/homepage-concepts/
+*.local.md
