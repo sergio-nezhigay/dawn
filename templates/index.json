@@ -6,291 +6,114 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */
-{
+ */{
   "sections": {
-    "slideshow_6nENYz": {
-      "type": "slideshow",
+    "home_board": {
+      "type": "home-board",
       "blocks": {
-        "slide_4jBHYL": {
-          "type": "slide",
+        "pad_0": {
+          "type": "pad",
           "settings": {
-            "image": "shopify://shop_images/logitech-mxmechanical-master3s-hero.jpg",
-            "logo_image": "shopify://shop_images/LOGI_BIG.D-3f288e21.png",
-            "image_overlay_opacity": 0,
-            "heading": "Періферія Logitech",
-            "heading_size": "h1",
-            "subheading": "",
-            "button_label": "Перейти",
-            "link": "/collections/logitech",
-            "button_style_secondary": false,
-            "show_text_box": true,
-            "box_align": "middle-center",
-            "text_alignment": "center",
-            "text_alignment_mobile": "center",
-            "color_scheme": ""
+            "collection": "pamyat",
+            "label": "Пам'ять для ноутбука"
           }
         },
-        "slide_dtTgdW": {
-          "type": "slide",
-          "disabled": true,
+        "pad_1": {
+          "type": "pad",
           "settings": {
-            "image_overlay_opacity": 0,
-            "heading": "Image slide",
-            "heading_size": "h1",
-            "subheading": "Tell your brand's story through images",
-            "button_label": "Button label",
-            "link": "",
-            "button_style_secondary": false,
-            "show_text_box": true,
-            "box_align": "middle-center",
-            "text_alignment": "center",
-            "text_alignment_mobile": "center",
-            "color_scheme": "scheme-1"
+            "collection": "laptop-charger-adapters",
+            "label": "Зарядка від павербанка",
+            "price": "40"
           }
         },
-        "slide_Zp8Kx1": {
-          "type": "slide",
+        "pad_2": {
+          "type": "pad",
           "settings": {
-            "image": "shopify://shop_images/ktc-articles-solutions-pc-performance-different-ssd-form-factors-hero-lg.jpg",
-            "logo_image": "shopify://shop_images/Kingston-Logo-White.png",
-            "image_overlay_opacity": 0,
-            "heading": "Сховища Kingston",
-            "heading_size": "h1",
-            "subheading": "",
-            "button_label": "Перейти",
-            "link": "/collections/kingston",
-            "button_style_secondary": false,
-            "show_text_box": true,
-            "box_align": "middle-center",
-            "text_alignment": "center",
-            "text_alignment_mobile": "center",
-            "color_scheme": ""
+            "collection": "perehonhik_com_usb",
+            "label": "USB у COM і RS485"
           }
         },
-        "slide_NJCWL4": {
-          "type": "slide",
+        "pad_3": {
+          "type": "pad",
           "settings": {
-            "image": "shopify://shop_images/social.jpg",
-            "logo_image": "shopify://shop_images/66954.webp",
-            "image_overlay_opacity": 100,
-            "heading": "Пам’ять Samsung",
-            "heading_size": "h1",
-            "subheading": "",
-            "button_label": "Перейти",
-            "link": "/collections/samsung",
-            "button_style_secondary": false,
-            "show_text_box": true,
-            "box_align": "middle-center",
-            "text_alignment": "center",
-            "text_alignment_mobile": "center",
-            "color_scheme": "scheme-1"
+            "collection": "perehodnik-hdmi-rca",
+            "label": "Старий ТВ у HDMI"
+          }
+        },
+        "pad_4": {
+          "type": "pad",
+          "settings": {
+            "collection": "hdmi-vga",
+            "label": "Другий монітор"
+          }
+        },
+        "pad_5": {
+          "type": "pad",
+          "settings": {
+            "collection": "usb-ethernet-rj45",
+            "label": "Інтернет через USB"
+          }
+        },
+        "pad_6": {
+          "type": "pad",
+          "settings": {
+            "collection": "koncentratory-usb",
+            "label": "USB-хаби"
+          }
+        },
+        "pad_7": {
+          "type": "pad",
+          "settings": {
+            "collection": "ssd",
+            "label": "SSD диски"
           }
         }
       },
       "block_order": [
-        "slide_4jBHYL",
-        "slide_dtTgdW",
-        "slide_Zp8Kx1",
-        "slide_NJCWL4"
+        "pad_0",
+        "pad_1",
+        "pad_2",
+        "pad_3",
+        "pad_4",
+        "pad_5",
+        "pad_6",
+        "pad_7"
       ],
-      "name": "t:sections.slideshow.presets.name",
+      "settings": {}
+    },
+    "home_ram_picker": {
+      "type": "home-ram-picker",
+      "settings": {}
+    },
+    "home_best_sellers": {
+      "type": "home-best-sellers",
       "settings": {
-        "layout": "full_bleed",
-        "slide_height": "extra_small",
-        "slider_visual": "dots",
-        "auto_rotate": true,
-        "show_controls": false,
-        "change_slides_speed": 5,
-        "image_behavior": "ambient",
-        "show_text_below": true,
-        "accessibility_info": "Slideshow about our brand"
+        "collection": "popular"
       }
     },
-    "brand_logos_marquee_U4geGy": {
-      "type": "brand-logos-marquee",
-      "blocks": {
-        "logo_7RgCdt": {
-          "type": "logo",
-          "settings": {
-            "image": "shopify://shop_images/85WPWE631732671266.png",
-            "link": "",
-            "alt_text": ""
-          }
-        },
-        "logo_tAKgwQ": {
-          "type": "logo",
-          "settings": {
-            "image": "shopify://shop_images/OriginalLogo_127_Crucial.png",
-            "link": "",
-            "alt_text": ""
-          }
-        },
-        "logo_LT9diG": {
-          "type": "logo",
-          "settings": {
-            "image": "shopify://shop_images/1691604298samsung-logo-transparent..webp",
-            "link": "",
-            "alt_text": ""
-          }
-        },
-        "logo_MVyJEU": {
-          "type": "logo",
-          "settings": {
-            "image": "shopify://shop_images/Kingston-logo.png",
-            "link": "",
-            "alt_text": ""
-          }
-        },
-        "logo_cYjEHP": {
-          "type": "logo",
-          "settings": {
-            "image": "shopify://shop_images/Logitech-Symbol.png",
-            "link": "",
-            "alt_text": ""
-          }
-        },
-        "logo_gDxHDF": {
-          "type": "logo",
-          "settings": {
-            "image": "shopify://shop_images/logo_1.png",
-            "link": "",
-            "alt_text": ""
-          }
-        },
-        "logo_EMLePK": {
-          "type": "logo",
-          "settings": {
-            "image": "shopify://shop_images/Micron_Logo_-_Black_-_RGB.ai.web.2000.2000.png",
-            "link": "",
-            "alt_text": ""
-          }
-        },
-        "logo_cFWtfz": {
-          "type": "logo",
-          "settings": {
-            "image": "shopify://shop_images/hynix.png",
-            "link": "",
-            "alt_text": ""
-          }
-        }
-      },
-      "block_order": [
-        "logo_7RgCdt",
-        "logo_tAKgwQ",
-        "logo_LT9diG",
-        "logo_MVyJEU",
-        "logo_cYjEHP",
-        "logo_gDxHDF",
-        "logo_EMLePK",
-        "logo_cFWtfz"
-      ],
-      "name": "Brand Logos Marquee",
+    "home_fit_check": {
+      "type": "home-fit-check",
+      "settings": {}
+    },
+    "home_deals": {
+      "type": "home-deals",
       "settings": {
-        "container_width": "full-width",
-        "color_scheme": "",
-        "marquee_speed": 120,
-        "padding_top": 0,
-        "padding_bottom": 0
+        "collection_hotline": "deal-hotline",
+        "collection_500": "deal-500",
+        "exclude": "popular"
       }
     },
-    "popular_categories": {
-      "type": "popular-categories",
-      "blocks": {
-        "collection_N6tLKa": {
-          "type": "collection",
-          "settings": {
-            "collection": "lamps"
-          }
-        },
-        "collection_U8eyWV": {
-          "type": "collection",
-          "settings": {
-            "collection": "laptop-charger-adapters"
-          }
-        },
-        "collection_1": {
-          "type": "collection",
-          "settings": {
-            "collection": "pamyat"
-          }
-        },
-        "collection_2": {
-          "type": "collection",
-          "settings": {
-            "collection": "perehonhik_com_usb"
-          }
-        },
-        "collection_4": {
-          "type": "collection",
-          "settings": {
-            "collection": "fleshki"
-          }
-        },
-        "collection_6": {
-          "type": "collection",
-          "settings": {
-            "collection": "koncentratory-usb"
-          }
-        }
-      },
-      "block_order": [
-        "collection_N6tLKa",
-        "collection_U8eyWV",
-        "collection_1",
-        "collection_2",
-        "collection_4",
-        "collection_6"
-      ],
-      "settings": {
-        "title": "Популярні категорії",
-        "heading_size": "h2",
-        "columns_desktop": 6,
-        "columns_mobile": "2",
-        "swipe_on_mobile": true,
-        "enable_desktop_slider": false,
-        "color_scheme": "scheme-1",
-        "padding_top": 32,
-        "padding_bottom": 36
-      }
-    },
-    "related_products_wQpik6": {
-      "type": "product-suggestions",
-      "name": "Product Suggestions",
-      "settings": {
-        "heading": "Популярні товари",
-        "container_width": "page-width",
-        "products_source": "collection",
-        "collection": "popular",
-        "recommendations_intent": "related",
-        "products_to_show": 18
-      }
-    },
-    "174643254122ccb34f": {
-      "type": "apps",
-      "blocks": {
-        "judge_me_reviews_featured_carousel_W8LLen": {
-          "type": "shopify://apps/judge-me-reviews/blocks/featured_carousel/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {
-            "maxwidth": 1600
-          }
-        }
-      },
-      "block_order": [
-        "judge_me_reviews_featured_carousel_W8LLen"
-      ],
-      "settings": {
-        "include_margins": false,
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
+    "home_reviews": {
+      "type": "home-reviews",
+      "settings": {}
     }
   },
   "order": [
-    "slideshow_6nENYz",
-    "brand_logos_marquee_U4geGy",
-    "popular_categories",
-    "related_products_wQpik6",
-    "174643254122ccb34f"
+    "home_board",
+    "home_ram_picker",
+    "home_best_sellers",
+    "home_fit_check",
+    "home_deals",
+    "home_reviews"
   ]
 }
