@@ -542,8 +542,7 @@
       "out_of": "out of 5",
       "stars_label": "{{ rating }} out of 5",
       "previous": "Previous reviews",
-      "next": "Next reviews",
-      "note": "Newest 4-5 star reviews. Reviews are collected by Judge.me after purchase."
+      "next": "Next reviews"
     },
     "home_best_sellers": {
       "heading": "Best sellers",
