@@ -26,6 +26,14 @@
   color: #fff;
 }
 
+/* Hover recipe (mouse only; transition and focus ring come from the interaction kit in base.css) */
+@media (hover: hover) {
+  .home-deals__tab:not([aria-selected='true']):hover {
+    border-color: var(--home-blue);
+    color: var(--home-blue);
+  }
+}
+
 .home-deals__note {
   margin: 10px 0 13px;
   font-size: 13px;

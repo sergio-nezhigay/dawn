@@ -78,6 +78,18 @@
   color: #fff;
 }
 
+/* Hover recipe (mouse only; transition and focus ring come from the interaction kit in base.css) */
+@media (hover: hover) {
+  .home-ram__seg:not([aria-pressed='true']):hover {
+    border-color: var(--home-blue);
+    color: var(--home-blue);
+  }
+
+  .home-ram__text a:hover {
+    text-decoration: underline;
+  }
+}
+
 @media screen and (max-width: 749px) {
   .home-ram__box {
     grid-template-columns: minmax(0, 1fr);

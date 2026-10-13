@@ -65,6 +65,14 @@
   font-weight: 600;
 }
 
+/* Hover recipe (mouse only; transition and focus ring come from the interaction kit in base.css) */
+@media (hover: hover) {
+  .home-review__product:hover {
+    color: var(--home-blue-deep);
+    text-decoration: underline;
+  }
+}
+
 .home-review__by {
   font-size: 13px;
   color: var(--home-muted);

@@ -1380,3 +1380,6 @@ class CartPerformance {
     performance.measure(metricName, `${metricName}:start`, `${metricName}:end`);
   }
 }
+
+// iOS Safari only shows :active tap feedback when a touch listener exists
+document.addEventListener('touchstart', () => {}, { passive: true });

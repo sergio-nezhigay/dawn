@@ -1277,6 +1277,46 @@ summary::-webkit-details-marker {
 }
 
 /*
+  Interaction kit (homepage sections + product card): one transition, one focus ring, one tap press.
+  Hover colours live in each section's CSS, always under @media (hover: hover) so they never stick after a tap.
+*/
+:root {
+  --ui-dur: 0.2s;
+  --ui-ease: ease;
+  --ui-ring: #0071dc;
+}
+
+/* Navy blocks: blue is hard to see there, so the ring turns yellow */
+.home-board,
+.home-fit {
+  --ui-ring: #ffc220;
+}
+
+:where(.home-section, .home-board, .product-card) :is(a, button, label, label > span) {
+  transition: background-color var(--ui-dur) var(--ui-ease), border-color var(--ui-dur) var(--ui-ease),
+    color var(--ui-dur) var(--ui-ease), box-shadow var(--ui-dur) var(--ui-ease), filter var(--ui-dur) var(--ui-ease);
+}
+
+:where(.home-section, .home-board) :focus-visible {
+  outline: 2px solid var(--ui-ring);
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+/* Tap press: a touch darker, nothing moves */
+:where(.home-section, .home-board) :is(a, button):active,
+.home-fit__goal:active span,
+.product-card:active {
+  filter: brightness(0.94);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.home-section, .home-board, .product-card) :is(a, button, label, label > span) {
+    transition: none;
+  }
+}
+
+/*
   Focus ring - inset
 */
 
