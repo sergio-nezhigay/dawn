@@ -132,6 +132,7 @@
         "other": "{{ count }} відгуку"
       },
       "buy": "Купити",
+      "details": "Детальніше",
       "description": "Опис",
       "description_read_more": "Читати повністю",
       "description_read_less": "Приховати",

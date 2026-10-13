@@ -132,6 +132,7 @@
         "many": "{{ count }} reviews"
       },
       "buy": "Buy",
+      "details": "Details",
       "choose_options": "Choose options",
       "choose_product_options": "Choose options for {{ product_name }}",
       "description": "Description",
