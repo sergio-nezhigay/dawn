@@ -37,6 +37,7 @@
 
 .collection-hero__title {
   font-size: 22px;
+  color: var(--ui-navy);
 }
 
 .collection-hero__title + .collection-hero__description {

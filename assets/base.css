@@ -36,10 +36,9 @@
 
 
 
-.section-title,
+body:not(.template-product) .section-title,
 .title,
 .collection-list-title,
-.jdgm-rev-widg__title,
 .jdgm-carousel-title,
 .jdgm-carousel-wrapper .jdgm-carousel-title {
   font-size: 2.4rem !important;
@@ -49,6 +48,20 @@
   font-family: 'Chakra Petch', 'Tektur', sans-serif !important;
   text-transform: uppercase !important;
   letter-spacing: 0.05em !important;
+  text-align: left !important;
+}
+
+/* PDP section headings and reviews: the home heading recipe (home-sections.css .home-heading) in navy */
+.template-product .section-title,
+.jdgm-rev-widg__title {
+  font-size: clamp(20px, 2.4vw, 26px) !important;
+  font-weight: 600 !important;
+  color: var(--ui-navy) !important;
+  margin-bottom: 24px !important;
+  font-family: 'Chakra Petch', 'Tektur', sans-serif !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.03em !important;
+  line-height: 1.1;
   text-align: left !important;
 }
 
@@ -4729,13 +4742,16 @@ button[id^="ProductSubmitButton-"]:active {
   transform: translateY(2px);
 }
 
+/* "Опис": the home heading recipe, like the PDP section headings above */
 .description__headings {
-  font-weight: 700;
+  font-family: 'Chakra Petch', 'Tektur', sans-serif;
+  font-weight: 600;
   color: var(--ui-navy);
   margin-bottom: 1.6rem;
   text-transform: uppercase;
-  font-size: 1.6rem;
-  letter-spacing: 0.05em;
+  font-size: clamp(20px, 2.4vw, 26px);
+  letter-spacing: 0.03em;
+  line-height: 1.1;
   border-bottom: 0.1rem solid var(--ui-line);
   padding-bottom: 0.8rem;
 }

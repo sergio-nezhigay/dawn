@@ -166,6 +166,17 @@
   gap: 0.5rem;
 }
 
+.product-info-block__price .price-item--regular,
+.product-info-block__price .price-amount {
+  color: var(--ui-navy);
+}
+
+/* Compare-at price stays muted and struck through */
+.product-info-block__price .price--on-sale .price-item--regular,
+.product-info-block__price .price--on-sale .price-item--regular .price-amount {
+  color: rgba(var(--color-foreground), 0.75);
+}
+
 /* Sale price indicator */
 .product-info-block__price .price-item--sale {
   font-family: 'Chakra Petch', 'Tektur', sans-serif;
