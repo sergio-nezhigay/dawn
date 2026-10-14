@@ -18,6 +18,7 @@
 <style>
   .template-search__header {
     margin-bottom: 3rem;
+    --ui-heading-align: center;
   }
 
   .template-search__search {
@@ -41,18 +42,6 @@
 
   .search__button .icon {
     height: 1.8rem;
-  }
-
-  .template-search__header h1 {
-    font-family: 'Chakra Petch', 'Tektur', sans-serif !important;
-    font-weight: 600 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.05em !important;
-    color: var(--ui-navy);
-  }
-
-  :lang(en) .template-search__header h1 {
-    font-weight: 700 !important;
   }
 </style>
 
@@ -79,7 +68,7 @@
 {% paginate search.results by 24 %}
   <div class="template-search{% unless search.performed and search.results_count > 0 %} template-search--empty{% endunless %} section-{{ section.id }}-padding">
     <div class="template-search__header page-width{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-      <h1 class="h2 center font-heading">
+      <h1 class="ui-heading ui-heading--h1">
         {%- if search.performed -%}
           {{- 'templates.search.title' | t -}}
         {%- else -%}
