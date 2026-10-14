@@ -69,6 +69,12 @@
   border-radius: inherit;
 }
 
+/* A filter or transform on the title link would shrink that overlay to the title at mouse-down,
+   so a press on the image would not open the product (the homepage press effect in base.css sets filter on links) */
+.product-card .product-card__title:active {
+  filter: none;
+}
+
 .product-card__title:focus-visible {
   outline: none;
 }
