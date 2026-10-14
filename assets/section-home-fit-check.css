@@ -217,7 +217,7 @@
 
 .home-fit__sheet th {
   width: 32%;
-  background: var(--home-blue-tint);
+  background: var(--ui-tint);
   color: var(--home-blue-deep);
   font-family: 'Chakra Petch', 'Tektur', system-ui, sans-serif;
   font-size: 14px;

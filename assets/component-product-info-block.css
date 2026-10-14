@@ -63,7 +63,7 @@
    =============================================== */
 
 .badge-super-price {
-  background-color: #ffc220;
+  background-color: var(--ui-yellow);
   color: #001e3c;
   border: none;
   border-radius: 6px;

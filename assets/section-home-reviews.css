@@ -18,7 +18,7 @@
 }
 
 .home-review__stars {
-  color: var(--home-yellow-deep);
+  color: var(--ui-yellow-deep);
   font-size: 18px;
   letter-spacing: 2px;
 }

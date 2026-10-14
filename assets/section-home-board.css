@@ -295,7 +295,7 @@
    The chip keeps its small grow on purpose: it is the hero's centrepiece. */
 @media (hover: hover) {
   .home-board__search button:hover {
-    background: #f2ae00;
+    background: var(--ui-yellow-deep);
   }
 
   .home-board__chips a:hover {
