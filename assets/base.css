@@ -36,34 +36,33 @@
 
 
 
-body:not(.template-product) .section-title,
+/*
+  Shared heading (the homepage recipe): .ui-heading in our markup; Dawn's .title / .section-title and the
+  Judge.me titles join the same rule. !important beats Dawn's .h1/.h2 type rules and Judge.me's widget CSS.
+  Per-context knobs: --ui-heading-color (navy blocks), --ui-heading-gap, --ui-heading-align.
+*/
+.ui-heading,
+.section-title,
 .title,
 .collection-list-title,
 .jdgm-carousel-title,
-.jdgm-carousel-wrapper .jdgm-carousel-title {
-  font-size: 2.4rem !important;
-  font-weight: 600 !important;
-  color: #2e2f32 !important;
-  margin-bottom: 2.4rem !important;
+.jdgm-carousel-wrapper .jdgm-carousel-title,
+.jdgm-rev-widg__title {
   font-family: 'Chakra Petch', 'Tektur', sans-serif !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.05em !important;
-  text-align: left !important;
-}
-
-/* PDP section headings, reviews and the cart H1: the home heading recipe (home-sections.css .home-heading) in navy */
-.template-product .section-title,
-.jdgm-rev-widg__title,
-cart-items .title--primary {
   font-size: clamp(20px, 2.4vw, 26px) !important;
   font-weight: 600 !important;
-  color: var(--ui-navy) !important;
-  margin-bottom: 24px !important;
-  font-family: 'Chakra Petch', 'Tektur', sans-serif !important;
-  text-transform: uppercase !important;
+  line-height: 1.1 !important;
   letter-spacing: 0.03em !important;
-  line-height: 1.1;
-  text-align: left !important;
+  text-transform: uppercase !important;
+  color: var(--ui-heading-color, var(--ui-navy)) !important;
+  margin-bottom: var(--ui-heading-gap, 24px) !important;
+  text-align: var(--ui-heading-align, left) !important;
+}
+
+/* Page titles (collection, search, cart, 404, …) */
+.ui-heading--h1,
+h1.title {
+  font-size: clamp(24px, 3vw, 32px) !important;
 }
 
 :lang(en) .section-title,

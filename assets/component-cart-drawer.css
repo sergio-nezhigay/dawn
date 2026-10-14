@@ -82,16 +82,10 @@ cart-drawer:not(.is-empty) .cart-drawer__collection {
   align-items: center;
 }
 
-/* "Кошик": the home heading recipe (home-sections.css .home-heading) in navy */
+/* "Кошик" is a .ui-heading (base.css) */
 .drawer__heading {
-  margin: 0 0 1rem;
-  font-family: 'Chakra Petch', 'Tektur', sans-serif;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  line-height: 1.1;
-  font-size: clamp(20px, 2.4vw, 26px);
-  color: var(--ui-navy);
+  --ui-heading-gap: 1rem;
+  margin-top: 0;
 }
 
 .drawer__close {
