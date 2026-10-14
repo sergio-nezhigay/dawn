@@ -2014,6 +2014,108 @@ shopify-accelerated-checkout-cart {
   stroke: rgb(var(--color-button-text));
 }
 
+/*
+  Shared button (the homepage recipe): .ui-btn + --primary (yellow) or --ghost (blue outline), sizes --sm 44 / 48 / --lg 56.
+  Sits after Dawn's .button so it wins at equal specificity; elements may keep .button for Dawn's loading spinner and JS.
+  (.btn is taken: an app injects its own .btn buttons on product pages.)
+*/
+.ui-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 0;
+  min-height: 48px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: var(--ui-radius-sm);
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color var(--ui-dur) var(--ui-ease), box-shadow var(--ui-dur) var(--ui-ease),
+    color var(--ui-dur) var(--ui-ease), filter var(--ui-dur) var(--ui-ease);
+}
+
+.ui-btn--sm {
+  min-height: 44px;
+  padding: 0 14px;
+  font-size: 14px;
+}
+
+.ui-btn--lg {
+  min-height: 56px;
+  font-size: 18px;
+}
+
+.ui-btn--primary {
+  background: var(--ui-yellow);
+  color: var(--ui-navy);
+  box-shadow: none;
+}
+
+.ui-btn--ghost {
+  background: transparent;
+  color: var(--ui-blue);
+  box-shadow: inset 0 0 0 1.5px var(--ui-blue);
+}
+
+/* Ghost on a navy block (home board) */
+.ui-btn--ghost.ui-btn--on-dark {
+  color: #fff;
+  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.6);
+}
+
+/* Dawn's .button draws its border and hover with ::before/::after */
+.ui-btn::before,
+.ui-btn::after {
+  content: none;
+}
+
+@media (hover: hover) {
+  .ui-btn--primary:not([disabled]):hover {
+    background: var(--ui-yellow-deep);
+  }
+
+  .ui-btn--ghost:hover {
+    background: var(--ui-tint);
+  }
+
+  .ui-btn--ghost.ui-btn--on-dark:hover {
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: inset 0 0 0 1.5px #fff;
+  }
+}
+
+.ui-btn:focus-visible {
+  outline: 2px solid var(--ui-ring);
+  outline-offset: 2px;
+}
+
+.ui-btn--primary:focus-visible {
+  box-shadow: none;
+}
+
+.ui-btn:not([disabled]):active {
+  filter: brightness(0.94);
+}
+
+.ui-btn:disabled,
+.ui-btn[aria-disabled='true'] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ui-btn {
+    transition: none;
+  }
+}
+
 /* Button - social share */
 
 .share-button {
@@ -4708,32 +4810,6 @@ h4+p {
   opacity: 0.65;
 }
 
-button[id^="ProductSubmitButton-"] {
-  background-color: var(--ui-yellow) !important;
-  height: 56px !important;
-  color: var(--ui-navy) !important;
-  font-size: 18px !important;
-  font-weight: 700 !important;
-  text-transform: uppercase !important;
-  line-height: 1 !important;
-  font-family: 'Chakra Petch', sans-serif !important;
-  letter-spacing: 0.05em !important;
-  border: none !important;
-  border-radius: 8px !important;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
-  transition: all 200ms ease-out !important;
-}
-
-button[id^="ProductSubmitButton-"]:hover {
-  transform: translateY(-3px) !important;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
-}
-
-button[id^="ProductSubmitButton-"]:active {
-  transform: translateY(0) !important;
-}
-
 .buy-button-text {
   align-items: center !important;
 }
@@ -4836,10 +4912,7 @@ button[id^="ProductSubmitButton-"]:active {
 }
 
 .product-form__row .product-form__submit {
-  width: 100% !important;
-  height: 5.6rem !important;
-  min-height: 5.6rem !important;
-  padding: 0 3.5rem !important;
+  width: 100%;
   margin: 0;
   display: flex;
   align-items: center;

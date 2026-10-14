@@ -44,29 +44,10 @@
   justify-content: center;
 }
 
-/* Empty drawer: "Продовжити покупки" is the only action, so it gets the home yellow button */
+/* Empty drawer: "Продовжити покупки" is the only action, so it is the yellow .ui-btn (base.css) */
 .cart-drawer__empty-content .button {
   margin-top: 1.5rem;
-  background: var(--ui-yellow);
-  color: var(--ui-navy);
-  border: none;
-  border-radius: var(--ui-radius-sm);
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s;
-  min-width: 20rem; /* Give it some width */
-}
-
-@media (hover: hover) {
-  .cart-drawer__empty-content .button:hover {
-    background: var(--ui-yellow-deep);
-    box-shadow: none;
-  }
-}
-
-.cart-drawer__empty-content .button:active {
-  transform: scale(0.97);
+  min-width: 20rem;
 }
 
 cart-drawer.is-empty .drawer__inner {
@@ -384,29 +365,10 @@ cart-drawer-items {
 .cart-drawer .cart__checkout-button {
   max-width: none;
   width: 100%;
-  padding: 16px;
-  background: var(--ui-yellow);
-  color: var(--ui-navy);
-  border: none;
-  border-radius: var(--ui-radius-sm);
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s;
 }
 
 .cart-drawer .cart__ctas {
   margin-top: 2rem;
-}
-
-@media (hover: hover) {
-  .cart-drawer .cart__checkout-button:hover {
-    background: var(--ui-yellow-deep);
-  }
-}
-
-.cart-drawer .cart__checkout-button:active {
-  transform: scale(0.97);
 }
 
 .drawer__footer .cart__dynamic-checkout-buttons {

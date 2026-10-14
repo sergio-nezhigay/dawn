@@ -148,12 +148,6 @@
   z-index: 2;
 }
 
-.product-card .home-btn.product-card__buy {
-  min-height: 44px;
-  padding: 0 14px;
-  font-size: 14px;
-}
-
 .product-card__buy.loading > span {
   visibility: hidden;
 }
@@ -220,7 +214,7 @@
     align-items: stretch;
   }
 
-  .product-card .home-btn.product-card__buy {
+  .product-card .ui-btn.product-card__buy {
     width: 100%;
   }
 }

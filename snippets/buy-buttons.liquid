@@ -58,7 +58,7 @@
             id="ProductSubmitButton-{{ section_id }}"
             type="submit"
             name="add"
-            class="product-form__submit button button--full-width button--primary"
+            class="product-form__submit button button--full-width ui-btn ui-btn--primary ui-btn--lg"
             {% if product.selected_or_first_available_variant.available == false
               or quantity_rule_soldout
               or product.selected_or_first_available_variant == null

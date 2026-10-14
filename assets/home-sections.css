@@ -47,44 +47,8 @@ home-deals.home-section {
   margin: 0 0 var(--home-heading-gap, 20px);
 }
 
-.home-section .home-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  min-height: 48px;
-  padding: 0 22px;
-  border: 0;
-  border-radius: 8px;
-  font-family: inherit;
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 1;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.home-section .home-btn--buy {
-  background: var(--home-yellow);
-  color: var(--home-navy);
-}
-
-.home-section .home-btn--ghost {
-  background: transparent;
-  color: var(--home-blue);
-  box-shadow: inset 0 0 0 1.5px var(--home-blue);
-}
-
 /* Hover recipe (mouse only; transition and focus ring come from the interaction kit in base.css) */
 @media (hover: hover) {
-  .home-section .home-btn--buy:hover {
-    background: var(--home-yellow-deep);
-  }
-
-  .home-section .home-btn--ghost:hover {
-    background: #e8f1fb;
-  }
-
   .home-section__all:hover {
     text-decoration: underline;
   }
