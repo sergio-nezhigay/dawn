@@ -54,30 +54,6 @@
   gap: 12px;
 }
 
-.home-board__btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  min-height: 48px;
-  padding: 0 22px;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 1;
-  color: #fff;
-  text-decoration: none;
-}
-
-.home-board__btn--fit {
-  background: var(--home-board-yellow);
-  color: var(--home-board-navy);
-}
-
-.home-board__btn--ghost {
-  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.6);
-}
-
 .home-board__search {
   display: none;
   background: #fff;
@@ -318,14 +294,8 @@
 /* Hover recipe (mouse only; transition and focus ring come from the interaction kit in base.css).
    The chip keeps its small grow on purpose: it is the hero's centrepiece. */
 @media (hover: hover) {
-  .home-board__btn--fit:hover,
   .home-board__search button:hover {
     background: #f2ae00;
-  }
-
-  .home-board__btn--ghost:hover {
-    background: rgba(255, 255, 255, 0.12);
-    box-shadow: inset 0 0 0 1.5px #fff;
   }
 
   .home-board__chips a:hover {

@@ -81,18 +81,18 @@
       <product-form data-section-id="{{ section_id }}" data-hide-errors="true">
         {%- form 'product', product, id: form_id, novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
           <input type="hidden" name="id" value="{{ variant.id }}">
-          <button type="submit" name="add" class="home-btn home-btn--buy product-card__buy">
+          <button type="submit" name="add" class="ui-btn ui-btn--primary ui-btn--sm product-card__buy">
             <span>{{ 'products.product.buy' | t }}</span>
             {%- render 'loading-spinner' -%}
           </button>
         {%- endform -%}
       </product-form>
     {%- elsif buy and product.available -%}
-      <a class="home-btn home-btn--buy product-card__buy" href="{{ product.url }}" tabindex="-1">
+      <a class="ui-btn ui-btn--primary ui-btn--sm product-card__buy" href="{{ product.url }}" tabindex="-1">
         {{- 'products.product.buy' | t -}}
       </a>
     {%- elsif buy -%}
-      <a class="home-btn home-btn--ghost product-card__buy" href="{{ product.url }}" tabindex="-1">
+      <a class="ui-btn ui-btn--ghost ui-btn--sm product-card__buy" href="{{ product.url }}" tabindex="-1">
         {{- 'products.product.details' | t -}}
       </a>
     {%- endif -%}

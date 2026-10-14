@@ -58,9 +58,9 @@
       </form>
 
       <div class="home-board__ctas">
-        <a class="home-board__btn home-board__btn--fit" href="#fit">{{ 'sections.home_board.fit_button' | t }}</a>
+        <a class="ui-btn ui-btn--primary" href="#fit">{{ 'sections.home_board.fit_button' | t }}</a>
         <a
-          class="home-board__btn home-board__btn--ghost"
+          class="ui-btn ui-btn--ghost ui-btn--on-dark"
           href="{{ section.settings.catalog_url | default: routes.all_products_collection_url }}"
         >
           {{- 'sections.home_board.catalog_button' | t -}}

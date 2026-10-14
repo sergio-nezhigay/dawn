@@ -42,7 +42,7 @@
                   {{- 'icon-close.svg' | inline_asset_content -}}
                 </span>
               </button>
-              <a href="{{ routes.all_products_collection_url }}" class="button">
+              <a href="{{ routes.all_products_collection_url }}" class="button ui-btn ui-btn--primary">
                 {{ 'general.continue_shopping' | t }}
               </a>
 
@@ -543,7 +543,7 @@
 
         <div class="cart__ctas" {{ block.shopify_attributes }}>
           <a
-            class="cart__checkout-button button w-full"
+            class="cart__checkout-button button ui-btn ui-btn--primary w-full"
             href="/checkout?checkout[shipping_address][zip]=12345"
           >
             {{- 'sections.cart.checkout' | t -}}
