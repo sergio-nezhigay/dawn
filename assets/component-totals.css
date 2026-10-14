@@ -27,7 +27,7 @@
 
 .totals__total-value {
   font-size: 18px;
-  color: #121212;
+  color: var(--ui-navy);
   font-family: 'Chakra Petch', 'Tektur', sans-serif;
   font-weight: 600;
 }

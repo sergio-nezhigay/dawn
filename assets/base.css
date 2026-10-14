@@ -51,9 +51,10 @@ body:not(.template-product) .section-title,
   text-align: left !important;
 }
 
-/* PDP section headings and reviews: the home heading recipe (home-sections.css .home-heading) in navy */
+/* PDP section headings, reviews and the cart H1: the home heading recipe (home-sections.css .home-heading) in navy */
 .template-product .section-title,
-.jdgm-rev-widg__title {
+.jdgm-rev-widg__title,
+cart-items .title--primary {
   font-size: clamp(20px, 2.4vw, 26px) !important;
   font-weight: 600 !important;
   color: var(--ui-navy) !important;

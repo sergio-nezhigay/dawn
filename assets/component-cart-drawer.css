@@ -44,12 +44,13 @@
   justify-content: center;
 }
 
+/* Empty drawer: "Продовжити покупки" is the only action, so it gets the home yellow button */
 .cart-drawer__empty-content .button {
   margin-top: 1.5rem;
-  background: var(--ui-blue);
-  color: white;
+  background: var(--ui-yellow);
+  color: var(--ui-navy);
   border: none;
-  border-radius: 6px;
+  border-radius: var(--ui-radius-sm);
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
@@ -57,9 +58,11 @@
   min-width: 20rem; /* Give it some width */
 }
 
-.cart-drawer__empty-content .button:hover {
-  background: #005ec4;
-  box-shadow: none;
+@media (hover: hover) {
+  .cart-drawer__empty-content .button:hover {
+    background: var(--ui-yellow-deep);
+    box-shadow: none;
+  }
 }
 
 .cart-drawer__empty-content .button:active {
@@ -98,8 +101,16 @@ cart-drawer:not(.is-empty) .cart-drawer__collection {
   align-items: center;
 }
 
+/* "Кошик": the home heading recipe (home-sections.css .home-heading) in navy */
 .drawer__heading {
   margin: 0 0 1rem;
+  font-family: 'Chakra Petch', 'Tektur', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  line-height: 1.1;
+  font-size: clamp(20px, 2.4vw, 26px);
+  color: var(--ui-navy);
 }
 
 .drawer__close {
@@ -374,10 +385,10 @@ cart-drawer-items {
   max-width: none;
   width: 100%;
   padding: 16px;
-  background: var(--ui-blue);
-  color: white;
+  background: var(--ui-yellow);
+  color: var(--ui-navy);
   border: none;
-  border-radius: 6px;
+  border-radius: var(--ui-radius-sm);
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
@@ -388,8 +399,10 @@ cart-drawer-items {
   margin-top: 2rem;
 }
 
-.cart-drawer .cart__checkout-button:hover {
-  background: #005ec4;
+@media (hover: hover) {
+  .cart-drawer .cart__checkout-button:hover {
+    background: var(--ui-yellow-deep);
+  }
 }
 
 .cart-drawer .cart__checkout-button:active {
