@@ -133,7 +133,7 @@
             {%- if card_product.available == false -%}
               <span
                 id="NoMediaStandardBadge-{{ section_id }}-{{ card_product.id }}"
-                class="badge badge--bottom-left color-{{ settings.sold_out_badge_color_scheme }}"
+                class="badge badge--bottom-left"
               >
                 {{- 'products.product.sold_out' | t -}}
               </span>
@@ -519,7 +519,7 @@
           {%- if card_product.available == false -%}
             <span
               id="Badge-{{ section_id }}-{{ card_product.id }}"
-              class="badge badge--bottom-left color-{{ settings.sold_out_badge_color_scheme }}"
+              class="badge badge--bottom-left"
             >
               {{- 'products.product.sold_out' | t -}}
             </span>

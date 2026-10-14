@@ -533,21 +533,18 @@ a.product__text {
 .product__title {
   word-break: break-word;
   margin-bottom: 0;
+  --ui-heading-gap: 0;
+}
+
+/* Long product names: keep the phone size small so the buy box stays high */
+@media screen and (max-width: 749px) {
+  .product__title .ui-heading--h1 {
+    font-size: 18px !important;
+  }
 }
 
 .product__title > * {
   margin: 0;
-}
-
-.product__title h1 {
-  font-family: 'Chakra Petch', 'Tektur', sans-serif;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.025em;
-}
-
-:lang(en) .product__title h1 {
-  font-weight: 700;
 }
 
 .product__title > a {
