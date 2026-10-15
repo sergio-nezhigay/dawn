@@ -1,0 +1,124 @@
+{%- comment -%}
+  Help block for a search with no results: popular searches, main-menu categories and the phone.
+  Accepts: chips (string, comma-separated search terms)
+{%- endcomment -%}
+{%- assign menu = linklists['main-menu'] -%}
+<div class="search-empty page-width">
+  {%- assign chip_list = chips | split: ',' -%}
+  {%- if chip_list.size > 0 -%}
+    <p class="search-empty__label">{{ 'templates.search.popular' | t }}</p>
+    <div class="search-empty__chips">
+      {%- for chip in chip_list -%}
+        {%- assign term = chip | strip -%}
+        {%- if term != blank -%}
+          <a href="{{ routes.search_url }}?q={{ term | url_encode }}&options%5Bprefix%5D=last&type=product">{{ term | escape }}</a>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  {%- if menu.links.size > 0 -%}
+    <p class="search-empty__label">{{ 'templates.search.categories' | t }}</p>
+    <ul class="search-empty__tiles" role="list">
+      {%- for link in menu.links -%}
+        <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+
+  {%- if shop.phone != blank -%}
+    <div class="search-empty__help">
+      <div>
+        <strong>{{ 'templates.search.help_title' | t }}</strong>
+        <span>{{ 'templates.search.help_text' | t }}</span>
+      </div>
+      <a class="ui-btn ui-btn--primary" href="tel:{% render 'phone-number', format: 'href' %}">
+        {%- render 'phone-number', format: 'display' -%}
+      </a>
+    </div>
+  {%- endif -%}
+</div>
+
+<style>
+  .search-empty {
+    max-width: 96rem;
+    margin: 0 auto;
+    color: var(--ui-text, #001e3c);
+  }
+  .search-empty__label {
+    margin: 3rem 0 1.2rem;
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ui-muted, #5b6573);
+  }
+  .search-empty__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+  .search-empty__chips a {
+    padding: 0.6rem 1.4rem;
+    border: 1px solid #cfe2f7;
+    border-radius: var(--ui-radius-pill, 999px);
+    background: var(--ui-tint, #f6f9fd);
+    color: var(--ui-blue-deep, #0058ad);
+    font-size: 1.4rem;
+    text-decoration: none;
+  }
+  .search-empty__chips a:hover {
+    border-color: var(--ui-blue, #0071dc);
+  }
+  .search-empty__tiles {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .search-empty__tiles a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 5.6rem;
+    padding: 1rem;
+    border: 1px solid var(--ui-line, #e5e7eb);
+    border-radius: var(--ui-radius-md, 12px);
+    background: #fff;
+    color: inherit;
+    font-weight: 700;
+    font-size: 1.5rem;
+    text-align: center;
+    text-decoration: none;
+  }
+  .search-empty__tiles a:hover {
+    border-color: var(--ui-blue, #0071dc);
+    color: var(--ui-blue, #0071dc);
+  }
+  .search-empty__help {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.6rem;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 3.2rem;
+    padding: 1.8rem 2.2rem;
+    border-radius: var(--ui-radius-md, 12px);
+    background: var(--ui-navy, #001e3c);
+    color: #fff;
+  }
+  .search-empty__help strong,
+  .search-empty__help span {
+    display: block;
+  }
+  .search-empty__help span {
+    opacity: 0.8;
+  }
+  @media screen and (min-width: 750px) {
+    .search-empty__tiles {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+</style>

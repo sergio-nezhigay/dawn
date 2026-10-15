@@ -38,6 +38,7 @@
         {%- if results.terms -%}
           <input type="hidden" name="q" value="{{ results.terms | escape }}">
           <input name="options[prefix]" type="hidden" value="last">
+          <input type="hidden" name="type" value="product">
         {%- endif -%}
 
         {% if enable_filtering %}
@@ -426,7 +427,7 @@
                           selected="selected"
                         {% endif %}
                       >
-                        {{ option.name | escape }}
+                        {%- render 'sort-option-label', option: option -%}
                       </option>
                     {%- endfor -%}
                   </select>
@@ -749,7 +750,7 @@
                                   selected="selected"
                                 {% endif %}
                               >
-                                {{ option.name | escape }}
+                                {%- render 'sort-option-label', option: option -%}
                               </option>
                             {%- endunless -%}
                           {%- endfor -%}
@@ -786,6 +787,7 @@
             {%- if results.terms -%}
               <input type="hidden" name="q" value="{{ results.terms | escape }}">
               <input name="options[prefix]" type="hidden" value="last">
+              <input type="hidden" name="type" value="product">
             {%- endif -%}
           </div>
         </form>
@@ -857,7 +859,7 @@
                       selected="selected"
                     {% endif %}
                   >
-                    {{ option.name | escape }}
+                    {%- render 'sort-option-label', option: option -%}
                   </option>
                 {%- endfor -%}
               </select>
@@ -875,6 +877,7 @@
         {%- if results.terms -%}
           <input type="hidden" name="q" value="{{ results.terms | escape }}">
           <input name="options[prefix]" type="hidden" value="last">
+          <input type="hidden" name="type" value="product">
         {%- endif -%}
       </form>
     </facet-filters-form>

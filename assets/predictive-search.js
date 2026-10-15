@@ -43,6 +43,12 @@ class PredictiveSearch extends SearchForm {
       return;
     }
 
+    // One letter matches half the catalogue; wait for a second character.
+    if (this.searchTerm.length < 2) {
+      this.close();
+      return;
+    }
+
     this.getSearchResults(this.searchTerm);
   }
 
@@ -185,9 +191,14 @@ class PredictiveSearch extends SearchForm {
       return;
     }
 
-    fetch(`${routes.predictive_search_url}?q=${encodeURIComponent(searchTerm)}&section_id=predictive-search&resources[limit]=${limit}`, {
-      signal: this.abortController.signal,
-    })
+    fetch(
+      `${routes.predictive_search_url}?q=${encodeURIComponent(
+        searchTerm
+      )}&section_id=predictive-search&resources[limit]=${limit}&resources[type]=product,query,collection`,
+      {
+        signal: this.abortController.signal,
+      }
+    )
       .then((response) => {
         if (!response.ok) {
           var error = new Error(response.status);
@@ -240,6 +251,32 @@ class PredictiveSearch extends SearchForm {
 
     this.setLiveRegionResults();
     this.open();
+    this.renderResultsCount(this.searchTerm);
+  }
+
+  // "Show all N products" — the predictive API has no total, so ask the search page (search.count template).
+  renderResultsCount(searchTerm) {
+    if (!this.querySelector('#predictive-search-results-products-list')) return;
+    const apply = (label) => {
+      const target = this.querySelector('[data-predictive-search-search-for-text]');
+      if (label && target && this.searchTerm === searchTerm) target.textContent = label;
+    };
+    PredictiveSearch.countCache = PredictiveSearch.countCache || {};
+    if (PredictiveSearch.countCache[searchTerm]) {
+      apply(PredictiveSearch.countCache[searchTerm]);
+      return;
+    }
+    fetch(
+      `${routes.search_url}?q=${encodeURIComponent(searchTerm)}&options%5Bprefix%5D=last&type=product&view=count`,
+      { signal: this.abortController.signal }
+    )
+      .then((response) => (response.ok ? response.json() : null))
+      .then((data) => {
+        if (!data?.label) return;
+        PredictiveSearch.countCache[searchTerm] = data.label;
+        apply(data.label);
+      })
+      .catch(() => {});
   }
 
   setLiveRegionResults() {
@@ -258,7 +295,7 @@ class PredictiveSearch extends SearchForm {
     const SHOW_ALL_HEIGHT = 59;
     const available = this.getResultsMaxHeight();
     const limit = Math.floor((available - SHOW_ALL_HEIGHT) / ITEM_HEIGHT);
-    return Math.min(10, Math.max(3, limit));
+    return Math.min(6, Math.max(4, limit));
   }
 
   open() {
@@ -278,7 +315,7 @@ class PredictiveSearch extends SearchForm {
     // Reset any previously hidden items before trimming
     productItems.forEach((el) => el.style.removeProperty('display'));
     let i = productItems.length - 1;
-    while (container.scrollHeight > container.clientHeight && i >= 1) {
+    while (container.scrollHeight > container.clientHeight && i >= 4) {
       productItems[i].style.display = 'none';
       i--;
     }

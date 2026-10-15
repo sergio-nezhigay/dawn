@@ -98,6 +98,10 @@ class FacetFiltersForm extends HTMLElement {
     const containerDesktop = document.getElementById('ProductCountDesktop');
     container.innerHTML = count;
     container.classList.remove('loading');
+    // Search page: the visible count sits under the title
+    const searchCount = new DOMParser().parseFromString(html, 'text/html').getElementById('SearchResultsCount');
+    const searchCountTarget = document.getElementById('SearchResultsCount');
+    if (searchCount && searchCountTarget) searchCountTarget.innerHTML = searchCount.innerHTML;
     if (containerDesktop) {
       containerDesktop.innerHTML = count;
       containerDesktop.classList.remove('loading');
@@ -252,7 +256,15 @@ class FacetFiltersForm extends HTMLElement {
 
   createSearchParams(form) {
     const formData = new FormData(form);
-    return new URLSearchParams(formData).toString();
+    const params = new URLSearchParams(formData);
+    // Search: sold-out items carry price 0 and would fill the first pages of "price, low to high".
+    // With the Search & Discovery "Availability" filter switched on, also hide sold-out items.
+    const searchFilters = form.closest('#main-search-filters');
+    if (searchFilters && params.get('sort_by') === 'price-ascending') {
+      params.set('filter.v.price.gte', '1');
+      if (searchFilters.hasAttribute('data-availability-filter')) params.set('filter.v.availability', '1');
+    }
+    return params.toString();
   }
 
   onSubmitForm(searchParams, event) {

@@ -23,6 +23,8 @@
       {%- comment -%} Shopify's cart page_title is English-only ("Your Shopping Cart"); use the theme's translated title. {%- endcomment -%}
       {%- if request.page_type == 'cart' -%}
         {{ 'sections.cart.title' | t }} &ndash; {{ shop.name }}
+      {%- elsif request.page_type == 'search' and search.performed -%}
+        {{ 'templates.search.results_for' | t: terms: search.terms }} &ndash; {{ shop.name }}
       {%- else -%}
         {{ page_title }}
       {%- endif -%}
@@ -372,6 +374,7 @@
         cart_update_url: '{{ routes.cart_update_url }}',
         cart_url: '{{ routes.cart_url }}',
         predictive_search_url: '{{ routes.predictive_search_url }}',
+        search_url: '{{ routes.search_url }}',
       };
 
       window.cartStrings = {

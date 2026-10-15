@@ -30,13 +30,36 @@
     margin-top: 3rem;
   }
 
+  .template-search__count {
+    margin: 0.6rem 0 0;
+    text-align: center;
+    color: var(--ui-muted, #5b6573);
+    font-size: 1.5rem;
+  }
+
+  #main-search-filters .product-count {
+    display: none;
+  }
+
+  .template-search__stock-note {
+    margin: 0 0 1.6rem;
+    font-size: 1.4rem;
+    color: var(--ui-muted, #5b6573);
+  }
+
+  .template-search__hint {
+    margin: 1rem 0 0;
+    text-align: center;
+    color: var(--ui-muted, #5b6573);
+  }
+
   .template-search--empty {
     padding-bottom: 18rem;
   }
 
   @media screen and (min-width: 750px) {
     .template-search__header {
-      margin-bottom: 5rem;
+      margin-bottom: 3rem;
     }
   }
 
@@ -49,6 +72,26 @@
   assign sort_by = search.sort_by | default: search.default_sort_by
   assign terms = search.terms | escape
   assign search_url = '?q=' | append: terms | append: '&options%5Bprefix%5D=last&sort_by=' | append: sort_by
+
+  comment
+    Price sort puts sold-out items with a real price first. If the Search & Discovery "Availability"
+    filter is switched on, facets.js applies it for price sort; otherwise each page lists in-stock
+    cards first.
+  endcomment
+  assign has_availability_filter = false
+  assign availability_active = false
+  for filter in search.filters
+    if filter.param_name == 'filter.v.availability'
+      assign has_availability_filter = true
+      if filter.active_values.size > 0
+        assign availability_active = true
+      endif
+    endif
+  endfor
+  assign split_stock = false
+  if sort_by == 'price-ascending'
+    assign split_stock = true
+  endif
 -%}
 
 {%- style -%}
@@ -69,12 +112,24 @@
   <div class="template-search{% unless search.performed and search.results_count > 0 %} template-search--empty{% endunless %} section-{{ section.id }}-padding">
     <div class="template-search__header page-width{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
       <h1 class="ui-heading ui-heading--h1">
-        {%- if search.performed -%}
-          {{- 'templates.search.title' | t -}}
+        {%- if search.performed and search.results_count == 0 -%}
+          {{- 'templates.search.no_results_title' | t: terms: search.terms -}}
+        {%- elsif search.performed -%}
+          {{- 'templates.search.results_for' | t: terms: search.terms -}}
         {%- else -%}
           {{- 'general.search.search' | t -}}
         {%- endif -%}
       </h1>
+      {%- if search.performed and search.results_count > 0 -%}
+        <p class="template-search__count" id="SearchResultsCount">
+          {{- 'templates.search.product_count' | t: count: search.results_count -}}
+        </p>
+      {%- endif -%}
+      {%- comment -%}
+        After a search the header box already holds the query; a second box here duplicated it and its
+        dropdown slid under the product grid. Only show it on the bare /search page.
+      {%- endcomment -%}
+      {%- unless search.performed -%}
       <div class="template-search__search">
         {%- if settings.predictive_search_enabled -%}
           <predictive-search data-loading-text="{{ 'accessibility.loading' | t }}">
@@ -104,6 +159,7 @@
               >
               <label class="field__label" for="Search-In-Template">{{ 'general.search.search' | t }}</label>
               <input name="options[prefix]" type="hidden" value="last">
+              <input type="hidden" name="type" value="product">
 
               {%- if settings.predictive_search_enabled -%}
                 <div class="predictive-search predictive-search--search-template" tabindex="-1" data-predictive-search>
@@ -134,6 +190,7 @@
           </predictive-search>
         {%- endif -%}
       </div>
+      {%- endunless -%}
       {%- if search.performed -%}
         {%- unless section.settings.enable_filtering or section.settings.enable_sorting -%}
           {%- if search.results_count > 0 -%}
@@ -143,10 +200,14 @@
           {%- endif -%}
         {%- endunless -%}
         {%- if search.results_count == 0 and search.filters == empty -%}
-          <p role="status">{{ 'templates.search.no_results' | t: terms: search.terms }}</p>
+          <p class="template-search__hint" role="status">{{ 'templates.search.no_results_hint' | t }}</p>
         {%- endif -%}
+        {%- render 'search-layout-hint', count: search.results_count -%}
       {%- endif -%}
     </div>
+    {%- if search.performed and search.results_count == 0 and search.filters == empty -%}
+      {%- render 'search-empty-help', chips: section.settings.empty_chips -%}
+    {%- endif -%}
     {%- if search.performed -%}
       {%- if section.settings.enable_sorting
         and section.settings.filter_type == 'vertical'
@@ -174,7 +235,7 @@
                           selected="selected"
                         {% endif %}
                       >
-                        {{ option.name | escape }}
+                        {%- render 'sort-option-label', option: option -%}
                       </option>
                     {%- endfor -%}
                   </select>
@@ -217,6 +278,9 @@
               class="facets-wrapper{% unless section.settings.enable_filtering %} facets-wrapper--no-filters{% endunless %}{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}"
               id="main-search-filters"
               data-id="{{ section.id }}"
+              {% if has_availability_filter %}
+                data-availability-filter
+              {% endif %}
             >
               {% render 'facets',
                 results: search,
@@ -254,59 +318,46 @@
               data-id="{{ section.id }}"
             >
               <div class="loading-overlay gradient"></div>
+              {%- if availability_active -%}
+                {%- assign all_stock_url = search_url | append: '&type=product&filter.v.price.gte=1' -%}
+                <p class="template-search__stock-note">
+                  {{ 'templates.search.in_stock_only' | t }}
+                  <a href="{{ all_stock_url }}" class="link underlined-link">
+                    {{- 'templates.search.show_sold_out' | t -}}
+                  </a>
+                </p>
+              {%- endif -%}
               <ul
                 class="grid product-grid  grid--{{ section.settings.columns_mobile }}-col-tablet-down grid--{{ section.settings.columns_desktop }}-col-desktop"
                 role="list"
               >
-                {%- for item in search.results -%}
-                  {% assign lazy_load = false %}
-                  {%- if forloop.index > 2 -%}
+                {%- comment -%}
+                  Products only (articles/pages showed raw slugs). With price sort: pass 1 = in stock,
+                  pass 2 = sold out, so buyable cards lead each page.
+                {%- endcomment -%}
+                {%- assign card_index = 0 -%}
+                {%- for pass in (1..2) -%}
+                  {%- if pass == 2 and split_stock == false -%}{%- break -%}{%- endif -%}
+                  {%- for item in search.results -%}
+                    {%- if item.object_type != 'product' -%}{%- continue -%}{%- endif -%}
+                    {%- if split_stock -%}
+                      {%- if pass == 1 and item.available == false -%}{%- continue -%}{%- endif -%}
+                      {%- if pass == 2 and item.available -%}{%- continue -%}{%- endif -%}
+                    {%- endif -%}
+                    {%- assign card_index = card_index | plus: 1 -%}
                     {%- assign lazy_load = true -%}
-                  {%- endif -%}
-
-                  <li
-                    class="grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-                    {% if settings.animations_reveal_on_scroll %}
-                      data-cascade
-                    {% endif %}
-                  >
-                    {%- case item.object_type -%}
-                      {%- when 'product' -%}
-                        {% render 'product-card', product: item, section_id: section.id, lazy_load: lazy_load %}
-                      {%- when 'article' -%}
-                        {% render 'article-card',
-                          article: item,
-                          show_image: true,
-                          show_date: section.settings.article_show_date,
-                          show_author: section.settings.article_show_author,
-                          show_badge: true,
-                          media_aspect_ratio: 1,
-                          lazy_load: lazy_load
-                        %}
-                      {%- when 'page' -%}
-                        <div class="article-card-wrapper card-wrapper underline-links-hover">
-                          <div
-                            class="card card--card card--text ratio color-{{ settings.blog_card_color_scheme }}"
-                            style="--ratio-percent: 100%;"
-                          >
-                            <div class="card__content">
-                              <div class="card__information">
-                                <h3 class="card__heading">
-                                  <a href="{{ item.url }}" class="full-unstyled-link">
-                                    {{ item.title | truncate: 50 | escape }}
-                                  </a>
-                                </h3>
-                              </div>
-                              <div class="card__badge {{ settings.badge_position }}">
-                                <span class="badge color-{{ settings.color_schemes | first }}">
-                                  {{- 'templates.search.page' | t -}}
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                    {%- endcase -%}
-                  </li>
+                    {%- if card_index <= 2 -%}
+                      {%- assign lazy_load = false -%}
+                    {%- endif -%}
+                    <li
+                      class="grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                      {% if settings.animations_reveal_on_scroll %}
+                        data-cascade
+                      {% endif %}
+                    >
+                      {% render 'product-card', product: item, section_id: section.id, lazy_load: lazy_load %}
+                    </li>
+                  {%- endfor -%}
                 {%- endfor -%}
               </ul>
               {%- if paginate.pages > 1 -%}
@@ -353,6 +404,17 @@
           "label": "t:sections.main-search.settings.columns_mobile.options__2.label"
         }
       ]
+    },
+    {
+      "type": "header",
+      "content": "Nothing found"
+    },
+    {
+      "type": "text",
+      "id": "empty_chips",
+      "label": "Popular searches",
+      "info": "Comma-separated. Shown when a search finds nothing, next to the main menu categories.",
+      "default": "DDR4 8GB, DDR3 SODIMM, HDMI, DisplayPort, USB-C, SSD"
     },
     {
       "type": "header",
