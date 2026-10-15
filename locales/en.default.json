@@ -343,7 +343,19 @@
       "categories": "Shop by category",
       "help_title": "Can’t find it?",
       "help_text": "Send us the model and we’ll find a compatible part.",
-      "no_suggestions": "Nothing found"
+      "no_suggestions": "Nothing found",
+      "in_stock": "in stock",
+      "in_stock_only": "Showing in-stock items only.",
+      "show_sold_out": "Show sold-out items too",
+      "layout_hint": "Did you mean",
+      "product_count": {
+        "one": "{{ count }} product",
+        "other": "{{ count }} products"
+      },
+      "show_all_count": {
+        "one": "Show {{ count }} product for “{{ terms }}”",
+        "other": "Show all {{ count }} products for “{{ terms }}”"
+      }
     },
     "cart": {
       "cart": "Cart"

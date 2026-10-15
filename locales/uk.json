@@ -334,7 +334,7 @@
         "many": "Продуктів: {{ count }}",
         "other": "Продуктів: {{ count }}"
       },
-      "suggestions": "Рекомендації",
+      "suggestions": "Підказки",
       "pages": "Сторінки",
       "results_for": "Результати за «{{ terms }}»",
       "no_results_title": "За запитом «{{ terms }}» нічого не знайдено",
@@ -343,7 +343,23 @@
       "categories": "Розділи каталогу",
       "help_title": "Не знайшли потрібне?",
       "help_text": "Надішліть модель, і ми підберемо сумісну деталь.",
-      "no_suggestions": "Нічого не знайдено"
+      "no_suggestions": "Нічого не знайдено",
+      "in_stock": "в наявності",
+      "in_stock_only": "Показано лише товари в наявності.",
+      "show_sold_out": "Показати також відсутні",
+      "layout_hint": "Можливо, ви мали на увазі",
+      "product_count": {
+        "one": "{{ count }} товар",
+        "few": "{{ count }} товари",
+        "many": "{{ count }} товарів",
+        "other": "{{ count }} товару"
+      },
+      "show_all_count": {
+        "one": "Показати {{ count }} товар за «{{ terms }}»",
+        "few": "Показати всі {{ count }} товари за «{{ terms }}»",
+        "many": "Показати всі {{ count }} товарів за «{{ terms }}»",
+        "other": "Показати всі {{ count }} товару за «{{ terms }}»"
+      }
     },
     "cart": {
       "cart": "Кошик"

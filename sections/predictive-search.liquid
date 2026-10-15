@@ -1,7 +1,55 @@
 {% comment %}theme-check-disable ImgLazyLoading{% endcomment %}
 {%- if predictive_search.performed -%}
+  {%- comment -%}
+    Category chips: collections Shopify suggests, plus the main-menu collections the found products
+    belong to (menu names are short and tidy). At most 3.
+  {%- endcomment -%}
+  {%- liquid
+    assign menu_handles = ','
+    for l1 in linklists['main-menu'].links
+      if l1.type == 'collection_link'
+        assign menu_handles = menu_handles | append: l1.object.handle | append: ','
+      endif
+      for l2 in l1.links
+        if l2.type == 'collection_link'
+          assign menu_handles = menu_handles | append: l2.object.handle | append: ','
+        endif
+        for l3 in l2.links
+          if l3.type == 'collection_link'
+            assign menu_handles = menu_handles | append: l3.object.handle | append: ','
+          endif
+        endfor
+      endfor
+    endfor
+
+    assign chip_handles = ','
+    assign chip_count = 0
+    for c in predictive_search.resources.collections
+      if chip_count < 3
+        assign key = ',' | append: c.handle | append: ','
+        unless chip_handles contains key
+          assign chip_handles = chip_handles | append: c.handle | append: ','
+          assign chip_count = chip_count | plus: 1
+        endunless
+      endif
+    endfor
+    for p in predictive_search.resources.products
+      for c in p.collections
+        if chip_count < 3
+          assign key = ',' | append: c.handle | append: ','
+          if menu_handles contains key
+            unless chip_handles contains key
+              assign chip_handles = chip_handles | append: c.handle | append: ','
+              assign chip_count = chip_count | plus: 1
+            endunless
+          endif
+        endif
+      endfor
+    endfor
+    assign chip_list = chip_handles | split: ','
+  -%}
   {% assign first_column_results_size = predictive_search.resources.queries.size
-    | plus: predictive_search.resources.collections.size
+    | plus: chip_count
     | plus: predictive_search.resources.pages.size
     | plus: predictive_search.resources.articles.size
   %}
@@ -9,13 +57,13 @@
     {%- if first_column_results_size > 0 or predictive_search.resources.products.size > 0 -%}
       <div
         id="predictive-search-results-groups-wrapper"
-        class="predictive-search__results-groups-wrapper{% unless predictive_search.resources.products.size > 0 %} predictive-search__results-groups-wrapper--no-products{% endunless %}{% unless predictive_search.resources.queries.size > 0 or predictive_search.resources.collections.size > 0 %} predictive-search__results-groups-wrapper--no-suggestions{% endunless %}"
+        class="predictive-search__results-groups-wrapper{% unless predictive_search.resources.products.size > 0 %} predictive-search__results-groups-wrapper--no-products{% endunless %}{% unless predictive_search.resources.queries.size > 0 or chip_count > 0 %} predictive-search__results-groups-wrapper--no-suggestions{% endunless %}"
       >
     {%- endif -%}
     {%- if first_column_results_size > 0 -%}
       <div class="predictive-search__result-group">
     {%- endif -%}
-    {%- if predictive_search.resources.queries.size > 0 or predictive_search.resources.collections.size > 0 -%}
+    {%- if predictive_search.resources.queries.size > 0 or chip_count > 0 -%}
       <div>
         {%- if predictive_search.resources.queries.size > 0 -%}
         <h2 id="predictive-search-queries" class="predictive-search__heading text-body caption-with-letter-spacing">
@@ -48,30 +96,28 @@
             </li>
           {%- endfor -%}
         </ul>
-        {%- if predictive_search.resources.collections.size > 0 -%}
+        {%- if chip_count > 0 -%}
           <h2 id="predictive-search-collections" class="predictive-search__heading text-body caption-with-letter-spacing">
             {{- 'templates.search.categories' | t -}}
           </h2>
           <ul
             id="predictive-search-results-collections-list"
-            class="predictive-search__results-list list-unstyled"
+            class="predictive-search__results-list predictive-search__chips list-unstyled"
             role="group"
             aria-labelledby="predictive-search-collections"
           >
-          {%- for collection in predictive_search.resources.collections -%}
-            <li
-              id="predictive-search-option-collection-{{ forloop.index }}"
-              class="predictive-search__list-item"
-              role="option"
-              aria-selected="false"
-            >
-              <a href="{{ collection.url }}" class="predictive-search__item link link--text" tabindex="-1">
-                <div class="predictive-search__item-content predictive-search__item-content--centered">
-                  <p class="predictive-search__item-heading h5">{{ collection.title | escape }}</p>
-                </div>
-              </a>
-            </li>
-          {%- endfor -%}
+            {%- for handle in chip_list -%}
+              {%- if handle == blank -%}{%- continue -%}{%- endif -%}
+              {%- assign chip = collections[handle] -%}
+              <li
+                id="predictive-search-option-collection-{{ forloop.index }}"
+                class="predictive-search__list-item"
+                role="option"
+                aria-selected="false"
+              >
+                <a href="{{ chip.url }}" class="predictive-search__chip" tabindex="-1">{{ chip.title | escape }}</a>
+              </li>
+            {%- endfor -%}
           </ul>
         {%- endif -%}
       </div>
@@ -174,9 +220,18 @@
                         </div>
                       {%- endif -%}
                       <p class="predictive-search__item-heading h5">{{ product.title | escape }}</p>
-                      {%- if settings.predictive_search_show_price -%}
-                        {% render 'price', product: product, use_variant: true, show_badges: false %}
-                      {%- endif -%}
+                      <div class="predictive-search__price-row">
+                        {%- if settings.predictive_search_show_price and product.price > 0 -%}
+                          {% render 'price', product: product, use_variant: true, show_badges: false %}
+                        {%- endif -%}
+                        {%- if product.available -%}
+                          <span class="predictive-search__stock">{{ 'templates.search.in_stock' | t }}</span>
+                        {%- else -%}
+                          <span class="predictive-search__stock predictive-search__stock--out">
+                            {{- 'products.product.sold_out' | t -}}
+                          </span>
+                        {%- endif -%}
+                      </div>
                     </div>
                   </a>
                 </li>

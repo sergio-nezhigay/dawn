@@ -1,0 +1,47 @@
+{%- comment -%}
+  Keyboard-layout hint: "rf,tkm" typed on an English layout is a Cyrillic word.
+  Shown only when the converted query finds more products than the current one.
+  Accepts: count (number, current results count)
+{%- endcomment -%}
+<p class="search-layout-hint" hidden data-layout-hint data-locale="{{ request.locale.iso_code }}" data-count="{{ count | default: 0 }}">
+  {{ 'templates.search.layout_hint' | t }} <a href="#"></a>?
+</p>
+<script>
+  (function () {
+    var hint = document.querySelector('[data-layout-hint]');
+    if (!hint) return;
+    var query = new URLSearchParams(location.search).get('q') || '';
+    if (!/[a-z]/i.test(query)) return;
+    var lat = "qwertyuiop[]asdfghjkl;'zxcvbnm,.";
+    var cyr = hint.dataset.locale === 'ru' ? '\u0439\u0446\u0443\u043a\u0435\u043d\u0433\u0448\u0449\u0437\u0445\u044a\u0444\u044b\u0432\u0430\u043f\u0440\u043e\u043b\u0434\u0436\u044d\u044f\u0447\u0441\u043c\u0438\u0442\u044c\u0431\u044e' : '\u0439\u0446\u0443\u043a\u0435\u043d\u0433\u0448\u0449\u0437\u0445\u0457\u0444\u0456\u0432\u0430\u043f\u0440\u043e\u043b\u0434\u0436\u0454\u044f\u0447\u0441\u043c\u0438\u0442\u044c\u0431\u044e';
+    var fixed = query.toLowerCase().replace(/./g, function (ch) {
+      var i = lat.indexOf(ch);
+      return i === -1 ? ch : cyr.charAt(i);
+    });
+    if (fixed === query.toLowerCase()) return;
+    var params = new URLSearchParams(location.search);
+    params.set('q', fixed);
+    var link = hint.querySelector('a');
+    link.href = location.pathname + '?' + params.toString();
+    link.textContent = String.fromCharCode(171) + fixed + String.fromCharCode(187);
+    // Only suggest the converted word when it actually finds products.
+    params.set('type', 'product');
+    params.set('view', 'count');
+    fetch(location.pathname + '?' + params.toString())
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) { if (data && data.count > Number(hint.dataset.count || 0)) hint.hidden = false; })
+      .catch(function () {});
+  })();
+</script>
+
+<style>
+.search-layout-hint {
+  margin: 1.2rem 0 0;
+  text-align: center;
+  font-size: 1.6rem;
+}
+.search-layout-hint a {
+  color: var(--ui-blue-deep, #0058ad);
+  font-weight: 700;
+}
+</style>

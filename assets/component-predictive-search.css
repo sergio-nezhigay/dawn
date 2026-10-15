@@ -224,13 +224,14 @@ predictive-search[loading] .predictive-search__results-groups-wrapper ~ .predict
   letter-spacing: 0;
 }
 
+/* The typed part (mark) is the anchor: bold navy; the suggested rest stays regular. */
 .predictive-search__item-query-result *:not(mark) {
-  font-weight: bolder;
+  font-weight: 400;
 }
 
 .predictive-search__item-query-result mark {
-  color: var(--ui-muted, #5b6573);
-  font-weight: 400;
+  color: var(--ui-navy, #001e3c);
+  font-weight: 700;
 }
 
 .predictive-search__item-query-result mark {
@@ -320,4 +321,60 @@ body:has(predictive-search[open]) .header__menu-row::after {
   padding: 1.4rem 2rem 0.4rem;
   color: var(--ui-muted, #5b6573);
   font-size: 1.4rem;
+}
+
+/* Stock label under the price (text, not colour alone) */
+.predictive-search__price-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2rem 1rem;
+  margin-top: 0.5rem;
+}
+
+.predictive-search__price-row .price {
+  margin-top: 0;
+}
+
+.predictive-search__stock {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--ui-blue-deep, #0058ad);
+}
+
+.predictive-search__stock--out {
+  color: #b45309;
+}
+
+/* Category chips */
+.predictive-search__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  padding: 1.2rem 2rem 1.4rem;
+}
+
+.predictive-search__chips .predictive-search__list-item {
+  border: 0;
+}
+
+.predictive-search__chips .predictive-search__list-item::before {
+  content: none;
+}
+
+.predictive-search__chip {
+  display: inline-block;
+  padding: 0.5rem 1.2rem;
+  border: 1px solid #cfe2f7;
+  border-radius: var(--ui-radius-pill, 999px);
+  background: var(--ui-tint, #f6f9fd);
+  color: var(--ui-blue-deep, #0058ad);
+  font-size: 1.3rem;
+  text-decoration: none;
+}
+
+.predictive-search__list-item[aria-selected='true'] > .predictive-search__chip,
+.predictive-search__chip:hover {
+  border-color: var(--ui-blue, #0071dc);
+  background: #ebf4ff;
 }

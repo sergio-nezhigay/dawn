@@ -11,7 +11,7 @@
       {%- for chip in chip_list -%}
         {%- assign term = chip | strip -%}
         {%- if term != blank -%}
-          <a href="{{ routes.search_url }}?q={{ term | url_encode }}&options%5Bprefix%5D=last">{{ term | escape }}</a>
+          <a href="{{ routes.search_url }}?q={{ term | url_encode }}&options%5Bprefix%5D=last&type=product">{{ term | escape }}</a>
         {%- endif -%}
       {%- endfor -%}
     </div>

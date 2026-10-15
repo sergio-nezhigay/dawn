@@ -38,7 +38,7 @@
                 <li>
                   {%- if childlink.links == blank -%}
                     <a
-                      id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}"
+                      id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}-{{ forloop.index }}"
                       href="{{ childlink.url }}"
                       class="header__menu-item list-menu__item link link--text focus-inset caption-large{% if childlink.current %} list-menu__item--active{% endif %}"
                       {% if childlink.current %}
@@ -50,7 +50,7 @@
                   {%- else -%}
                     <div id="Details-HeaderSubMenu-{{ link.handle }}-{{ childlink.handle }}">
                       <span
-                        id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}"
+                        id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}-{{ forloop.index }}"
                         class="header__menu-item link link--text list-menu__item focus-inset caption-large"
                       >
                         <span>{{ childlink.title | escape }}</span>
@@ -67,7 +67,7 @@
                         {%- for grandchildlink in childlink.links -%}
                           <li>
                             <a
-                              id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}-{{ grandchildlink.handle }}"
+                              id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}-{{ grandchildlink.handle }}-{{ forloop.index }}"
                               href="{{ grandchildlink.url }}"
                               class="header__menu-item list-menu__item link link--text focus-inset caption-large{% if grandchildlink.current %} list-menu__item--active{% endif %}"
                               {% if grandchildlink.current %}

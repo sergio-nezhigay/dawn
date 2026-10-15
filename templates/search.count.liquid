@@ -1,0 +1,9 @@
+{%- layout none -%}
+{%- comment -%}
+  Tiny JSON used by predictive-search.js for the "show all N products" button.
+  Request: /search?q=...&options[prefix]=last&type=product&view=count
+{%- endcomment -%}
+{%- capture label -%}
+  {{- 'templates.search.show_all_count' | t: count: search.results_count, terms: search.terms -}}
+{%- endcapture -%}
+{"count": {{ search.results_count | json }}, "label": {{ label | json }}}
