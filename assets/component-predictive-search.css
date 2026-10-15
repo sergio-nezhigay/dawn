@@ -407,3 +407,29 @@ body:has(predictive-search[open]) .header__menu-row::after {
     border-top: 1px solid var(--ui-line, #e5e7eb);
   }
 }
+
+/* Narrow header search box (small laptops/tablets): the two-column panel does not fit,
+   so stack it like the phone sheet - products first. */
+.predictive-search--header {
+  container-type: inline-size;
+}
+
+@container (max-width: 560px) {
+  .predictive-search__results-groups-wrapper {
+    flex-direction: column-reverse;
+    gap: 0;
+  }
+
+  .predictive-search__result-group,
+  .predictive-search__result-group:first-child {
+    flex: 1 1 auto;
+    gap: 0;
+  }
+
+  .predictive-search__search-for-button {
+    position: sticky;
+    bottom: 0;
+    z-index: 1;
+    border-top: 1px solid var(--ui-line, #e5e7eb);
+  }
+}
