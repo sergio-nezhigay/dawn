@@ -406,7 +406,8 @@
     onScroll() {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-      if (this.predictiveSearch && this.predictiveSearch.isOpen) return;
+      // any open search (desktop inline box or the phone search sheet) keeps the header in place
+      if (this.querySelector('predictive-search[open], .header__search details[open]')) return;
 
       if (scrollTop > this.currentScrollTop && scrollTop > this.headerBounds.bottom) {
         this.header.classList.add('scrolled-past-header');
