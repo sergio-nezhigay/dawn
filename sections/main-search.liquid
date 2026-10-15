@@ -30,6 +30,12 @@
     margin-top: 3rem;
   }
 
+  .template-search__hint {
+    margin: 1rem 0 0;
+    text-align: center;
+    color: var(--ui-muted, #5b6573);
+  }
+
   .template-search--empty {
     padding-bottom: 18rem;
   }
@@ -69,12 +75,19 @@
   <div class="template-search{% unless search.performed and search.results_count > 0 %} template-search--empty{% endunless %} section-{{ section.id }}-padding">
     <div class="template-search__header page-width{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
       <h1 class="ui-heading ui-heading--h1">
-        {%- if search.performed -%}
-          {{- 'templates.search.title' | t -}}
+        {%- if search.performed and search.results_count == 0 -%}
+          {{- 'templates.search.no_results_title' | t: terms: search.terms -}}
+        {%- elsif search.performed -%}
+          {{- 'templates.search.results_for' | t: terms: search.terms -}}
         {%- else -%}
           {{- 'general.search.search' | t -}}
         {%- endif -%}
       </h1>
+      {%- comment -%}
+        After a search the header box already holds the query; a second box here duplicated it and its
+        dropdown slid under the product grid. Only show it on the bare /search page.
+      {%- endcomment -%}
+      {%- unless search.performed -%}
       <div class="template-search__search">
         {%- if settings.predictive_search_enabled -%}
           <predictive-search data-loading-text="{{ 'accessibility.loading' | t }}">
@@ -134,6 +147,7 @@
           </predictive-search>
         {%- endif -%}
       </div>
+      {%- endunless -%}
       {%- if search.performed -%}
         {%- unless section.settings.enable_filtering or section.settings.enable_sorting -%}
           {%- if search.results_count > 0 -%}
@@ -143,10 +157,13 @@
           {%- endif -%}
         {%- endunless -%}
         {%- if search.results_count == 0 and search.filters == empty -%}
-          <p role="status">{{ 'templates.search.no_results' | t: terms: search.terms }}</p>
+          <p class="template-search__hint" role="status">{{ 'templates.search.no_results_hint' | t }}</p>
         {%- endif -%}
       {%- endif -%}
     </div>
+    {%- if search.performed and search.results_count == 0 and search.filters == empty -%}
+      {%- render 'search-empty-help', chips: section.settings.empty_chips -%}
+    {%- endif -%}
     {%- if search.performed -%}
       {%- if section.settings.enable_sorting
         and section.settings.filter_type == 'vertical'
@@ -174,7 +191,7 @@
                           selected="selected"
                         {% endif %}
                       >
-                        {{ option.name | escape }}
+                        {%- render 'sort-option-label', option: option -%}
                       </option>
                     {%- endfor -%}
                   </select>
@@ -353,6 +370,17 @@
           "label": "t:sections.main-search.settings.columns_mobile.options__2.label"
         }
       ]
+    },
+    {
+      "type": "header",
+      "content": "Nothing found"
+    },
+    {
+      "type": "text",
+      "id": "empty_chips",
+      "label": "Popular searches",
+      "info": "Comma-separated. Shown when a search finds nothing, next to the main menu categories.",
+      "default": "DDR4 8GB, DDR3 SODIMM, HDMI, DisplayPort, USB-C, SSD"
     },
     {
       "type": "header",

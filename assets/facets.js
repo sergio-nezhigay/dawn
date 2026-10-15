@@ -252,7 +252,12 @@ class FacetFiltersForm extends HTMLElement {
 
   createSearchParams(form) {
     const formData = new FormData(form);
-    return new URLSearchParams(formData).toString();
+    const params = new URLSearchParams(formData);
+    // Search: sold-out items carry price 0 and would fill the first pages of "price, low to high".
+    if (form.closest('#main-search-filters') && params.get('sort_by') === 'price-ascending') {
+      params.set('filter.v.price.gte', '1');
+    }
+    return params.toString();
   }
 
   onSubmitForm(searchParams, event) {

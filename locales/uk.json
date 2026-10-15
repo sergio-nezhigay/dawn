@@ -279,7 +279,18 @@
       "filter_selected_accessibility": "{{ type }} (встановлено фільтри: {{ count }})",
       "show_more": "Показати більше",
       "show_less": "Показати менше",
-      "filter_and_operator_subtitle": "Вибрати все"
+      "filter_and_operator_subtitle": "Вибрати все",
+      "sort_options": {
+        "relevance": "За релевантністю",
+        "manual": "Рекомендовані",
+        "best_selling": "Популярні",
+        "title_ascending": "За назвою, А–Я",
+        "title_descending": "За назвою, Я–А",
+        "price_ascending": "Від дешевих до дорогих",
+        "price_descending": "Від дорогих до дешевих",
+        "created_ascending": "Спочатку старі",
+        "created_descending": "Спочатку нові"
+      }
     }
   },
   "templates": {
@@ -298,7 +309,7 @@
       },
       "page": "Сторінка",
       "products": "Товари",
-      "search_for": "Показати всі результати \"{{ terms }}\"",
+      "search_for": "Показати всі результати «{{ terms }}»",
       "results_with_count_and_term": {
         "one": "{{ count }} рез. за запитом «{{ terms }}»",
         "few": "{{ count }} рез. за запитом «{{ terms }}»",
@@ -324,7 +335,15 @@
         "other": "Продуктів: {{ count }}"
       },
       "suggestions": "Рекомендації",
-      "pages": "Сторінки"
+      "pages": "Сторінки",
+      "results_for": "Результати за «{{ terms }}»",
+      "no_results_title": "За запитом «{{ terms }}» нічого не знайдено",
+      "no_results_hint": "Перевірте написання або спробуйте коротший запит, наприклад тільки модель.",
+      "popular": "Часто шукають",
+      "categories": "Розділи каталогу",
+      "help_title": "Не знайшли потрібне?",
+      "help_text": "Надішліть модель, і ми підберемо сумісну деталь.",
+      "no_suggestions": "Нічого не знайдено"
     },
     "cart": {
       "cart": "Кошик"
@@ -1143,4 +1162,3 @@
     }
   }
 }
-

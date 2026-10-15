@@ -426,7 +426,7 @@
                           selected="selected"
                         {% endif %}
                       >
-                        {{ option.name | escape }}
+                        {%- render 'sort-option-label', option: option -%}
                       </option>
                     {%- endfor -%}
                   </select>
@@ -749,7 +749,7 @@
                                   selected="selected"
                                 {% endif %}
                               >
-                                {{ option.name | escape }}
+                                {%- render 'sort-option-label', option: option -%}
                               </option>
                             {%- endunless -%}
                           {%- endfor -%}
@@ -857,7 +857,7 @@
                       selected="selected"
                     {% endif %}
                   >
-                    {{ option.name | escape }}
+                    {%- render 'sort-option-label', option: option -%}
                   </option>
                 {%- endfor -%}
               </select>

@@ -17,9 +17,11 @@
     {%- endif -%}
     {%- if predictive_search.resources.queries.size > 0 or predictive_search.resources.collections.size > 0 -%}
       <div>
+        {%- if predictive_search.resources.queries.size > 0 -%}
         <h2 id="predictive-search-queries" class="predictive-search__heading text-body caption-with-letter-spacing">
           {{- 'templates.search.suggestions' | t -}}
         </h2>
+        {%- endif -%}
         <ul
           id="predictive-search-results-queries-list"
           class="predictive-search__results-list list-unstyled"
@@ -45,6 +47,17 @@
               </a>
             </li>
           {%- endfor -%}
+        </ul>
+        {%- if predictive_search.resources.collections.size > 0 -%}
+          <h2 id="predictive-search-collections" class="predictive-search__heading text-body caption-with-letter-spacing">
+            {{- 'templates.search.categories' | t -}}
+          </h2>
+          <ul
+            id="predictive-search-results-collections-list"
+            class="predictive-search__results-list list-unstyled"
+            role="group"
+            aria-labelledby="predictive-search-collections"
+          >
           {%- for collection in predictive_search.resources.collections -%}
             <li
               id="predictive-search-option-collection-{{ forloop.index }}"
@@ -59,7 +72,8 @@
               </a>
             </li>
           {%- endfor -%}
-        </ul>
+          </ul>
+        {%- endif -%}
       </div>
     {%- endif -%}
     {%- if predictive_search.resources.articles.size > 0 or predictive_search.resources.pages.size > 0 -%}
@@ -141,15 +155,17 @@
                     class="predictive-search__item predictive-search__item--link-with-thumbnail link link--text"
                     tabindex="-1"
                   >
-                    {%- if product.featured_media != blank -%}
-                      <img
-                        class="predictive-search__image"
-                        src="{{ product.featured_media | image_url: width: 150 }}"
-                        alt="{{ product.featured_media.alt | escape }}"
-                        width="50"
-                        height="{{ 50 | divided_by: product.featured_media.preview_image.aspect_ratio }}"
-                      >
-                    {%- endif -%}
+                    <span class="predictive-search__thumb">
+                      {%- if product.featured_media != blank -%}
+                        <img
+                          class="predictive-search__image"
+                          src="{{ product.featured_media | image_url: width: 150 }}"
+                          alt="{{ product.featured_media.alt | escape }}"
+                          width="50"
+                          height="{{ 50 | divided_by: product.featured_media.preview_image.aspect_ratio }}"
+                        >
+                      {%- endif -%}
+                    </span>
                     <div class="predictive-search__item-content{% unless settings.predictive_search_show_vendor or settings.predictive_search_show_price %} predictive-search__item-content--centered{% endunless %}">
                       {%- if settings.predictive_search_show_vendor -%}
                         <span class="visually-hidden">{{ 'accessibility.vendor' | t }}</span>
@@ -217,6 +233,10 @@
     {%- endif -%}
     {%- if first_column_results_size > 0 or predictive_search.resources.products.size > 0 -%}
       </div>
+    {%- endif -%}
+
+    {%- if first_column_results_size == 0 and predictive_search.resources.products.size == 0 -%}
+      <p class="predictive-search__empty">{{ 'templates.search.no_suggestions' | t }}</p>
     {%- endif -%}
 
     {%- render 'loading-spinner', class: 'predictive-search__loading-state' -%}

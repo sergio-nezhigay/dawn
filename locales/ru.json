@@ -279,10 +279,25 @@
       "filter_selected_accessibility": "{{ type }} (установлены фильтры: {{ count }})",
       "show_more": "Показать больше",
       "show_less": "Показать меньше",
-      "filter_and_operator_subtitle": "Выбрать все"
+      "filter_and_operator_subtitle": "Выбрать все",
+      "sort_options": {
+        "relevance": "По релевантности",
+        "manual": "Рекомендуемые",
+        "best_selling": "Популярные",
+        "title_ascending": "По названию, А–Я",
+        "title_descending": "По названию, Я–А",
+        "price_ascending": "От дешевых к дорогим",
+        "price_descending": "От дорогих к дешевым",
+        "created_ascending": "Сначала старые",
+        "created_descending": "Сначала новые"
+      }
     }
   },
   "templates": {
+    "404": {
+      "title": "Страница не найдена",
+      "subtext": "404"
+    },
     "search": {
       "no_results": "По запросу «{{ terms }}» ничего не найдено. Проверьте правописание или выберите другие слова либо фразу.",
       "title": "Результаты поиска",
@@ -294,7 +309,7 @@
       },
       "page": "Страница",
       "products": "Товары",
-      "search_for": "Поиск \"{{ terms }}\"",
+      "search_for": "Показать все результаты «{{ terms }}»",
       "results_with_count_and_term": {
         "one": "{{ count }} рез. по запросу «{{ terms }}»",
         "other": "{{ count }} рез. по запросу «{{ terms }}»",
@@ -320,7 +335,15 @@
         "many": "Продукты: {{ count }}"
       },
       "suggestions": "Рекомендации",
-      "pages": "Страницы"
+      "pages": "Страницы",
+      "results_for": "Результаты по «{{ terms }}»",
+      "no_results_title": "По запросу «{{ terms }}» ничего не найдено",
+      "no_results_hint": "Проверьте написание или попробуйте запрос короче, например только модель.",
+      "popular": "Часто ищут",
+      "categories": "Разделы каталога",
+      "help_title": "Не нашли нужное?",
+      "help_text": "Пришлите модель, и мы подберем совместимую деталь.",
+      "no_suggestions": "Ничего не найдено"
     },
     "cart": {
       "cart": "Корзина"
@@ -336,10 +359,6 @@
         "error_heading": "Измените следующие элементы:",
         "title": "Форма для связи"
       }
-    },
-    "404": {
-      "title": "Страница не найдена",
-      "subtext": "404"
     }
   },
   "sections": {
