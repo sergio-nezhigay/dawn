@@ -194,7 +194,7 @@ class PredictiveSearch extends SearchForm {
     fetch(
       `${routes.predictive_search_url}?q=${encodeURIComponent(
         searchTerm
-      )}&section_id=predictive-search&resources[limit]=${limit}&resources[type]=product,query,collection`,
+      )}&section_id=predictive-search&resources[limit]=${limit}&resources[limit_scope]=each&resources[type]=product,query,collection`,
       {
         signal: this.abortController.signal,
       }
@@ -284,13 +284,29 @@ class PredictiveSearch extends SearchForm {
     this.setLiveRegionText(this.querySelector('[data-predictive-search-live-region-count-value]').textContent);
   }
 
+  // Phone search sheet (header search modal under 750px): results fill the space above the keyboard.
+  isPhoneSheet() {
+    return !!this.closest('.search-modal') && window.matchMedia('(max-width: 749px)').matches;
+  }
+
   getResultsMaxHeight() {
-    this.resultsMaxHeight =
-      window.innerHeight - document.querySelector('.section-header')?.getBoundingClientRect().bottom - 16;
+    // visualViewport shrinks when the on-screen keyboard opens; innerHeight does not (Android Chrome).
+    const viewport = window.visualViewport;
+    const visibleBottom = viewport ? viewport.offsetTop + viewport.height : window.innerHeight;
+    const top = this.isPhoneSheet()
+      ? this.predictiveSearchResults.getBoundingClientRect().top
+      : document.querySelector('.section-header')?.getBoundingClientRect().bottom;
+    this.resultsMaxHeight = Math.max(160, visibleBottom - top - (this.isPhoneSheet() ? 0 : 16));
     return this.resultsMaxHeight;
   }
 
+  onViewportChange() {
+    if (!this.isOpen) return;
+    this.predictiveSearchResults.style.maxHeight = `${this.getResultsMaxHeight()}px`;
+  }
+
   getResultsLimit() {
+    if (this.isPhoneSheet()) return 6; // the phone list scrolls, so always ask for the full six
     const ITEM_HEIGHT = 90;
     const SHOW_ALL_HEIGHT = 59;
     const available = this.getResultsMaxHeight();
@@ -299,11 +315,16 @@ class PredictiveSearch extends SearchForm {
   }
 
   open() {
-    this.predictiveSearchResults.style.maxHeight = `${this.getResultsMaxHeight()}px`;
     this.setAttribute('open', true);
+    this.predictiveSearchResults.style.maxHeight = `${this.getResultsMaxHeight()}px`;
     this.input.setAttribute('aria-expanded', true);
     this.isOpen = true;
-    this.trimOverflowingResults();
+    if (!this.viewportListener && window.visualViewport) {
+      this.viewportListener = this.onViewportChange.bind(this);
+      window.visualViewport.addEventListener('resize', this.viewportListener);
+    }
+    // On the phone sheet the list scrolls inside itself, so nothing is cut.
+    if (!this.isPhoneSheet()) this.trimOverflowingResults();
   }
 
   trimOverflowingResults() {
@@ -324,6 +345,10 @@ class PredictiveSearch extends SearchForm {
   close(clearSearchTerm = false) {
     this.closeResults(clearSearchTerm);
     this.isOpen = false;
+    if (this.viewportListener) {
+      window.visualViewport.removeEventListener('resize', this.viewportListener);
+      this.viewportListener = null;
+    }
   }
 
   closeResults(clearSearchTerm = false) {

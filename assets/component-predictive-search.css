@@ -17,6 +17,8 @@ predictive-search input::selection {
   border: 1px solid #E8F2FF;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  /* scrolling the list must never scroll the page behind it */
+  overscroll-behavior: contain;
   /* fixed colours: the header colour scheme has white foreground, which made text white-on-white */
   color: var(--ui-text, #001e3c);
 }
@@ -377,4 +379,57 @@ body:has(predictive-search[open]) .header__menu-row::after {
 .predictive-search__chip:hover {
   border-color: var(--ui-blue, #0071dc);
   background: #ebf4ff;
+}
+
+/* Phone search sheet (header search icon, under 750px): the list sits flush under the search field,
+   products come first, and "show all" stays pinned above the keyboard. */
+@media screen and (max-width: 749px) {
+  .search-modal .predictive-search {
+    border-width: 1px 0 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .search-modal .predictive-search__results-groups-wrapper {
+    flex-direction: column-reverse;
+    gap: 0;
+    border-bottom: 0;
+  }
+
+  .search-modal .predictive-search__result-group {
+    gap: 0;
+  }
+
+  .search-modal .predictive-search__search-for-button {
+    position: sticky;
+    bottom: 0;
+    z-index: 1;
+    border-top: 1px solid var(--ui-line, #e5e7eb);
+  }
+}
+
+/* Narrow header search box (small laptops/tablets): the two-column panel does not fit,
+   so stack it like the phone sheet - products first. */
+.predictive-search--header {
+  container-type: inline-size;
+}
+
+@container (max-width: 560px) {
+  .predictive-search__results-groups-wrapper {
+    flex-direction: column-reverse;
+    gap: 0;
+  }
+
+  .predictive-search__result-group,
+  .predictive-search__result-group:first-child {
+    flex: 1 1 auto;
+    gap: 0;
+  }
+
+  .predictive-search__search-for-button {
+    position: sticky;
+    bottom: 0;
+    z-index: 1;
+    border-top: 1px solid var(--ui-line, #e5e7eb);
+  }
 }

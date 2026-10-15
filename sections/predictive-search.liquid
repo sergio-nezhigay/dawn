@@ -76,7 +76,7 @@
           role="group"
           aria-labelledby="predictive-search-queries"
         >
-          {%- for query in predictive_search.resources.queries -%}
+          {%- for query in predictive_search.resources.queries limit: 3 -%}
             <li
               id="predictive-search-option-query-{{ forloop.index }}"
               class="predictive-search__list-item"
