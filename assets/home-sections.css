@@ -151,14 +151,30 @@ home-deals.home-section {
   border: 1px solid var(--home-line);
   border-radius: 50%;
   background: #fff;
-  padding: 1px 6px;
+  padding: 0;
   box-shadow: 0 2px 8px rgba(0, 30, 60, 0.15);
   color: var(--home-navy);
-  font-family: inherit;
-  font-size: 20px;
-  font-weight: 700;
-  line-height: normal;
+  font-size: 0;
   cursor: pointer;
+}
+
+.home-rail__arrow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 9px;
+  height: 9px;
+  border: solid currentColor;
+  border-width: 2px 2px 0 0;
+}
+
+.home-rail__arrow--prev::before {
+  transform: translateX(2.5px) rotate(-135deg);
+}
+
+.home-rail__arrow--next::before {
+  transform: translateX(-2.5px) rotate(45deg);
 }
 
 .home-rail__arrow--prev {
