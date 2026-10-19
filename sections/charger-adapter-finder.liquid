@@ -1,0 +1,266 @@
+{%- comment -%}
+  Laptop charger adapters collection (template collection.charger-adapters): brand buttons above the grid,
+  a "how to find your plug size" guide (plug pictures, brand-to-sizes table) and a "send us the laptop model" helper.
+  Brand buttons and plug pictures come from the Search & Discovery filters on cable.compatible_brands and
+  specifications.dc_size (filled by supplier-sync scripts/chargerAdapters), so they render nothing until those filters exist.
+  The helper reuses the homepage fit-check contract (assets/home-fit-check.js: data-fit form, AI chat / Telegram / Viber).
+{%- endcomment -%}
+{{ 'section-charger-finder.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'home-fit-check.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'charger-finder.js' | asset_url }}" defer="defer"></script>
+{%- liquid
+  assign brand_param = 'filter.p.m.cable.compatible_brands'
+  assign size_param = 'filter.p.m.specifications.dc_size'
+  for filter in collection.filters
+    if filter.param_name == brand_param
+      assign brand_filter = filter
+    elsif filter.param_name == size_param
+      assign size_filter = filter
+    endif
+  endfor
+  assign brand_order = section.settings.brands | split: ','
+  assign pin_sizes = section.settings.pin_sizes | split: ','
+  assign phone = '(099) 381-5288'
+  assign phone_href = 'tel:+380993815288'
+  assign model_id = 'ChargerModel-' | append: section.id
+  assign error_id = 'ChargerError-' | append: section.id
+-%}
+<div class="charger-finder page-width" data-charger-finder data-brand-param="{{ brand_param }}">
+  {%- if brand_filter -%}
+    <p class="charger-finder__label" id="ChargerBrands-{{ section.id }}">{{ 'sections.charger_finder.brands_label' | t }}</p>
+    <ul class="charger-finder__chips list-unstyled" aria-labelledby="ChargerBrands-{{ section.id }}">
+      <li>
+        <a
+          class="charger-finder__chip{% if brand_filter.active_values.size == 0 %} is-active{% endif %}"
+          href="{{ collection.url }}"
+          data-brand=""
+          {% if brand_filter.active_values.size == 0 %}
+            aria-current="true"
+          {% endif %}
+        >
+          {{- 'sections.charger_finder.all' | t -}}
+        </a>
+      </li>
+      {%- for name in brand_order -%}
+        {%- assign name = name | strip -%}
+        {%- for value in brand_filter.values -%}
+          {%- comment -%} Every brand stays visible: a button sets only the brand (drops other filters), so it never leads to 0 results {%- endcomment -%}
+          {%- if value.value == name -%}
+            {%- liquid
+              case value.value
+                when 'Apple'
+                  assign label = 'Apple MagSafe'
+                when 'Microsoft'
+                  assign label = 'Surface'
+                else
+                  assign label = value.label
+              endcase
+            -%}
+            <li>
+              <a
+                class="charger-finder__chip{% if value.active %} is-active{% endif %}"
+                href="{% if value.active %}{{ collection.url }}{% else %}{{ collection.url }}?{{ brand_param }}={{ value.value | url_encode }}{% endif %}"
+                data-brand="{{ value.value | escape }}"
+                {% if value.active %}
+                  aria-current="true"
+                {% endif %}
+              >
+                {{- label | escape -}}
+              </a>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+
+  <details class="charger-finder__guide" id="adapter-help"{% if size_filter.active_values.size > 0 %} open{% endif %}>
+    <summary class="charger-finder__summary">
+      <span class="svg-wrapper">{{- 'icon-question-mark.svg' | inline_asset_content -}}</span>
+      <span>{{ 'sections.charger_finder.guide_summary' | t }}</span>
+      <span class="svg-wrapper charger-finder__caret">{{- 'icon-caret.svg' | inline_asset_content -}}</span>
+    </summary>
+    <div class="charger-finder__body">
+      <ol class="charger-finder__steps">
+        <li>{{ 'sections.charger_finder.step_label_html' | t }}</li>
+        {%- if size_filter -%}
+          <li>
+            {{ 'sections.charger_finder.step_compare' | t }}
+            <ul class="charger-finder__plugs list-unstyled">
+              {%- for value in size_filter.values -%}
+                {%- if value.count > 0 or value.active -%}
+                  {%- liquid
+                    comment
+                      Sizes are "4.0x1.35" with a multiplication sign, which .liquid files can't hold: compare url_encode forms
+                    endcomment
+                    assign size_ascii = value.value | url_encode | replace: '%C3%97', 'x'
+                    assign parts = size_ascii | split: 'x'
+                    assign outer = parts[0] | times: 1.0
+                    assign inner = parts[1] | times: 1.0
+                    assign round_plug = false
+                    if parts.size == 2 and outer > 0
+                      assign round_plug = true
+                    endif
+                  -%}
+                  <li>
+                    <a
+                      class="charger-finder__plug{% if value.active %} is-active{% endif %}"
+                      href="{% if value.active %}{{ value.url_to_remove }}{% else %}{{ value.url_to_add }}{% endif %}"
+                      {% if value.active %}
+                        aria-current="true"
+                      {% endif %}
+                    >
+                      {%- if round_plug -%}
+                        {%- assign r_outer = outer | times: 2.6 -%}
+                        {%- assign r_inner = inner | times: 2.6 -%}
+                        <svg viewBox="-22 -22 44 44" width="44" height="44" aria-hidden="true" focusable="false">
+                          <circle r="{{ r_outer }}" class="charger-finder__plug-body"/>
+                          <circle r="{{ r_inner }}" class="charger-finder__plug-hole"/>
+                          {%- if pin_sizes contains size_ascii -%}
+                            <circle r="1.8" class="charger-finder__plug-pin"/>
+                          {%- endif -%}
+                        </svg>
+                      {%- else -%}
+                        <svg viewBox="-22 -22 44 44" width="44" height="44" aria-hidden="true" focusable="false">
+                          <rect x="-16" y="-8" width="32" height="16" rx="4" class="charger-finder__plug-body"/>
+                          <rect x="-10" y="-3" width="20" height="6" rx="2" class="charger-finder__plug-hole"/>
+                        </svg>
+                      {%- endif -%}
+                      <span class="charger-finder__plug-name">
+                        {{- value.label | escape -}}
+                        {%- if pin_sizes contains size_ascii -%}
+                          <small>{{ 'sections.charger_finder.pin' | t }}</small>
+                        {%- endif -%}
+                      </span>
+                    </a>
+                  </li>
+                {%- endif -%}
+              {%- endfor -%}
+            </ul>
+            {%- if size_filter.active_values.size > 0 -%}
+              <a class="charger-finder__reset" href="{{ size_filter.url_to_remove }}">
+                {{- 'sections.charger_finder.all_sizes' | t -}}
+              </a>
+            {%- endif -%}
+          </li>
+        {%- endif -%}
+        {%- if section.blocks.size > 0 -%}
+          <li>
+            {{ 'sections.charger_finder.step_table' | t }}
+            <div class="charger-finder__table-wrap">
+              <table class="charger-finder__table">
+                <thead>
+                  <tr>
+                    <th scope="col">{{ 'sections.charger_finder.table_brand' | t }}</th>
+                    <th scope="col">{{ 'sections.charger_finder.table_sizes' | t }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {%- for block in section.blocks -%}
+                    <tr {{ block.shopify_attributes }}>
+                      <th scope="row">{{ block.settings.brand | escape }}</th>
+                      <td>{{ block.settings.sizes | escape }}</td>
+                    </tr>
+                  {%- endfor -%}
+                </tbody>
+              </table>
+            </div>
+          </li>
+        {%- endif -%}
+      </ol>
+      <p class="charger-finder__note">{{ 'sections.charger_finder.pin_note' | t }}</p>
+      <p class="charger-finder__note">{{ 'sections.charger_finder.powerbank_note' | t }}</p>
+
+      {%- comment -%}
+        Same contract as sections/home-fit-check.liquid (assets/home-fit-check.js) with the goal fixed to "charger".
+        Starts without the AI button: home-fit-check.js shows it once the chat exposes window.ShopAIChat.open
+      {%- endcomment -%}
+      <form class="charger-help home-fit__form--noai" novalidate data-fit>
+        <h2 class="charger-help__heading">{{ 'sections.charger_finder.help_heading' | t }}</h2>
+        <input type="radio" name="goal" value="charger" checked hidden>
+        <label for="{{ model_id }}" data-fit-label>{{ 'sections.home_fit_check.label_charger_html' | t }}</label>
+        <div class="charger-help__row">
+          <input
+            type="text"
+            id="{{ model_id }}"
+            name="model"
+            required
+            autocomplete="off"
+            aria-describedby="{{ error_id }}"
+            placeholder="{{ 'sections.home_fit_check.placeholder_charger_html' | t | escape }}"
+          >
+          <button type="submit" class="ui-btn ui-btn--primary home-fit__ai">
+            {{- 'sections.home_fit_check.ai_button' | t -}}
+          </button>
+        </div>
+        <p class="home-fit__error" id="{{ error_id }}" role="alert" hidden>{{ 'sections.home_fit_check.error' | t }}</p>
+        <div data-fit-installed hidden><input type="hidden" name="installed" value=""></div>
+        <p class="charger-help__alt">
+          <span class="home-fit__ai">{{ 'sections.home_fit_check.manager' | t }}</span>
+          <a href="https://t.me/NSergiy?text=" target="_blank" rel="noopener" data-channel="telegram">Telegram</a>
+          <a href="viber://chat?number=+380507025777&amp;draft=" class="charger-help__viber" data-channel="viber">Viber</a>
+          <a href="{{ phone_href }}" data-channel="phone">{{ phone }}</a>
+        </p>
+        <script type="application/json" data-fit-strings>
+          {
+            "intro": {{ 'sections.charger_finder.draft_intro_html' | t | json }},
+            "goal": {{ 'sections.home_fit_check.draft_goal_html' | t: goal: '%goal%' | json }},
+            "installed": {{ 'sections.home_fit_check.draft_installed_html' | t: installed: '%installed%' | json }},
+            "goals": {
+              "charger": {
+                "name": {{ 'sections.home_fit_check.goal_name_charger_html' | t | json }},
+                "label": {{ 'sections.home_fit_check.label_charger_html' | t | json }},
+                "placeholder": {{ 'sections.home_fit_check.placeholder_charger_html' | t | json }}
+              }
+            }
+          }
+        </script>
+      </form>
+    </div>
+  </details>
+</div>
+
+{% schema %}
+{
+  "name": "Charger adapter finder",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "brands",
+      "label": "Brand buttons (values of the compatibility filter, in order)",
+      "default": "Asus,HP,Lenovo,Dell,Acer,Apple,Samsung,Microsoft,Sony,Toshiba"
+    },
+    {
+      "type": "text",
+      "id": "pin_sizes",
+      "label": "Plug sizes with a centre pin",
+      "default": "4.5x3.0,7.4x5.0,6.0x3.7,7.9x5.5,5.0x3.0,5.5x3.0,6.0x4.0,6.5x4.4"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "brand",
+      "name": "Brand -> sizes row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "brand",
+          "label": "Laptop brand"
+        },
+        {
+          "type": "text",
+          "id": "sizes",
+          "label": "Plug sizes"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Charger adapter finder"
+    }
+  ]
+}
+{% endschema %}

@@ -120,7 +120,8 @@
             enable_filtering: section.settings.enable_filtering,
             enable_sorting: section.settings.enable_sorting,
             filter_type: section.settings.filter_type,
-            paginate: paginate
+            paginate: paginate,
+            hide_filters: section.settings.hide_filters
           %}
         </aside>
       {%- endif -%}
@@ -135,6 +136,10 @@
         {%- if collection.products.size == 0 -%}
           <div class="collection collection--empty page-width" id="product-grid" data-id="{{ section.id }}">
             <div class="loading-overlay gradient"></div>
+            {%- if section.settings.help_card_after != blank -%}
+              {%- comment -%} Charger adapters: nothing fits these filters, so offer the model helper instead of the plain message {%- endcomment -%}
+              {% render 'charger-help-card', no_results: true, reset_url: collection.url %}
+            {%- else -%}
             <div class="title-wrapper center">
               <h2 class="title title--primary">
                 {{ 'sections.collection_template.empty' | t -}}
@@ -145,6 +150,7 @@
                 }}
               </h2>
             </div>
+            {%- endif -%}
           </div>
         {%- else -%}
           <div
@@ -182,6 +188,9 @@
                     fetch_priority: fetch_priority
                   %}
                 </li>
+                {%- if forloop.index == section.settings.help_card_after and paginate.current_page == 1 -%}
+                  <li class="grid__item">{% render 'charger-help-card' %}</li>
+                {%- endif -%}
               {%- endfor -%}
             </ul>
 
@@ -352,6 +361,18 @@
     {
       "type": "header",
       "content": "t:sections.main-collection-product-grid.settings.header__1.content"
+    },
+    {
+      "type": "text",
+      "id": "hide_filters",
+      "label": "Hidden filters",
+      "info": "Comma-separated filter param names not shown on this template, e.g. filter.p.m.custom.color"
+    },
+    {
+      "type": "number",
+      "id": "help_card_after",
+      "label": "\"Not sure which one fits?\" tile after product number",
+      "info": "Charger adapters template only (needs the Charger adapter finder section). Empty = no tile"
     },
     {
       "type": "checkbox",

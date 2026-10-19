@@ -213,6 +213,7 @@
       "duties_included": "Duties included.",
       "duties_and_taxes_included": "Duties and taxes included.",
       "shipping_policy_html": "<a href=\"{{ link }}\">Shipping</a> calculated at checkout.",
+      "fits_brands": "Fits",
       "fit_check": {
         "title_memory_sodimm": "Not sure it fits?",
         "title_memory_dimm": "Not sure it fits?",
@@ -599,6 +600,28 @@
       "heading": "Best sellers",
       "view_all": "View all",
       "view_all_mobile": "View all best sellers"
+    },
+    "charger_finder": {
+      "brands_label": "Which laptop?",
+      "all": "All",
+      "guide_summary": "Don't know your plug size? How to find it",
+      "step_label_html": "Check the label on your old charger or the bottom of the laptop: it shows the voltage and often the plug size, e.g. <b>19V ⎓ 3.42A, 5.5×2.5</b>.",
+      "step_compare": "Or compare your plug with the drawings and tap your size:",
+      "step_table": "Plug sizes most often used by each brand:",
+      "table_brand": "Laptop brand",
+      "table_sizes": "Plug sizes",
+      "pin": "with pin",
+      "pin_note": "HP and Dell plugs with a centre pin (4.5×3.0, 7.4×5.0): some models charge more slowly with a universal cable.",
+      "powerbank_note": "Charging from a power bank? It needs USB-C Power Delivery at 20 V and 65 W or more.",
+      "help_heading": "Not sure? Send us your laptop model and we'll pick one",
+      "draft_intro_html": "Hello! (from the laptop charger adapters catalog)",
+      "card_title": "Not sure which one fits?",
+      "card_text": "Send us your laptop model and we'll tell you which adapter you need.",
+      "card_button": "Find by model",
+      "card_telegram": "Or message us on Telegram",
+      "all_sizes": "Show all sizes",
+      "empty_title": "Nothing matches these filters",
+      "reset_filters": "Clear filters"
     },
     "home_fit_check": {
       "heading": "We'll check compatibility",
