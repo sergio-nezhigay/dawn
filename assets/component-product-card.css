@@ -221,3 +221,49 @@
     width: 100%;
   }
 }
+
+/* Charger adapters: plug size + power on the image, fitting laptop brands under the title */
+.product-card__specs {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  max-width: 100%;
+  pointer-events: none;
+}
+
+.product-card__spec {
+  padding: 2px 7px;
+  border: 1px solid var(--card-blue);
+  border-radius: 6px;
+  background: var(--card-blue);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.product-card__spec--power {
+  border-color: var(--ui-yellow);
+  background: var(--ui-yellow);
+  color: var(--card-navy);
+}
+
+.product-card__fits {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin: -4px 0 0;
+  color: var(--card-muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.product-card__fits b {
+  color: var(--card-navy);
+  font-weight: 600;
+}

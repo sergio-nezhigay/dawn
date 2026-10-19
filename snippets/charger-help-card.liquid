@@ -1,0 +1,28 @@
+{%- doc -%}
+  "Not sure which one fits?" tile inside the product grid of the charger adapters collection, shaped like a product card.
+  The button opens the plug-size guide and focuses its model helper (assets/charger-finder.js; without JS it jumps to
+  #adapter-help). Styles live in assets/section-charger-finder.css, loaded by sections/charger-adapter-finder.liquid.
+
+  @param {boolean} [no_results] - Shown instead of an empty result (not named "empty": that is a Liquid literal): "nothing found" wording, wide layout
+  @param {string} [reset_url] - Link that clears the filters (with no_results)
+{%- enddoc -%}
+<div class="charger-help-card{% if no_results %} charger-help-card--empty{% endif %}">
+  <span class="charger-help-card__icon svg-wrapper">{{- 'icon-question-mark.svg' | inline_asset_content -}}</span>
+  {%- if no_results -%}
+    <p class="charger-help-card__title">{{ 'sections.charger_finder.empty_title' | t }}</p>
+  {%- else -%}
+    <p class="charger-help-card__title">{{ 'sections.charger_finder.card_title' | t }}</p>
+  {%- endif -%}
+  <p class="charger-help-card__text">{{ 'sections.charger_finder.card_text' | t }}</p>
+  <a class="ui-btn ui-btn--primary ui-btn--sm charger-help-card__btn" href="#adapter-help" data-charger-help>
+    {{- 'sections.charger_finder.card_button' | t -}}
+  </a>
+  {%- if no_results -%}
+    <a class="charger-help-card__link" href="https://t.me/NSergiy" target="_blank" rel="noopener">
+      {{- 'sections.charger_finder.card_telegram' | t -}}
+    </a>
+  {%- endif -%}
+  {%- if no_results and reset_url -%}
+    <a class="charger-help-card__link" href="{{ reset_url }}">{{ 'sections.charger_finder.reset_filters' | t }}</a>
+  {%- endif -%}
+</div>

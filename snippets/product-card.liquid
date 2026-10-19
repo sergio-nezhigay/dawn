@@ -4,6 +4,8 @@
   The whole card is a link (stretched title link); the Buy button sits above it.
   Buy adds single-variant products to the cart drawer (Dawn product-form); other products link to the product page.
   Sold-out products show "Sold out" instead of the price (never a 0 price) and a Details link instead of Buy.
+  Laptop charger adapters (specifications.dc_size set) also show plug size + power on the image and the laptop brands
+  they fit (cable.compatible_brands) under the title.
   Styles live in assets/component-product-card.css.
 
   Accepts:
@@ -28,6 +30,7 @@
     assign loading = 'eager'
   endif
   assign sizes = '(min-width: 990px) 240px, (min-width: 750px) 30vw, 45vw'
+  assign dc_size = product.metafields.specifications.dc_size.value
   assign second = product.media[1]
   if second.media_type != 'image'
     assign second = nil
@@ -54,8 +57,24 @@
         }}
       {%- endif -%}
     {%- endif -%}
+    {%- if dc_size != blank -%}
+      <span class="product-card__specs">
+        <span class="product-card__spec">{{ dc_size | escape }}</span>
+        {%- if product.metafields.specifications.power_w.value != blank -%}
+          <span class="product-card__spec product-card__spec--power">
+            {{- product.metafields.specifications.power_w.value | escape -}}
+          </span>
+        {%- endif -%}
+      </span>
+    {%- endif -%}
   </div>
   <a class="product-card__title" href="{{ product.url }}">{{ product.title | escape }}</a>
+  {%- if dc_size != blank and product.metafields.cable.compatible_brands.value != blank -%}
+    <p class="product-card__fits">
+      {{ 'products.product.fits_brands' | t }}:
+      <b>{{ product.metafields.cable.compatible_brands.value | join: ', ' | escape }}</b>
+    </p>
+  {%- endif -%}
   {% render 'review-badge', product: product %}
   <div class="product-card__row">
     {%- if product.available -%}

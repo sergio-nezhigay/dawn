@@ -1,0 +1,160 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "banner": {
+      "type": "main-collection-banner",
+      "settings": {
+        "show_collection_description": false,
+        "show_collection_image": false,
+        "color_scheme": "scheme-1"
+      }
+    },
+    "charger-finder": {
+      "type": "charger-adapter-finder",
+      "blocks": {
+        "brand-1": {
+          "type": "brand",
+          "settings": {
+            "brand": "Asus",
+            "sizes": "2.5×0.7, 3.0×1.1, 3.5×1.35, 4.0×1.35, 4.0×1.7, 4.5×3.0, 5.5×2.1, 5.5×2.5, 6.0×3.7, 6.0×4.0, 6.3×3.0"
+          }
+        },
+        "brand-2": {
+          "type": "brand",
+          "settings": {
+            "brand": "HP",
+            "sizes": "4.0×1.7, 4.5×3.0, 4.8×1.7, 5.5×2.1, 5.5×2.5, 7.4×5.0"
+          }
+        },
+        "brand-3": {
+          "type": "brand",
+          "settings": {
+            "brand": "Lenovo",
+            "sizes": "4.0×1.35, 4.0×1.7, 5.5×2.1, 5.5×2.5, 7.9×5.5, Lenovo Square"
+          }
+        },
+        "brand-4": {
+          "type": "brand",
+          "settings": {
+            "brand": "Dell",
+            "sizes": "4.5×3.0, 7.4×5.0"
+          }
+        },
+        "brand-5": {
+          "type": "brand",
+          "settings": {
+            "brand": "Acer",
+            "sizes": "3.0×1.1, 5.5×1.7, 5.5×2.1, 5.5×2.5"
+          }
+        },
+        "brand-6": {
+          "type": "brand",
+          "settings": {
+            "brand": "Apple",
+            "sizes": "MagSafe, MagSafe 2, MagSafe 3"
+          }
+        },
+        "brand-7": {
+          "type": "brand",
+          "settings": {
+            "brand": "Samsung",
+            "sizes": "3.0×1.1, 4.0×1.35, 4.0×1.7, 5.0×3.0, 5.5×2.1, 5.5×3.0"
+          }
+        },
+        "brand-8": {
+          "type": "brand",
+          "settings": {
+            "brand": "Microsoft",
+            "sizes": "Surface"
+          }
+        },
+        "brand-9": {
+          "type": "brand",
+          "settings": {
+            "brand": "Sony",
+            "sizes": "4.8×1.7, 6.0×4.0, 6.5×4.4"
+          }
+        },
+        "brand-10": {
+          "type": "brand",
+          "settings": {
+            "brand": "Toshiba",
+            "sizes": "5.5×2.1, 5.5×2.5, 6.3×3.0"
+          }
+        },
+        "brand-11": {
+          "type": "brand",
+          "settings": {
+            "brand": "FUJITSU",
+            "sizes": "5.5×2.5"
+          }
+        },
+        "brand-12": {
+          "type": "brand",
+          "settings": {
+            "brand": "Packard Bell",
+            "sizes": "5.5×1.7"
+          }
+        }
+      },
+      "block_order": [
+        "brand-1",
+        "brand-2",
+        "brand-3",
+        "brand-4",
+        "brand-5",
+        "brand-6",
+        "brand-7",
+        "brand-8",
+        "brand-9",
+        "brand-10",
+        "brand-11",
+        "brand-12"
+      ],
+      "settings": {
+        "brands": "Asus,HP,Lenovo,Dell,Acer,Apple,Samsung,Microsoft,Sony,Toshiba",
+        "pin_sizes": "4.5x3.0,7.4x5.0,6.0x3.7,7.9x5.5,5.0x3.0,5.5x3.0,6.0x4.0,6.5x4.4"
+      }
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "settings": {
+        "products_per_page": 36,
+        "columns_desktop": 5,
+        "columns_mobile": "2",
+        "color_scheme": "",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "none",
+        "enable_filtering": true,
+        "filter_type": "vertical",
+        "enable_sorting": true,
+        "padding_top": 0,
+        "padding_bottom": 24,
+        "hide_filters": "filter.p.m.custom.color,filter.p.vendor",
+        "help_card_after": 4
+      }
+    },
+    "collection-description": {
+      "type": "collection-description",
+      "settings": {}
+    }
+  },
+  "order": [
+    "banner",
+    "charger-finder",
+    "product-grid",
+    "collection-description"
+  ]
+}

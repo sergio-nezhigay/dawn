@@ -1,0 +1,464 @@
+/* Charger adapters collection: brand buttons, plug-size guide with the model helper (sections/charger-adapter-finder.liquid)
+   and the "Not sure which one fits?" tile in the grid (snippets/charger-help-card.liquid). Tokens from base.css. */
+.charger-finder {
+  margin-bottom: 16px;
+  color: var(--ui-navy);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  letter-spacing: normal;
+}
+
+.charger-finder__label {
+  margin: 0 0 12px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.charger-finder__chips {
+  position: relative; /* offset parent for charger-finder.js scrolling the chosen chip into view */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+}
+
+.charger-finder__chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1.5px solid var(--ui-line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ui-navy);
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: border-color var(--ui-dur) var(--ui-ease), background-color var(--ui-dur) var(--ui-ease),
+    color var(--ui-dur) var(--ui-ease);
+}
+
+.charger-finder__chip.is-active {
+  border-color: var(--ui-blue);
+  background: var(--ui-blue);
+  color: #fff;
+}
+
+.charger-finder__chip.is-active::before {
+  content: '\2713';
+  margin-right: 6px;
+  font-weight: 700;
+}
+
+/* Phones: one row that scrolls sideways, running to the screen edges */
+@media screen and (max-width: 749px) {
+  .charger-finder__chips {
+    flex-wrap: nowrap;
+    margin: 0 -1.5rem;
+    padding: 0 1.5rem 4px;
+    overflow-x: auto;
+    scroll-padding-inline: 1.5rem;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+  }
+
+  .charger-finder__chips::-webkit-scrollbar {
+    display: none;
+  }
+
+  .charger-finder__chips li {
+    flex: none;
+    scroll-snap-align: start;
+  }
+}
+
+/* Guide */
+.charger-finder__guide {
+  margin-top: 12px;
+}
+
+.charger-finder__summary {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  min-height: 44px;
+  color: var(--ui-blue);
+  font-weight: 600;
+  list-style: none;
+  cursor: pointer;
+}
+
+.charger-finder__summary::-webkit-details-marker {
+  display: none;
+}
+
+.charger-finder__summary .svg-wrapper {
+  flex: none;
+  width: 18px;
+  height: 18px;
+}
+
+.charger-finder__caret {
+  transition: transform var(--ui-dur) var(--ui-ease);
+}
+
+.charger-finder__guide[open] .charger-finder__caret {
+  transform: rotate(180deg);
+}
+
+.charger-finder__body {
+  margin-top: 8px;
+  padding: 20px;
+  border: 1px solid var(--ui-line);
+  border-radius: var(--ui-radius-md);
+  background: #fff;
+}
+
+.charger-finder__steps {
+  display: grid;
+  gap: 16px;
+  margin: 0;
+  padding-left: 20px;
+}
+
+.charger-finder__steps > li::marker {
+  color: var(--ui-blue);
+  font-weight: 700;
+}
+
+.charger-finder__plugs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 92px);
+  grid-auto-rows: 1fr; /* "with pin" captions make some plugs taller: keep rows even */
+  gap: 8px;
+  margin: 10px 0 0;
+}
+
+.charger-finder__plug {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+  height: 100%;
+  min-height: 72px;
+  padding: 8px 4px;
+  border: 1px solid var(--ui-line);
+  border-radius: 10px;
+  color: var(--ui-navy);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.25;
+  text-align: center;
+  text-decoration: none;
+  transition: border-color var(--ui-dur) var(--ui-ease), background-color var(--ui-dur) var(--ui-ease);
+}
+
+.charger-finder__plug.is-active {
+  border-color: var(--ui-blue);
+  background: var(--ui-tint);
+}
+
+.charger-finder__plug-name small {
+  display: block;
+  color: var(--ui-muted);
+  font-size: 11px;
+  font-weight: 400;
+}
+
+.charger-finder__plug-body {
+  fill: #c9d1dc;
+  stroke: var(--ui-navy);
+  stroke-width: 1;
+}
+
+.charger-finder__plug-hole {
+  fill: #fff;
+  stroke: var(--ui-navy);
+  stroke-width: 0.75;
+}
+
+.charger-finder__plug-pin {
+  fill: var(--ui-navy);
+}
+
+.charger-finder__table-wrap {
+  margin-top: 10px;
+  overflow-x: auto;
+}
+
+.charger-finder__table {
+  width: 100%;
+  max-width: 640px;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.charger-finder__table th,
+.charger-finder__table td {
+  padding: 7px 12px;
+  border-bottom: 1px solid var(--ui-line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.charger-finder__table thead th {
+  color: var(--ui-muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.charger-finder__table tbody th {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.charger-finder__note {
+  margin: 16px 0 0;
+  padding: 8px 12px;
+  border-left: 3px solid var(--ui-yellow);
+  border-radius: 4px;
+  background: var(--ui-tint);
+  font-size: 14px;
+}
+
+.charger-finder__note + .charger-finder__note {
+  margin-top: 8px;
+}
+
+/* Model helper: the homepage fit-check panel, compact */
+.charger-help {
+  max-width: 720px;
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: var(--ui-radius-md);
+  background: var(--ui-blue);
+  color: #fff;
+}
+
+.charger-help__heading {
+  margin: 0 0 12px;
+  color: inherit;
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: normal;
+}
+
+.charger-help label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.charger-help__row {
+  display: flex;
+  gap: 8px;
+}
+
+.charger-help input[type='text'] {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 48px;
+  padding: 0 14px;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ui-navy);
+  font-family: inherit;
+  font-size: 16px;
+}
+
+.charger-help input[aria-invalid='true'] {
+  border-color: var(--ui-yellow);
+}
+
+.charger-help .home-fit__error {
+  margin: 8px 0 0;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: var(--ui-navy);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.charger-help__alt {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  align-items: center;
+  margin: 12px 0 0;
+  font-size: 15px;
+}
+
+.charger-help__alt a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* No chat API on the page: no AI button, Telegram becomes the main action (same as the homepage panel) */
+.home-fit__form--noai .home-fit__ai {
+  display: none;
+}
+
+.home-fit__form--noai .charger-help__alt a[data-channel='telegram'] {
+  background: var(--ui-yellow);
+  color: var(--ui-navy);
+}
+
+.charger-help__alt .charger-help__viber {
+  display: none;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .charger-help__alt .charger-help__viber {
+    display: inline-flex;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .charger-finder__body {
+    padding: 16px;
+  }
+
+  .charger-finder__steps {
+    padding-left: 16px;
+  }
+
+  .charger-finder__plugs {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .charger-finder__plug-name small {
+    font-size: 10px;
+  }
+
+  .charger-help {
+    padding: 16px;
+  }
+
+  .charger-help__row {
+    flex-direction: column;
+  }
+
+  .charger-help input[type='text'] {
+    flex: none;
+  }
+
+  .charger-help .ui-btn {
+    width: 100%;
+  }
+}
+
+/* "Not sure which one fits?" tile, sized like a product card */
+.charger-help-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+  height: 100%;
+  padding: 16px;
+  border: 1px solid var(--ui-line);
+  border-radius: 12px;
+  background: var(--ui-tint);
+  color: var(--ui-navy);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.4;
+  letter-spacing: normal;
+}
+
+.charger-help-card__icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 9px;
+  border-radius: 50%;
+  background: var(--ui-blue);
+  color: #fff;
+}
+
+.charger-help-card__title {
+  margin: 4px 0 0;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.charger-help-card__text {
+  margin: 0;
+  color: var(--ui-muted);
+  font-size: 14px;
+}
+
+.charger-help-card__btn {
+  width: 100%;
+  margin-top: 4px;
+}
+
+.charger-help-card__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  align-self: center;
+  color: var(--ui-blue);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+@media (hover: hover) {
+  .charger-finder__chip:not(.is-active):hover,
+  .charger-finder__plug:hover {
+    border-color: var(--ui-blue);
+  }
+
+  .charger-help__alt a:hover {
+    background: #fff;
+    color: var(--ui-blue);
+  }
+}
+
+.charger-finder__reset {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 4px;
+  color: var(--ui-blue);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Empty result: the tile replaces Dawn's "no products" message */
+.charger-help-card--empty {
+  align-items: center;
+  max-width: 480px;
+  margin: 24px auto;
+  padding: 24px;
+  text-align: center;
+}
+
+.charger-help-card--empty .charger-help-card__btn {
+  max-width: 320px;
+}
+
+/* Grid tile on narrow cards (tablet, small laptop): title + button only, so it stays card height */
+@media screen and (min-width: 750px) and (max-width: 1199px) {
+  .charger-help-card:not(.charger-help-card--empty) .charger-help-card__text {
+    display: none;
+  }
+}
+
+/* Phones: the product count ("59 of 178") beside the filter button stays on one line (this stylesheet loads only on this template) */
+@media screen and (max-width: 749px) {
+  .product-count__text {
+    white-space: nowrap;
+  }
+}
