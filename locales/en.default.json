@@ -263,18 +263,19 @@
       "filter_selected_accessibility": "{{ type }} ({{ count }} filters selected)",
       "show_more": "Show more",
       "show_less": "Show less",
+      "length_unit": "m",
       "max_price": "The highest price is {{ price }} ₴",
       "product_count": {
         "one": "{{ product_count }} of {{ count }} product",
         "other": "{{ product_count }} of {{ count }} products",
-        "few": "{{ product_count }} of {{ count }} products.",
-        "many": "{{ product_count }} of {{ count }} products."
+        "few": "{{ product_count }} of {{ count }} products",
+        "many": "{{ product_count }} of {{ count }} products"
       },
       "product_count_simple": {
         "one": "{{ count }} product",
         "other": "{{ count }} products",
-        "few": "Products: {{ count }}",
-        "many": "Products: {{ count }}"
+        "few": "{{ count }} products",
+        "many": "{{ count }} products"
       },
       "reset": "Reset",
       "sort_button": "Sort",
@@ -318,8 +319,8 @@
       "results_products_with_count": {
         "one": "{{ count }} product",
         "other": "{{ count }} products",
-        "few": "Products: {{ count }}",
-        "many": "Products: {{ count }}"
+        "few": "{{ count }} products",
+        "many": "{{ count }} products"
       },
       "results_with_count": {
         "one": "{{ count }} result",
@@ -603,8 +604,9 @@
     },
     "charger_finder": {
       "brands_label": "Which laptop?",
+      "more_filters": "More filters:",
       "all": "All",
-      "guide_summary": "Don't know your plug size? How to find it",
+      "guide_summary": "How to find your plug size",
       "step_label_html": "Check the label on your old charger or the bottom of the laptop: it shows the voltage and often the plug size, e.g. <b>19V ⎓ 3.42A, 5.5×2.5</b>.",
       "step_compare": "Or compare your plug with the drawings and tap your size:",
       "step_table": "Plug sizes most often used by each brand:",
@@ -616,9 +618,9 @@
       "help_heading": "Not sure? Send us your laptop model and we'll pick one",
       "draft_intro_html": "Hello! (from the laptop charger adapters catalog)",
       "card_title": "Not sure which one fits?",
-      "card_text": "Send us your laptop model and we'll tell you which adapter you need.",
+      "card_text": "The plug size is printed on the old charger label. Can't find it? Send us the laptop model and we'll help.",
       "card_button": "Find by model",
-      "card_telegram": "Or message us on Telegram",
+      "card_telegram": "Telegram",
       "all_sizes": "Show all sizes",
       "empty_title": "Nothing matches these filters",
       "reset_filters": "Clear filters"

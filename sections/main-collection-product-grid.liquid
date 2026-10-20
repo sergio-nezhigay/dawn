@@ -43,7 +43,7 @@
   {%- paginate collection.products by section.settings.products_per_page -%}
     {% comment %} Product count is the first tabbable element when filter type is vertical {% endcomment %}
     {%- if section.settings.enable_sorting and section.settings.filter_type == 'vertical' -%}
-      <facet-filters-form class="facets facets-vertical-sort page-width small-hide">
+      <facet-filters-form class="facets facets-vertical-sort page-width small-hide medium-hide">
         <form class="facets-vertical-form" id="FacetSortForm">
           <div class="product-count-vertical" role="status">
             <h2 class="product-count__text text-body">
@@ -121,7 +121,9 @@
             enable_sorting: section.settings.enable_sorting,
             filter_type: section.settings.filter_type,
             paginate: paginate,
-            hide_filters: section.settings.hide_filters
+            hide_filters: section.settings.hide_filters,
+            open_filters: section.settings.open_filters,
+            show_more_limit: section.settings.show_more_limit
           %}
         </aside>
       {%- endif -%}
@@ -188,8 +190,30 @@
                     fetch_priority: fetch_priority
                   %}
                 </li>
-                {%- if forloop.index == section.settings.help_card_after and paginate.current_page == 1 -%}
-                  <li class="grid__item">{% render 'charger-help-card' %}</li>
+                {%- if section.settings.help_card_after != blank and paginate.current_page == 1 -%}
+                  {%- comment -%}
+                    Charger adapters: the helper strip spans the grid after the first full row: desktop row
+                    (columns_desktop), tablet row (3 columns), or help_card_after products on phones
+                  {%- endcomment -%}
+                  {%- liquid
+                    assign at_small = false
+                    assign at_medium = false
+                    assign at_large = false
+                    if forloop.index == section.settings.help_card_after
+                      assign at_small = true
+                    endif
+                    if forloop.index == 3
+                      assign at_medium = true
+                    endif
+                    if forloop.index == section.settings.columns_desktop
+                      assign at_large = true
+                    endif
+                  -%}
+                  {%- if at_small or at_medium or at_large -%}
+                    <li class="grid__item charger-help-strip{% unless at_small %} small-hide{% endunless %}{% unless at_medium %} medium-hide{% endunless %}{% unless at_large %} large-up-hide{% endunless %}">
+                      {% render 'charger-help-card' %}
+                    </li>
+                  {%- endif -%}
                 {%- endif -%}
               {%- endfor -%}
             </ul>
@@ -372,7 +396,19 @@
       "type": "number",
       "id": "help_card_after",
       "label": "\"Not sure which one fits?\" tile after product number",
-      "info": "Charger adapters template only (needs the Charger adapter finder section). Empty = no tile"
+      "info": "Charger adapters template only (needs the Charger adapter finder section). Phones: the strip goes after this many products; tablet and desktop: after the first row. Empty = no strip"
+    },
+    {
+      "type": "text",
+      "id": "open_filters",
+      "label": "Filters open on load",
+      "info": "Comma-separated filter param names open in the sidebar, e.g. filter.p.m.specifications.dc_size. Empty = only the first"
+    },
+    {
+      "type": "number",
+      "id": "show_more_limit",
+      "label": "Filter values before \"Show more\"",
+      "info": "Empty = 10"
     },
     {
       "type": "checkbox",

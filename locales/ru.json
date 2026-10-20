@@ -265,21 +265,22 @@
         "many": "Выбрано: {{ count }}"
       },
       "product_count": {
-        "one": "{{ product_count }} из {{ count }} прод.",
-        "other": "{{ product_count }} из {{ count }} прод.",
-        "few": "{{ product_count }} из {{ count }} прод.",
-        "many": "{{ product_count }} из {{ count }} прод."
+        "one": "{{ product_count }} из {{ count }} товаров",
+        "other": "{{ product_count }} из {{ count }} товаров",
+        "few": "{{ product_count }} из {{ count }} товаров",
+        "many": "{{ product_count }} из {{ count }} товаров"
       },
       "product_count_simple": {
-        "one": "{{ count }} прод.",
-        "other": "Продуктов: {{ count }}",
-        "few": "Продуктов: {{ count }}",
-        "many": "Продуктов: {{ count }}"
+        "one": "{{ count }} товар",
+        "other": "{{ count }} товаров",
+        "few": "{{ count }} товара",
+        "many": "{{ count }} товаров"
       },
       "clear_filter": "Снять фильтр",
       "filter_selected_accessibility": "{{ type }} (установлены фильтры: {{ count }})",
       "show_more": "Показать больше",
       "show_less": "Показать меньше",
+      "length_unit": "м",
       "filter_and_operator_subtitle": "Выбрать все",
       "sort_options": {
         "relevance": "По релевантности",
@@ -330,10 +331,10 @@
         "many": "Рекомендации: {{ count }}"
       },
       "results_products_with_count": {
-        "one": "Продукты: {{ count }}",
-        "other": "Продукты: {{ count }}",
-        "few": "Продукты: {{ count }}",
-        "many": "Продукты: {{ count }}"
+        "one": "Товары: {{ count }}",
+        "other": "Товары: {{ count }}",
+        "few": "Товары: {{ count }}",
+        "many": "Товары: {{ count }}"
       },
       "suggestions": "Подсказки",
       "pages": "Страницы",
@@ -475,7 +476,7 @@
     },
     "collection_template": {
       "title": "Коллекция",
-      "empty": "Продукты не найдены",
+      "empty": "Товары не найдены",
       "use_fewer_filters_html": "Используйте меньше фильтров или <a class=\"{{ class }}\" href=\"{{ link }}\">удалите все</a>"
     },
     "video": {
@@ -609,8 +610,9 @@
     },
     "charger_finder": {
       "brands_label": "Для какого ноутбука?",
+      "more_filters": "Ещё фильтры:",
       "all": "Все",
-      "guide_summary": "Не знаете размер штекера? Как узнать",
+      "guide_summary": "Как узнать размер штекера",
       "step_label_html": "Посмотрите на наклейку старого зарядного или на дно ноутбука: там указывают напряжение и часто размер штекера, например <b>19V ⎓ 3.42A, 5.5×2.5</b>.",
       "step_compare": "Или сравните свой штекер с рисунком и нажмите нужный размер:",
       "step_table": "Размеры, которые чаще всего бывают у брендов:",
@@ -622,9 +624,9 @@
       "help_heading": "Не уверены? Напишите модель ноутбука — подберём",
       "draft_intro_html": "Здравствуйте! (из каталога переходников для зарядки ноутбука)",
       "card_title": "Не знаете, какой подойдёт?",
-      "card_text": "Напишите модель ноутбука — подскажем, какой переходник нужен.",
+      "card_text": "Размер штекера указан на наклейке старого зарядного. Не нашли — напишите модель ноутбука, подскажем.",
       "card_button": "Подобрать по модели",
-      "card_telegram": "Или напишите в Telegram",
+      "card_telegram": "Telegram",
       "all_sizes": "Показать все размеры",
       "empty_title": "По этим фильтрам ничего не нашлось",
       "reset_filters": "Сбросить фильтры"

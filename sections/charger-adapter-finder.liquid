@@ -2,7 +2,8 @@
   Laptop charger adapters collection (template collection.charger-adapters): brand buttons above the grid,
   a "how to find your plug size" guide (plug pictures, brand-to-sizes table) and a "send us the laptop model" helper.
   Brand buttons and plug pictures come from the Search & Discovery filters on cable.compatible_brands and
-  specifications.dc_size (filled by supplier-sync scripts/chargerAdapters), so they render nothing until those filters exist.
+  specifications.dc_size (filled once, then by hand on new products), so they render nothing until those filters exist.
+  "More filters" pills jump to the size and power filters of the product grid.
   The helper reuses the homepage fit-check contract (assets/home-fit-check.js: data-fit form, AI chat / Telegram / Viber).
 {%- endcomment -%}
 {{ 'section-charger-finder.css' | asset_url | stylesheet_tag }}
@@ -11,11 +12,14 @@
 {%- liquid
   assign brand_param = 'filter.p.m.cable.compatible_brands'
   assign size_param = 'filter.p.m.specifications.dc_size'
+  assign power_param = 'filter.p.m.specifications.power_w'
   for filter in collection.filters
     if filter.param_name == brand_param
       assign brand_filter = filter
     elsif filter.param_name == size_param
       assign size_filter = filter
+    elsif filter.param_name == power_param
+      assign power_filter = filter
     endif
   endfor
   assign brand_order = section.settings.brands | split: ','
@@ -74,9 +78,33 @@
     </ul>
   {%- endif -%}
 
+  {%- if size_filter or power_filter -%}
+    {%- comment -%} Shortcuts to the size and power filters: the sidebar opens only on wide screens, phones and tablets get the drawer (assets/charger-finder.js) {%- endcomment -%}
+    <div class="charger-finder__more">
+      <span class="charger-finder__more-label">{{ 'sections.charger_finder.more_filters' | t }}</span>
+      {%- for filter in collection.filters -%}
+        {%- if filter.param_name == size_param or filter.param_name == power_param -%}
+          <a
+            class="charger-finder__more-pill{% if filter.active_values.size > 0 %} is-active{% endif %}"
+            href="#main-collection-filters"
+            data-open-filter="{{ filter.param_name }}"
+          >
+            {{- filter.label | escape -}}
+            {%- if filter.active_values.size > 0 %} ({{ filter.active_values.size }}){% endif -%}
+            <span class="svg-wrapper">{{- 'icon-caret.svg' | inline_asset_content -}}</span>
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
   <details class="charger-finder__guide" id="adapter-help"{% if size_filter.active_values.size > 0 %} open{% endif %}>
     <summary class="charger-finder__summary">
-      <span class="svg-wrapper">{{- 'icon-question-mark.svg' | inline_asset_content -}}</span>
+      <svg class="charger-finder__plug-icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+        <circle cx="10" cy="10" r="8.25" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <circle cx="10" cy="10" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <circle cx="10" cy="10" r="1.3" fill="currentColor"/>
+      </svg>
       <span>{{ 'sections.charger_finder.guide_summary' | t }}</span>
       <span class="svg-wrapper charger-finder__caret">{{- 'icon-caret.svg' | inline_asset_content -}}</span>
     </summary>

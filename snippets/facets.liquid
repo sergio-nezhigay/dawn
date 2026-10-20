@@ -8,6 +8,8 @@
   - filter_type: {String} Type of filter
   - paginate: {Object}
   - hide_filters: {String} Comma-separated filter param names not to show (e.g. filter.p.m.custom.color). Optional
+  - open_filters: {String} Comma-separated filter param names open on load (vertical type); empty = only the first. Optional
+  - show_more_limit: {Number} Values shown before "Show more" in list filters (vertical type), default 10. Optional
 
   Usage:
   {% render 'facets', results: collection, enable_filtering: true, enable_sorting: true, filter_type: 'vertical', paginate: paginate %}
@@ -31,7 +33,7 @@
 
 <div class="facets-container{% if filter_type == 'drawer' %} facets-container-drawer{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
   {%- if filter_type == 'vertical' or filter_type == 'horizontal' -%}
-    <facet-filters-form class="facets small-hide">
+    <facet-filters-form class="facets small-hide{% if filter_type == 'vertical' %} medium-hide{% endif %}">
       <form
         id="FacetFiltersForm"
         class="{% if filter_type == 'horizontal' %}facets__form{% else %}facets__form-vertical{% endif %}"
@@ -79,7 +81,7 @@
                     <facet-remove>
                       <a href="{{ value.url_to_remove }}" class="active-facets__button active-facets__button--light">
                         <span class="active-facets__button-inner button button--tertiary">
-                          {{ filter.label | escape }}: {{ value.label | escape }}
+                          {{ filter.label | escape }}: {% render 'facet-value-label', filter: filter, value: value %}
                           <span class="svg-wrapper">
                             {{- 'icon-close-small.svg' | inline_asset_content -}}
                           </span>
@@ -113,6 +115,7 @@
             {% comment %} Filters for both horizontal and vertical filter {% endcomment %}
             {%- for filter in results.filters -%}
               {%- assign hidden_list = hide_filters | split: ',' -%}
+              {%- assign open_list = open_filters | split: ',' -%}
               {%- if hidden_list contains filter.param_name -%}{%- continue -%}{%- endif -%}
               {% liquid
                 assign total_active_values = total_active_values | plus: filter.active_values.size
@@ -122,7 +125,7 @@
                   assign show_more_number = 12
                   assign visual_layout_class = 'facets-layout facets-layout-grid facets-layout-grid--' | append: presentation
                 else
-                  assign show_more_number = 10
+                  assign show_more_number = show_more_limit | default: 10
                   assign visual_layout_class = 'facets-layout facets-layout-list facets-layout-list--' | append: presentation
                 endif
               %}
@@ -133,8 +136,12 @@
                     id="Details-{{ filter.param_name | escape }}-{{ section.id }}"
                     class="{% if filter_type == 'horizontal' %}disclosure-has-popup facets__disclosure{% else %} facets__disclosure-vertical{% endif %} js-filter"
                     data-index="{{ forloop.index }}"
-                    {% if filter_type == 'vertical' and forloop.index == 1 %}
-                      open
+                    {% if filter_type == 'vertical' %}
+                      {% if open_filters != blank %}
+                        {% if open_list contains filter.param_name %}open{% endif %}
+                      {% elsif forloop.index == 1 %}
+                        open
+                      {% endif %}
                     {% endif %}
                   >
                     <summary
@@ -191,6 +198,10 @@
                             assign inactive_filter_values = filter.values | where: 'active', false
                             assign sorted_values = active_filter_values | concat: inactive_filter_values
                           endif
+                          # Lengths are bare numbers (snippets/facet-value-label): text order puts them shortest first
+                          if filter.param_name == 'filter.p.m.custom.length'
+                            assign sorted_values = sorted_values | sort: 'label'
+                          endif
                         -%}
                         <ul
                           class="{{ visual_layout_class }}{% if filter_type == 'vertical' %} facets__list--vertical{% else %} facets__list{% endif %} list-unstyled"
@@ -210,13 +221,13 @@
 
                             {%- capture text_value -%}
                               <span class="facet-checkbox__text" aria-hidden="true">
-                                <span class="facet-checkbox__text-label">{{- value.label | escape }}</span>
+                                <span class="facet-checkbox__text-label">{% render 'facet-value-label', filter: filter, value: value %}</span>
                               </span>
                               <span class="facet-checkbox__count" aria-hidden="true">
                                 ({{- value.count -}})
                               </span>
                               <span class="visually-hidden">
-                                {{- value.label | escape }} (
+                                {%- render 'facet-value-label', filter: filter, value: value %} (
                                 {%- if value.count == 1 -%}
                                   {{- 'products.facets.product_count_simple.one' | t: count: value.count -}}
                                 {%- else -%}
@@ -307,8 +318,12 @@
                     id="Details-{{ filter.param_name | escape }}-{{ section.id }}"
                     class="{% if filter_type == 'horizontal' %}disclosure-has-popup facets__disclosure{% else %} facets__disclosure-vertical{% endif %} js-filter"
                     data-index="{{ forloop.index }}"
-                    {% if filter_type == 'vertical' and forloop.index == 1 %}
-                      open
+                    {% if filter_type == 'vertical' %}
+                      {% if open_filters != blank %}
+                        {% if open_list contains filter.param_name %}open{% endif %}
+                      {% elsif forloop.index == 1 %}
+                        open
+                      {% endif %}
                     {% endif %}
                   >
                     <summary class="facets__summary caption-large focus-offset">
@@ -350,7 +365,7 @@
                   <facet-remove>
                     <a href="{{ value.url_to_remove }}" class="active-facets__button active-facets__button--light">
                       <span class="active-facets__button-inner button button--tertiary">
-                        {{ filter.label | escape }}: {{ value.label | escape }}
+                        {{ filter.label | escape }}: {% render 'facet-value-label', filter: filter, value: value %}
                         <span class="svg-wrapper">
                           {{- 'icon-close-small.svg' | inline_asset_content -}}
                         </span>
@@ -447,8 +462,8 @@
   {%- endif -%}
   {% comment %}  Drawer and mobile filter {% endcomment %}
   <menu-drawer
-    class="mobile-facets__wrapper{% if filter_type == 'horizontal' or filter_type == 'vertical' %} medium-hide large-up-hide{% endif %}"
-    data-breakpoint="mobile"
+    class="mobile-facets__wrapper{% if filter_type == 'horizontal' %} medium-hide large-up-hide{% elsif filter_type == 'vertical' %} large-up-hide{% endif %}"
+    data-breakpoint="{% if filter_type == 'vertical' %}tablet{% else %}mobile{% endif %}"
   >
     <details class="mobile-facets__disclosure disclosure-has-popup">
       <summary class="mobile-facets__open-wrapper focus-offset">
@@ -456,7 +471,7 @@
           <span class="svg-wrapper">
             {{- 'icon-filter.svg' | inline_asset_content -}}
           </span>
-          <span class="mobile-facets__open-label button-label medium-hide large-up-hide">
+          <span class="mobile-facets__open-label button-label{% unless filter_type == 'vertical' %} medium-hide{% endunless %} large-up-hide">
             {%- if enable_filtering and enable_sorting -%}
               {{ 'products.facets.filter_and_sort' | t }}
             {%- elsif enable_filtering -%}
@@ -465,7 +480,7 @@
               {{ 'products.facets.sort_button' | t }}
             {%- endif -%}
           </span>
-          <span class="mobile-facets__open-label button-label small-hide">
+          <span class="mobile-facets__open-label button-label small-hide{% if filter_type == 'vertical' %} medium-hide{% endif %}">
             {%- if enable_filtering -%}
               {{ 'products.facets.filter_button' | t }}
             {%- endif -%}
@@ -482,7 +497,7 @@
           <div class="mobile-facets__inner gradient">
             <div class="mobile-facets__header">
               <div class="mobile-facets__header-inner">
-                <h2 class="mobile-facets__heading medium-hide large-up-hide">
+                <h2 class="mobile-facets__heading{% unless filter_type == 'vertical' %} medium-hide{% endunless %} large-up-hide">
                   {%- if enable_filtering and enable_sorting -%}
                     {{ 'products.facets.filter_and_sort' | t }}
                   {%- elsif enable_filtering -%}
@@ -491,7 +506,7 @@
                     {{ 'products.facets.sort_button' | t }}
                   {%- endif -%}
                 </h2>
-                <h2 class="mobile-facets__heading small-hide">
+                <h2 class="mobile-facets__heading small-hide{% if filter_type == 'vertical' %} medium-hide{% endif %}">
                   {%- if enable_filtering -%}
                     {{ 'products.facets.filter_button' | t }}
                   {%- endif -%}
@@ -568,6 +583,10 @@
                                 assign inactive_filter_values = filter.values | where: 'active', false
                                 assign sorted_values = active_filter_values | concat: inactive_filter_values
                               endif
+                              # Lengths are bare numbers (snippets/facet-value-label): text order puts them shortest first
+                              if filter.param_name == 'filter.p.m.custom.length'
+                                assign sorted_values = sorted_values | sort: 'label'
+                              endif
                             -%}
                             {%- for value in sorted_values -%}
                               {% liquid
@@ -584,13 +603,13 @@
 
                               {%- capture text_value -%}
                                 <span class="facet-checkbox__text" aria-hidden="true">
-                                  <span class="facet-checkbox__text-label">{{- value.label | escape }}</span>
+                                  <span class="facet-checkbox__text-label">{% render 'facet-value-label', filter: filter, value: value %}</span>
                                 </span>
                                 <span class="facet-checkbox__count" aria-hidden="true">
                                   ({{- value.count -}})
                                 </span>
                                 <span class="visually-hidden">
-                                  {{- value.label | escape }} (
+                                  {%- render 'facet-value-label', filter: filter, value: value %} (
                                   {%- if value.count == '1' -%}
                                     {{- 'products.facets.product_count_simple.one' | t: count: value.count -}}
                                   {%- else -%}
@@ -800,13 +819,13 @@
     </details>
   </menu-drawer>
 
-  <div class="active-facets active-facets-mobile medium-hide large-up-hide">
+  <div class="active-facets active-facets-mobile{% unless filter_type == 'vertical' %} medium-hide{% endunless %} large-up-hide">
     {%- for filter in results.filters -%}
       {%- for value in filter.active_values -%}
         <facet-remove>
           <a href="{{ value.url_to_remove }}" class="active-facets__button active-facets__button--light">
             <span class="active-facets__button-inner button button--tertiary">
-              {{ filter.label | escape }}: {{ value.label | escape }}
+              {{ filter.label | escape }}: {% render 'facet-value-label', filter: filter, value: value %}
               <span class="svg-wrapper">
                 {{- 'icon-close-small.svg' | inline_asset_content -}}
               </span>
@@ -888,7 +907,7 @@
     </facet-filters-form>
   {%- endif -%}
   <div
-    class="product-count light{% if filter_type == 'vertical' or filter_type == 'horizontal' %} medium-hide large-up-hide{% endif %}"
+    class="product-count light{% if filter_type == 'horizontal' %} medium-hide large-up-hide{% elsif filter_type == 'vertical' %} large-up-hide{% endif %}"
     role="status"
   >
     <h2 class="product-count__text text-body">
@@ -916,7 +935,7 @@
               <facet-remove>
                 <a href="{{ value.url_to_remove }}" class="active-facets__button active-facets__button--light">
                   <span class="active-facets__button-inner button button--tertiary">
-                    {{ filter.label | escape }}: {{ value.label | escape }}
+                    {{ filter.label | escape }}: {% render 'facet-value-label', filter: filter, value: value %}
                     <span class="svg-wrapper">
                       {{- 'icon-close-small.svg' | inline_asset_content -}}
                     </span>
