@@ -5,7 +5,8 @@
   that sold out since the refresh; renders nothing when none are left.
 
   The first available alternative is shown as the recommended replacement with its own
-  add-to-cart form (Dawn's <product-form>, so it opens the cart drawer); the rest are links.
+  add-to-cart form (Dawn's <product-form>, so it opens the cart drawer); the next 3 available are links.
+  Lists hold up to 8 picks so the block survives picks selling out.
 
   Accepts:
   - product: {Object} Product Liquid object (required)
@@ -20,7 +21,7 @@
     if alt.available
       if best == null
         assign best = alt
-      else
+      elsif others_count < 3
         assign others_count = others_count | plus: 1
       endif
     endif
@@ -123,8 +124,10 @@
           {{ 'products.product.memory_alternatives_others' | t }} ({{ others_count }})
         </p>
         <ul class="memory-alternatives__list" role="list">
+          {%- assign listed = 0 -%}
           {%- for alt in alts -%}
-            {%- if alt.available and alt.id != best.id -%}
+            {%- if alt.available and alt.id != best.id and listed < 3 -%}
+              {%- assign listed = listed | plus: 1 -%}
               <li>
                 <a href="{{ alt.url }}" class="memory-alternatives__item">
                   <span class="memory-alternatives__item-title">{{ alt.title }}</span>
