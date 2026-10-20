@@ -265,21 +265,22 @@
         "other": "Вибрано: {{ count }}"
       },
       "product_count": {
-        "one": "{{ product_count }} з {{ count }} прод.",
-        "few": "{{ product_count }} з {{ count }} прод.",
-        "many": "{{ product_count }} з {{ count }} прод.",
-        "other": "{{ product_count }} з {{ count }} прод."
+        "one": "{{ product_count }} з {{ count }} товарів",
+        "few": "{{ product_count }} з {{ count }} товарів",
+        "many": "{{ product_count }} з {{ count }} товарів",
+        "other": "{{ product_count }} з {{ count }} товарів"
       },
       "product_count_simple": {
-        "one": "{{ count }} прод.",
-        "few": "Продуктів: {{ count }}",
-        "many": "Продуктів: {{ count }}",
-        "other": "Продуктів: {{ count }}"
+        "one": "{{ count }} товар",
+        "few": "{{ count }} товари",
+        "many": "{{ count }} товарів",
+        "other": "{{ count }} товарів"
       },
       "clear_filter": "Зняти фільтр",
       "filter_selected_accessibility": "{{ type }} (встановлено фільтри: {{ count }})",
       "show_more": "Показати більше",
       "show_less": "Показати менше",
+      "length_unit": "м",
       "filter_and_operator_subtitle": "Вибрати все",
       "sort_options": {
         "relevance": "За релевантністю",
@@ -330,10 +331,10 @@
         "other": "Рекомендацій: {{ count }}"
       },
       "results_products_with_count": {
-        "one": "Продукт: {{ count }}",
-        "few": "Продукти: {{ count }}",
-        "many": "Продуктів: {{ count }}",
-        "other": "Продуктів: {{ count }}"
+        "one": "Товар: {{ count }}",
+        "few": "Товари: {{ count }}",
+        "many": "Товарів: {{ count }}",
+        "other": "Товарів: {{ count }}"
       },
       "suggestions": "Підказки",
       "pages": "Сторінки",
@@ -353,7 +354,7 @@
         "one": "{{ count }} товар",
         "few": "{{ count }} товари",
         "many": "{{ count }} товарів",
-        "other": "{{ count }} товару"
+        "other": "{{ count }} товарів"
       },
       "show_all_count": {
         "one": "Показати {{ count }} товар за «{{ terms }}»",
@@ -475,7 +476,7 @@
     },
     "collection_template": {
       "title": "Колекція",
-      "empty": "Продукти не знайдено",
+      "empty": "Товари не знайдено",
       "use_fewer_filters_html": "Використовуйте менше фільтрів або <a class=\"{{ class }}\" href=\"{{ link }}\">видаліть усі</a>"
     },
     "video": {
@@ -609,8 +610,9 @@
     },
     "charger_finder": {
       "brands_label": "Для якого ноутбука?",
+      "more_filters": "Ще фільтри:",
       "all": "Усі",
-      "guide_summary": "Не знаєте розмір штекера? Як дізнатися",
+      "guide_summary": "Як дізнатися розмір штекера",
       "step_label_html": "Подивіться на наклейку старого зарядного або на дно ноутбука: там пишуть напругу і часто розмір штекера, наприклад <b>19V ⎓ 3.42A, 5.5×2.5</b>.",
       "step_compare": "Або порівняйте свій штекер з малюнком і натисніть потрібний розмір:",
       "step_table": "Розміри, які найчастіше бувають у брендів:",
@@ -622,9 +624,9 @@
       "help_heading": "Не впевнені? Напишіть модель ноутбука — підберемо",
       "draft_intro_html": "Вітаю! (з каталогу перехідників для зарядки ноутбука)",
       "card_title": "Не знаєте, який підійде?",
-      "card_text": "Напишіть модель ноутбука — підкажемо, який перехідник потрібен.",
+      "card_text": "Розмір штекера вказаний на наклейці старого зарядного. Не знайшли — напишіть модель ноутбука, підкажемо.",
       "card_button": "Підібрати за моделлю",
-      "card_telegram": "Або напишіть у Telegram",
+      "card_telegram": "Telegram",
       "all_sizes": "Показати всі розміри",
       "empty_title": "За цими фільтрами нічого не знайшлося",
       "reset_filters": "Скинути фільтри"

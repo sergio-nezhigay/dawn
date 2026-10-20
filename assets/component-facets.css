@@ -1564,4 +1564,21 @@ input.mobile-facets__checkbox {
   .facets-vertical .active-facets__button-remove {
     padding: 0 1rem 1rem;
   }
+
+  /* Tablets: a sidebar left two ~160px product columns, so vertical filters use the drawer here
+     (snippets/facets.liquid) and the grid gets three columns */
+  .facets-vertical {
+    display: block;
+  }
+
+  .facets-vertical .facets-wrapper {
+    margin-bottom: 1.6rem;
+    padding: 0;
+    border: 0;
+    background: none;
+  }
+
+  .facets-vertical .product-grid .grid__item {
+    width: calc(33.33% - var(--grid-desktop-horizontal-spacing) * 2 / 3);
+  }
 }

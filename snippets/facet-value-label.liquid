@@ -1,0 +1,21 @@
+{%- doc -%}
+  Filter value label for snippets/facets.liquid. Length values are stored as bare metres ("0.18", the format the
+  Rozetka feed needs), so they are shown as "0,18 m" here; every other value prints as is.
+
+  @param {object} filter - The filter the value belongs to
+  @param {object} value - The filter value
+{%- enddoc -%}
+{%- liquid
+  assign label = value.label
+  if filter.param_name == 'filter.p.m.custom.length'
+    assign digits_removed = label | remove: '.' | remove: '0' | remove: '1' | remove: '2' | remove: '3' | remove: '4' | remove: '5' | remove: '6' | remove: '7' | remove: '8' | remove: '9'
+    if digits_removed == blank and label != blank
+      unless request.locale.iso_code == 'en'
+        assign label = label | replace: '.', ','
+      endunless
+      assign unit = 'products.facets.length_unit' | t
+      assign label = label | append: ' ' | append: unit
+    endif
+  endif
+  echo label | escape
+-%}

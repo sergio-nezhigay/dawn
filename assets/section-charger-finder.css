@@ -1,5 +1,5 @@
 /* Charger adapters collection: brand buttons, plug-size guide with the model helper (sections/charger-adapter-finder.liquid)
-   and the "Not sure which one fits?" tile in the grid (snippets/charger-help-card.liquid). Tokens from base.css. */
+   and the "Not sure which one fits?" strip in the grid (snippets/charger-help-card.liquid). Tokens from base.css. */
 .charger-finder {
   margin-bottom: 16px;
   color: var(--ui-navy);
@@ -52,9 +52,15 @@
   font-weight: 700;
 }
 
-/* Phones: one row that scrolls sideways, running to the screen edges */
+/* Phones: one row that scrolls sideways, running to the screen edges; the fade on the right says "there is more" */
 @media screen and (max-width: 749px) {
+  .charger-finder__more-label {
+    flex-basis: 100%;
+  }
+
   .charger-finder__chips {
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 40px), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - 40px), transparent);
     flex-wrap: nowrap;
     margin: 0 -1.5rem;
     padding: 0 1.5rem 4px;
@@ -74,7 +80,44 @@
   }
 }
 
-/* Guide */
+/* "More filters": shortcuts to the size and power filters (dashed = they open something elsewhere on the page) */
+.charger-finder__more {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.charger-finder__more-label {
+  color: var(--ui-muted);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.charger-finder__more-pill {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1.5px dashed var(--ui-blue);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ui-blue);
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color var(--ui-dur) var(--ui-ease), color var(--ui-dur) var(--ui-ease);
+}
+
+.charger-finder__more-pill.is-active {
+  border-style: solid;
+  background: var(--ui-tint);
+}
+
+/* Guide: a pill that turns solid blue while open */
 .charger-finder__guide {
   margin-top: 12px;
 }
@@ -84,24 +127,47 @@
   gap: 8px;
   align-items: center;
   min-height: 44px;
+  padding: 0 18px 0 14px;
+  border: 1.5px solid #cfe0f5;
+  border-radius: 999px;
+  background: var(--ui-tint);
   color: var(--ui-blue);
-  font-weight: 600;
+  font-weight: 700;
   list-style: none;
   cursor: pointer;
+  transition: background-color var(--ui-dur) var(--ui-ease), border-color var(--ui-dur) var(--ui-ease),
+    color var(--ui-dur) var(--ui-ease);
 }
 
 .charger-finder__summary::-webkit-details-marker {
   display: none;
 }
 
-.charger-finder__summary .svg-wrapper {
-  flex: none;
-  width: 18px;
-  height: 18px;
+.charger-finder__guide[open] > .charger-finder__summary {
+  border-color: var(--ui-blue);
+  background: var(--ui-blue);
+  color: #fff;
 }
 
-.charger-finder__caret {
+.charger-finder__plug-icon {
+  flex: none;
+  width: 20px;
+  height: 20px;
+}
+
+/* base.css positions and rotates every summary caret; here only the wrapper turns, so open = arrow up */
+.charger-finder .svg-wrapper:has(> .icon-caret) {
+  flex: none;
+  width: 10px;
+  height: 10px;
   transition: transform var(--ui-dur) var(--ui-ease);
+}
+
+.charger-finder .svg-wrapper > .icon-caret {
+  position: static;
+  width: 10px;
+  height: 6px;
+  transform: none;
 }
 
 .charger-finder__guide[open] .charger-finder__caret {
@@ -158,6 +224,7 @@
 .charger-finder__plug.is-active {
   border-color: var(--ui-blue);
   background: var(--ui-tint);
+  box-shadow: inset 0 0 0 1px var(--ui-blue);
 }
 
 .charger-finder__plug-name small {
@@ -359,16 +426,20 @@
   }
 }
 
-/* "Not sure which one fits?" tile, sized like a product card */
+/* "Not sure which one fits?" strip: spans the grid row after the first full row (sections/main-collection-product-grid.liquid) */
+#product-grid .grid__item.charger-help-strip {
+  width: 100%;
+  max-width: 100%;
+}
+
 .charger-help-card {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  justify-content: center;
-  height: 100%;
-  padding: 16px;
-  border: 1px solid var(--ui-line);
-  border-radius: 12px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 16px 28px;
+  align-items: center;
+  padding: 20px 28px 20px 24px;
+  border: 1px solid #d6e4f5;
+  border-radius: 16px;
   background: var(--ui-tint);
   color: var(--ui-navy);
   font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
@@ -376,42 +447,118 @@
   letter-spacing: normal;
 }
 
-.charger-help-card__icon {
+/* The charger sticker: the place where the plug size is printed */
+.charger-help-card__label {
   display: grid;
-  place-items: center;
-  width: 40px;
-  height: 40px;
-  padding: 9px;
-  border-radius: 50%;
-  background: var(--ui-blue);
-  color: #fff;
+  gap: 2px;
+  padding: 10px 12px;
+  border: 1px solid var(--ui-line);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 30, 60, 0.08);
+  color: #3b4654;
+  font: 600 12px/1.5 ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  white-space: nowrap;
+  transform: rotate(-3deg);
+}
+
+.charger-help-card__label mark {
+  padding: 0 4px;
+  border-radius: 3px;
+  background: var(--ui-yellow);
+  color: var(--ui-navy);
 }
 
 .charger-help-card__title {
-  margin: 4px 0 0;
-  font-size: 17px;
-  font-weight: 700;
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.3;
 }
 
 .charger-help-card__text {
-  margin: 0;
+  max-width: 60ch;
+  margin: 4px 0 0;
   color: var(--ui-muted);
   font-size: 14px;
 }
 
+.charger-help-card__actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.charger-help-card__btn,
+.charger-help-card__tg {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 20px;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color var(--ui-dur) var(--ui-ease), color var(--ui-dur) var(--ui-ease);
+}
+
 .charger-help-card__btn {
-  width: 100%;
-  margin-top: 4px;
+  background: var(--ui-yellow);
+  color: var(--ui-navy);
+}
+
+.charger-help-card__tg {
+  padding: 0 18px;
+  border: 1.5px solid var(--ui-blue);
+  background: #fff;
+  color: var(--ui-blue);
 }
 
 .charger-help-card__link {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  align-self: center;
   color: var(--ui-blue);
   font-size: 14px;
   font-weight: 600;
+}
+
+/* Phones and tablets: sticker + text, the buttons on their own line */
+@media screen and (max-width: 989px) {
+  .charger-help-card {
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 14px 18px;
+    padding: 16px;
+  }
+
+  .charger-help-card__actions {
+    grid-column: 2;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .charger-help-card__label {
+    padding: 8px 9px;
+    font-size: 10.5px;
+  }
+
+  .charger-help-card__title {
+    font-size: 16px;
+  }
+
+  .charger-help-card__actions {
+    grid-column: 1 / -1;
+  }
+
+  .charger-help-card__btn {
+    flex: 1 1 auto;
+  }
+
+  .charger-help-card__text {
+    font-size: 13px;
+  }
 }
 
 @media (hover: hover) {
@@ -423,6 +570,21 @@
   .charger-help__alt a:hover {
     background: #fff;
     color: var(--ui-blue);
+  }
+
+  .charger-finder__more-pill:hover,
+  .charger-finder__guide:not([open]) > .charger-finder__summary:hover {
+    border-color: var(--ui-blue);
+    background: var(--ui-tint);
+  }
+
+  .charger-help-card__btn:hover {
+    background: #ffd25c;
+  }
+
+  .charger-help-card__tg:hover {
+    background: var(--ui-blue);
+    color: #fff;
   }
 }
 
@@ -436,24 +598,19 @@
   font-weight: 600;
 }
 
-/* Empty result: the tile replaces Dawn's "no products" message */
+/* Empty result: the card replaces Dawn's "no products" message */
 .charger-help-card--empty {
-  align-items: center;
-  max-width: 480px;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  max-width: 520px;
   margin: 24px auto;
-  padding: 24px;
+  padding: 28px 24px;
   text-align: center;
 }
 
-.charger-help-card--empty .charger-help-card__btn {
-  max-width: 320px;
-}
-
-/* Grid tile on narrow cards (tablet, small laptop): title + button only, so it stays card height */
-@media screen and (min-width: 750px) and (max-width: 1199px) {
-  .charger-help-card:not(.charger-help-card--empty) .charger-help-card__text {
-    display: none;
-  }
+.charger-help-card--empty .charger-help-card__actions {
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 /* Phones: the product count ("59 of 178") beside the filter button stays on one line (this stylesheet loads only on this template) */
