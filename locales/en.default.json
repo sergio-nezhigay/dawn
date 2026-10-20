@@ -352,11 +352,15 @@
       "layout_hint": "Did you mean",
       "product_count": {
         "one": "{{ count }} product",
-        "other": "{{ count }} products"
+        "other": "{{ count }} products",
+        "few": "{{ count }} items",
+        "many": "{{ count }} items"
       },
       "show_all_count": {
         "one": "Show {{ count }} product for “{{ terms }}”",
-        "other": "Show all {{ count }} products for “{{ terms }}”"
+        "other": "Show all {{ count }} products for “{{ terms }}”",
+        "few": "Show all {{ count }} products for \"{{ terms }}\"",
+        "many": "Show all {{ count }} products for “{{ terms }}”"
       }
     },
     "cart": {
@@ -389,7 +393,9 @@
       "promise_exchange": "14-day exchange",
       "reviews_count": {
         "one": "{{ number }} review",
-        "other": "{{ number }} reviews"
+        "other": "{{ number }} reviews",
+        "few": "{{ number }} reviews",
+        "many": "{{ number }} reviews"
       },
       "price_from": "from {{ price }} ₴",
       "chip_title_html": "Check<br>compatibility",
