@@ -9,6 +9,12 @@
  */
 {
   "general": {
+    "breadcrumbs": {
+      "label": "Breadcrumbs",
+      "home": "Home",
+      "back_to_search": "Back to search results",
+      "back_to_list": "Back to the list"
+    },
     "password_page": {
       "login_form_heading": "Enter store using password:",
       "login_password_button": "Enter using password",

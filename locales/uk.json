@@ -9,6 +9,12 @@
  */
 {
   "general": {
+    "breadcrumbs": {
+      "label": "Хлібні крихти",
+      "home": "Головна",
+      "back_to_search": "До результатів пошуку",
+      "back_to_list": "Назад до списку"
+    },
     "password_page": {
       "login_form_heading": "Вхід до магазину за допомогою пароля:",
       "login_password_button": "Увійти за допомогою пароля",

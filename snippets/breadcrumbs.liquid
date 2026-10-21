@@ -1,15 +1,99 @@
-{% unless template == 'index' or template == 'cart' or template == 'list-collections' or template == '404' %}
-  {% assign t = template | split: '.' | first %}
+{%- comment -%}
+  Breadcrumbs (product, collection, page and other templates).
 
-  <nav
-    class="breadcrumbs scrollbar-hide overflow-x-auto whitespace-nowrap{% if template.name == 'product' %} breadcrumbs-product{% endif %}"
-    role="navigation"
-    aria-label="breadcrumbs"
-  >
-    <ol class="flex items-center text-black/80 " itemscope itemtype="https://schema.org/BreadcrumbList">
-      <li class="breadcrumb-item block" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-        <a href="/" itemprop="item" class="flex items-center">
-          <span itemprop="name" class="sr-only">Home</span>
+  Product trail follows the main menu, not product.collections.first: that list is
+  alphabetical, so brands and price groups (Logitech, deal-500) used to win over
+  the real category. Sold-out products are not in the in-stock smart collections,
+  so they fall back to the menu collection that holds their product type.
+  RAM gets one extra step from the existing sodimm-/dimm- spec collections.
+
+  Phones see a single "back to parent" link; the full trail (and its microdata) stays in the HTML.
+  A "back to results" link appears when the shopper came from search or a filtered list.
+{%- endcomment -%}
+{% unless template == 'index' or template == 'cart' or template == 'list-collections' or template == '404' %}
+  {%- liquid
+    assign t = template | split: '.' | first
+    assign category_url = blank
+    assign category_title = blank
+    assign spec = nil
+
+    if t == 'product'
+      assign product_collection_ids = product.collections | map: 'id' | join: ',' | prepend: ',' | append: ','
+      for top in linklists['main-menu'].links
+        for link in top.links
+          if link.type == 'collection_link'
+            assign needle = link.object.id | prepend: ',' | append: ','
+            if product_collection_ids contains needle
+              assign category_url = link.object.url
+              assign category_title = link.title
+              break
+            endif
+          endif
+        endfor
+        if category_url != blank
+          break
+        endif
+      endfor
+
+      # all_types stays untranslated while product.type is translated, so on
+      # /ru/ and /en/ compare with the first product of a single-type collection.
+      if category_url == blank and product.type != blank
+        for top in linklists['main-menu'].links
+          for link in top.links
+            if link.type != 'collection_link'
+              continue
+            endif
+            assign matched = false
+            if link.object.all_types contains product.type
+              assign matched = true
+            elsif request.locale.primary == false and link.object.all_types.size == 1
+              if link.object.products.first.type == product.type
+                assign matched = true
+              endif
+            endif
+            if matched
+              assign category_url = link.object.url
+              assign category_title = link.title
+              break
+            endif
+          endfor
+          if category_url != blank
+            break
+          endif
+        endfor
+      endif
+
+      for c in product.collections
+        if c.handle contains 'dimm-ddr'
+          assign spec = c
+          break
+        endif
+      endfor
+    endif
+
+    if t == 'collection' and collection.handle contains 'dimm-ddr'
+      assign category_url = collections['pamyat'].url
+      assign category_title = collections['pamyat'].title
+    endif
+
+    assign up_url = routes.root_url
+    assign up_title = 'general.breadcrumbs.home' | t
+    if spec
+      assign up_url = spec.url
+      assign up_title = spec.handle | replace: '-', ' ' | upcase
+    elsif category_url != blank
+      assign up_url = category_url
+      assign up_title = category_title
+    endif
+
+    assign pos = 1
+  -%}
+
+  <nav class="breadcrumbs{% if t == 'product' %} breadcrumbs--product{% endif %}" aria-label="{{ 'general.breadcrumbs.label' | t }}">
+    <ol class="breadcrumbs__list" itemscope itemtype="https://schema.org/BreadcrumbList">
+      <li class="breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a href="{{ routes.root_url }}" itemprop="item" class="breadcrumbs__home">
+          <span itemprop="name" class="visually-hidden">{{ 'general.breadcrumbs.home' | t }}</span>
           <span class="svg-wrapper">
             {{- 'icon-home.svg' | inline_asset_content -}}
           </span>
@@ -18,100 +102,201 @@
       </li>
 
       {% case t %}
-        {% when 'page' %}
-          <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-            <a href="{{ page.url }}" itemprop="item" aria-current="page">
-              <span itemprop="name">{{ page.title }}</span>
-            </a>
-            <meta itemprop="position" content="2">
-          </li>
-
-        {% when 'product' -%}
-          {% if collection.url -%}
-            <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-              <a href="{{ collection.url }}" itemprop="item">
-                <span itemprop="name">{{ collection.title }}</span>
-              </a>
-              <meta itemprop="position" content="2">
-            </li>
-          {% elsif product.collections.first %}
-            <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-              <a href="{{ product.collections.first.url }}" itemprop="item" class="hover:underline">
-                <span itemprop="name" class="font-medium">{{ product.collections.first.title }}</span>
-              </a>
-              <meta itemprop="position" content="2">
+        {% when 'product' %}
+          {% if category_url != blank %}
+            {% assign pos = pos | plus: 1 %}
+            <li class="breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+              <a href="{{ category_url }}" itemprop="item"><span itemprop="name">{{ category_title | escape }}</span></a>
+              <meta itemprop="position" content="{{ pos }}">
             </li>
           {% endif %}
-
-          <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-            <a itemprop="item" href="{{ product.url }}" aria-current="page" class="pointer-events-none cursor-default">
-              <span itemprop="name">{{ product.title }}</span>
-            </a>
-            <meta itemprop="position" content="3">
+          {% if spec %}
+            {% assign pos = pos | plus: 1 %}
+            <li class="breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+              <a href="{{ spec.url }}" itemprop="item"><span itemprop="name">{{ up_title }}</span></a>
+              <meta itemprop="position" content="{{ pos }}">
+            </li>
+          {% endif %}
+          {% assign pos = pos | plus: 1 %}
+          <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <span itemprop="name">{{ product.title | escape }}</span>
+            <meta itemprop="position" content="{{ pos }}">
           </li>
 
         {% when 'collection' %}
-          {% if current_tags %}
-            <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-              <a href="{{ collection.url }}" itemprop="item">
-                <span itemprop="name">{{ collection.title }}</span>
-              </a>
-              <meta itemprop="position" content="2">
+          {% if category_url != blank %}
+            {% assign pos = pos | plus: 1 %}
+            <li class="breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+              <a href="{{ category_url }}" itemprop="item"><span itemprop="name">{{ category_title | escape }}</span></a>
+              <meta itemprop="position" content="{{ pos }}">
             </li>
-            <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-              {% capture tag_url %}{{ collection.url }}/{{ current_tags | join: "+"}}{% endcapture %}
-              <a href="{{ tag_url }}" itemprop="item" aria-current="page">
-                <span itemprop="name">{{ current_tags | join: ' + ' }}</span>
-              </a>
-              <meta itemprop="position" content="3">
+          {% endif %}
+          {% assign pos = pos | plus: 1 %}
+          {% if current_tags %}
+            <li class="breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+              <a href="{{ collection.url }}" itemprop="item"><span itemprop="name">{{ collection.title | escape }}</span></a>
+              <meta itemprop="position" content="{{ pos }}">
+            </li>
+            {% assign pos = pos | plus: 1 %}
+            <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+              <span itemprop="name">{{ current_tags | join: ' + ' | escape }}</span>
+              <meta itemprop="position" content="{{ pos }}">
             </li>
           {% else %}
-            <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-              <a
-                itemprop="item"
-                href="{{ collection.url }}"
-                aria-current="page"
-                class="pointer-events-none cursor-default"
-              >
-                <span itemprop="name">{{ collection.title }}</span>
-              </a>
-              <meta itemprop="position" content="2">
+            <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+              <span itemprop="name">{% if category_url != blank %}{{ collection.handle | replace: '-', ' ' | upcase }}{% else %}{{ collection.title | escape }}{% endif %}</span>
+              <meta itemprop="position" content="{{ pos }}">
             </li>
           {% endif %}
 
+        {% when 'page' %}
+          <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <span itemprop="name">{{ page.title | escape }}</span>
+            <meta itemprop="position" content="2">
+          </li>
+
         {% else %}
-          <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-            <a href="{{ request.path }}" itemprop="item" aria-current="page">
-              <span itemprop="name">{{ page_title }}</span>
-            </a>
+          <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <span itemprop="name">{{ page_title | escape }}</span>
             <meta itemprop="position" content="2">
           </li>
       {% endcase %}
     </ol>
+
+    {% if t == 'product' %}
+      <a class="breadcrumbs__up" href="{{ up_url }}"><span aria-hidden="true">&larr;</span> <span class="breadcrumbs__label">{{ up_title | escape }}</span></a>
+      <a class="breadcrumbs__back" href="#" hidden><span aria-hidden="true">&larr;</span> <span class="breadcrumbs__label"></span></a>
+    {% endif %}
   </nav>
 
-  <style>
-    .breadcrumbs{
-        padding: 10px 0;
-        opacity: 0.75;
+  {% if t == 'product' %}
+    <script>
+      (() => {
+        const nav = document.currentScript.previousElementSibling;
+        let from;
+        try {
+          from = new URL(document.referrer);
+        } catch (e) {
+          return;
+        }
+        if (from.origin !== location.origin) return;
+        const isSearch = /\/search\/?$/.test(from.pathname);
+        const isList = from.pathname.includes('/collections/') && from.search !== '';
+        if (!isSearch && !isList) return;
+        const back = nav.querySelector('.breadcrumbs__back');
+        back.href = from.href;
+        back.lastElementChild.textContent = isSearch
+          ? {{ 'general.breadcrumbs.back_to_search' | t | json }}
+          : {{ 'general.breadcrumbs.back_to_list' | t | json }};
+        back.hidden = false;
+        nav.classList.add('breadcrumbs--has-back');
+      })();
+    </script>
+  {% endif %}
 
-    }
-    @media screen and (min-width: 750px) {
-      .breadcrumbs-product {
-        margin-bottom: 8px;
-      }
-    }
-    .breadcrumb-item{
-        color:#2e2f32!important;
-    }
-    .breadcrumb-item:not(:last-child)::after {
-      content: '/';
-      margin: 0 0.5rem;
-      display: inline-block;
-    }
-    .breadcrumb-item {
+  <style>
+    .breadcrumbs {
       display: flex;
       align-items: center;
+      gap: 2.4rem;
+      padding: 1rem 0;
+      font-size: 1.5rem;
+      line-height: 1.4;
+      color: var(--ui-text);
+    }
+    .breadcrumbs a {
+      color: inherit;
+      text-decoration: none;
+    }
+    .breadcrumbs a:hover {
+      color: var(--ui-blue);
+      text-decoration: underline;
+    }
+    .breadcrumbs__list {
+      display: flex;
+      align-items: center;
+      min-width: 0;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      white-space: nowrap;
+    }
+    .breadcrumbs__item {
+      display: flex;
+      align-items: center;
+      flex: none;
+      font-weight: 600;
+    }
+    .breadcrumbs__item:not(:last-child)::after {
+      content: '/';
+      margin: 0 0.6rem;
+      color: #9aa1ab;
+      font-weight: 400;
+    }
+    .breadcrumbs__item--current {
+      flex: 0 1 auto;
+      min-width: 0;
+      font-weight: 400;
+      color: var(--ui-muted);
+    }
+    .breadcrumbs__item--current > span,
+    .breadcrumbs__label {
+      display: block;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .breadcrumbs__home {
+      display: flex;
+      padding: 0.4rem 0;
+    }
+    .breadcrumbs__up,
+    .breadcrumbs__back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex: none;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .breadcrumbs__back {
+      margin-left: auto;
+      color: var(--ui-blue) !important;
+      font-weight: 500;
+    }
+    .breadcrumbs__up,
+    .breadcrumbs__back[hidden] {
+      display: none;
+    }
+    @media screen and (min-width: 750px) {
+      .breadcrumbs--product {
+        margin-bottom: 0.8rem;
+      }
+    }
+    @media screen and (max-width: 749px) {
+      .breadcrumbs--product .breadcrumbs__list {
+        display: none;
+      }
+      .breadcrumbs--product {
+        padding: 0;
+        font-size: 1.6rem;
+      }
+      .breadcrumbs__up {
+        display: inline-flex;
+      }
+      .breadcrumbs__up,
+      .breadcrumbs__back {
+        min-width: 0;
+        min-height: 44px;
+        margin: 0;
+      }
+      .breadcrumbs__back[hidden],
+      .breadcrumbs--has-back .breadcrumbs__up {
+        display: none;
+      }
+      .breadcrumbs:not(.breadcrumbs--product) .breadcrumbs__list {
+        overflow-x: auto;
+      }
     }
   </style>
 {% endunless %}
