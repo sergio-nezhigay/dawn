@@ -164,8 +164,11 @@
     </ol>
 
     {% if t == 'product' %}
-      <a class="breadcrumbs__up" href="{{ up_url }}"><span aria-hidden="true">&larr;</span> <span class="breadcrumbs__label">{{ up_title | escape }}</span></a>
-      <a class="breadcrumbs__back" href="#" hidden><span aria-hidden="true">&larr;</span> <span class="breadcrumbs__label"></span></a>
+      {%- capture chevron -%}
+        <svg class="breadcrumbs__chevron" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M10.5 2.5 5 8l5.5 5.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      {%- endcapture -%}
+      <a class="breadcrumbs__up" href="{{ up_url }}">{{ chevron }}<span class="breadcrumbs__label">{{ up_title | escape }}</span></a>
+      <a class="breadcrumbs__back" href="#" hidden>{{ chevron }}<span class="breadcrumbs__label"></span></a>
     {% endif %}
   </nav>
 
@@ -259,6 +262,11 @@
       font-weight: 600;
       white-space: nowrap;
     }
+    .breadcrumbs__chevron {
+      flex: none;
+      width: 1.2rem;
+      height: 1.2rem;
+    }
     .breadcrumbs__back {
       margin-left: auto;
       color: var(--ui-blue) !important;
@@ -277,12 +285,18 @@
       .breadcrumbs--product .breadcrumbs__list {
         display: none;
       }
+      /* Quieter than the title so the link doesn't read as its first line. */
       .breadcrumbs--product {
         padding: 0;
-        font-size: 1.6rem;
+        margin-bottom: 0.4rem;
+        font-size: 1.4rem;
       }
       .breadcrumbs__up {
         display: inline-flex;
+      }
+      .breadcrumbs--product .breadcrumbs__up {
+        font-weight: 500;
+        color: var(--ui-muted);
       }
       .breadcrumbs__up,
       .breadcrumbs__back {
