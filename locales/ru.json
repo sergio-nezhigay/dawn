@@ -9,6 +9,12 @@
  */
 {
   "general": {
+    "breadcrumbs": {
+      "label": "Хлебные крошки",
+      "home": "Главная",
+      "back_to_search": "К результатам поиска",
+      "back_to_list": "Назад к списку"
+    },
     "password_page": {
       "login_form_heading": "Вход в магазин с помощью пароля:",
       "login_password_button": "Войти с помощью пароля",
