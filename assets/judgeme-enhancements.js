@@ -145,10 +145,10 @@
   });
 
   // The rails above the widget load as the page scrolls past them and push it down, and Judge.me can still
-  // grow it. Keep re-aiming until the widget has stayed put for a second (8 s at most), unless the shopper
-  // scrolls on their own. The stop point is #judgeme_product_reviews' scroll-margin-top in assets/base.css.
-  const scrollToReviews = (onComplete) => {
-    const widget = document.querySelector('#judgeme_product_reviews');
+  // grow it. Keep re-aiming until the target has stayed put for a second (8 s at most), unless the shopper
+  // scrolls on their own. The stop point is the target's scroll-margin-top in assets/base.css.
+  // The target is the widget, or the review form / thank-you note inside the reviews area.
+  const scrollToReviews = (onComplete, widget = document.querySelector('#judgeme_product_reviews')) => {
     if (!widget) return;
     widget.scrollIntoView({ behavior: 'smooth' });
 
@@ -182,20 +182,38 @@
     setTimeout(follow, 100);
   };
 
-  // Judge.me's own "write a review" link opens its form; it exists only once the widget has rendered.
-  // Waits up to 10 s, so a slow widget never pops the form up long after the tap.
-  const openReviewForm = () => {
+  // On /ru/ Judge.me renders two .jdgm-form; the real one has the submit button.
+  const findReviewForm = () =>
+    [...document.querySelectorAll('#judgeme_product_reviews .jdgm-form')].find((f) =>
+      f.querySelector('input[type=submit]'),
+    );
+
+  // Judge.me's own "write a review" link opens its form. The link is in the markup before Judge.me binds it,
+  // so click once it is set up. Clicks only within 10 s, so a slow widget never pops the form up long after
+  // the tap; then waits up to 3 s for the form to show. Judge.me scrolls the open form to the very top of the
+  // window, under the sticky header, so aim it at the header offset again.
+  const openReviewForm = (onOpen) => {
     const widget = document.querySelector('#judgeme_product_reviews');
     if (!widget) return;
-    const tryOpen = () => {
+    let until = Date.now() + 10000;
+    let clicked = false;
+    const step = () => {
+      const form = findReviewForm();
+      const wrapper = form && (form.closest('.jdgm-form-wrapper') || form);
+      if (wrapper && wrapper.offsetHeight > 0) {
+        if (typeof onOpen === 'function') onOpen(form);
+        scrollToReviews(undefined, wrapper);
+        return;
+      }
       const link = widget.querySelector('.jdgm-write-rev-link');
-      if (link) link.click();
-      return !!link;
+      if (!clicked && link && widget.classList.contains('jdgm--done-setup-widget')) {
+        link.click();
+        clicked = true;
+        until = Date.now() + 3000;
+      }
+      if (Date.now() < until) setTimeout(step, 100);
     };
-    if (tryOpen()) return;
-    const mo = new MutationObserver(() => tryOpen() && mo.disconnect());
-    mo.observe(widget, { childList: true, subtree: true });
-    setTimeout(() => mo.disconnect(), 10000);
+    step();
   };
 
   // Review links all point at #judgeme_product_reviews and work as plain anchors without JS.
@@ -218,13 +236,88 @@
     scrollToReviews(link.hasAttribute('data-reviews-write') ? openReviewForm : undefined);
   };
 
-  // Email links land on #judgeme_product_reviews. Take the hash off so the browser does not jump before the
-  // page settles, scroll there ourselves, then put it back.
+  // Fills the open form from the review email. No focus: the phone keyboard would cover the stars.
+  const prefillReviewForm = (form, { rating, name, email }) => {
+    if (rating) form.querySelector(`.jdgm-form__rating a.jdgm-star[data-alt="${rating}"]`)?.click();
+    [
+      ['input[name=reviewer_name]', name],
+      ['input[name=reviewer_email]', email],
+    ].forEach(([selector, value]) => {
+      const input = form.querySelector(selector);
+      if (!input || !value) return;
+      input.value = value;
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+      input.dispatchEvent(new Event('change', { bubbles: true }));
+    });
+    const body = form.querySelector('textarea[name=review_body]');
+    const hint = window.jdgmSettings && jdgmSettings.widget_body_hint;
+    if (body && hint) body.placeholder = hint;
+    // Judge.me focuses a field as its form opens: drop it
+    if (form.contains(document.activeElement)) document.activeElement.blur();
+  };
+
+  // Shown just above the reviews after a review sent from the email form; outside the widget, which
+  // Judge.me re-renders. Returns the note, or nothing when there is no widget or text.
+  const showThanks = () => {
+    const widget = document.querySelector('#judgeme_product_reviews');
+    const text = window.jdgmSettings && jdgmSettings.widget_thanks_text;
+    if (!widget || !text) return null;
+    const note = document.createElement('p');
+    note.className = 'jdgm-thanks';
+    note.setAttribute('role', 'status');
+    widget.before(note);
+    // Filled after insertion so screen readers announce it
+    setTimeout(() => (note.textContent = text), 100);
+    return note;
+  };
+
+  // Review-email links: #judgeme_product_reviews&rating=N&name=…&email=… (the "write on the site" button)
+  // or &thanks=1 (after the in-email form). The data rides in the hash so it never reaches the server; the
+  // layout/theme.liquid guard takes it out of the address bar early and keeps it in window.jdgmReviewHash.
+  // Values that look wrong are dropped. "+" means a space in the name only: emails can contain "+".
+  const readReviewHash = (hash) => {
+    const params = {};
+    hash
+      .split('&')
+      .slice(1)
+      .forEach((pair) => {
+        const at = pair.indexOf('=');
+        if (at < 0) return;
+        const key = pair.slice(0, at);
+        const value = pair.slice(at + 1);
+        try {
+          params[key] = decodeURIComponent(key === 'name' ? value.replace(/\+/g, ' ') : value).trim();
+        } catch (e) {
+          // a broken %-sequence: leave the value out
+        }
+      });
+    const get = (key) => params[key] || '';
+    const rating = /^[1-5]$/.test(get('rating')) ? Number(get('rating')) : 0;
+    const name = get('name').length <= 60 ? get('name') : '';
+    const email = /^[^@\s]+@[^@\s]+$/.test(get('email')) ? get('email') : '';
+    return { thanks: get('thanks') === '1', rating, name, email };
+  };
+
+  // Email links land on #judgeme_product_reviews. Take the hash off at once so the browser does not jump
+  // before the page settles, and scroll there ourselves. Links from the review email also open the form and
+  // leave no hash behind, so a reload does not open the form again (or the thank-you note); a plain anchor
+  // only scrolls and gets its hash back.
   const handleHashNavigation = () => {
-    if (window.location.hash !== '#judgeme_product_reviews') return;
-    const hash = window.location.hash;
-    history.replaceState(null, '', window.location.pathname + window.location.search);
-    scrollToReviews(() => history.replaceState(null, '', hash));
+    const anchor = '#judgeme_product_reviews';
+    const { search, pathname } = window.location;
+    const hash = window.jdgmReviewHash || window.location.hash;
+    if (hash !== anchor && !hash.startsWith(`${anchor}&`)) return;
+    history.replaceState(null, '', pathname + search);
+    const data = readReviewHash(hash);
+    const fromEmail =
+      new URLSearchParams(search).get('utm_campaign') === 'review_request' ||
+      !!(data.rating || data.name || data.email);
+    const openForm = fromEmail && !data.thanks;
+    const note = data.thanks ? showThanks() : null;
+    scrollToReviews(() => {
+      if (!fromEmail && !data.thanks) history.replaceState(null, '', anchor);
+      if (openForm) openReviewForm((form) => prefillReviewForm(form, data));
+    }, note || undefined);
   };
 
   const init = () => {
