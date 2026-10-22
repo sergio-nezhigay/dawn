@@ -334,13 +334,22 @@
       {%- endcomment -%}
       <script>
         (function () {
+          var fromReviewLink = /judgeme/i.test(location.search + location.hash);
           {%- if template.name == 'product' %}
             if (window.jdgmSettings) {
               jdgmSettings.widget_pagination_type = 'load_more';
               jdgmSettings.widget_load_more_text = {{ 'sections.product_reviews.load_more' | t | json }};
+              jdgmSettings.widget_body_hint = {{ 'sections.product_reviews.body_hint' | t | json }};
+              jdgmSettings.widget_thanks_text = {{ 'sections.product_reviews.thanks' | t | json }};
+            }
+            // Review-email data (#judgeme_product_reviews&name=...&email=...) leaves the address bar as early as
+            // possible; assets/judgeme-enhancements.js reads it from window.jdgmReviewHash.
+            if (location.hash.indexOf('#judgeme_product_reviews&') === 0) {
+              window.jdgmReviewHash = location.hash;
+              history.replaceState(null, '', location.pathname + location.search);
             }
           {%- endif %}
-          if (/judgeme/i.test(location.search + location.hash)) return;
+          if (fromReviewLink) return;
           var s = document.querySelector('script[src*="judgeme"][src*="loader.js"]');
           if (!s) return;
           window.jdgm = window.jdgm || {};
