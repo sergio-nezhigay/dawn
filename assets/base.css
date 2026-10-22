@@ -5085,6 +5085,7 @@ h4+p {
 .template-product .jdgm-histogram,
 .template-product .jdgm-histogram__percentage,
 .template-product .jdgm-rev-widg__summary-average,
+.template-product .jdgm-rev-widg[data-number-of-reviews='0'] .jdgm-rev-widg__summary,
 .template-product .jdgm-paginate {
   display: none !important;
 }
