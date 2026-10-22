@@ -68,14 +68,18 @@
     loadJudgeme();
     const y = window.scrollY;
     const hadFocus = document.activeElement === button;
-    const stayPut = (e) => {
-      if (!e.target.closest('.jdgm-rev')) return;
-      widget.removeEventListener('focusin', stayPut);
-      window.scrollTo({ top: y, behavior: 'instant' });
-      if (hadFocus) button.focus({ preventScroll: true });
-    };
-    widget.addEventListener('focusin', stayPut);
-    setTimeout(() => widget.removeEventListener('focusin', stayPut), 10000);
+    const listening = new AbortController();
+    widget.addEventListener(
+      'focusin',
+      (e) => {
+        if (!e.target.closest('.jdgm-rev')) return;
+        listening.abort();
+        window.scrollTo({ top: y, behavior: 'instant' });
+        if (hadFocus) button.focus({ preventScroll: true });
+      },
+      { signal: listening.signal },
+    );
+    setTimeout(() => listening.abort(), 10000);
     const deadline = Date.now() + 5000;
     const press = () => {
       const next = widget.querySelector('.jdgm-paginate__load-more, .jdgm-paginate__next-page');
