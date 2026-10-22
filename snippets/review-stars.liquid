@@ -1,0 +1,24 @@
+{% comment %}
+  Star row in Judge.me's star classes (font + colour come from its inline "miracle" styles), so it renders without Judge.me JS.
+
+  Accepts:
+  - score: {Number} Rating, may be fractional (half star from .5)
+  - max: {Number} Number of stars (default 5)
+  - label: {String} Accessible label
+
+  Usage:
+  {% render 'review-stars', score: 4.9, label: label %}
+{% endcomment %}
+{%- assign scale_max = max | default: 5 -%}
+<span class="jdgm-prev-badge__stars" role="img" aria-label="{{ label | escape }}">
+  {%- for i in (1..scale_max) -%}
+    {%- assign half_at = i | minus: 0.5 -%}
+    {%- if score >= i -%}
+      <span class="jdgm-star jdgm--on"></span>
+    {%- elsif score >= half_at -%}
+      <span class="jdgm-star jdgm--half"></span>
+    {%- else -%}
+      <span class="jdgm-star jdgm--off"></span>
+    {%- endif -%}
+  {%- endfor -%}
+</span>

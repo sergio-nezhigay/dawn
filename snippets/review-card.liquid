@@ -1,0 +1,47 @@
+{% comment %}
+  One review card in sections/product-reviews-summary.liquid.
+
+  Accepts:
+  - score: {Number} Review rating, 1-5
+  - date: {String} ISO date (2026-03-27T10:39:39Z), shown as month + year
+  - author: {String} Reviewer name, HTML-safe
+  - verified: {Boolean} Show the verified-buyer label
+  - title: {String} Review title, HTML-safe (optional)
+  - body: {String} Review text, HTML-safe; blank shows "rating without a comment"
+  - product_url / product_title: {String} The reviewed product, for reviews of other products (optional, title HTML-safe)
+
+  Usage:
+  {% render 'review-card', score: 5, date: date, author: author, body: body %}
+{% endcomment %}
+{%- liquid
+  assign months = 'sections.product_reviews.months' | t | split: ','
+  assign month_index = date | slice: 5, 2 | plus: 0 | minus: 1
+  assign label = 'sections.home_reviews.stars_label' | t: rating: score
+-%}
+<article class="reviews-summary__card">
+  <div class="reviews-summary__card-top">
+    {% render 'review-stars', score: score, label: label %}
+    <span class="reviews-summary__date">{{ months[month_index] }} {{ date | slice: 0, 4 }}</span>
+  </div>
+  {%- if product_url == blank -%}
+    <div class="reviews-summary__who">
+      <b>{{ author }}</b>
+      {%- if verified %}
+        <span class="reviews-summary__verified">{{ 'sections.product_reviews.verified' | t }}</span>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+  {%- if title != blank -%}
+    <div class="reviews-summary__title">{{ title }}</div>
+  {%- endif -%}
+  {%- if body != blank -%}
+    <p class="reviews-summary__body">{{ body }}</p>
+  {%- else -%}
+    <p class="reviews-summary__quiet reviews-summary__quiet--card">{{ 'sections.product_reviews.no_comment' | t }}</p>
+  {%- endif -%}
+  {%- if product_url != blank -%}
+    <div class="reviews-summary__product">
+      {{ author }} &middot; <a href="{{ product_url }}">{{ product_title }}</a>
+    </div>
+  {%- endif -%}
+</article>

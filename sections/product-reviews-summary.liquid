@@ -1,0 +1,282 @@
+{%- liquid
+  assign rating = product.metafields.reviews.rating.value
+  assign count = product.metafields.reviews.rating_count.value | default: 0
+  assign has_reviews = false
+  if rating != blank and count > 0
+    assign has_reviews = true
+  endif
+  assign split_layout = false
+  if count > 5
+    assign split_layout = true
+  endif
+  comment
+    shown = cards with real text; the store chip backs up a block that has none
+  endcomment
+  assign shown = 0
+-%}
+
+{%- if has_reviews -%}
+  {%- liquid
+    assign score = rating.rating | times: 1.0
+    assign scale_max = rating.scale_max | round
+    assign avg = score | round: 2
+    assign stars_label = 'products.product.rating_label' | t: rating: avg, max: scale_max
+
+    comment
+      product.metafields.judgeme.widget is Judge.me's server HTML: the histogram plus the first 5 reviews.
+      With 5 reviews or fewer every review is in it, so stars-only ones can be counted honestly.
+    endcomment
+    assign widget = product.metafields.judgeme.widget.value
+    assign rev_chunks = widget | split: "<div class='jdgm-rev "
+    if split_layout
+      assign hist_chunks = widget | split: "<div class='jdgm-histogram__row' "
+      assign max_cards = 2
+    else
+      assign max_cards = 5
+    endif
+    assign own_title = product.title | escape | downcase
+    assign no_text = 0
+    assign cards = ''
+    assign first_quiet = ''
+  -%}
+  {%- for chunk in rev_chunks offset: 1 -%}
+    {%- liquid
+      if split_layout and shown == max_cards
+        break
+      endif
+      assign rev_score = chunk | split: "data-score='" | slice: 1 | first | split: "'" | first | plus: 0
+      assign rev_date = chunk | split: "datetime='" | slice: 1 | first | split: "'" | first
+      assign author = chunk | split: "jdgm-rev__author'>" | slice: 1 | first | split: '</span>' | first | strip
+      assign title = chunk | split: "jdgm-rev__title'>" | slice: 1 | first | split: '</b>' | first | strip_html | strip
+      assign body = chunk | split: "jdgm-rev__body'>" | slice: 1 | first | split: '</div>' | first | strip_html | strip
+      assign judgeme_title = chunk | split: "data-product-title='" | slice: 1 | first | split: "'" | first
+
+      comment
+        Real text: not empty and not an echo of the author or the product title (Judge.me writes the title when the comment is empty)
+      endcomment
+      assign echoes = author | append: '~' | append: judgeme_title | append: '~' | append: own_title | downcase | split: '~'
+      assign body_lc = body | downcase
+      assign title_lc = title | downcase
+      if title_lc == body_lc or echoes contains title_lc
+        assign title = ''
+      endif
+      if body == blank or echoes contains body_lc
+        assign body = ''
+        assign no_text = no_text | plus: 1
+      elsif shown == max_cards
+        continue
+      endif
+      if body == blank and first_quiet != blank
+        continue
+      endif
+
+      assign name_parts = author | split: ' '
+      assign author_short = name_parts | first
+      if name_parts.size > 1
+        assign initial = name_parts[1] | slice: 0
+        assign author_short = author_short | append: ' ' | append: initial | append: '.'
+      endif
+      assign verified = false
+      if chunk contains "data-verified-buyer='true'"
+        assign verified = true
+      endif
+    -%}
+    {%- capture card -%}
+      {% render 'review-card', score: rev_score, date: rev_date, author: author_short, verified: verified, title: title, body: body %}
+    {%- endcapture -%}
+    {%- liquid
+      if body == blank
+        assign first_quiet = card
+      else
+        assign shown = shown | plus: 1
+        assign cards = cards | append: card
+      endif
+    -%}
+  {%- endfor -%}
+  {%- liquid
+    comment
+      No review with text: show the newest stars-only one as a card (rated, no comment) instead of an empty block
+    endcomment
+    if shown == 0 and first_quiet != blank
+      assign cards = first_quiet
+      assign no_text = no_text | minus: 1
+    endif
+  -%}
+{%- else -%}
+  {%- liquid
+    comment
+      No reviews (B2): newest store reviews with text, same product type first (all_products: 20 handles per page at most)
+    endcomment
+    assign grid = shop.metafields.judgeme.reviews_grid.value.product_reviews.reviews | sort: 'created_at' | reverse
+    assign similar = 0
+    assign others = 0
+    assign lookups = 0
+    assign similar_cards = ''
+    assign other_cards = ''
+  -%}
+  {%- for review in grid -%}
+    {%- if similar == 2 or lookups == 20 -%}
+      {%- break -%}
+    {%- endif -%}
+    {%- assign body = review.body | strip -%}
+    {%- if review.rating >= 4 and body.size >= 20 -%}
+      {%- liquid
+        assign handle = review.product_url | split: '/products/' | last | split: '?' | first
+        assign reviewed = all_products[handle]
+        assign lookups = lookups | plus: 1
+        assign slot = ''
+        if reviewed != blank and product.type != blank and reviewed.type == product.type
+          assign slot = 'similar'
+          assign similar = similar | plus: 1
+        elsif others < 2
+          assign slot = 'other'
+          assign others = others | plus: 1
+        endif
+        if reviewed != blank
+          assign reviewed_url = reviewed.url
+          assign reviewed_title = reviewed.title | escape
+        else
+          assign reviewed_url = review.product_url
+          assign reviewed_title = review.product_title | escape
+        endif
+      -%}
+      {%- if slot != '' -%}
+        {%- assign author = review.reviewer_name | escape -%}
+        {%- assign body = body | escape -%}
+        {%- capture card -%}
+          {% render 'review-card',
+            score: review.rating,
+            date: review.created_at,
+            author: author,
+            body: body,
+            product_url: reviewed_url,
+            product_title: reviewed_title
+          %}
+        {%- endcapture -%}
+        {%- if slot == 'similar' -%}
+          {%- assign similar_cards = similar_cards | append: card -%}
+        {%- else -%}
+          {%- assign other_cards = other_cards | append: card -%}
+        {%- endif -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- liquid
+    if similar == 2
+      assign cards = similar_cards
+      assign cards_label = 'sections.product_reviews.similar_label' | t
+    else
+      assign cards = other_cards
+      assign cards_label = 'sections.product_reviews.other_label' | t
+    endif
+  -%}
+{%- endif -%}
+
+{%- assign store_total = shop.metafields.judgeme.all_reviews_count.value | plus: 0 -%}
+
+{%- if has_reviews or cards != blank -%}
+  {{ 'section-product-reviews-summary.css' | asset_url | stylesheet_tag }}
+  <div class="page-width">
+    <div class="reviews-summary{% if split_layout %} reviews-summary--split{% endif %}" data-reviews-summary>
+      <div class="reviews-summary__head">
+        {%- if has_reviews -%}
+          <h2 class="reviews-summary__heading">{{ 'sections.product_reviews.heading' | t }}</h2>
+          <a href="#judgeme_product_reviews" class="reviews-summary__write" data-reviews-write>
+            {{- 'sections.product_reviews.write' | t -}}
+          </a>
+        {%- else -%}
+          <h2 class="reviews-summary__heading">{{ 'sections.product_reviews.heading_none' | t }}</h2>
+        {%- endif -%}
+      </div>
+
+      {%- if has_reviews -%}
+        <div class="reviews-summary__layout">
+          <div class="reviews-summary__overview">
+            <div class="reviews-summary__score">
+              <span class="reviews-summary__avg">{% render 'review-format', rating: avg %}</span>
+              <div>
+                {% render 'review-stars', score: score, max: scale_max, label: stars_label %}
+                <div class="reviews-summary__count">{% render 'review-format', count: count %}</div>
+              </div>
+            </div>
+            {%- if split_layout and hist_chunks.size > 1 -%}
+              <div class="reviews-summary__hist">
+                {%- for row in hist_chunks offset: 1 limit: 5 -%}
+                  {%- liquid
+                    assign row_rating = row | split: "data-rating='" | slice: 1 | first | split: "'" | first
+                    assign row_count = row | split: "data-frequency='" | slice: 1 | first | split: "'" | first
+                    assign row_percent = row | split: "data-percentage='" | slice: 1 | first | split: "'" | first
+                  -%}
+                  <div class="reviews-summary__hist-row">
+                    <span>{{ row_rating }}&#9733;</span>
+                    <div class="reviews-summary__bar"><b style="width: {{ row_percent }}%"></b></div>
+                    <span>{{ row_count }}</span>
+                  </div>
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+          </div>
+          <div class="reviews-summary__main">
+            {%- if cards != blank -%}
+              <div class="reviews-summary__list">{{ cards }}</div>
+            {%- endif -%}
+            {%- if split_layout -%}
+              <div class="reviews-summary__btns">
+                <a href="#judgeme_product_reviews" class="ui-btn ui-btn--ghost ui-btn--sm" data-reviews-show-all>
+                  {{- 'sections.product_reviews.show_all' | t: count: count -}}
+                </a>
+              </div>
+            {%- elsif no_text > 0 -%}
+              <p class="reviews-summary__quiet">{{ 'sections.product_reviews.quiet_more' | t: count: no_text }}</p>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- else -%}
+        <p class="reviews-summary__none">{{ 'sections.product_reviews.none_line' | t }}</p>
+      {%- endif -%}
+
+      {%- if shown == 0 and store_total > 0 -%}
+        {%- assign store_rating = shop.metafields.judgeme.all_reviews_rating.value | times: 1.0 | round: 1 -%}
+        {%- capture store_rating_text -%}{% render 'review-format', rating: store_rating %}{%- endcapture -%}
+        {%- capture store_count_text -%}{% render 'review-format', count: store_total %}{%- endcapture -%}
+        <p class="reviews-summary__chip-row">
+          <span class="reviews-summary__chip">
+            <span class="reviews-summary__chip-star" aria-hidden="true">&#9733;</span>
+            {{- 'sections.product_reviews.store_chip' | t: rating: store_rating_text, count: store_count_text -}}
+          </span>
+        </p>
+      {%- endif -%}
+
+      {%- unless has_reviews -%}
+        <div class="reviews-summary__label">{{ cards_label }}</div>
+        <div class="reviews-summary__list">{{ cards }}</div>
+        <p class="reviews-summary__quiet">
+          {{ 'sections.product_reviews.write_first_prompt' | t }}
+          <a href="#judgeme_product_reviews" data-reviews-write>{{ 'sections.product_reviews.write_first' | t }}</a>
+        </p>
+      {%- endunless -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Reviews summary",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Product rating, bar chart and 1-2 reviews with text, from the Judge.me metafields (no Judge.me script). Products with no reviews show the store rating and recent reviews of similar products. Place it right after the product information; the full Judge.me widget stays further down."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Reviews summary"
+    }
+  ]
+}
+{% endschema %}

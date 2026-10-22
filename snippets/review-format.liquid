@@ -1,0 +1,27 @@
+{% comment %}
+  Prints a rating with the locale decimal mark (4,9), or a review count with its plural word,
+  spaced by thousands (1&nbsp;732).
+
+  Accepts:
+  - rating: {Number} Rating, already rounded
+  - count: {Number} Review count (takes precedence over rating)
+
+  Usage:
+  {% capture rating_text %}{% render 'review-format', rating: 4.9 %}{% endcapture %}
+{% endcomment %}
+{%- liquid
+  if count != blank
+    assign text = 'products.product.review_count' | t: count: count
+    if count >= 1000
+      assign rest = count | modulo: 1000 | plus: 1000 | append: '' | slice: 1, 3
+      assign spaced = count | divided_by: 1000 | append: '&nbsp;' | append: rest
+      assign text = text | replace: count, spaced
+    endif
+  else
+    assign text = rating | append: ''
+    if request.locale.iso_code != 'en'
+      assign text = text | replace: '.', ','
+    endif
+  endif
+  echo text
+-%}
