@@ -176,7 +176,7 @@
 
 {%- if has_reviews or cards != blank -%}
   {{ 'section-product-reviews-summary.css' | asset_url | stylesheet_tag }}
-  <div class="page-width">
+  <div class="page-width-narrow">
     <div class="reviews-summary{% if split_layout %} reviews-summary--split{% endif %}" data-reviews-summary>
       <div class="reviews-summary__head">
         {%- if has_reviews -%}
