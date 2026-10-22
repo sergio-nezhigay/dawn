@@ -27,108 +27,159 @@
     widget.addEventListener('focusin', loadJudgeme, { once: true });
   };
 
-  const hideRedundantReviews = () => {
-    const reviews = document.querySelectorAll('.jdgm-rev');
-    reviews.forEach((rev) => {
-      const authorEl = rev.querySelector('.jdgm-rev__author');
-      const titleEl = rev.querySelector('.jdgm-rev__title');
-      const bodyEl = rev.querySelector('.jdgm-rev__body');
+  // Same "real text" rule as sections/product-reviews-summary.liquid: a body that is empty or only repeats the
+  // author or the product title (Judge.me writes the title when the comment is empty) is a stars-only review.
+  const norm = (text) => (text || '').replace(/\s+/g, ' ').trim().toLowerCase();
+  const monthYear = new Intl.DateTimeFormat(document.documentElement.lang || 'uk', { month: 'long', year: 'numeric' });
+  const decimal = new Intl.NumberFormat(document.documentElement.lang || 'uk', { maximumFractionDigits: 2 });
 
-      if (!authorEl) return;
-
-      const author = authorEl.textContent.trim().toLowerCase();
-
-      // Hide title if it matches author
-      if (titleEl) {
-        const title = titleEl.textContent.trim().toLowerCase();
-        if (title === author) {
-          titleEl.style.setProperty('display', 'none', 'important');
-        }
-      }
-
-      // Hide body if it matches author
-      if (bodyEl) {
-        const body = bodyEl.textContent.trim().toLowerCase();
-        if (body === author) {
-          bodyEl.style.setProperty('display', 'none', 'important');
-        }
-      }
-    });
+  // "грудень 2025" instead of 11/12/25; Judge.me rewrites the date when it renders, so this runs again after it
+  const formatDate = (time) => {
+    const date = new Date((time.getAttribute('datetime') || '').trim());
+    if (isNaN(date)) return;
+    const text = monthYear.format(date).replace(/\s(р|г)\.$/, '');
+    if (time.textContent !== text) time.textContent = text;
   };
 
-  const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      if (mutation.addedNodes.length) {
-        hideRedundantReviews();
+  const tidyReview = (rev, widgetTitle) => {
+    const author = norm(rev.querySelector('.jdgm-rev__author')?.textContent);
+    const echoes = [author, norm(rev.dataset.productTitle), widgetTitle];
+    const titleEl = rev.querySelector('.jdgm-rev__title');
+    const body = norm(rev.querySelector('.jdgm-rev__body')?.textContent);
+    // Photos, videos or a store reply keep the full card: the slim row would hide them
+    const extras = rev.querySelector('.jdgm-rev__pics *, .jdgm-rev__vids *, .jdgm-rev__reply *');
+    const thin = !extras && (!body || echoes.includes(body));
+    rev.classList.toggle('jdgm-rev--thin', thin);
+    if (titleEl) {
+      const title = norm(titleEl.textContent);
+      titleEl.hidden = !title || title === body || echoes.includes(title);
+    }
+    const time = rev.querySelector('.jdgm-rev__timestamp');
+    if (time) formatDate(time);
+  };
+
+  // One "Показати ще" button instead of page numbers. Judge.me appends the next page itself
+  // (layout/theme.liquid sets widget_pagination_type to load_more); the button presses its next-page link.
+  // A tap before Judge.me has rendered waits for it; repeat taps are ignored until the reviews arrive
+  // (10 s at most). After the append Judge.me focuses the list's first review, which scrolls the page back
+  // up: keep the page where it was (the new reviews appear where the button was) and the focus on the button.
+  let pressing = false;
+  const showMore = (widget, button) => {
+    if (pressing) return;
+    pressing = true;
+    loadJudgeme();
+    const y = window.scrollY;
+    const hadFocus = document.activeElement === button;
+    const count = () => widget.querySelectorAll('.jdgm-rev').length;
+    const before = count();
+    const listening = new AbortController();
+    widget.addEventListener(
+      'focusin',
+      (e) => {
+        if (!e.target.matches('.jdgm-rev')) return;
+        window.scrollTo({ top: y, behavior: 'instant' });
+        if (hadFocus) button.focus({ preventScroll: true });
+      },
+      { signal: listening.signal },
+    );
+    const deadline = Date.now() + 10000;
+    let clicked = false;
+    const step = () => {
+      const next = widget.querySelector('.jdgm-paginate__load-more, .jdgm-paginate__next-page');
+      if (!clicked && next && widget.classList.contains('jdgm--done-setup-widget')) {
+        next.click();
+        clicked = true;
       }
+      if ((clicked && count() > before) || Date.now() > deadline) {
+        listening.abort();
+        pressing = false;
+        return;
+      }
+      setTimeout(step, 100);
+    };
+    step();
+  };
+
+  const syncMoreButton = (widget) => {
+    const pager = widget.querySelector('.jdgm-paginate');
+    let button = widget.querySelector('.jdgm-more');
+    if (pager && !button) {
+      button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'jdgm-more ui-btn ui-btn--ghost ui-btn--sm';
+      button.textContent = (window.jdgmSettings && jdgmSettings.widget_load_more_text) || '…';
+      button.addEventListener('click', () => showMore(widget, button));
+    }
+    if (!button) return;
+    if (pager && button.previousElementSibling !== pager) pager.after(button);
+    button.hidden = !widget.querySelector('.jdgm-paginate__load-more, .jdgm-paginate__next-page');
+  };
+
+  const tidyReviews = () => {
+    const widget = document.querySelector('#judgeme_product_reviews');
+    if (!widget) return;
+    const widgetTitle = norm(widget.dataset.productTitle);
+    widget.querySelectorAll('.jdgm-rev').forEach((rev) => tidyReview(rev, widgetTitle));
+
+    const root = widget.querySelector('.jdgm-rev-widg');
+    if (root) {
+      // Bar chart only above 5 reviews (as in the summary card); the average as a number before the stars
+      widget.classList.toggle('jdgm--hist', Number(root.dataset.numberOfReviews) > 5);
+      const summary = widget.querySelector('.jdgm-rev-widg__summary');
+      const average = Number(root.dataset.averageRating);
+      if (summary && average && !summary.querySelector('.jdgm-avg')) {
+        summary.insertAdjacentHTML('afterbegin', `<span class="jdgm-avg">${decimal.format(average)}</span>`);
+      }
+    }
+    syncMoreButton(widget);
+  };
+
+  let tidyQueued = false;
+  const observer = new MutationObserver(() => {
+    if (tidyQueued) return;
+    tidyQueued = true;
+    requestAnimationFrame(() => {
+      tidyQueued = false;
+      tidyReviews();
     });
   });
 
+  // The rails above the widget load as the page scrolls past them and push it down, and Judge.me can still
+  // grow it. Keep re-aiming until the widget has stayed put for a second (8 s at most), unless the shopper
+  // scrolls on their own. The stop point is #judgeme_product_reviews' scroll-margin-top in assets/base.css.
   const scrollToReviews = (onComplete) => {
-    const reviewsSection = document.querySelector('#judgeme_product_reviews');
-    if (!reviewsSection) return;
+    const widget = document.querySelector('#judgeme_product_reviews');
+    if (!widget) return;
+    widget.scrollIntoView({ behavior: 'smooth' });
 
-    const getOffset = () => {
-      const headerHeight =
-        parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-height')) || 80;
-      return headerHeight + 20;
-    };
-
-    const doScroll = () => {
-      const duration = 1500;
-      const startY = window.pageYOffset;
-      const startTime = performance.now();
-      const offset = getOffset();
-      const targetY = reviewsSection.getBoundingClientRect().top + window.pageYOffset - offset;
-
-      const easeInOutCubic = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
-
-      const animate = (currentTime) => {
-        const elapsed = currentTime - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        window.scrollTo(0, startY + (targetY - startY) * easeInOutCubic(progress));
-        if (progress < 1) {
-          requestAnimationFrame(animate);
-        } else if (typeof onComplete === 'function') {
-          onComplete();
-        }
-      };
-
-      requestAnimationFrame(animate);
-    };
-
-    // Phase 1: trigger lazy recs and wait for their fetches to complete
-    document.querySelectorAll('product-recommendations:not(.product-recommendations--loaded)').forEach((el) => {
-      if (el.loadRecommendations && el.dataset.productId) {
-        el.loadRecommendations(el.dataset.productId);
+    let shopperScrolled = false;
+    const listening = new AbortController();
+    ['wheel', 'touchstart', 'pointerdown', 'keydown'].forEach((type) =>
+      window.addEventListener(type, () => (shopperScrolled = true), { passive: true, signal: listening.signal }),
+    );
+    const deadline = Date.now() + 8000;
+    let lastTop = Math.round(widget.getBoundingClientRect().top + window.scrollY);
+    let stillSince = Date.now();
+    const follow = () => {
+      const top = Math.round(widget.getBoundingClientRect().top + window.scrollY);
+      if (top !== lastTop) {
+        lastTop = top;
+        stillSince = Date.now();
+        widget.scrollIntoView({ behavior: 'smooth' });
       }
-    });
-
-    const recsDeadline = Date.now() + 3000;
-    const waitForRecs = () => {
-      const pending = document.querySelectorAll('product-recommendations:not(.product-recommendations--loaded)');
-      if (pending.length === 0 || Date.now() >= recsDeadline) {
-        // Phase 2: recs loaded (or timed out) — wait for layout to stabilise
-        let lastTop = -1;
-        let stableCount = 0;
-        const stabilityDeadline = Date.now() + 1000;
-        const waitForStable = () => {
-          const top = Math.round(reviewsSection.getBoundingClientRect().top + window.pageYOffset);
-          stableCount = top === lastTop ? stableCount + 1 : 0;
-          lastTop = top;
-          if (stableCount >= 3 || Date.now() >= stabilityDeadline) {
-            doScroll();
-          } else {
-            setTimeout(waitForStable, 100);
-          }
-        };
-        waitForStable();
-      } else {
-        setTimeout(waitForRecs, 100);
+      const done = shopperScrolled || Date.now() > deadline || Date.now() - stillSince > 1000;
+      if (!done) {
+        setTimeout(follow, 100);
+        return;
       }
+      listening.abort();
+      const margin = parseFloat(getComputedStyle(widget).scrollMarginTop) || 0;
+      if (!shopperScrolled && Math.abs(widget.getBoundingClientRect().top - margin) > 2) {
+        widget.scrollIntoView();
+      }
+      if (typeof onComplete === 'function') onComplete();
     };
-
-    waitForRecs();
+    setTimeout(follow, 100);
   };
 
   // Judge.me's own "write a review" link opens its form; it exists only once the widget has rendered.
@@ -167,51 +218,13 @@
     scrollToReviews(link.hasAttribute('data-reviews-write') ? openReviewForm : undefined);
   };
 
+  // Email links land on #judgeme_product_reviews. Take the hash off so the browser does not jump before the
+  // page settles, scroll there ourselves, then put it back.
   const handleHashNavigation = () => {
-    if (window.location.hash === '#judgeme_product_reviews') {
-      // Store hash and remove it immediately to prevent browser scroll
-      const originalHash = window.location.hash;
-      history.replaceState(null, null, window.location.pathname + window.location.search);
-
-      let attempts = 0;
-      const maxAttempts = 50; // Max 5 seconds (50 * 100ms)
-
-      // Wait for reviews section to have actual content
-      const waitForReviews = () => {
-        const reviewsSection = document.querySelector('#judgeme_product_reviews');
-
-        // Check if section exists AND has content (not just empty container)
-        const hasContent =
-          reviewsSection &&
-          (reviewsSection.querySelector('.jdgm-widget') ||
-            reviewsSection.querySelector('.jdgm-rev') ||
-            reviewsSection.innerHTML.trim().length > 100);
-
-        if (hasContent) {
-          // Content is ready, start smooth scroll; restore hash only after animation completes
-          requestAnimationFrame(() => {
-            scrollToReviews(() => {
-              history.replaceState(null, null, originalHash);
-            });
-          });
-        } else if (attempts < maxAttempts) {
-          attempts++;
-          setTimeout(waitForReviews, 100);
-        } else {
-          // Timeout - scroll anyway if section exists
-          if (reviewsSection) {
-            requestAnimationFrame(() => {
-              scrollToReviews(() => {
-                history.replaceState(null, null, originalHash);
-              });
-            });
-          }
-        }
-      };
-
-      // Small delay to let page render critical content
-      setTimeout(waitForReviews, 300);
-    }
+    if (window.location.hash !== '#judgeme_product_reviews') return;
+    const hash = window.location.hash;
+    history.replaceState(null, '', window.location.pathname + window.location.search);
+    scrollToReviews(() => history.replaceState(null, '', hash));
   };
 
   const init = () => {
@@ -219,7 +232,7 @@
     if (target) {
       initLazyLoad(target);
       observer.observe(target, { childList: true, subtree: true });
-      hideRedundantReviews();
+      tidyReviews();
     }
     document.addEventListener('click', handleReviewLinkClick);
   };

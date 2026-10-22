@@ -330,9 +330,16 @@
         On the homepage nothing re-injects it: the reviews section reads metafields.
         Here in <body> because the app embed prints the loader tag at the end of <head>.
         Review-email links (judgeme_* params, #judgeme hash) load it right away. No loader tag = no-op.
+        Product pages: more reviews append under the list instead of paging (the theme draws the button).
       {%- endcomment -%}
       <script>
         (function () {
+          {%- if template.name == 'product' %}
+            if (window.jdgmSettings) {
+              jdgmSettings.widget_pagination_type = 'load_more';
+              jdgmSettings.widget_load_more_text = {{ 'sections.product_reviews.load_more' | t | json }};
+            }
+          {%- endif %}
           if (/judgeme/i.test(location.search + location.hash)) return;
           var s = document.querySelector('script[src*="judgeme"][src*="loader.js"]');
           if (!s) return;
