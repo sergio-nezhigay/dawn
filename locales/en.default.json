@@ -616,6 +616,7 @@
       "write": "Write a review",
       "write_first_prompt": "Bought this product?",
       "write_first": "Write the first review",
+      "load_more": "Show more",
       "show_all": {
         "one": "Show all {{ count }} review",
         "other": "Show all {{ count }} reviews"

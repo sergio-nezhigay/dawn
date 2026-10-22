@@ -52,7 +52,8 @@
       assign judgeme_title = chunk | split: "data-product-title='" | slice: 1 | first | split: "'" | first
 
       comment
-        Real text: not empty and not an echo of the author or the product title (Judge.me writes the title when the comment is empty)
+        Real text: not empty and not an echo of the author or the product title (Judge.me writes the title when the comment is empty).
+        The full list applies the same rule in assets/judgeme-enhancements.js (tidyReview): keep both in line.
       endcomment
       assign echoes = author | append: '~' | append: judgeme_title | append: '~' | append: own_title | downcase | split: '~'
       assign body_lc = body | downcase

@@ -5081,10 +5081,123 @@ h4+p {
   margin-top: -2px;
 }
 
-.template-product .jdgm-rev-widg__summary,
+.template-product .jdgm-row-actions,
 .template-product .jdgm-histogram,
-.template-product .jdgm-row-actions {
+.template-product .jdgm-histogram__percentage,
+.template-product .jdgm-rev-widg__summary-average,
+.template-product .jdgm-paginate {
   display: none !important;
+}
+
+/* Header: the average (JS adds .jdgm-avg), the stars and the count */
+.template-product .jdgm-rev-widg__summary {
+  margin: 0 !important;
+  text-align: left !important;
+}
+
+.template-product .jdgm-rev-widg__summary-inner {
+  display: flex !important;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+}
+
+.jdgm-avg {
+  color: var(--ui-navy);
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.template-product .jdgm-rev-widg__summary-text {
+  margin: 0 !important;
+  white-space: nowrap;
+  color: var(--ui-muted) !important;
+  font-size: 15px !important;
+}
+
+/* The bar chart only above 5 reviews (JS sets .jdgm--hist), drawn like the summary card's; a row tap filters the list */
+.template-product .jdgm--hist .jdgm-histogram {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 6px;
+  width: 100% !important;
+  max-width: 300px;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+}
+
+.template-product .jdgm-histogram__row:not(.jdgm-histogram__clear-filter) {
+  position: relative;
+  display: grid !important;
+  grid-template-columns: 26px 1fr 28px;
+  gap: 8px;
+  align-items: center;
+  margin: 0 !important;
+  border-radius: 4px;
+  min-height: 22px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.template-product .jdgm-histogram__clear-filter {
+  color: var(--ui-blue);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.template-product .jdgm-histogram__row:not(.jdgm-histogram__clear-filter)::before {
+  content: attr(data-rating) '\2605';
+}
+
+/* Judge.me's star strip stays as the invisible tap target over the whole row */
+.template-product .jdgm-histogram__star {
+  position: absolute !important;
+  inset: 0;
+  opacity: 0;
+}
+
+.template-product .jdgm-histogram__bar {
+  width: auto !important;
+  height: 8px !important;
+  margin: 0 !important;
+  overflow: hidden;
+  border-radius: 4px !important;
+  background: #eef0f3 !important;
+}
+
+.template-product .jdgm-histogram__bar-content {
+  height: 100% !important;
+  border-radius: 0 !important;
+  background: var(--ui-yellow-deep) !important;
+}
+
+.template-product .jdgm-histogram__frequency {
+  margin: 0 !important;
+  color: var(--ui-muted);
+  text-align: right;
+}
+
+.template-product .jdgm-histogram__row--selected,
+.template-product .jdgm-histogram__row:not(.jdgm-histogram__clear-filter):hover {
+  background: var(--ui-tint);
+}
+
+/* "Показати ще" instead of page numbers (JS adds it; Judge.me appends the next page) */
+.jdgm-more {
+  display: flex;
+  width: 100%;
+  margin-top: 1.6rem;
+}
+
+.jdgm-more[hidden] {
+  display: none;
+}
+
+#judgeme_product_reviews {
+  scroll-margin-top: calc(var(--header-height, 80px) + 2rem);
 }
 
 .template-product .jdgm-write-rev-link {
@@ -5136,10 +5249,11 @@ h4+p {
 
   .template-product .jdgm-rev-widg__header {
     display: grid !important;
-    grid-template-columns: 1fr auto !important;
+    grid-template-columns: auto 1fr auto !important;
     grid-template-areas:
-      "title stars"
-      "form form" !important;
+      "title title actions"
+      "summary hist hist"
+      "form form form" !important;
     align-items: center !important;
     border-bottom: 1px solid var(--ui-line);
     padding-bottom: 2rem;
@@ -5153,13 +5267,19 @@ h4+p {
     text-align: left !important;
   }
 
+  /* Its children (summary, bar chart, write button) sit straight in the header grid */
   .template-product .jdgm-row-stars {
-    grid-area: stars !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: flex-end !important;
-    margin: 0 !important;
-    gap: 2rem;
+    display: contents !important;
+  }
+
+  .template-product .jdgm-rev-widg__summary {
+    grid-area: summary;
+    margin-right: 4rem !important;
+  }
+
+  .template-product .jdgm--hist .jdgm-histogram {
+    grid-area: hist;
+    width: 300px !important;
   }
 
   /* Positioning the form wrapper as the second row in the grid */
@@ -5171,15 +5291,10 @@ h4+p {
 
   /* Ensure the write/cancel link is aligned properly within stars row */
   .template-product .jdgm-widget-actions-wrapper {
+    grid-area: actions;
     margin: 0 !important;
     display: flex !important;
     align-items: center !important;
-    width: 100% !important;
-  }
-
-  /* Specific stars cleanup if they reappear */
-  .template-product .jdgm-rev-widg__header .jdgm-row-stars .jdgm-star {
-    display: none !important;
   }
 
   /* Safeguard ensures form stars are visible even if nested in header */
@@ -5325,9 +5440,6 @@ h4+p {
   color: var(--ui-navy) !important;
   font-size: 1.8rem !important;
   /* text-lg */
-  text-transform: uppercase !important;
-  letter-spacing: 0.05em !important;
-  /* tracking-wide */
 }
 
 .jdgm-rev__header {
@@ -5345,50 +5457,59 @@ h4+p {
   /* mb-5 */
 }
 
-/* Pagination Stylings */
-.jdgm-paginate {
-  border-top: 1px solid #f3f4f6 !important;
-  padding-top: 2.5rem !important;
-  margin-top: 1rem !important;
+/* Stars-only reviews (JS sets .jdgm-rev--thin, same rule as the summary card): one slim row of stars, date and name */
+.jdgm-rev.jdgm-rev--thin {
+  padding: 1rem 0 !important;
 }
 
-.jdgm-paginate__page {
-  color: #4b5563 !important;
-  /* Gray-600 for inactive pages */
-  font-weight: 500 !important;
-  font-size: 1.5rem !important;
-  padding: 0.8rem 1.2rem !important;
-  transition: all 0.2s ease !important;
-  border-radius: 4px !important;
+.jdgm-rev--thin .jdgm-rev__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.2rem 1.2rem;
 }
 
-.jdgm-paginate__page:hover {
-  background-color: #f3f4f6 !important;
-  color: var(--ui-navy) !important;
-  /* Brand Navy on hover */
+.jdgm-rev--thin .jdgm-row-rating,
+.jdgm-rev--thin .jdgm-row-profile {
+  gap: 1.2rem;
+  margin: 0 !important;
+  line-height: 2.2rem;
 }
 
-.jdgm-paginate__page.jdgm-curt {
-  color: var(--ui-navy) !important;
-  /* Brand Navy for current page */
-  background-color: var(--ui-yellow) !important;
-  /* Brand Yellow background for active */
-  font-weight: 800 !important;
+.jdgm-rev--thin .jdgm-rev__rating {
+  margin: 0 !important;
 }
 
-.jdgm-paginate__next,
-.jdgm-paginate__prev,
-.jdgm-paginate__last,
-.jdgm-paginate__first {
-  color: #4b5563 !important;
-  font-family: inherit !important;
-  padding: 0.8rem 1.2rem !important;
+.jdgm-rev--thin .jdgm-rev__timestamp,
+.jdgm-rev--thin .jdgm-rev__author {
+  margin: 0 !important;
+  font-size: 1.4rem !important;
 }
 
-.jdgm-paginate__next:hover,
-.jdgm-paginate__prev:hover {
-  color: var(--ui-navy) !important;
+.jdgm-rev--thin .jdgm-rev__icon,
+.jdgm-rev--thin .jdgm-row-product,
+.jdgm-rev--thin .jdgm-rev__br,
+.jdgm-rev--thin .jdgm-row-extra,
+.jdgm-rev--thin .jdgm-rev__content,
+.jdgm-rev--thin .jdgm-rev__actions {
+  display: none !important;
 }
+
+/* "Перевірено" as blue text with a tick (Judge.me draws the word in ::before) */
+.jdgm-rev__buyer-badge.jdgm-rev__buyer-badge {
+  padding: 0 !important;
+  background: transparent !important;
+  color: var(--ui-blue-deep) !important;
+  font-size: 1.3rem !important;
+  font-weight: 600;
+}
+
+.jdgm-rev[data-verified-buyer='true'] .jdgm-rev__buyer-badge-wrapper::before {
+  content: '\2713\00a0';
+  color: var(--ui-blue-deep);
+  font-size: 1.3rem;
+}
+
 
 .jdgm-rev__rating {
   margin-bottom: 0.5rem !important;
