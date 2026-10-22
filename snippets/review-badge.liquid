@@ -25,18 +25,7 @@
     assign label = 'products.product.rating_label' | t: rating: rating_text, max: scale_max
   -%}
   <div class="review-badge">
-    <span class="jdgm-prev-badge__stars" role="img" aria-label="{{ label | escape }}">
-      {%- for i in (1..scale_max) -%}
-        {%- assign half_at = i | minus: 0.5 -%}
-        {%- if score >= i -%}
-          <span class="jdgm-star jdgm--on"></span>
-        {%- elsif score >= half_at -%}
-          <span class="jdgm-star jdgm--half"></span>
-        {%- else -%}
-          <span class="jdgm-star jdgm--off"></span>
-        {%- endif -%}
-      {%- endfor -%}
-    </span>
+    {% render 'review-stars', score: score, max: scale_max, label: label %}
     {% if link -%}
       <a href="#judgeme_product_reviews" class="jdgm-prev-badge__text">
         {{- count_text -}}

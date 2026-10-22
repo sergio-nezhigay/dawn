@@ -609,6 +609,28 @@
       "previous": "Previous reviews",
       "next": "Next reviews"
     },
+    "product_reviews": {
+      "heading": "Customer reviews",
+      "heading_none": "Reviews",
+      "none_line": "No reviews for this product yet.",
+      "write": "Write a review",
+      "write_first_prompt": "Bought this product?",
+      "write_first": "Write the first review",
+      "show_all": {
+        "one": "Show all {{ count }} review",
+        "other": "Show all {{ count }} reviews"
+      },
+      "quiet_more": {
+        "one": "+ {{ count }} more rating without a comment",
+        "other": "+ {{ count }} more ratings without a comment"
+      },
+      "no_comment": "Rating without a comment",
+      "verified": "Verified buyer",
+      "similar_label": "Reviews of similar products",
+      "other_label": "Reviews of other products in our store",
+      "store_chip": "Store: {{ rating }} out of 5 · {{ count }}",
+      "months": "January,February,March,April,May,June,July,August,September,October,November,December"
+    },
     "home_best_sellers": {
       "heading": "Best sellers",
       "view_all": "View all",

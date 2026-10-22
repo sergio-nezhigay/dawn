@@ -131,14 +131,40 @@
     waitForRecs();
   };
 
-  const interceptBadgeScroll = () => {
-    document.querySelectorAll('.review-badge a[href="#judgeme_product_reviews"]').forEach((el) => {
-      el.addEventListener('click', (e) => {
-        e.preventDefault();
-        loadJudgeme();
-        scrollToReviews();
-      });
-    });
+  // Judge.me's own "write a review" link opens its form; it exists only once the widget has rendered.
+  // Waits up to 10 s, so a slow widget never pops the form up long after the tap.
+  const openReviewForm = () => {
+    const widget = document.querySelector('#judgeme_product_reviews');
+    if (!widget) return;
+    const tryOpen = () => {
+      const link = widget.querySelector('.jdgm-write-rev-link');
+      if (link) link.click();
+      return !!link;
+    };
+    if (tryOpen()) return;
+    const mo = new MutationObserver(() => tryOpen() && mo.disconnect());
+    mo.observe(widget, { childList: true, subtree: true });
+    setTimeout(() => mo.disconnect(), 10000);
+  };
+
+  // Review links all point at #judgeme_product_reviews and work as plain anchors without JS.
+  // The badge goes to the server-rendered summary when the page has one, else to the full widget.
+  const handleReviewLinkClick = (e) => {
+    const link = e.target.closest(
+      '.review-badge a[href="#judgeme_product_reviews"], [data-reviews-show-all], [data-reviews-write]',
+    );
+    if (!link) return;
+    e.preventDefault();
+    const summary = document.querySelector('[data-reviews-summary]');
+    if (summary && link.closest('.review-badge')) {
+      summary.scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+    if (link.hasAttribute('data-reviews-show-all')) {
+      (window.dataLayer = window.dataLayer || []).push({ event: 'reviews_show_all' });
+    }
+    loadJudgeme();
+    scrollToReviews(link.hasAttribute('data-reviews-write') ? openReviewForm : undefined);
   };
 
   const handleHashNavigation = () => {
@@ -195,7 +221,7 @@
       observer.observe(target, { childList: true, subtree: true });
       hideRedundantReviews();
     }
-    interceptBadgeScroll();
+    document.addEventListener('click', handleReviewLinkClick);
   };
 
   if (document.readyState === 'loading') {
