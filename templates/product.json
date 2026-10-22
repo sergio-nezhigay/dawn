@@ -30,10 +30,7 @@
         },
         "variant_picker": {
           "type": "variant_picker",
-          "settings": {
-            "picker_type": "button",
-            "swatch_shape": "circle"
-          }
+          "settings": {}
         },
         "share": {
           "type": "share",
@@ -43,11 +40,7 @@
         },
         "inventory_UzTnRe": {
           "type": "inventory",
-          "settings": {
-            "text_style": "body",
-            "inventory_threshold": 1,
-            "show_inventory_quantity": false
-          }
+          "settings": {}
         },
         "price": {
           "type": "price",
@@ -55,10 +48,7 @@
         },
         "buy_buttons": {
           "type": "buy_buttons",
-          "settings": {
-            "show_dynamic_checkout": false,
-            "show_gift_card_recipient": false
-          }
+          "settings": {}
         },
         "description": {
           "type": "description",
@@ -75,22 +65,7 @@
         "buy_buttons",
         "description"
       ],
-      "settings": {
-        "enable_sticky_info": true,
-        "color_scheme": "",
-        "media_size": "small",
-        "constrain_to_viewport": true,
-        "media_fit": "contain",
-        "gallery_layout": "thumbnail_slider",
-        "mobile_thumbnails": "hide",
-        "media_position": "left",
-        "image_zoom": "hover",
-        "mobile_lightbox_style": "fullscreen",
-        "hide_variants": false,
-        "desktop_description_threshold": 900,
-        "padding_top": 4,
-        "padding_bottom": 36
-      }
+      "settings": {}
     },
     "related_products_gEVb87": {
       "type": "product-suggestions",
@@ -143,11 +118,17 @@
         "padding_top": 36,
         "padding_bottom": 36
       }
+    },
+    "product_reviews_summary_qBkeRx": {
+      "type": "product-reviews-summary",
+      "name": "Reviews summary",
+      "settings": {}
     }
   },
   "order": [
     "1745736776b296c196",
     "main",
+    "product_reviews_summary_qBkeRx",
     "related_products_gEVb87",
     "related_products_FUNdGf",
     "related-products",
