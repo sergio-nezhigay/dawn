@@ -46,7 +46,9 @@
     const echoes = [author, norm(rev.dataset.productTitle), widgetTitle];
     const titleEl = rev.querySelector('.jdgm-rev__title');
     const body = norm(rev.querySelector('.jdgm-rev__body')?.textContent);
-    const thin = !body || echoes.includes(body);
+    // Photos, videos or a store reply keep the full card: the slim row would hide them
+    const extras = rev.querySelector('.jdgm-rev__pics *, .jdgm-rev__vids *, .jdgm-rev__reply *');
+    const thin = !extras && (!body || echoes.includes(body));
     rev.classList.toggle('jdgm-rev--thin', thin);
     if (titleEl) {
       const title = norm(titleEl.textContent);
@@ -58,9 +60,9 @@
 
   // One "Показати ще" button instead of page numbers. Judge.me appends the next page itself
   // (layout/theme.liquid sets widget_pagination_type to load_more); the button presses its next-page link.
-  // A tap before Judge.me has loaded waits for it (5 s at most); repeat taps meanwhile are ignored.
-  // After the append Judge.me focuses the list's first review, which scrolls the page back up: keep the
-  // page where it was (the new reviews appear where the button was) and the focus on the button.
+  // A tap before Judge.me has rendered waits for it; repeat taps are ignored until the reviews arrive
+  // (10 s at most). After the append Judge.me focuses the list's first review, which scrolls the page back
+  // up: keep the page where it was (the new reviews appear where the button was) and the focus on the button.
   let pressing = false;
   const showMore = (widget, button) => {
     if (pressing) return;
@@ -68,29 +70,34 @@
     loadJudgeme();
     const y = window.scrollY;
     const hadFocus = document.activeElement === button;
+    const count = () => widget.querySelectorAll('.jdgm-rev').length;
+    const before = count();
     const listening = new AbortController();
     widget.addEventListener(
       'focusin',
       (e) => {
-        if (!e.target.closest('.jdgm-rev')) return;
-        listening.abort();
+        if (!e.target.matches('.jdgm-rev')) return;
         window.scrollTo({ top: y, behavior: 'instant' });
         if (hadFocus) button.focus({ preventScroll: true });
       },
       { signal: listening.signal },
     );
-    setTimeout(() => listening.abort(), 10000);
-    const deadline = Date.now() + 5000;
-    const press = () => {
+    const deadline = Date.now() + 10000;
+    let clicked = false;
+    const step = () => {
       const next = widget.querySelector('.jdgm-paginate__load-more, .jdgm-paginate__next-page');
-      if (next && window.jdgm && jdgm.isWidgetLoadMore) next.click();
-      else if (Date.now() < deadline) {
-        setTimeout(press, 100);
+      if (!clicked && next && widget.classList.contains('jdgm--done-setup-widget')) {
+        next.click();
+        clicked = true;
+      }
+      if ((clicked && count() > before) || Date.now() > deadline) {
+        listening.abort();
+        pressing = false;
         return;
       }
-      pressing = false;
+      setTimeout(step, 100);
     };
-    press();
+    step();
   };
 
   const syncMoreButton = (widget) => {
@@ -147,7 +154,7 @@
 
     let shopperScrolled = false;
     const listening = new AbortController();
-    ['wheel', 'touchstart', 'keydown'].forEach((type) =>
+    ['wheel', 'touchstart', 'pointerdown', 'keydown'].forEach((type) =>
       window.addEventListener(type, () => (shopperScrolled = true), { passive: true, signal: listening.signal }),
     );
     const deadline = Date.now() + 8000;
@@ -167,7 +174,7 @@
       }
       listening.abort();
       const margin = parseFloat(getComputedStyle(widget).scrollMarginTop) || 0;
-      if (!shopperScrolled &&Math.abs(widget.getBoundingClientRect().top - margin) > 2) {
+      if (!shopperScrolled && Math.abs(widget.getBoundingClientRect().top - margin) > 2) {
         widget.scrollIntoView();
       }
       if (typeof onComplete === 'function') onComplete();

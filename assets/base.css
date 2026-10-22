@@ -5199,10 +5199,6 @@ h4+p {
   display: none;
 }
 
-#judgeme_product_reviews {
-  scroll-margin-top: calc(var(--header-height, 80px) + 2rem);
-}
-
 .template-product .jdgm-write-rev-link {
   width: auto !important;
   min-width: max-content !important;
@@ -5346,6 +5342,7 @@ h4+p {
 }
 
 #judgeme_product_reviews {
+  scroll-margin-top: calc(var(--header-height, 80px) + 2rem);
   max-width: 100% !important;
   margin-right: 0 !important;
   margin-left: 0 !important;
@@ -5434,6 +5431,11 @@ h4+p {
 
 .jdgm-rev:last-child {
   border-bottom: none !important;
+}
+
+/* The JS hides titles that only repeat the body, the author or the product */
+.jdgm-rev__title[hidden] {
+  display: none !important;
 }
 
 .jdgm-rev__title {
