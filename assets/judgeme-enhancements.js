@@ -59,11 +59,23 @@
   // One "Показати ще" button instead of page numbers. Judge.me appends the next page itself
   // (layout/theme.liquid sets widget_pagination_type to load_more); the button presses its next-page link.
   // A tap before Judge.me has loaded waits for it (5 s at most); repeat taps meanwhile are ignored.
+  // After the append Judge.me focuses the list's first review, which scrolls the page back up: keep the
+  // page where it was (the new reviews appear where the button was) and the focus on the button.
   let pressing = false;
-  const showMore = (widget) => {
+  const showMore = (widget, button) => {
     if (pressing) return;
     pressing = true;
     loadJudgeme();
+    const y = window.scrollY;
+    const hadFocus = document.activeElement === button;
+    const stayPut = (e) => {
+      if (!e.target.closest('.jdgm-rev')) return;
+      widget.removeEventListener('focusin', stayPut);
+      window.scrollTo({ top: y, behavior: 'instant' });
+      if (hadFocus) button.focus({ preventScroll: true });
+    };
+    widget.addEventListener('focusin', stayPut);
+    setTimeout(() => widget.removeEventListener('focusin', stayPut), 10000);
     const deadline = Date.now() + 5000;
     const press = () => {
       const next = widget.querySelector('.jdgm-paginate__load-more, .jdgm-paginate__next-page');
@@ -85,7 +97,7 @@
       button.type = 'button';
       button.className = 'jdgm-more ui-btn ui-btn--ghost ui-btn--sm';
       button.textContent = (window.jdgmSettings && jdgmSettings.widget_load_more_text) || '…';
-      button.addEventListener('click', () => showMore(widget));
+      button.addEventListener('click', () => showMore(widget, button));
     }
     if (!button) return;
     if (pager && button.previousElementSibling !== pager) pager.after(button);

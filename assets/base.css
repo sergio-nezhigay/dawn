@@ -5091,9 +5091,11 @@ h4+p {
 }
 
 /* Header: the average (JS adds .jdgm-avg), the stars and the count */
+/* Judge.me centres the row in a column flexbox; in the narrow desktop grid column it then spills off the left */
 .template-product .jdgm-rev-widg__summary {
   margin: 0 !important;
   text-align: left !important;
+  align-items: flex-start !important;
 }
 
 .template-product .jdgm-rev-widg__summary-inner {
