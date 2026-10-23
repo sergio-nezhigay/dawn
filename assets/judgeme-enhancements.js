@@ -115,9 +115,54 @@
     button.hidden = !widget.querySelector('.jdgm-paginate__load-more, .jdgm-paginate__next-page');
   };
 
+  const track = (event) => (window.dataLayer = window.dataLayer || []).push({ event });
+
+  // Our additions to Judge.me's review form (the look is in assets/base.css): the comment hint and "optional"
+  // mark, the name format, a shorter privacy note, and the word for the stars under the pointer or picked.
+  // Once per form.
+  const enhanceForm = (form) => {
+    if (form.dataset.enhanced) return;
+    form.dataset.enhanced = '1';
+    const settings = window.jdgmSettings || {};
+    const body = form.querySelector('textarea[name=review_body]');
+    if (body && settings.widget_body_hint) body.placeholder = settings.widget_body_hint;
+    const bodyLabel = body && form.querySelector(`label[for="${body.id}"]`);
+    if (bodyLabel && !body.required && settings.widget_optional_text) {
+      const mark = document.createElement('span');
+      mark.className = 'jdgm-optional';
+      mark.textContent = ` ${settings.widget_optional_text}`;
+      bodyLabel.append(mark);
+    }
+    // Shown as "Сергій Н." (owner's choice); the picker itself is hidden in assets/base.css
+    const nameFormat = form.querySelector('select[name=reviewer_name_format]');
+    if (nameFormat?.querySelector('option[value=last_initial]')) nameFormat.value = 'last_initial';
+    // Privacy note: keep only the last sentence, the consent with Judge.me's links
+    const note = [...form.querySelectorAll('.jdgm-form__fieldset p')].find((p) => p.querySelector('a'));
+    const lead = note?.firstChild;
+    if (lead?.nodeType === Node.TEXT_NODE) lead.textContent = lead.textContent.replace(/^[\s\S]*[.!]\s+/, '');
+
+    const rating = form.querySelector('.jdgm-form__rating');
+    const words = (settings.widget_star_labels || '').split(',');
+    if (!rating || words.length !== 5) return;
+    const score = rating.querySelector('input[name=score]');
+    const caption = document.createElement('p');
+    caption.className = 'jdgm-star-caption';
+    rating.after(caption);
+    const show = (n) => (caption.textContent = words[n - 1] || '');
+    const showPicked = () => show(Number(score?.value));
+    rating.addEventListener('mouseover', (e) => {
+      const star = e.target.closest('.jdgm-star');
+      if (star) show(Number(star.dataset.alt));
+    });
+    rating.addEventListener('mouseleave', showPicked);
+    // Judge.me sets the score in its own click and key handlers: read it after them
+    ['click', 'keyup'].forEach((type) => rating.addEventListener(type, () => setTimeout(showPicked)));
+  };
+
   const tidyReviews = () => {
     const widget = document.querySelector('#judgeme_product_reviews');
     if (!widget) return;
+    widget.querySelectorAll('.jdgm-form').forEach(enhanceForm);
     const widgetTitle = norm(widget.dataset.productTitle);
     widget.querySelectorAll('.jdgm-rev').forEach((rev) => tidyReview(rev, widgetTitle));
 
@@ -230,10 +275,25 @@
       return;
     }
     if (link.hasAttribute('data-reviews-show-all')) {
-      (window.dataLayer = window.dataLayer || []).push({ event: 'reviews_show_all' });
+      track('reviews_show_all');
     }
     loadJudgeme();
     scrollToReviews(link.hasAttribute('data-reviews-write') ? openReviewForm : undefined);
+  };
+
+  // Form completion rate: forms opened vs forms that passed Judge.me's checks on submit (it shows
+  // .jdgm-input-error under bad fields and sends nothing).
+  const trackReviewForm = (e) => {
+    if (e.target.closest('#judgeme_product_reviews .jdgm-write-rev-link')) {
+      if (!findReviewForm()?.offsetHeight) track('review_form_open');
+      return;
+    }
+    const form = e.target.closest('#judgeme_product_reviews .jdgm-submit-rev')?.form;
+    if (!form) return;
+    setTimeout(() => {
+      const errors = [...form.querySelectorAll('.jdgm-input-error')].filter((el) => el.offsetHeight && el.textContent.trim());
+      if (!errors.length) track('review_form_submit');
+    }, 300);
   };
 
   // Fills the open form from the review email. No focus: the phone keyboard would cover the stars.
@@ -249,9 +309,6 @@
       input.dispatchEvent(new Event('input', { bubbles: true }));
       input.dispatchEvent(new Event('change', { bubbles: true }));
     });
-    const body = form.querySelector('textarea[name=review_body]');
-    const hint = window.jdgmSettings && jdgmSettings.widget_body_hint;
-    if (body && hint) body.placeholder = hint;
     // Judge.me focuses a field as its form opens: drop it
     if (form.contains(document.activeElement)) document.activeElement.blur();
   };
@@ -328,6 +385,8 @@
       tidyReviews();
     }
     document.addEventListener('click', handleReviewLinkClick);
+    // Capture: a bubbling listener never saw the write-link click (Judge.me handles it first)
+    document.addEventListener('click', trackReviewForm, true);
   };
 
   if (document.readyState === 'loading') {
