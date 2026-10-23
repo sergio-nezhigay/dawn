@@ -115,8 +115,6 @@
     button.hidden = !widget.querySelector('.jdgm-paginate__load-more, .jdgm-paginate__next-page');
   };
 
-  const track = (event) => (window.dataLayer = window.dataLayer || []).push({ event });
-
   // Our additions to Judge.me's review form (the look is in assets/base.css): the comment hint and "optional"
   // mark, the name format, a shorter privacy note, and the word for the stars under the pointer or picked.
   // Once per form.
@@ -275,25 +273,10 @@
       return;
     }
     if (link.hasAttribute('data-reviews-show-all')) {
-      track('reviews_show_all');
+      (window.dataLayer = window.dataLayer || []).push({ event: 'reviews_show_all' });
     }
     loadJudgeme();
     scrollToReviews(link.hasAttribute('data-reviews-write') ? openReviewForm : undefined);
-  };
-
-  // Form completion rate: forms opened vs forms that passed Judge.me's checks on submit (it shows
-  // .jdgm-input-error under bad fields and sends nothing).
-  const trackReviewForm = (e) => {
-    if (e.target.closest('#judgeme_product_reviews .jdgm-write-rev-link')) {
-      if (!findReviewForm()?.offsetHeight) track('review_form_open');
-      return;
-    }
-    const form = e.target.closest('#judgeme_product_reviews .jdgm-submit-rev')?.form;
-    if (!form) return;
-    setTimeout(() => {
-      const errors = [...form.querySelectorAll('.jdgm-input-error')].filter((el) => el.offsetHeight && el.textContent.trim());
-      if (!errors.length) track('review_form_submit');
-    }, 300);
   };
 
   // Fills the open form from the review email. No focus: the phone keyboard would cover the stars.
@@ -385,8 +368,6 @@
       tidyReviews();
     }
     document.addEventListener('click', handleReviewLinkClick);
-    // Capture: a bubbling listener never saw the write-link click (Judge.me handles it first)
-    document.addEventListener('click', trackReviewForm, true);
   };
 
   if (document.readyState === 'loading') {
