@@ -618,6 +618,8 @@
       "write_first": "Write the first review",
       "load_more": "Show more",
       "body_hint": "A sentence or two: what you liked, did it fit your device",
+      "optional": "(optional)",
+      "star_labels": "Terrible,Poor,Okay,Good,Excellent",
       "thanks": "Thank you! We’ve received your review, it will appear after moderation",
       "show_all": {
         "one": "Show all {{ count }} review",

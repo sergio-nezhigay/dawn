@@ -5301,11 +5301,6 @@ h4+p {
     display: inline-block !important;
     pointer-events: auto !important;
   }
-
-  /* Remove duplicate cancel button */
-  .jdgm-rev-widg .jdgm-cancel-rev {
-    display: none !important;
-  }
 }
 
 /* Judge.me Notification/Success Message Fix */
@@ -5318,23 +5313,136 @@ h4+p {
 
 
 
-/* Judge.me form focus styles */
-.jdgm-form input[type="text"]:focus,
-.jdgm-form input[type="text"]:focus-visible,
-.jdgm-form input[type="email"]:focus,
-.jdgm-form input[type="email"]:focus-visible,
-.jdgm-form input[type="url"]:focus,
-.jdgm-form input[type="url"]:focus-visible,
-.jdgm-form textarea:focus,
-.jdgm-form textarea:focus-visible {
-  outline: none !important;
-  border-color: #bfdbfe !important;
+/* Judge.me write-a-review form in the site look: left labels, 48px fields like the search box, big stars,
+   full-width yellow button. Title and photo upload are off in Judge.me settings (Widgets > Write a Review).
+   The star caption and "optional" mark come from assets/judgeme-enhancements.js (enhanceForm). */
+#judgeme_product_reviews .jdgm-form {
+  max-width: 560px;
+  margin: 0 auto;
+  text-align: left !important;
 }
 
-.jdgm-form input,
-.jdgm-form textarea,
-.jdgm-picture-fieldset__box-wrapper {
-  border-radius: 6px !important;
+#judgeme_product_reviews .jdgm-form__title {
+  margin-bottom: 1.6rem !important;
+  color: var(--ui-navy) !important;
+  font-size: 2rem !important;
+  font-weight: 700 !important;
+  text-align: left !important;
+}
+
+#judgeme_product_reviews .jdgm-form__fieldset {
+  margin: 0 0 1.6rem !important;
+  text-align: left !important;
+}
+
+#judgeme_product_reviews .jdgm-form label {
+  display: block;
+  margin-bottom: 0.6rem !important;
+  color: var(--ui-navy) !important;
+  font-size: 1.5rem !important;
+  font-weight: 600 !important;
+  text-align: left !important;
+}
+
+.jdgm-optional {
+  color: var(--ui-muted);
+  font-weight: 400;
+}
+
+/* Name format stays the store default; the "shown publicly as John Smith ▾" picker only added a question */
+#judgeme_product_reviews .jdgm-form__reviewer-name-format-container {
+  display: none !important;
+}
+
+#judgeme_product_reviews .jdgm-form input[type='text'],
+#judgeme_product_reviews .jdgm-form input[type='email'],
+#judgeme_product_reviews .jdgm-form textarea {
+  width: 100% !important;
+  box-sizing: border-box;
+  padding: 0 1.4rem !important;
+  border: 1px solid #d1d5db !important;
+  border-radius: var(--ui-radius-sm) !important;
+  background: #fff !important;
+  color: #111827 !important;
+  font-size: 1.6rem !important;
+  transition: box-shadow var(--ui-dur) var(--ui-ease), border-color var(--ui-dur) var(--ui-ease);
+}
+
+#judgeme_product_reviews .jdgm-form input[type='text'],
+#judgeme_product_reviews .jdgm-form input[type='email'] {
+  height: 48px !important;
+}
+
+#judgeme_product_reviews .jdgm-form textarea {
+  min-height: 96px;
+  padding: 1.2rem 1.4rem !important;
+  line-height: 1.4;
+}
+
+#judgeme_product_reviews .jdgm-form input:focus,
+#judgeme_product_reviews .jdgm-form textarea:focus {
+  outline: none !important;
+  border-color: var(--ui-yellow-deep) !important;
+  box-shadow: 0 0 0 4px rgba(255, 194, 32, 0.5) !important;
+}
+
+/* Each star is a 44px tap area */
+#judgeme_product_reviews .jdgm-form__rating {
+  display: flex !important;
+  margin-left: -6px;
+}
+
+#judgeme_product_reviews .jdgm-form__rating .jdgm-star {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0 !important;
+  color: var(--ui-yellow) !important;
+  font-size: 3rem !important;
+}
+
+.jdgm-star-caption {
+  min-height: 2.2rem;
+  margin: 0.2rem 0 0;
+  color: var(--ui-navy);
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/* Judge.me's privacy note: keep it, small and quiet */
+#judgeme_product_reviews .jdgm-form__fieldset p {
+  margin: 0 !important;
+  color: var(--ui-muted) !important;
+  font-size: 1.2rem !important;
+  line-height: 1.5 !important;
+  text-align: left !important;
+}
+
+#judgeme_product_reviews .jdgm-form__fieldset p a {
+  color: inherit !important;
+}
+
+#judgeme_product_reviews .jdgm-submit-rev {
+  width: 100% !important;
+  min-height: 48px;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: var(--ui-radius-sm) !important;
+  background: var(--ui-yellow) !important;
+  color: var(--ui-navy) !important;
+  font-size: 1.6rem !important;
+  font-weight: 600 !important;
+  transition: background-color var(--ui-dur) var(--ui-ease);
+}
+
+#judgeme_product_reviews .jdgm-submit-rev:hover {
+  background: var(--ui-yellow-deep) !important;
+}
+
+#judgeme_product_reviews .jdgm-cancel-rev {
+  display: none !important;
 }
 
 .jdgm-widget:not(.jdgm-review-widget--small, .jdgm-review-widget--medium) .jdgm-row-stars {
