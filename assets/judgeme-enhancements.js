@@ -115,7 +115,9 @@
     button.hidden = !widget.querySelector('.jdgm-paginate__load-more, .jdgm-paginate__next-page');
   };
 
-  const track = (event) => (window.dataLayer = window.dataLayer || []).push({ event });
+  // GTM runs in the "Google Tag Manager FeedArmy 2" custom pixel sandbox and can't see this page's dataLayer:
+  // publish a Shopify custom event, which that pixel subscribes to and pushes into its own dataLayer.
+  const track = (event) => window.Shopify?.analytics?.publish?.(event, {});
 
   // Our additions to Judge.me's review form (the look is in assets/base.css): the comment hint and "optional"
   // mark, the name format, a shorter privacy note, and the word for the stars under the pointer or picked.
