@@ -892,7 +892,9 @@
         "country_label": "Країна",
         "country_code": "Країна",
         "email_label": "Електронна пошта",
-        "email_placeholder": "Електронна пошта (для підтвердження замовлення)"
+        "email_placeholder": "Електронна пошта (для підтвердження замовлення)",
+        "phone_label": "Номер телефону",
+        "phone_placeholder": "Номер телефону (менеджер зателефонує)"
       },
       "payment": {
         "card_fields_unavailable_html": "Платежі кредитними та дебетовими картками зараз недоступні.<br> <a href=\"%{current_url}\">Оновіть сторінку</a> або повторіть спробу пізніше.",
@@ -952,7 +954,11 @@
         "address_zip_blank": "Індекс (або просто 12345)",
         "handle_email_invalid": "Перевірте пошту, наприклад name@gmail.com",
         "email_invalid": "Перевірте пошту, наприклад name@gmail.com",
-        "email_blank": "Введіть електронну пошту"
+        "email_blank": "Введіть електронну пошту",
+        "handle_phone_invalid": "Введіть правильний номер телефону",
+        "address_phone_blank": "Введіть номер телефону",
+        "address_phone_invalid": "Введіть правильний номер телефону",
+        "phone_blank": "Введіть номер телефону"
       },
       "general": {
         "complete_purchase_button_label": "Замовлення підтверджую",
