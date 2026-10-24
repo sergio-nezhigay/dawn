@@ -906,7 +906,14 @@
         "address_neighborhood_contains_emojis": "District cannot contain emojis",
         "address_barangay_contains_html_tags": "Barangay cannot contain HTML tags.",
         "address_commune_contains_html_tags": "Commune cannot contain HTML tags.",
-        "address_district_contains_html_tags": "The district cannot contain HTML tags."
+        "address_district_contains_html_tags": "The district cannot contain HTML tags.",
+        "email_blank": "Enter your email",
+        "email_invalid": "Check your email, e.g. name@gmail.com",
+        "handle_email_invalid": "Check your email, e.g. name@gmail.com",
+        "phone_blank": "Enter your phone number",
+        "address_phone_blank": "Enter your phone number",
+        "address_phone_invalid": "Enter a valid phone number",
+        "handle_phone_invalid": "Enter a valid phone number"
       },
       "general": {
         "errors": {
@@ -931,10 +938,17 @@
         "block_label": "Block",
         "commune_label": "Commune",
         "optional_street_number_label": "Building number (optional)",
-        "optional_colony_label": "Colony (optional)"
+        "optional_colony_label": "Colony (optional)",
+        "email_label": "Email",
+        "email_placeholder": "Email (for order confirmation)",
+        "phone_label": "Phone number",
+        "phone_placeholder": "Phone (our manager will call)"
       },
       "thank_you": {
         "location_title": "Location"
+      },
+      "marketing": {
+        "accept_marketing_checkbox_label": "I agree to receive emails about my order"
       }
     },
     "errors": {

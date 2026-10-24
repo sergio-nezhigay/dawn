@@ -885,7 +885,11 @@
         "postal_code_label": "Почтовый индекс (оставьте 12345)",
         "postal_code_placeholder": "Почтовый индекс (оставьте 12345)",
         "address1_label": "Номер отделения Повой почты (или адрес для курьерской доставки)",
-        "city_label": "Населенный пункт"
+        "city_label": "Населенный пункт",
+        "email_label": "Электронная почта",
+        "email_placeholder": "Электронная почта (для подтверждения заказа)",
+        "phone_label": "Номер телефона",
+        "phone_placeholder": "Номер телефона (менеджер позвонит)"
       },
       "payment": {
         "card_fields_unavailable_html": "Платежи кредитными и дебетовыми картами сейчас недоступны.<br> <a href=\"%{current_url}\">Обновите эту страницу</a> или попробуйте другой способ оплаты."
@@ -930,7 +934,14 @@
         "address_neighborhood_contains_emojis": "Район не может содержать эмодзи",
         "address_barangay_contains_html_tags": "Barangay не может содержать теги HTML.",
         "address_commune_contains_html_tags": "Commune не может содержать теги HTML.",
-        "address_district_contains_html_tags": "Район не может содержать теги HTML."
+        "address_district_contains_html_tags": "Район не может содержать теги HTML.",
+        "email_blank": "Введите электронную почту",
+        "email_invalid": "Проверьте почту, например name@gmail.com",
+        "handle_email_invalid": "Проверьте почту, например name@gmail.com",
+        "phone_blank": "Введите номер телефона",
+        "address_phone_blank": "Введите номер телефона",
+        "address_phone_invalid": "Введите правильный номер телефона",
+        "handle_phone_invalid": "Введите правильный номер телефона"
       },
       "general": {
         "complete_purchase_button_label": "Заказ подтверджаю",
@@ -963,7 +974,8 @@
           "disclaimer": {
             "description_transactional_html": "Для подтверждения заказа"
           }
-        }
+        },
+        "accept_marketing_checkbox_label": "Согласен получать письма о моём заказе"
       }
     },
     "collections": {
