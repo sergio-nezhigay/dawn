@@ -465,7 +465,8 @@
       "address_street": "ул. Щусева, 36",
       "address_city": "Киев",
       "address_country": "Украина",
-      "working_hours_value": "Пн-Пт 9:00–18:00"
+      "working_hours_value": "Пн-Пт 9:00–18:00",
+      "reviews_suffix": "покупателей"
     },
     "featured_blog": {
       "view_all": "Посмотреть все",

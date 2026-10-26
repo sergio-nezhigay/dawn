@@ -465,7 +465,8 @@
       "address_label": "Адреса",
       "address_street": "вул. Щусєва, 36",
       "address_city": "Київ",
-      "address_country": "Україна"
+      "address_country": "Україна",
+      "reviews_suffix": "покупців"
     },
     "featured_blog": {
       "view_all": "Переглянути все",
