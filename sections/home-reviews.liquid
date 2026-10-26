@@ -7,7 +7,7 @@
 {%- capture count_text -%}{% render 'review-format', count: total %}{%- endcapture -%}
 {%- capture cards -%}
   {%- assign shown = 0 -%}
-  {%- comment -%} Newest 4-5 star reviews with at least 20 characters of text, 8 at most {%- endcomment -%}
+  {%- comment -%} Newest 4-5 star reviews with at least 20 characters of text, up to the setting; Judge.me's grid metafield holds the newest 25 {%- endcomment -%}
   {%- for review in grid -%}
     {%- assign body = review.body | strip -%}
     {%- if review.rating >= 4 and body.size >= 20 -%}
@@ -28,7 +28,7 @@
         </article>
       </li>
       {%- assign shown = shown | plus: 1 -%}
-      {%- if shown == 8 -%}
+      {%- if shown >= section.settings.max_reviews -%}
         {%- break -%}
       {%- endif -%}
     {%- endif -%}
@@ -69,7 +69,16 @@
   "settings": [
     {
       "type": "paragraph",
-      "content": "Shows the newest 4-5 star Judge.me reviews with text. Data comes from the Judge.me shop metafields, no Judge.me script runs on the homepage. The section is hidden when there is no data."
+      "content": "Shows the newest 4-5 star Judge.me reviews with text. Data comes from the Judge.me shop metafields, no Judge.me script runs on the homepage. On the Free plan the metafield holds the newest 25 reviews. The section is hidden when there is no data."
+    },
+    {
+      "type": "range",
+      "id": "max_reviews",
+      "min": 4,
+      "max": 25,
+      "step": 1,
+      "default": 25,
+      "label": "Maximum reviews"
     }
   ],
   "presets": [
