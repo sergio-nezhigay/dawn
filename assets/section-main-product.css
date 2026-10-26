@@ -536,10 +536,20 @@ a.product__text {
   --ui-heading-gap: 0;
 }
 
-/* Long product names: keep the phone size small so the buy box stays high */
+/* Product name is read, not glanced at: plain card font, as written in the admin.
+   The brand font has no Cyrillic, so in lowercase it mixes with its Tektur fallback. */
+.product__title .ui-heading--h1 {
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif !important;
+  font-size: 26px !important;
+  font-weight: 700 !important;
+  line-height: 1.25 !important;
+  letter-spacing: normal !important;
+  text-transform: none !important;
+}
+
 @media screen and (max-width: 749px) {
   .product__title .ui-heading--h1 {
-    font-size: 18px !important;
+    font-size: 19px !important;
   }
 }
 
@@ -593,10 +603,6 @@ a.product__text {
 
   .product__title {
     order: -2;
-  }
-
-  .product__title h1 {
-    font-size: 18px;
   }
 
   .product__info-container .review-badge {
