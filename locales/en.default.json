@@ -472,7 +472,8 @@
       "address_street": "36 Schuseva St",
       "address_city": "Kyiv",
       "address_country": "Ukraine",
-      "working_hours_value": "Mon-Fri 9:00–18:00"
+      "working_hours_value": "Mon-Fri 9:00–18:00",
+      "reviews_suffix": "from customers"
     },
     "featured_blog": {
       "view_all": "View all",

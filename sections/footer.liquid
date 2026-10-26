@@ -64,6 +64,26 @@
     </li>
   </ul>
 
+  {%- liquid
+    comment
+      Store rating from the Judge.me shop metafields, linking to the homepage reviews rail. Hidden without data.
+      No microdata: Google ignores self-served LocalBusiness ratings.
+    endcomment
+    assign reviews_total = shop.metafields.judgeme.all_reviews_count.value | plus: 0
+    assign reviews_rating = shop.metafields.judgeme.all_reviews_rating.value | times: 1.0 | round: 1
+    assign home_url = routes.root_url | append: '/' | replace: '//', '/'
+  -%}
+  {%- if reviews_total > 0 and reviews_rating > 0 -%}
+    <p class="footer-rating">
+      <a href="{{ home_url }}#reviews">
+        <span class="footer-rating__star" aria-hidden="true">&#9733;</span>
+        <b>{% render 'review-format', rating: reviews_rating %}</b> &middot;
+        {% render 'review-format', count: reviews_total %}
+        {{ 'sections.footer.reviews_suffix' | t }} &rarr;
+      </a>
+    </p>
+  {%- endif -%}
+
   <p class="footer-copyright">
     © {{ 'now' | date: '%Y' }} Informatica. By
     <a href="https://nezhyhai-portfolio.vercel.app/"> nezhyhai-portfolio.vercel.app </a>

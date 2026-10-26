@@ -5607,6 +5607,27 @@ h4+p {
   /* mb-5 */
 }
 
+/* Store reply under a review (Judge.me leaves .jdgm-rev__reply empty when there is none) */
+.jdgm-rev__reply:has(*) {
+  margin-top: 1.2rem !important;
+  padding: 1.2rem 1.4rem !important;
+  background: var(--ui-tint) !important;
+  border-left: 3px solid var(--ui-blue) !important;
+  border-radius: var(--ui-radius-sm) !important;
+  font-size: 1.4rem !important;
+  line-height: 1.5 !important;
+  color: var(--ui-text) !important;
+}
+
+.jdgm-rev__reply > :first-child:not(.jdgm-rev__reply-content) {
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.jdgm-rev__reply-content p {
+  margin: 0 !important;
+}
+
 /* Stars-only reviews (JS sets .jdgm-rev--thin, same rule as the summary card): one slim row of stars, date and name */
 .jdgm-rev.jdgm-rev--thin {
   padding: 1rem 0 !important;
@@ -5767,6 +5788,16 @@ footer {
   color: var(--ui-yellow);
   text-decoration: underline;
   text-underline-offset: 4px;
+}
+
+/* Store rating line */
+.footer-custom .footer-rating {
+  text-align: center;
+  margin: 3.2rem 0 0;
+}
+
+.footer-custom .footer-rating__star {
+  color: var(--ui-yellow);
 }
 
 /* Copyright section */
