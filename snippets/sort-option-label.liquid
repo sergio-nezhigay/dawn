@@ -4,7 +4,7 @@
   Usage: {% render 'sort-option-label', option: option %}
 {%- endcomment -%}
 {%- case option.value -%}
-  {%- when 'relevance' -%}
+  {%- when 'relevance', 'most-relevant' -%}
     {{- 'products.facets.sort_options.relevance' | t -}}
   {%- when 'manual' -%}
     {{- 'products.facets.sort_options.manual' | t -}}

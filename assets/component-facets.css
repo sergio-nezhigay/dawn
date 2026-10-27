@@ -1582,3 +1582,8 @@ input.mobile-facets__checkbox {
     width: calc(33.33% - var(--grid-desktop-horizontal-spacing) * 2 / 3);
   }
 }
+
+/* The chat app's floating bubble sits over the "Apply" button of the open mobile filter drawer */
+body:has(.mobile-facets__wrapper > details[open]) .shop-chat-interface {
+  display: none;
+}
