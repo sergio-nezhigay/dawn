@@ -128,3 +128,5 @@ jobs:
         uses: shopify/theme-check-action@v2
         with:
           token: ${{ github.token }}
+          # Pinned: @shopify/cli 5.0.0 (2026-10-27) crashes this action ("e.filter is not a function")
+          version: 4.9.4
