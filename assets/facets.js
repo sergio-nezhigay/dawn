@@ -264,6 +264,11 @@ class FacetFiltersForm extends HTMLElement {
       params.set('filter.v.price.gte', '1');
       if (searchFilters.hasAttribute('data-availability-filter')) params.set('filter.v.availability', '1');
     }
+    // Keep URLs short: drop empty fields (untouched price range) and the page's default sort
+    Array.from(params.keys()).forEach((key) => {
+      if (params.get(key) === '') params.delete(key);
+    });
+    if (FacetFiltersForm.defaultSort && params.get('sort_by') === FacetFiltersForm.defaultSort) params.delete('sort_by');
     return params.toString();
   }
 
@@ -290,7 +295,7 @@ class FacetFiltersForm extends HTMLElement {
           forms.push(this.createSearchParams(form));
         }
       });
-      this.onSubmitForm(forms.join('&'), event);
+      this.onSubmitForm(forms.filter(Boolean).join('&'), event);
     }
   }
 
@@ -308,6 +313,10 @@ class FacetFiltersForm extends HTMLElement {
 FacetFiltersForm.filterData = [];
 FacetFiltersForm.searchParamsInitial = window.location.search.slice(1);
 FacetFiltersForm.searchParamsPrev = window.location.search.slice(1);
+// The sort the page opened with, when the URL didn't choose one (the collection's default)
+FacetFiltersForm.defaultSort = new URLSearchParams(window.location.search).has('sort_by')
+  ? null
+  : document.querySelector('select[name="sort_by"]')?.value || null;
 customElements.define('facet-filters-form', FacetFiltersForm);
 FacetFiltersForm.setListeners();
 

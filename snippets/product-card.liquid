@@ -30,6 +30,7 @@
     assign loading = 'eager'
   endif
   assign sizes = '(min-width: 990px) 240px, (min-width: 750px) 30vw, 45vw'
+  assign image_alt = product.featured_media.alt | default: product.title
   assign dc_size = product.metafields.specifications.dc_size.value
   assign second = product.media[1]
   if second.media_type != 'image'
@@ -47,7 +48,7 @@
           sizes: sizes,
           loading: loading,
           fetchpriority: fetch_priority,
-          alt: ''
+          alt: image_alt
       }}
       {%- if second -%}
         {{
