@@ -3764,6 +3764,14 @@ details[open]>.header__submenu {
   }
 }
 
+/* Narrow desktops: tighter top items so all 8 fit in one row */
+@media screen and (min-width: 990px) and (max-width: 1099px) {
+  .header__menu-item {
+    padding-left: 0.8rem;
+    padding-right: 0.8rem;
+  }
+}
+
 .header__submenu {
   background-color: #ffffff;
   transition: opacity 0.2s ease, transform 0.2s ease;
@@ -3821,6 +3829,13 @@ details[open]>.header__submenu {
 
 /* Desktop dropdown menu item styles - per specification */
 @media screen and (min-width: 990px) {
+
+  /* Grow past the 288px default so the longest item fits on one line */
+  .header__submenu.list-menu--disclosure {
+    width: max-content;
+    min-width: 288px;
+    max-width: calc(100vw - 4rem);
+  }
 
   /* Override menu items INSIDE dropdowns only */
   .header__submenu .header__menu-item {
