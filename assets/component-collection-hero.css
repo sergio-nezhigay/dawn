@@ -92,3 +92,11 @@
     min-height: 20rem;
   }
 }
+
+/* Phones: a smaller title (long names take 2 lines, not 3) and less space before the filter bar, so products start higher */
+@media screen and (max-width: 749px) {
+  .collection-hero__title.ui-heading--h1 {
+    --ui-heading-gap: 12px;
+    font-size: 20px !important;
+  }
+}

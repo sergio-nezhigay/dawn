@@ -13,6 +13,27 @@
   gap: 8px;
 }
 
+/* Phones: a slim "Filter and sort" bar: no empty space under it while no filter is chosen, a 44px tap target */
+@media screen and (max-width: 749px) {
+  .facets-container {
+    padding-top: 0;
+  }
+
+  /* Only the always-present "Clear all" link: no filter chips yet */
+  .active-facets-mobile:not(:has(.active-facets__button--light)) {
+    margin: 0;
+  }
+
+  .mobile-facets__open {
+    min-height: 44px;
+  }
+
+  /* The product count ("227 of 455") beside the filter button stays on one line */
+  .product-count__text {
+    white-space: nowrap;
+  }
+}
+
 .mobile-facets__list {
   overflow-y: auto;
 }
