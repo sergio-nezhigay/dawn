@@ -1,0 +1,37 @@
+{%- doc -%}
+  Prints the order of a filter's values from low to high ("2,0,1": 0-based positions in filter.values) when every
+  value label starts with a number ("8 GB", "1600 MHz", "1.5"); prints nothing otherwise, so other filters keep
+  Shopify's order. Search & Discovery sorts text, which puts 16 before 4 and 1333 before 800.
+  Usage (the caller rebuilds the list in this order, see snippets/facets.liquid):
+  {% capture value_order %}{% render 'facet-value-order', filter: filter %}{% endcapture %}
+
+  @param {object} filter - Storefront filter (list type)
+{%- enddoc -%}
+{%- liquid
+  assign keys = ''
+  assign numeric = true
+  for value in filter.values
+    assign token = value.label | split: ' ' | first | replace: ',', '.'
+    assign number = token | times: 1
+    assign number_text = number | append: ''
+    if number_text != token
+      assign numeric = false
+      break
+    endif
+    comment
+      Fixed-width keys sort as text in number order; the position after "|" says which value it was
+    endcomment
+    assign scaled = number | times: 1000 | round
+    assign key = '000000000000' | append: scaled | slice: -12, 12
+    assign keys = keys | append: key | append: '|' | append: forloop.index0 | append: ','
+  endfor
+  if numeric and filter.values.size > 1
+    assign sorted_keys = keys | split: ',' | sort
+    for key in sorted_keys
+      echo key | split: '|' | last
+      unless forloop.last
+        echo ','
+      endunless
+    endfor
+  endif
+-%}

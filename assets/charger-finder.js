@@ -39,11 +39,16 @@ const openFilter = (param) => {
     return true;
   }
   const drawer = document.querySelector('menu-drawer.mobile-facets__wrapper');
-  const panel = drawer?.querySelector(`details[id^="Details-Mobile-${param}-"]`);
+  const panel = drawer?.querySelector(`[id^="Details-Mobile-${param}-"]`);
   if (!panel) return false;
   const main = drawer.querySelector('details');
   if (!main.open) main.querySelector('summary').click();
   setTimeout(() => {
+    // An open group (snippets/facets.liquid, open_filters) sits in the drawer itself: just bring it into view
+    if (panel.tagName !== 'DETAILS') {
+      panel.scrollIntoView({ block: 'start' });
+      return;
+    }
     if (!panel.open) panel.querySelector('summary').click();
     panel.querySelector('.mobile-facets__submenu')?.scrollTo(0, 0);
   }, 150);

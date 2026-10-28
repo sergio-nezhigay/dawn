@@ -1194,6 +1194,61 @@ details.menu-opening .mobile-facets__close .svg-wrapper {
   visibility: visible;
 }
 
+/* Open group in the drawer (open_filters): label + values as tap buttons with counts, no slide-in panel */
+.mobile-facets__group {
+  padding: 1.6rem 2rem;
+  border-bottom: 1px solid var(--ui-line);
+}
+
+.mobile-facets__group-label {
+  margin: 0 0 1rem;
+  font-size: 1.6rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.mobile-facets__group .mobile-facets__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  overflow: visible;
+}
+
+.mobile-facets__group .mobile-facets__label {
+  gap: 6px;
+  width: auto;
+  padding: 0 14px;
+  border: 1.5px solid var(--ui-line);
+  border-radius: 999px;
+  background: #fff;
+}
+
+.mobile-facets__group .mobile-facets__label.active {
+  border-color: var(--ui-blue);
+  background: var(--ui-tint);
+  color: var(--ui-blue);
+  font-weight: 600;
+}
+
+.mobile-facets__group .mobile-facets__label.disabled {
+  opacity: 0.45;
+}
+
+.mobile-facets__group .mobile-facets__label:has(:focus-visible) {
+  outline: 2px solid var(--ui-blue);
+  outline-offset: 2px;
+}
+
+.mobile-facets__group .mobile-facets__label > svg,
+.mobile-facets__group .mobile-facets__highlight {
+  display: none;
+}
+
+.mobile-facets__group .facet-checkbox__count {
+  color: var(--ui-muted);
+  font-size: 1.3rem;
+}
+
 .mobile-facets__summary {
   padding: 1.6rem 2rem;
   font-size: 1.6rem;
@@ -1345,6 +1400,23 @@ input.mobile-facets__checkbox {
 
 .mobile-facets__footer > * {
   width: 50%;
+}
+
+/* "Show 227 products" on its own full-width line (it doesn't fit beside "Clear" on phones), "Clear" under it */
+.mobile-facets__footer {
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  padding: 1.2rem 2rem;
+}
+
+.mobile-facets__footer > button.button--primary {
+  order: -1;
+  width: 100%;
+  white-space: nowrap;
+}
+
+.mobile-facets__footer > .mobile-facets__clear-wrapper {
+  width: 100%;
 }
 
 .mobile-facets__footer button.button--primary {
