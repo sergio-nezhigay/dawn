@@ -33,7 +33,7 @@
         "hide_filters": "",
         "help_cards": "pamyat:ram, sodimm-ddr4-8gb:ram, sodimm-ddr4-16gb:ram, sodimm-ddr4-4gb:ram, sodimm-ddr4-32gb:ram, sodimm-ddr3-4gb:ram, sodimm-ddr3-8gb:ram, sodimm-ddr3l-4gb:ram, sodimm-ddr3l-8gb:ram, dimm-ddr4-8gb:ram, deal-hotline:ram, ssd:ssd",
         "help_card_after": 4,
-        "open_filters": "",
+        "open_filters": "filter.p.m.specifications.type,filter.p.m.specifications.memory_capacity",
         "enable_filtering": true,
         "filter_type": "vertical",
         "enable_sorting": true,
