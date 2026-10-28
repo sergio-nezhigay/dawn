@@ -54,10 +54,6 @@
 
 /* Phones: one row that scrolls sideways, running to the screen edges; the fade on the right says "there is more" */
 @media screen and (max-width: 749px) {
-  .charger-finder__more-label {
-    flex-basis: 100%;
-  }
-
   .charger-finder__chips {
     -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 40px), transparent);
     mask-image: linear-gradient(to right, #000 calc(100% - 40px), transparent);
@@ -117,9 +113,60 @@
   background: var(--ui-tint);
 }
 
-/* Guide: a pill that turns solid blue while open */
+/* Guide: a pill that turns solid blue while open; wide screens: its own line below the filter pills */
 .charger-finder__guide {
-  margin-top: 12px;
+  flex-basis: 100%;
+  margin-top: 4px;
+}
+
+/*
+  Phones: the guide and the filter pills share one sideways-scrolling row (guide first, short wording), like the
+  brand buttons; "More filters:" stays for screen readers only. An open guide takes the full width again.
+*/
+@media screen and (max-width: 749px) {
+  .charger-finder__more {
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 40px), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - 40px), transparent);
+    flex-wrap: nowrap;
+    margin: 12px -1.5rem 0;
+    padding: 0 1.5rem 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .charger-finder__more::-webkit-scrollbar {
+    display: none;
+  }
+
+  .charger-finder__more-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .charger-finder__more-pill {
+    flex: none;
+  }
+
+  .charger-finder__guide {
+    flex: none;
+    order: -1;
+    margin-top: 0;
+  }
+
+  .charger-finder__more:has(.charger-finder__guide[open]) {
+    -webkit-mask-image: none;
+    mask-image: none;
+    flex-wrap: wrap;
+    overflow-x: visible;
+  }
+
+  .charger-finder__guide[open] {
+    flex-basis: 100%;
+  }
 }
 
 .charger-finder__summary {
@@ -333,11 +380,4 @@
   color: var(--ui-blue);
   font-size: 14px;
   font-weight: 600;
-}
-
-/* Phones: the product count ("59 of 178") beside the filter button stays on one line (this stylesheet loads only on this template) */
-@media screen and (max-width: 749px) {
-  .product-count__text {
-    white-space: nowrap;
-  }
 }
