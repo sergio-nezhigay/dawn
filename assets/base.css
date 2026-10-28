@@ -3876,23 +3876,6 @@ details[open]>.header__submenu {
     color: var(--ui-blue);
   }
 
-  /* Category title styling */
-  .header__submenu-title {
-    font-size: 14px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: #6b7280;
-    padding: 8px 24px;
-    border-bottom: 1px solid #f3f4f6;
-    margin-bottom: 8px;
-    list-style: none;
-    pointer-events: none;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
   /* Nested dropdown positioning (second-level) */
   .header__submenu .header__submenu {
     left: 100%;
