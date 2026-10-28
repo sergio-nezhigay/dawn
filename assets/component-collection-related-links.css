@@ -6,12 +6,13 @@
  * rich-text link colour used for prose in .rte.
  */
 
+/* Wider than the text measure so chips sit several to a row instead of one per line. */
 .collection-related-links {
-  max-width: 52rem;
+  max-width: 90rem;
 }
 
 .collection-description__disclosure + .collection-related-links {
-  margin-top: 4rem;
+  margin-top: 3.2rem;
 }
 
 .collection-related-links__heading {
