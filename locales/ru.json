@@ -493,7 +493,6 @@
       "empty": "Товары не найдены",
       "load_more": "Показать ещё {{ number }}",
       "load_previous": "Показать предыдущие",
-      "shown_of": "Показано {{ shown }} из {{ total }}",
       "use_fewer_filters_html": "Используйте меньше фильтров или <a class=\"{{ class }}\" href=\"{{ link }}\">удалите все</a>"
     },
     "video": {

@@ -285,7 +285,6 @@
                 if left > paginate.page_size
                   assign left = paginate.page_size
                 endif
-                assign shown_pct = shown | times: 100 | divided_by: paginate.items
               -%}
               <load-more-products class="load-more" data-url="{{ paginate.next.url }}" data-dir="next">
                 {%- if paginate.next -%}
@@ -293,10 +292,6 @@
                     {{ 'sections.collection_template.load_more' | t: number: left }}
                   </button>
                 {%- endif -%}
-                <p class="load-more__count">
-                  {{ 'sections.collection_template.shown_of' | t: shown: shown, total: paginate.items }}
-                </p>
-                <span class="load-more__bar" aria-hidden="true"><span style="width: {{ shown_pct }}%"></span></span>
               </load-more-products>
               {% render 'pagination', paginate: paginate, anchor: '', quiet: true %}
             {%- endif -%}
