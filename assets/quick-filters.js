@@ -13,7 +13,10 @@ if (!window.quickFiltersReady) {
     });
   };
 
+  // Quick taps can overlap: only the latest refetch may replace the rows
+  let latestRefresh = 0;
   const refreshOuterQuickFilters = async () => {
+    const refresh = ++latestRefresh;
     const rows = [...document.querySelectorAll('[data-quick-filters]')].filter(
       (row) => !row.closest('#ProductGridContainer')
     );
@@ -23,7 +26,7 @@ if (!window.quickFiltersReady) {
         url.searchParams.set('section_id', row.dataset.sectionId);
         const html = new DOMParser().parseFromString(await (await fetch(url)).text(), 'text/html');
         const fresh = html.querySelector(`[data-quick-filters][data-section-id="${row.dataset.sectionId}"]`);
-        if (fresh) row.replaceWith(fresh);
+        if (fresh && refresh === latestRefresh) row.replaceWith(fresh);
       })
     );
     showActiveQuickFilters();
