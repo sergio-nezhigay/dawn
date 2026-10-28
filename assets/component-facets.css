@@ -1219,19 +1219,15 @@ details.menu-opening .mobile-facets__close .svg-wrapper {
   line-height: 1;
 }
 
-/* :has() shows the choice at once, the class after the re-render */
-.mobile-facets__chip.active,
 .mobile-facets__chip:has(:checked) {
   border-color: var(--ui-blue);
   background: var(--ui-tint);
 }
 
-.mobile-facets__chip.active .mobile-facets__chip-x,
 .mobile-facets__chip:has(:checked) .mobile-facets__chip-x {
   display: inline;
 }
 
-.mobile-facets__chip.active .mobile-facets__chip-count,
 .mobile-facets__chip:has(:checked) .mobile-facets__chip-count {
   display: none;
 }

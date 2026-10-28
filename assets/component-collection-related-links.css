@@ -1,12 +1,4 @@
-/*
- * Related-collections chip row (snippets/collection-related-links.liquid).
- * Sourced from a list.collection_reference metafield rather than links
- * hand-written into collection.description, so it gets its own structured
- * treatment: a small «See also» heading and calm white pill chips, not the
- * rich-text link colour used for prose in .rte.
- */
-
-/* Wider than the text measure so chips sit several to a row instead of one per line. */
+/* «See also» chips (snippets/collection-related-links.liquid). Wider than the text so several fit per row. */
 .collection-related-links {
   max-width: 90rem;
 }
@@ -40,6 +32,15 @@
   transition: border-color var(--duration-short) ease;
 }
 
+.collection-related-links__tag:hover {
+  border-color: rgba(var(--color-foreground), 0.45);
+}
+
+.collection-related-links__tag:focus-visible {
+  outline: 0.2rem solid rgb(var(--color-foreground));
+  outline-offset: 0.2rem;
+}
+
 /* Phones: two equal columns, long labels wrap inside the chip, so 9 RAM links take
    5 rows instead of 9. */
 @media screen and (max-width: 749px) {
@@ -56,13 +57,4 @@
     border-radius: 1.2rem;
     padding: 0.8rem 1.2rem;
   }
-}
-
-.collection-related-links__tag:hover {
-  border-color: rgba(var(--color-foreground), 0.45);
-}
-
-.collection-related-links__tag:focus-visible {
-  outline: 0.2rem solid rgb(var(--color-foreground));
-  outline-offset: 0.2rem;
 }

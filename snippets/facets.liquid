@@ -23,6 +23,8 @@
   assign sort_by = results.sort_by | default: results.default_sort_by
   assign total_active_values = 0
   assign default_presentation = 'text'
+  assign hidden_list = hide_filters | split: ','
+  assign open_list = open_filters | remove: ' ' | split: ','
   # Drawer buttons say how many products the current filters leave ("Show 24 products")
   assign result_count = results.results_count | default: results.products_count
   if results.url
@@ -116,8 +118,6 @@
             <script src="{{ 'show-more.js' | asset_url }}" defer="defer"></script>
             {% comment %} Filters for both horizontal and vertical filter {% endcomment %}
             {%- for filter in results.filters -%}
-              {%- assign hidden_list = hide_filters | split: ',' -%}
-              {%- assign open_list = open_filters | split: ',' -%}
               {%- if hidden_list contains filter.param_name -%}{%- continue -%}{%- endif -%}
               {% liquid
                 assign total_active_values = total_active_values | plus: filter.active_values.size
@@ -533,10 +533,8 @@
             >
               {%- if enable_filtering -%}
                 {%- comment -%} The open_filters groups show their first values as tap buttons on the drawer's first screen {%- endcomment -%}
-                {%- assign chip_filters = open_filters | split: ',' -%}
                 {%- assign chip_limit = 10 -%}
                 {%- for filter in results.filters -%}
-                  {%- assign hidden_list = hide_filters | split: ',' -%}
                   {%- if hidden_list contains filter.param_name -%}{%- continue -%}{%- endif -%}
                   {% liquid
                     assign presentation = filter.presentation | default: default_presentation
@@ -561,14 +559,9 @@
                     # Chip groups: values 1-10 are buttons here, the rest go in the sub-panel behind "N more"
                     assign is_chip_group = false
                     assign list_offset = 0
-                    if filter.type == 'list' and presentation == 'text'
-                      for chip_param in chip_filters
-                        assign chip_param_name = chip_param | strip
-                        if chip_param_name == filter.param_name
-                          assign is_chip_group = true
-                          assign list_offset = chip_limit
-                        endif
-                      endfor
+                    if filter.type == 'list' and presentation == 'text' and open_list contains filter.param_name
+                      assign is_chip_group = true
+                      assign list_offset = chip_limit
                     endif
                     assign more_count = sorted_values.size | minus: list_offset
                   %}
@@ -592,7 +585,7 @@
                           <li>
                             <label
                               for="{{ input_id }}"
-                              class="mobile-facets__chip{% if is_disabled %} disabled{% endif %}{% if value.active %} active{% endif %}"
+                              class="mobile-facets__chip{% if is_disabled %} disabled{% endif %}"
                             >
                               <input
                                 class="mobile-facets__chip-input visually-hidden"
