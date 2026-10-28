@@ -14,7 +14,7 @@
 {{ 'component-pagination.css' | asset_url | stylesheet_tag }}
 
 {%- if paginate.parts.size > 0 -%}
-  <div class="pagination-wrapper" data-page="{{ paginate.current_page }}">
+  <div class="pagination-wrapper{% if quiet %} pagination-wrapper--quiet{% endif %}" data-page="{{ paginate.current_page }}">
     <nav class="pagination" role="navigation" aria-label="{{ 'general.pagination.label' | t }}">
       <ul class="pagination__list list-unstyled" role="list">
         {%- if paginate.previous -%}

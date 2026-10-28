@@ -496,6 +496,9 @@
     "collection_template": {
       "empty": "No products found",
       "title": "Collection",
+      "load_more": "Show {{ number }} more",
+      "load_previous": "Show previous",
+      "shown_of": "Showing {{ shown }} of {{ total }}",
       "use_fewer_filters_html": "Use fewer filters or <a class=\"{{ class }}\" href=\"{{ link }}\">remove all</a>"
     },
     "video": {
