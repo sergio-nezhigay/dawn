@@ -52,6 +52,7 @@
   .collection-related-links__tag {
     display: flex;
     align-items: center;
+    min-height: 4.4rem;
     font-size: 1.3rem;
     line-height: 1.3;
     border-radius: 1.2rem;
