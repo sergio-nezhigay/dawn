@@ -1,0 +1,61 @@
+{%- doc -%}
+  "Send us the model" helper: the homepage fit-check contract (assets/home-fit-check.js: data-fit form, AI chat /
+  Telegram / Viber / phone) with the goal fixed. Used inside the charger plug-size guide and in the RAM/SSD pop-up
+  of the collection help card. Starts without the AI button: home-fit-check.js shows it once the chat exposes
+  window.ShopAIChat.open. The page loads home-fit-check.js itself (once). Styles: assets/component-help-card.css.
+
+  @param {string} goal - charger, memory or ssd (picks the sections.home_fit_check label/placeholder/name keys)
+  @param {string} id - Unique suffix for the field ids (section id)
+  @param {string} heading - Translated heading
+  @param {string} intro - Translated first line of the pre-typed message (says which catalog it came from)
+{%- enddoc -%}
+{%- liquid
+  assign phone = '(099) 381-5288'
+  assign phone_href = 'tel:+380993815288'
+  assign model_id = 'HelpModel-' | append: id
+  assign error_id = 'HelpError-' | append: id
+  assign label_key = 'sections.home_fit_check.label_' | append: goal | append: '_html'
+  assign placeholder_key = 'sections.home_fit_check.placeholder_' | append: goal | append: '_html'
+  assign name_key = 'sections.home_fit_check.goal_name_' | append: goal | append: '_html'
+-%}
+<form class="help-form home-fit__form--noai" novalidate data-fit>
+  <h2 class="help-form__heading">{{ heading }}</h2>
+  <input type="radio" name="goal" value="{{ goal }}" checked hidden>
+  <label for="{{ model_id }}" data-fit-label>{{ label_key | t }}</label>
+  <div class="help-form__row">
+    <input
+      type="text"
+      id="{{ model_id }}"
+      name="model"
+      required
+      autocomplete="off"
+      aria-describedby="{{ error_id }}"
+      placeholder="{{ placeholder_key | t | escape }}"
+    >
+    <button type="submit" class="ui-btn ui-btn--primary home-fit__ai">
+      {{- 'sections.home_fit_check.ai_button' | t -}}
+    </button>
+  </div>
+  <p class="home-fit__error" id="{{ error_id }}" role="alert" hidden>{{ 'sections.home_fit_check.error' | t }}</p>
+  <div data-fit-installed hidden><input type="hidden" name="installed" value=""></div>
+  <p class="help-form__alt">
+    <span class="home-fit__ai">{{ 'sections.home_fit_check.manager' | t }}</span>
+    <a href="https://t.me/NSergiy?text=" target="_blank" rel="noopener" data-channel="telegram">Telegram</a>
+    <a href="viber://chat?number=+380507025777&amp;draft=" class="help-form__viber" data-channel="viber">Viber</a>
+    <a href="{{ phone_href }}" data-channel="phone">{{ phone }}</a>
+  </p>
+  <script type="application/json" data-fit-strings>
+    {
+      "intro": {{ intro | json }},
+      "goal": {{ 'sections.home_fit_check.draft_goal_html' | t: goal: '%goal%' | json }},
+      "installed": {{ 'sections.home_fit_check.draft_installed_html' | t: installed: '%installed%' | json }},
+      "goals": {
+        {{ goal | json }}: {
+          "name": {{ name_key | t | json }},
+          "label": {{ label_key | t | json }},
+          "placeholder": {{ placeholder_key | t | json }}
+        }
+      }
+    }
+  </script>
+</form>

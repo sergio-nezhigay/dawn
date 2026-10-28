@@ -1,5 +1,5 @@
-/* Charger adapters collection: brand buttons, plug-size guide with the model helper (sections/charger-adapter-finder.liquid)
-   and the "Not sure which one fits?" strip in the grid (snippets/charger-help-card.liquid). Tokens from base.css. */
+/* Charger adapters collection: brand buttons and the plug-size guide (sections/charger-adapter-finder.liquid).
+   The model helper form and the grid help card live in component-help-card.css. Tokens from base.css. */
 .charger-finder {
   margin-bottom: 16px;
   color: var(--ui-navy);
@@ -294,104 +294,6 @@
   margin-top: 8px;
 }
 
-/* Model helper: the homepage fit-check panel, compact */
-.charger-help {
-  max-width: 720px;
-  margin-top: 20px;
-  padding: 20px;
-  border-radius: var(--ui-radius-md);
-  background: var(--ui-blue);
-  color: #fff;
-}
-
-.charger-help__heading {
-  margin: 0 0 12px;
-  color: inherit;
-  font-family: inherit;
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 1.3;
-  letter-spacing: normal;
-}
-
-.charger-help label {
-  display: block;
-  margin-bottom: 6px;
-  font-size: 14px;
-}
-
-.charger-help__row {
-  display: flex;
-  gap: 8px;
-}
-
-.charger-help input[type='text'] {
-  flex: 1 1 auto;
-  min-width: 0;
-  height: 48px;
-  padding: 0 14px;
-  border: 2px solid transparent;
-  border-radius: 8px;
-  background: #fff;
-  color: var(--ui-navy);
-  font-family: inherit;
-  font-size: 16px;
-}
-
-.charger-help input[aria-invalid='true'] {
-  border-color: var(--ui-yellow);
-}
-
-.charger-help .home-fit__error {
-  margin: 8px 0 0;
-  padding: 6px 10px;
-  border-radius: 6px;
-  background: var(--ui-navy);
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.charger-help__alt {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 10px;
-  align-items: center;
-  margin: 12px 0 0;
-  font-size: 15px;
-}
-
-.charger-help__alt a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  padding: 0 14px;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.15);
-  color: #fff;
-  font-weight: 700;
-  text-decoration: none;
-}
-
-/* No chat API on the page: no AI button, Telegram becomes the main action (same as the homepage panel) */
-.home-fit__form--noai .home-fit__ai {
-  display: none;
-}
-
-.home-fit__form--noai .charger-help__alt a[data-channel='telegram'] {
-  background: var(--ui-yellow);
-  color: var(--ui-navy);
-}
-
-.charger-help__alt .charger-help__viber {
-  display: none;
-}
-
-@media (hover: none) and (pointer: coarse) {
-  .charger-help__alt .charger-help__viber {
-    display: inline-flex;
-  }
-}
-
 @media screen and (max-width: 749px) {
   .charger-finder__body {
     padding: 16px;
@@ -408,157 +310,6 @@
   .charger-finder__plug-name small {
     font-size: 10px;
   }
-
-  .charger-help {
-    padding: 16px;
-  }
-
-  .charger-help__row {
-    flex-direction: column;
-  }
-
-  .charger-help input[type='text'] {
-    flex: none;
-  }
-
-  .charger-help .ui-btn {
-    width: 100%;
-  }
-}
-
-/* "Not sure which one fits?" strip: spans the grid row after the first full row (sections/main-collection-product-grid.liquid) */
-#product-grid .grid__item.charger-help-strip {
-  width: 100%;
-  max-width: 100%;
-}
-
-.charger-help-card {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  gap: 16px 28px;
-  align-items: center;
-  padding: 20px 28px 20px 24px;
-  border: 1px solid #d6e4f5;
-  border-radius: 16px;
-  background: var(--ui-tint);
-  color: var(--ui-navy);
-  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  line-height: 1.4;
-  letter-spacing: normal;
-}
-
-/* The charger sticker: the place where the plug size is printed */
-.charger-help-card__label {
-  display: grid;
-  gap: 2px;
-  padding: 10px 12px;
-  border: 1px solid var(--ui-line);
-  border-radius: 8px;
-  background: #fff;
-  box-shadow: 0 2px 6px rgba(0, 30, 60, 0.08);
-  color: #3b4654;
-  font: 600 12px/1.5 ui-monospace, 'Cascadia Mono', Consolas, monospace;
-  white-space: nowrap;
-  transform: rotate(-3deg);
-}
-
-.charger-help-card__label mark {
-  padding: 0 4px;
-  border-radius: 3px;
-  background: var(--ui-yellow);
-  color: var(--ui-navy);
-}
-
-.charger-help-card__title {
-  margin: 0;
-  font-size: 18px;
-  font-weight: 800;
-  line-height: 1.3;
-}
-
-.charger-help-card__text {
-  max-width: 60ch;
-  margin: 4px 0 0;
-  color: var(--ui-muted);
-  font-size: 14px;
-}
-
-.charger-help-card__actions {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.charger-help-card__btn,
-.charger-help-card__tg {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 44px;
-  padding: 0 20px;
-  border-radius: 999px;
-  font-size: 15px;
-  font-weight: 700;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: background-color var(--ui-dur) var(--ui-ease), color var(--ui-dur) var(--ui-ease);
-}
-
-.charger-help-card__btn {
-  background: var(--ui-yellow);
-  color: var(--ui-navy);
-}
-
-.charger-help-card__tg {
-  padding: 0 18px;
-  border: 1.5px solid var(--ui-blue);
-  background: #fff;
-  color: var(--ui-blue);
-}
-
-.charger-help-card__link {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  color: var(--ui-blue);
-  font-size: 14px;
-  font-weight: 600;
-}
-
-/* Phones and tablets: sticker + text, the buttons on their own line */
-@media screen and (max-width: 989px) {
-  .charger-help-card {
-    grid-template-columns: auto minmax(0, 1fr);
-    gap: 14px 18px;
-    padding: 16px;
-  }
-
-  .charger-help-card__actions {
-    grid-column: 2;
-  }
-}
-
-@media screen and (max-width: 749px) {
-  .charger-help-card__label {
-    padding: 8px 9px;
-    font-size: 10.5px;
-  }
-
-  .charger-help-card__title {
-    font-size: 16px;
-  }
-
-  .charger-help-card__actions {
-    grid-column: 1 / -1;
-  }
-
-  .charger-help-card__btn {
-    flex: 1 1 auto;
-  }
-
-  .charger-help-card__text {
-    font-size: 13px;
-  }
 }
 
 @media (hover: hover) {
@@ -567,24 +318,10 @@
     border-color: var(--ui-blue);
   }
 
-  .charger-help__alt a:hover {
-    background: #fff;
-    color: var(--ui-blue);
-  }
-
   .charger-finder__more-pill:hover,
   .charger-finder__guide:not([open]) > .charger-finder__summary:hover {
     border-color: var(--ui-blue);
     background: var(--ui-tint);
-  }
-
-  .charger-help-card__btn:hover {
-    background: #ffd25c;
-  }
-
-  .charger-help-card__tg:hover {
-    background: var(--ui-blue);
-    color: #fff;
   }
 }
 
@@ -596,21 +333,6 @@
   color: var(--ui-blue);
   font-size: 14px;
   font-weight: 600;
-}
-
-/* Empty result: the card replaces Dawn's "no products" message */
-.charger-help-card--empty {
-  grid-template-columns: 1fr;
-  justify-items: center;
-  max-width: 520px;
-  margin: 24px auto;
-  padding: 28px 24px;
-  text-align: center;
-}
-
-.charger-help-card--empty .charger-help-card__actions {
-  flex-wrap: wrap;
-  justify-content: center;
 }
 
 /* Phones: the product count ("59 of 178") beside the filter button stays on one line (this stylesheet loads only on this template) */

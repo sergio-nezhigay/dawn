@@ -1,6 +1,6 @@
 // Charger adapters collection (sections/charger-adapter-finder.liquid): keeps the brand buttons in step with the
 // filters (the sidebar filters re-render the grid by AJAX and only change the URL), and opens the plug-size guide
-// with the model helper from the "Not sure which one fits?" strip in the grid (snippets/charger-help-card.liquid).
+// with the model helper from the "Not sure which one fits?" strip in the grid (snippets/help-card.liquid).
 const syncChargerChips = () => {
   document.querySelectorAll('[data-charger-finder]').forEach((finder) => {
     const active = new URLSearchParams(window.location.search).getAll(finder.dataset.brandParam);

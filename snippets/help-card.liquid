@@ -1,0 +1,67 @@
+{%- doc -%}
+  "Not sure which one fits?" strip across the collection product grid (after the first full row), or a centred card
+  instead of an empty result. One card, three wordings: the sticker shows where the answer is printed (charger label,
+  memory module label, SSD label). Charger: the button opens the plug-size guide and focuses its model helper
+  (assets/charger-finder.js; without JS it jumps to #adapter-help). RAM/SSD: the button opens the model helper pop-up
+  that sections/main-collection-product-grid.liquid renders once (assets/home-fit-check.js; without JS it opens
+  Telegram). Styles: assets/component-help-card.css.
+
+  @param {string} kind - charger, ram or ssd
+  @param {string} [dialog_id] - Id of the model helper pop-up (ram, ssd)
+  @param {boolean} [no_results] - Shown instead of an empty result (not named "empty": that is a Liquid literal): "nothing found" wording, centred card
+  @param {string} [reset_url] - Link that clears the filters (with no_results)
+{%- enddoc -%}
+{%- liquid
+  assign title_key = 'sections.help_card.' | append: kind | append: '_title'
+  assign text_key = 'sections.help_card.' | append: kind | append: '_text'
+  if no_results
+    assign title_key = 'sections.help_card.empty_title'
+  endif
+-%}
+<div class="help-card{% if no_results %} help-card--empty{% endif %}">
+  {%- comment -%} The sticker: the place where the size or type is printed {%- endcomment -%}
+  <div class="help-card__label" aria-hidden="true">
+    {%- case kind -%}
+      {%- when 'ram' -%}
+        <span>8GB 1Rx8 <mark>PC4-3200AA</mark></span>
+        <span><mark>SODIMM</mark> 1.2V</span>
+      {%- when 'ssd' -%}
+        <span>M.2 <mark>2280</mark></span>
+        <span><mark>NVMe</mark> PCIe 3.0</span>
+      {%- else -%}
+        <span>OUTPUT <mark>19V &#9107; 3.42A</mark></span>
+        <span>PLUG <mark>5.5&times;2.5</mark></span>
+    {%- endcase -%}
+  </div>
+  <div class="help-card__body">
+    <p class="help-card__title">{{ title_key | t }}</p>
+    <p class="help-card__text">{{ text_key | t }}</p>
+  </div>
+  <div class="help-card__actions">
+    {%- if kind == 'charger' -%}
+      <a class="help-card__btn" href="#adapter-help" data-charger-help>
+        {{- 'sections.help_card.button' | t -}}
+      </a>
+    {%- else -%}
+      {%- liquid
+        assign intro_key = 'sections.help_card.' | append: kind | append: '_intro_html'
+        assign draft = intro_key | t | url_encode | replace: '+', '%20'
+      -%}
+      <a
+        class="help-card__btn"
+        href="https://t.me/NSergiy?text={{ draft }}"
+        target="_blank"
+        rel="noopener"
+        data-fit-open="{{ dialog_id }}"
+      >
+        {{- 'sections.help_card.button' | t -}}
+      </a>
+    {%- endif -%}
+    <a class="help-card__tg" href="https://t.me/NSergiy" target="_blank" rel="noopener">
+      {{- 'sections.help_card.telegram' | t -}}
+    </a>
+  </div>
+  {%- if no_results and reset_url -%}
+    <a class="help-card__link" href="{{ reset_url }}">{{ 'sections.help_card.reset_filters' | t }}</a>
+  {%- endif -%}
+</div>
