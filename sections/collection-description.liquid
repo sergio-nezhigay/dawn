@@ -5,7 +5,8 @@
   row (snippets/collection-related-links.liquid), sourced from a metafield rather
   than from links hand-written into the description. Removes itself when there is
   neither a description nor related collections to show. Collapse reuses
-  <product-description-toggle> from the product page.
+  <product-description-toggle> from the product page; GA4 counters for "read more"
+  and the bottom links live in assets/collection-bottom-events.js.
 {%- endcomment -%}
 
 {%- assign related_collections = collection.metafields.custom.related_collections.value -%}
@@ -36,7 +37,10 @@
     {%- endif -%}
   {%- endstyle -%}
 
-  <div class="collection-description page-width section-{{ section.id }}-padding{% if section.settings.indent_past_filters %} collection-description--grid-aligned{% endif %}">
+  <div
+    class="collection-description page-width section-{{ section.id }}-padding{% if section.settings.indent_past_filters %} collection-description--grid-aligned{% endif %}"
+    data-collection-handle="{{ collection.handle | escape }}"
+  >
     {%- if collection.description != blank -%}
       <product-description-toggle class="collection-description__disclosure">
         <div
@@ -67,6 +71,7 @@
   {%- if collection.description != blank -%}
     <script src="{{ 'product-description-toggle.js' | asset_url }}" defer="defer"></script>
   {%- endif -%}
+  <script src="{{ 'collection-bottom-events.js' | asset_url }}" defer="defer"></script>
 {%- endif -%}
 
 {% schema %}

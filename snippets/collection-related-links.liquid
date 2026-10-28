@@ -1,17 +1,70 @@
 {%- comment -%}
-  Renders a related-collections tag row. Self-hides when related_collections is
-  blank -- pairs with a list.collection_reference metafield, not links
-  hand-written into collection.description.
+  Renders a related-collections chip row under a «See also» heading. Self-hides
+  when related_collections is blank -- pairs with a list.collection_reference
+  metafield, not links hand-written into collection.description.
+
+  With 3 or more links, the whole words every title starts with are dropped from
+  the chip label (RAM: «Оперативна пам'ять SODIMM DDR4 8 ГБ для ноутбука» ->
+  «SODIMM DDR4 8 ГБ для ноутбука»); the full title stays in title="". Each label
+  keeps at least one word.
 
   Accepts:
   - related_collections: array of collection objects to link to
 {%- endcomment -%}
 
 {%- if related_collections != blank -%}
+  {%- liquid
+    assign prefix_length = 0
+    if related_collections.size >= 3
+      assign max_words = 1000
+      for rc in related_collections
+        if forloop.first
+          assign first_title = rc.title
+        endif
+        assign rc_words = rc.title | split: ' '
+        assign rc_limit = rc_words.size | minus: 1
+        if rc_limit < max_words
+          assign max_words = rc_limit
+        endif
+      endfor
+
+      assign first_words = first_title | split: ' '
+      assign candidate = ''
+      for word in first_words
+        if forloop.index > max_words
+          break
+        endif
+        assign candidate = candidate | append: word | append: ' '
+        assign shared = true
+        for rc in related_collections
+          assign rc_head = rc.title | slice: 0, candidate.size
+          if rc_head != candidate
+            assign shared = false
+            break
+          endif
+        endfor
+        if shared
+          assign prefix_length = candidate.size
+        else
+          break
+        endif
+      endfor
+    endif
+  -%}
   <div class="collection-related-links">
+    <h2 class="collection-related-links__heading">{{ 'sections.collection_template.see_also' | t }}</h2>
     <div class="collection-related-links__row">
       {%- for related in related_collections -%}
-        <a href="{{ related.url }}" class="collection-related-links__tag">{{ related.title }}</a>
+        {%- assign related_label = related.title | slice: prefix_length, related.title.size -%}
+        <a
+          href="{{ related.url }}"
+          class="collection-related-links__tag"
+          {% if prefix_length > 0 %}
+            title="{{ related.title | escape }}"
+          {% endif %}
+        >
+          {{- related_label -}}
+        </a>
       {%- endfor -%}
     </div>
   </div>
