@@ -23,6 +23,8 @@
   assign sort_by = results.sort_by | default: results.default_sort_by
   assign total_active_values = 0
   assign default_presentation = 'text'
+  # Drawer buttons say how many products the current filters leave ("Show 24 products")
+  assign result_count = results.results_count | default: results.products_count
   if results.url
     assign results_url = results.url
   else
@@ -687,7 +689,7 @@
                               class="button button--primary"
                               onclick="this.closest('.mobile-facets__wrapper').querySelector('summary').click()"
                             >
-                              {{ 'products.facets.apply' | t }}
+                              <span class="mobile-facets__show">{{ 'products.facets.show_results' | t: count: result_count }}</span>
                             </button>
                           </div>
                         </div>
@@ -738,7 +740,7 @@
                               class="button button--primary"
                               onclick="this.closest('.mobile-facets__wrapper').querySelector('summary').click()"
                             >
-                              {{ 'products.facets.apply' | t }}
+                              <span class="mobile-facets__show">{{ 'products.facets.show_results' | t: count: result_count }}</span>
                             </button>
                           </div>
                         </div>
@@ -799,7 +801,7 @@
                   class="button button--primary"
                   onclick="this.closest('.mobile-facets__wrapper').querySelector('summary').click()"
                 >
-                  {{ 'products.facets.apply' | t }}
+                  <span class="mobile-facets__show">{{ 'products.facets.show_results' | t: count: result_count }}</span>
                 </button>
               </div>
             </div>

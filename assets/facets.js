@@ -200,6 +200,14 @@ class FacetFiltersForm extends HTMLElement {
       document.querySelector(selector).innerHTML = html.querySelector(selector).innerHTML;
     });
 
+    // Every drawer button says the new product count ("Show 24 products"), including the ones in open panels
+    const showResults = html.querySelector('.mobile-facets__show');
+    if (showResults) {
+      document.querySelectorAll('.mobile-facets__show').forEach((element) => {
+        element.innerHTML = showResults.innerHTML;
+      });
+    }
+
     document.getElementById('FacetFiltersFormMobile').closest('menu-drawer').bindEvents();
   }
 
