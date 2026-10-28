@@ -16,17 +16,13 @@
 
 /* Desktop: the vertical filter sidebar (26rem form + 2.4rem padding + 0.2rem border
    + 1.6rem flex gap = 32.6rem) pushes the product grid and its pagination to the
-   right. Match that offset and centre the measure within the remaining column, so
-   the block lines up under the pagination instead of hanging off the page's left
-   edge. Below 750px the sidebar is a stacked drawer, so there is no offset. */
-@media screen and (min-width: 750px) {
+   right. Match that offset so the block starts at the grid's left edge instead of
+   hanging under the sidebar. The vertical sidebar is medium-hide (snippets/facets.liquid), so it only
+   appears from 990px; below that it is a drawer and the block keeps the grid's own
+   page-width gutter with no offset. */
+@media screen and (min-width: 990px) {
   .collection-description--grid-aligned {
     padding-left: calc(5rem + 32.6rem);
-  }
-
-  .collection-description--grid-aligned .collection-description__disclosure,
-  .collection-description--grid-aligned .collection-related-links {
-    margin-inline: auto;
   }
 }
 
