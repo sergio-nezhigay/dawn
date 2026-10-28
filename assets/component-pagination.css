@@ -83,3 +83,58 @@
 .pagination__item--prev:hover .icon {
   transform: rotate(-90deg) scale(1.07);
 }
+
+/* Collection "Show 36 more" (assets/collection-load-more.js): the button */
+load-more-products:not(:defined) {
+  display: none;
+}
+
+.load-more {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 3.2rem auto 0;
+  max-width: 32rem;
+  text-align: center;
+}
+
+.load-more--prev {
+  margin: 0 auto 2rem;
+}
+
+.load-more .load-more__button {
+  width: 100%;
+}
+
+.load-more__button.loading {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+/* The numbered links stay (crawlers, no-JS, jumping far) but step back: small grey text, no boxes */
+.pagination-wrapper--quiet {
+  margin-top: 2.4rem;
+}
+
+.pagination-wrapper--quiet .pagination__list > li {
+  flex: 0 0 auto;
+  max-width: none;
+}
+
+.pagination-wrapper--quiet .pagination__list > li:not(:last-child) {
+  margin-right: 0.2rem;
+}
+
+.pagination-wrapper--quiet .pagination__item {
+  min-width: 3.2rem;
+  height: 3.2rem;
+  border: 0;
+  font-size: 1.3rem;
+  color: rgba(var(--color-foreground), 0.6);
+}
+
+.pagination-wrapper--quiet .pagination__item--current,
+.pagination-wrapper--quiet .pagination__item--current:hover {
+  background: none;
+  color: rgb(var(--color-foreground));
+}

@@ -491,6 +491,8 @@
     "collection_template": {
       "title": "Колекція",
       "empty": "Товари не знайдено",
+      "load_more": "Показати ще {{ number }}",
+      "load_previous": "Показати попередні",
       "use_fewer_filters_html": "Використовуйте менше фільтрів або <a class=\"{{ class }}\" href=\"{{ link }}\">видаліть усі</a>"
     },
     "video": {

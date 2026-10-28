@@ -144,6 +144,7 @@
     <div class="{% if section.settings.filter_type == 'vertical' %} facets-vertical page-width{% endif %}">
       {{ 'component-facets.css' | asset_url | stylesheet_tag }}
       <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
+      <script src="{{ 'collection-load-more.js' | asset_url }}" defer="defer"></script>
       {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
         <aside
           aria-labelledby="verticalTitle"
@@ -200,6 +201,18 @@
             class="collection{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}"
           >
             <div class="loading-overlay gradient"></div>
+            {%- comment -%}
+              "Show 36 more" (assets/collection-load-more.js): the next page is appended below, earlier pages are
+              prepended above (a cold ?page=N or Back after a reload). Server markup wins: each fetch swaps these
+              blocks and the page links for the fetched ones. The numbered links stay for crawlers and no-JS.
+            {%- endcomment -%}
+            {%- if paginate.previous -%}
+              <load-more-products class="load-more load-more--prev" data-url="{{ paginate.previous.url }}" data-dir="prev">
+                <button type="button" class="ui-btn ui-btn--ghost ui-btn--sm load-more__button">
+                  {{ 'sections.collection_template.load_previous' | t }}
+                </button>
+              </load-more-products>
+            {%- endif -%}
             <ul
               id="product-grid"
               data-id="{{ section.id }}"
@@ -219,6 +232,7 @@
                 {%- endif -%}
                 <li
                   class="grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                  data-page="{{ paginate.current_page }}"
                   {% if settings.animations_reveal_on_scroll %}
                     data-cascade
                     style="--animation-order: {{ forloop.index }};"
@@ -251,7 +265,10 @@
                     endif
                   -%}
                   {%- if at_small or at_medium or at_large -%}
-                    <li class="grid__item help-card-strip{% unless at_small %} small-hide{% endunless %}{% unless at_medium %} medium-hide{% endunless %}{% unless at_large %} large-up-hide{% endunless %}">
+                    <li
+                      class="grid__item help-card-strip{% unless at_small %} small-hide{% endunless %}{% unless at_medium %} medium-hide{% endunless %}{% unless at_large %} large-up-hide{% endunless %}"
+                      data-page="{{ paginate.current_page }}"
+                    >
                       {% render 'help-card', kind: help_kind, dialog_id: help_dialog_id %}
                     </li>
                   {%- endif -%}
@@ -262,7 +279,21 @@
             {%- render 'collection-structured-data', collection: collection, products: collection.products -%}
 
             {%- if paginate.pages > 1 -%}
-              {% render 'pagination', paginate: paginate, anchor: '' %}
+              {%- liquid
+                assign shown = paginate.current_offset | plus: collection.products.size
+                assign left = paginate.items | minus: shown
+                if left > paginate.page_size
+                  assign left = paginate.page_size
+                endif
+              -%}
+              <load-more-products class="load-more" data-url="{{ paginate.next.url }}" data-dir="next">
+                {%- if paginate.next -%}
+                  <button type="button" class="ui-btn ui-btn--primary load-more__button">
+                    {{ 'sections.collection_template.load_more' | t: number: left }}
+                  </button>
+                {%- endif -%}
+              </load-more-products>
+              {% render 'pagination', paginate: paginate, anchor: '', quiet: true %}
             {%- endif -%}
           </div>
         {%- endif -%}
