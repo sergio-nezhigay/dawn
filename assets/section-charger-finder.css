@@ -10,6 +10,11 @@
 }
 
 /* "More filters": shortcuts to the size and power filters (dashed = they open something elsewhere on the page) */
+/* The brand buttons (component-quick-filters.css) sit right above: the pills' own top margin sets the gap */
+.charger-finder .quick-filters {
+  margin-bottom: 0;
+}
+
 .charger-finder__more {
   display: flex;
   flex-wrap: wrap;

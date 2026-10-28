@@ -6,7 +6,8 @@
   Inside #ProductGridContainer the row refreshes with the grid; anywhere else assets/quick-filters.js refetches it.
 
   Accepts:
-  - params: {String} Comma-separated filter param names, in display order (up to 3 groups)
+  - params: {String} Comma-separated filter param names, in display order (up to 3 groups). A plain name shows
+    wherever the filter exists; "handle:name" shows only on that collection (e.g. pamyat:filter.p.m.specifications.type)
   - order: {String} Comma-separated values to show, in this order (one group only); others are dropped. Optional
   - labels: {String} Comma-separated value:label pairs to rename buttons, e.g. "Apple:Apple MagSafe". Optional
   - heading: {String} Group label instead of the filter name (one group only). Optional
@@ -20,8 +21,16 @@
   assign groups = 0
 -%}
 {%- capture rows -%}
-  {%- for param in param_list -%}
-    {%- assign param = param | strip -%}
+  {%- for entry in param_list -%}
+    {%- assign param = entry | strip -%}
+    {%- if param contains ':' -%}
+      {%- assign param_parts = param | split: ':' -%}
+      {%- assign param_handle = param_parts.first | strip -%}
+      {%- if param_handle != collection.handle -%}
+        {%- continue -%}
+      {%- endif -%}
+      {%- assign param = param_parts.last | strip -%}
+    {%- endif -%}
     {%- for filter in collection.filters -%}
       {%- if filter.param_name != param or filter.type != 'list' or filter.values.size < 2 or groups >= 3 -%}
         {%- continue -%}
@@ -56,8 +65,8 @@
             </facet-remove>
           </li>
           {%- assign shown = 0 -%}
-          {%- for name in names -%}
-            {%- assign name = name | strip -%}
+          {%- for raw_name in names -%}
+            {%- assign name = raw_name | strip -%}
             {%- for value in filter.values -%}
               {%- if value.value != name or shown >= 10 -%}
                 {%- continue -%}
