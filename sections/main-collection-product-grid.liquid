@@ -3,6 +3,42 @@
 {{ 'component-product-card.css' | asset_url | stylesheet_tag }}
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
 
+{%- liquid
+  comment
+    Help card ("Not sure which one fits?", snippets/help-card.liquid): help_cards lists handle:kind pairs
+    (kind = charger, ram or ssd); empty = the charger card (adapters template). help_card_after = the phone
+    position; empty = no card on this template.
+  endcomment
+  assign help_kind = blank
+  if section.settings.help_card_after != blank
+    if section.settings.help_cards == blank
+      assign help_kind = 'charger'
+    else
+      assign help_pairs = section.settings.help_cards | split: ','
+      for help_pair in help_pairs
+        assign help_parts = help_pair | split: ':'
+        assign help_handle = help_parts.first | strip
+        if help_handle == collection.handle
+          assign help_kind = help_parts.last | strip
+          break
+        endif
+      endfor
+    endif
+  endif
+  assign help_kinds = 'charger,ram,ssd' | split: ','
+  unless help_kinds contains help_kind
+    assign help_kind = blank
+  endunless
+  assign help_dialog_id = 'HelpDialog-' | append: section.id
+-%}
+{%- if help_kind != blank -%}
+  {{ 'component-help-card.css' | asset_url | stylesheet_tag }}
+  {%- comment -%} The charger finder section already loads it on the adapters page; loading it twice doubles its listeners {%- endcomment -%}
+  {%- unless help_kind == 'charger' -%}
+    <script src="{{ 'home-fit-check.js' | asset_url }}" defer="defer"></script>
+  {%- endunless -%}
+{%- endif -%}
+
 {% if section.settings.image_shape == 'blob' %}
   {{ 'mask-blobs.css' | asset_url | stylesheet_tag }}
 {%- endif -%}
@@ -138,9 +174,14 @@
         {%- if collection.products.size == 0 -%}
           <div class="collection collection--empty page-width" id="product-grid" data-id="{{ section.id }}">
             <div class="loading-overlay gradient"></div>
-            {%- if section.settings.help_card_after != blank -%}
-              {%- comment -%} Charger adapters: nothing fits these filters, so offer the model helper instead of the plain message {%- endcomment -%}
-              {% render 'charger-help-card', no_results: true, reset_url: collection.url %}
+            {%- if help_kind != blank -%}
+              {%- comment -%} Nothing fits these filters: offer the model helper instead of the plain message {%- endcomment -%}
+              {% render 'help-card',
+                kind: help_kind,
+                dialog_id: help_dialog_id,
+                no_results: true,
+                reset_url: collection.url
+              %}
             {%- else -%}
             <div class="title-wrapper center">
               <h2 class="title title--primary">
@@ -190,9 +231,9 @@
                     fetch_priority: fetch_priority
                   %}
                 </li>
-                {%- if section.settings.help_card_after != blank and paginate.current_page == 1 -%}
+                {%- if help_kind != blank and paginate.current_page == 1 -%}
                   {%- comment -%}
-                    Charger adapters: the helper strip spans the grid after the first full row: desktop row
+                    The help strip spans the grid after the first full row: desktop row
                     (columns_desktop), tablet row (3 columns), or help_card_after products on phones
                   {%- endcomment -%}
                   {%- liquid
@@ -210,8 +251,8 @@
                     endif
                   -%}
                   {%- if at_small or at_medium or at_large -%}
-                    <li class="grid__item charger-help-strip{% unless at_small %} small-hide{% endunless %}{% unless at_medium %} medium-hide{% endunless %}{% unless at_large %} large-up-hide{% endunless %}">
-                      {% render 'charger-help-card' %}
+                    <li class="grid__item help-card-strip{% unless at_small %} small-hide{% endunless %}{% unless at_medium %} medium-hide{% endunless %}{% unless at_large %} large-up-hide{% endunless %}">
+                      {% render 'help-card', kind: help_kind, dialog_id: help_dialog_id %}
                     </li>
                   {%- endif -%}
                 {%- endif -%}
@@ -226,6 +267,28 @@
           </div>
         {%- endif -%}
       </div>
+
+      {%- if help_kind == 'ram' or help_kind == 'ssd' -%}
+        {%- comment -%}
+          The help card's model helper, once per section and outside the grid container (filters re-render that):
+          assets/home-fit-check.js opens it from [data-fit-open] and closes it after sending
+        {%- endcomment -%}
+        {%- liquid
+          assign help_goal = help_kind
+          if help_kind == 'ram'
+            assign help_goal = 'memory'
+          endif
+          assign help_heading = 'sections.help_card.form_heading' | t
+          assign help_intro_key = 'sections.help_card.' | append: help_kind | append: '_intro_html'
+          assign help_intro = help_intro_key | t
+        -%}
+        <dialog class="help-dialog" id="{{ help_dialog_id }}" aria-label="{{ help_heading | escape }}">
+          <button type="button" class="help-dialog__close" data-fit-close aria-label="{{ 'accessibility.close' | t }}">
+            <span class="svg-wrapper">{{- 'icon-close.svg' | inline_asset_content -}}</span>
+          </button>
+          {% render 'help-form', goal: help_goal, id: section.id, heading: help_heading, intro: help_intro %}
+        </dialog>
+      {%- endif -%}
     </div>
   {%- endpaginate -%}
   {% if section.settings.image_shape == 'arch' %}
@@ -393,10 +456,16 @@
       "info": "Comma-separated filter param names not shown on this template, e.g. filter.p.m.custom.color"
     },
     {
+      "type": "text",
+      "id": "help_cards",
+      "label": "\"Not sure which one fits?\" cards",
+      "info": "Comma-separated handle:kind pairs (kind = charger, ram or ssd), e.g. pamyat:ram, ssd:ssd. Collections not listed show no card. Empty = the charger card (charger adapters template)"
+    },
+    {
       "type": "number",
       "id": "help_card_after",
       "label": "\"Not sure which one fits?\" tile after product number",
-      "info": "Charger adapters template only (needs the Charger adapter finder section). Phones: the strip goes after this many products; tablet and desktop: after the first row. Empty = no strip"
+      "info": "Phones: the strip goes after this many products; tablet and desktop: after the first row. Empty = no card. The charger card needs the Charger adapter finder section"
     },
     {
       "type": "text",

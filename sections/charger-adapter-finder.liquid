@@ -4,9 +4,10 @@
   Brand buttons and plug pictures come from the Search & Discovery filters on cable.compatible_brands and
   specifications.dc_size (filled once, then by hand on new products), so they render nothing until those filters exist.
   "More filters" pills jump to the size and power filters of the product grid.
-  The helper reuses the homepage fit-check contract (assets/home-fit-check.js: data-fit form, AI chat / Telegram / Viber).
+  The helper is snippets/help-form.liquid (homepage fit-check contract, assets/home-fit-check.js).
 {%- endcomment -%}
 {{ 'section-charger-finder.css' | asset_url | stylesheet_tag }}
+{{ 'component-help-card.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'home-fit-check.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'charger-finder.js' | asset_url }}" defer="defer"></script>
 {%- liquid
@@ -24,10 +25,6 @@
   endfor
   assign brand_order = section.settings.brands | split: ','
   assign pin_sizes = section.settings.pin_sizes | split: ','
-  assign phone = '(099) 381-5288'
-  assign phone_href = 'tel:+380993815288'
-  assign model_id = 'ChargerModel-' | append: section.id
-  assign error_id = 'ChargerError-' | append: section.id
 -%}
 <div class="charger-finder page-width" data-charger-finder data-brand-param="{{ brand_param }}">
   {%- if brand_filter -%}
@@ -199,51 +196,12 @@
       <p class="charger-finder__note">{{ 'sections.charger_finder.pin_note' | t }}</p>
       <p class="charger-finder__note">{{ 'sections.charger_finder.powerbank_note' | t }}</p>
 
-      {%- comment -%}
-        Same contract as sections/home-fit-check.liquid (assets/home-fit-check.js) with the goal fixed to "charger".
-        Starts without the AI button: home-fit-check.js shows it once the chat exposes window.ShopAIChat.open
-      {%- endcomment -%}
-      <form class="charger-help home-fit__form--noai" novalidate data-fit>
-        <h2 class="charger-help__heading">{{ 'sections.charger_finder.help_heading' | t }}</h2>
-        <input type="radio" name="goal" value="charger" checked hidden>
-        <label for="{{ model_id }}" data-fit-label>{{ 'sections.home_fit_check.label_charger_html' | t }}</label>
-        <div class="charger-help__row">
-          <input
-            type="text"
-            id="{{ model_id }}"
-            name="model"
-            required
-            autocomplete="off"
-            aria-describedby="{{ error_id }}"
-            placeholder="{{ 'sections.home_fit_check.placeholder_charger_html' | t | escape }}"
-          >
-          <button type="submit" class="ui-btn ui-btn--primary home-fit__ai">
-            {{- 'sections.home_fit_check.ai_button' | t -}}
-          </button>
-        </div>
-        <p class="home-fit__error" id="{{ error_id }}" role="alert" hidden>{{ 'sections.home_fit_check.error' | t }}</p>
-        <div data-fit-installed hidden><input type="hidden" name="installed" value=""></div>
-        <p class="charger-help__alt">
-          <span class="home-fit__ai">{{ 'sections.home_fit_check.manager' | t }}</span>
-          <a href="https://t.me/NSergiy?text=" target="_blank" rel="noopener" data-channel="telegram">Telegram</a>
-          <a href="viber://chat?number=+380507025777&amp;draft=" class="charger-help__viber" data-channel="viber">Viber</a>
-          <a href="{{ phone_href }}" data-channel="phone">{{ phone }}</a>
-        </p>
-        <script type="application/json" data-fit-strings>
-          {
-            "intro": {{ 'sections.charger_finder.draft_intro_html' | t | json }},
-            "goal": {{ 'sections.home_fit_check.draft_goal_html' | t: goal: '%goal%' | json }},
-            "installed": {{ 'sections.home_fit_check.draft_installed_html' | t: installed: '%installed%' | json }},
-            "goals": {
-              "charger": {
-                "name": {{ 'sections.home_fit_check.goal_name_charger_html' | t | json }},
-                "label": {{ 'sections.home_fit_check.label_charger_html' | t | json }},
-                "placeholder": {{ 'sections.home_fit_check.placeholder_charger_html' | t | json }}
-              }
-            }
-          }
-        </script>
-      </form>
+      {%- comment -%} Same fit-check contract as the homepage, goal fixed to "charger" {%- endcomment -%}
+      {%- liquid
+        assign help_heading = 'sections.charger_finder.help_heading' | t
+        assign help_intro = 'sections.charger_finder.draft_intro_html' | t
+      -%}
+      {% render 'help-form', goal: 'charger', id: section.id, heading: help_heading, intro: help_intro %}
     </div>
   </details>
 </div>

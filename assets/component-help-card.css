@@ -1,0 +1,340 @@
+/* Shared "Not sure which one fits?" help card (snippets/help-card.liquid: charger, RAM, SSD) in the collection grid,
+   and the model helper form it opens (snippets/help-form.liquid: inside the charger guide, or in a pop-up on RAM/SSD).
+   Fit-check behaviour: assets/home-fit-check.js. Tokens from base.css. */
+
+/* Model helper: the homepage fit-check panel, compact */
+.help-form {
+  max-width: 720px;
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: var(--ui-radius-md);
+  background: var(--ui-blue);
+  color: #fff;
+}
+
+.help-form__heading {
+  margin: 0 0 12px;
+  color: inherit;
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: normal;
+}
+
+.help-form label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.help-form__row {
+  display: flex;
+  gap: 8px;
+}
+
+.help-form input[type='text'] {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 48px;
+  padding: 0 14px;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ui-navy);
+  font-family: inherit;
+  font-size: 16px;
+}
+
+.help-form input[aria-invalid='true'] {
+  border-color: var(--ui-yellow);
+}
+
+.help-form .home-fit__error {
+  margin: 8px 0 0;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: var(--ui-navy);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.help-form__alt {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  align-items: center;
+  margin: 12px 0 0;
+  font-size: 15px;
+}
+
+.help-form__alt a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* No chat API on the page: no AI button, Telegram becomes the main action (same as the homepage panel) */
+.home-fit__form--noai .home-fit__ai {
+  display: none;
+}
+
+.home-fit__form--noai .help-form__alt a[data-channel='telegram'] {
+  background: var(--ui-yellow);
+  color: var(--ui-navy);
+}
+
+.help-form__alt .help-form__viber {
+  display: none;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .help-form__alt .help-form__viber {
+    display: inline-flex;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .help-form {
+    padding: 16px;
+  }
+
+  .help-form__row {
+    flex-direction: column;
+  }
+
+  .help-form input[type='text'] {
+    flex: none;
+  }
+
+  .help-form .ui-btn {
+    width: 100%;
+  }
+}
+
+/* "Not sure which one fits?" strip: spans the grid row after the first full row (sections/main-collection-product-grid.liquid) */
+#product-grid .grid__item.help-card-strip {
+  width: 100%;
+  max-width: 100%;
+}
+
+.help-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 16px 28px;
+  align-items: center;
+  padding: 20px 28px 20px 24px;
+  border: 1px solid #d6e4f5;
+  border-radius: 16px;
+  background: var(--ui-tint);
+  color: var(--ui-navy);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.4;
+  letter-spacing: normal;
+}
+
+/* The charger sticker: the place where the plug size is printed */
+.help-card__label {
+  display: grid;
+  gap: 2px;
+  padding: 10px 12px;
+  border: 1px solid var(--ui-line);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 30, 60, 0.08);
+  color: #3b4654;
+  font: 600 12px/1.5 ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  white-space: nowrap;
+  transform: rotate(-3deg);
+}
+
+.help-card__label mark {
+  padding: 0 4px;
+  border-radius: 3px;
+  background: var(--ui-yellow);
+  color: var(--ui-navy);
+}
+
+.help-card__title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.help-card__text {
+  max-width: 60ch;
+  margin: 4px 0 0;
+  color: var(--ui-muted);
+  font-size: 14px;
+}
+
+.help-card__actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.help-card__btn,
+.help-card__tg {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 20px;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color var(--ui-dur) var(--ui-ease), color var(--ui-dur) var(--ui-ease);
+}
+
+.help-card__btn {
+  background: var(--ui-yellow);
+  color: var(--ui-navy);
+}
+
+.help-card__tg {
+  padding: 0 18px;
+  border: 1.5px solid var(--ui-blue);
+  background: #fff;
+  color: var(--ui-blue);
+}
+
+.help-card__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--ui-blue);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Phones and tablets: sticker + text, the buttons on their own line */
+@media screen and (max-width: 989px) {
+  .help-card {
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 14px 18px;
+    padding: 16px;
+  }
+
+  .help-card__actions {
+    grid-column: 2;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .help-card__label {
+    padding: 8px 9px;
+    font-size: 10.5px;
+  }
+
+  .help-card__title {
+    font-size: 16px;
+  }
+
+  .help-card__actions {
+    grid-column: 1 / -1;
+  }
+
+  .help-card__btn {
+    flex: 1 1 auto;
+  }
+
+  .help-card__text {
+    font-size: 13px;
+  }
+}
+
+/* Empty result: the card replaces Dawn's "no products" message */
+.help-card--empty {
+  grid-template-columns: 1fr;
+  justify-items: center;
+  max-width: 520px;
+  margin: 24px auto;
+  padding: 28px 24px;
+  text-align: center;
+}
+
+.help-card--empty .help-card__actions {
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+@media (hover: hover) {
+  .help-form__alt a:hover {
+    background: #fff;
+    color: var(--ui-blue);
+  }
+
+  .help-card__btn:hover {
+    background: #ffd25c;
+  }
+
+  .help-card__tg:hover {
+    background: var(--ui-blue);
+    color: #fff;
+  }
+}
+
+/* RAM/SSD: the model helper in a pop-up (native dialog: Esc, focus trap and the top layer come with it) */
+.help-dialog {
+  width: min(560px, calc(100% - 32px));
+  max-width: none;
+  /* base.css zeroes margins; auto centres the dialog again */
+  margin: auto;
+  padding: 0;
+  border: 0;
+  border-radius: var(--ui-radius-md);
+  background: transparent;
+}
+
+.help-dialog::backdrop {
+  background: rgba(0, 20, 45, 0.55);
+}
+
+.help-dialog .help-form {
+  max-width: none;
+  margin: 0;
+  padding: 24px 24px 20px;
+}
+
+.help-dialog .help-form__heading {
+  padding-right: 40px;
+}
+
+.help-dialog__close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+}
+
+.help-dialog__close .svg-wrapper,
+.help-dialog__close svg {
+  width: 18px;
+  height: 18px;
+}
+
+@media screen and (max-width: 749px) {
+  .help-dialog .help-form {
+    padding: 20px 16px 16px;
+  }
+}

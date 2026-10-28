@@ -1,4 +1,5 @@
-// Homepage fit check: the goal sets the field wording; one pre-typed message goes to the AI chat or a manager.
+// Fit check (homepage panel, charger plug-size guide, collection help card pop-up): the goal sets the field wording;
+// one pre-typed message goes to the AI chat or a manager.
 // Listeners are delegated on document so forms re-rendered by the theme editor keep working.
 const fitStrings = (form) => {
   form.fitStrings ??= JSON.parse(form.querySelector('[data-fit-strings]').textContent);
@@ -61,6 +62,8 @@ const sendFit = (form, channel) => {
     showFitError(form, false);
   }
 
+  // The collection help card's pop-up (top layer) would cover the chat
+  form.closest('dialog')?.close();
   if (channel === 'ai') window.ShopAIChat.open(fitDraft(form));
   return true;
 };
@@ -85,6 +88,19 @@ document.addEventListener('click', (event) => {
 
   const link = event.target.closest('[data-fit] a[data-channel]');
   if (link && !sendFit(link.closest('[data-fit]'), link.dataset.channel)) event.preventDefault();
+
+  // Collection help card (snippets/help-card.liquid): its button opens the model helper pop-up; the close button
+  // and a click on the backdrop (the dialog itself, outside the form) close it
+  const opener = event.target.closest('[data-fit-open]');
+  const dialog = opener && document.getElementById(opener.dataset.fitOpen);
+  if (dialog) {
+    event.preventDefault();
+    dialog.showModal();
+    dialog.querySelector('input[name="model"]').focus();
+  }
+  if (event.target.closest('[data-fit-close]') || event.target.matches('dialog.help-dialog')) {
+    event.target.closest('dialog').close();
+  }
 });
 
 document.addEventListener('submit', (event) => {
