@@ -253,6 +253,13 @@
     },
     "facets": {
       "apply": "Застосувати",
+      "show_results": {
+        "one": "Показати {{ count }} товар",
+        "few": "Показати {{ count }} товари",
+        "many": "Показати {{ count }} товарів",
+        "other": "Показати {{ count }} товарів"
+      },
+      "more_values": "Ще {{ count }}",
       "clear": "Видалити",
       "clear_all": "Очистити всі",
       "from": "Від",

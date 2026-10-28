@@ -253,6 +253,13 @@
     },
     "facets": {
       "apply": "Применить",
+      "show_results": {
+        "one": "Показать {{ count }} товар",
+        "few": "Показать {{ count }} товара",
+        "many": "Показать {{ count }} товаров",
+        "other": "Показать {{ count }} товаров"
+      },
+      "more_values": "Ещё {{ count }}",
       "clear": "Удалить",
       "clear_all": "Очистить все",
       "from": "От",

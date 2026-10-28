@@ -23,6 +23,8 @@
   assign sort_by = results.sort_by | default: results.default_sort_by
   assign total_active_values = 0
   assign default_presentation = 'text'
+  # Drawer buttons say how many products the current filters leave ("Show 24 products")
+  assign result_count = results.results_count | default: results.products_count
   if results.url
     assign results_url = results.url
   else
@@ -530,6 +532,9 @@
               class="mobile-facets__main has-submenu gradient"
             >
               {%- if enable_filtering -%}
+                {%- comment -%} The open_filters groups show their first values as tap buttons on the drawer's first screen {%- endcomment -%}
+                {%- assign chip_filters = open_filters | split: ',' -%}
+                {%- assign chip_limit = 10 -%}
                 {%- for filter in results.filters -%}
                   {%- assign hidden_list = hide_filters | split: ',' -%}
                   {%- if hidden_list contains filter.param_name -%}{%- continue -%}{%- endif -%}
@@ -540,18 +545,95 @@
                     else
                       assign visual_layout_class = 'facets-layout facets-layout-list facets-layout-list--' | append: presentation
                     endif
+
+                    assign sorted_values = filter.values
+                    # Keep the selected values grouped together when operator is AND
+                    if filter.operator == 'AND'
+                      assign active_filter_values = filter.values | where: 'active', true
+                      assign inactive_filter_values = filter.values | where: 'active', false
+                      assign sorted_values = active_filter_values | concat: inactive_filter_values
+                    endif
+                    # Lengths are bare numbers (snippets/facet-value-label): text order puts them shortest first
+                    if filter.param_name == 'filter.p.m.custom.length'
+                      assign sorted_values = sorted_values | sort: 'label'
+                    endif
+
+                    # Chip groups: values 1-10 are buttons here, the rest go in the sub-panel behind "N more"
+                    assign is_chip_group = false
+                    assign list_offset = 0
+                    if filter.type == 'list' and presentation == 'text'
+                      for chip_param in chip_filters
+                        assign chip_param_name = chip_param | strip
+                        if chip_param_name == filter.param_name
+                          assign is_chip_group = true
+                          assign list_offset = chip_limit
+                        endif
+                      endfor
+                    endif
+                    assign more_count = sorted_values.size | minus: list_offset
                   %}
+
+                  {%- if is_chip_group -%}
+                    <div
+                      id="Chips-Mobile-{{ filter.param_name | escape }}-{{ section.id }}"
+                      class="mobile-facets__chip-group js-filter"
+                      data-index="mobile-chips-{{ forloop.index }}"
+                    >
+                      <p class="mobile-facets__chip-heading">{{ filter.label | escape }}</p>
+                      <ul class="mobile-facets__chips list-unstyled" role="list">
+                        {%- for value in sorted_values limit: chip_limit -%}
+                          {% liquid
+                            assign input_id = 'Filter-' | append: filter.param_name | escape | append: '-chip-' | append: forloop.index
+                            assign is_disabled = false
+                            if value.count == 0 and value.active == false
+                              assign is_disabled = true
+                            endif
+                          %}
+                          <li>
+                            <label
+                              for="{{ input_id }}"
+                              class="mobile-facets__chip{% if is_disabled %} disabled{% endif %}{% if value.active %} active{% endif %}"
+                            >
+                              <input
+                                class="mobile-facets__chip-input visually-hidden"
+                                type="checkbox"
+                                name="{{ value.param_name }}"
+                                value="{{ value.value }}"
+                                id="{{ input_id }}"
+                                {% if value.active %}
+                                  checked
+                                {% endif %}
+                                {% if is_disabled %}
+                                  disabled
+                                {% endif %}
+                              >
+                              <span class="mobile-facets__chip-label">
+                                {%- render 'facet-value-label', filter: filter, value: value -%}
+                              </span>
+                              <span class="mobile-facets__chip-count" aria-hidden="true">{{ value.count }}</span>
+                              <span class="mobile-facets__chip-x" aria-hidden="true">&times;</span>
+                            </label>
+                          </li>
+                        {%- endfor -%}
+                      </ul>
+                    </div>
+                    {%- if more_count < 1 -%}{%- continue -%}{%- endif -%}
+                  {%- endif -%}
 
                   {% case filter.type %}
                     {% when 'boolean', 'list' %}
                       <details
                         id="Details-Mobile-{{ filter.param_name | escape }}-{{ section.id }}"
-                        class="mobile-facets__details js-filter"
+                        class="mobile-facets__details js-filter{% if is_chip_group %} mobile-facets__details--more{% endif %}"
                         data-index="mobile-{{ forloop.index }}"
                       >
                         <summary class="mobile-facets__summary focus-inset">
                           <div>
-                            <span>{{ filter.label | escape }}</span>
+                            {%- if is_chip_group -%}
+                              <span>{{ 'products.facets.more_values' | t: count: more_count }}</span>
+                            {%- else -%}
+                              <span>{{ filter.label | escape }}</span>
+                            {%- endif %}
                             <span class="mobile-facets__arrow">
                               {{- 'icon-arrow.svg' | inline_asset_content -}}
                             </span>
@@ -575,20 +657,7 @@
                             {%- endif -%}
                           </button>
                           <ul class="{{ visual_layout_class }} mobile-facets__list list-unstyled" role="list">
-                            {%- liquid
-                              assign sorted_values = filter.values
-                              # Keep the selected values grouped together when operator is AND
-                              if filter.operator == 'AND'
-                                assign active_filter_values = filter.values | where: 'active', true
-                                assign inactive_filter_values = filter.values | where: 'active', false
-                                assign sorted_values = active_filter_values | concat: inactive_filter_values
-                              endif
-                              # Lengths are bare numbers (snippets/facet-value-label): text order puts them shortest first
-                              if filter.param_name == 'filter.p.m.custom.length'
-                                assign sorted_values = sorted_values | sort: 'label'
-                              endif
-                            -%}
-                            {%- for value in sorted_values -%}
+                            {%- for value in sorted_values offset: list_offset -%}
                               {% liquid
                                 assign input_id = 'Filter-' | append: filter.param_name | escape | append: '-mobile-' | append: forloop.index
                                 assign is_disabled = false
@@ -687,7 +756,7 @@
                               class="button button--primary"
                               onclick="this.closest('.mobile-facets__wrapper').querySelector('summary').click()"
                             >
-                              {{ 'products.facets.apply' | t }}
+                              <span class="mobile-facets__show">{{ 'products.facets.show_results' | t: count: result_count }}</span>
                             </button>
                           </div>
                         </div>
@@ -738,7 +807,7 @@
                               class="button button--primary"
                               onclick="this.closest('.mobile-facets__wrapper').querySelector('summary').click()"
                             >
-                              {{ 'products.facets.apply' | t }}
+                              <span class="mobile-facets__show">{{ 'products.facets.show_results' | t: count: result_count }}</span>
                             </button>
                           </div>
                         </div>
@@ -799,7 +868,7 @@
                   class="button button--primary"
                   onclick="this.closest('.mobile-facets__wrapper').querySelector('summary').click()"
                 >
-                  {{ 'products.facets.apply' | t }}
+                  <span class="mobile-facets__show">{{ 'products.facets.show_results' | t: count: result_count }}</span>
                 </button>
               </div>
             </div>
