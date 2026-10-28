@@ -1164,6 +1164,95 @@ details.menu-opening .mobile-facets__close .svg-wrapper {
   border-bottom: 1px solid var(--ui-line);
 }
 
+/* open_filters groups on the drawer's first screen: values as tap buttons (snippets/facets.liquid) */
+.mobile-facets__chip-group {
+  padding: 1.6rem 2rem;
+  border-bottom: 1px solid var(--ui-line);
+  color: var(--ui-navy);
+}
+
+/* The "N more" row belongs to the buttons above it: no line between them */
+.mobile-facets__chip-group:has(+ .mobile-facets__details--more) {
+  padding-bottom: 0.4rem;
+  border-bottom: 0;
+}
+
+.mobile-facets__chip-heading {
+  margin: 0 0 1rem;
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.mobile-facets__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin: 0;
+}
+
+.mobile-facets__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 44px;
+  padding: 0 1.6rem;
+  border: 1.5px solid var(--ui-line);
+  border-radius: var(--ui-radius-pill);
+  background: #fff;
+  color: var(--ui-navy);
+  font-size: 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color var(--ui-dur) var(--ui-ease), background-color var(--ui-dur) var(--ui-ease);
+}
+
+.mobile-facets__chip-count {
+  color: var(--ui-muted);
+  font-size: 1.3rem;
+  font-weight: 400;
+}
+
+.mobile-facets__chip-x {
+  display: none;
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+/* :has() shows the choice at once, the class after the re-render */
+.mobile-facets__chip.active,
+.mobile-facets__chip:has(:checked) {
+  border-color: var(--ui-blue);
+  background: var(--ui-tint);
+}
+
+.mobile-facets__chip.active .mobile-facets__chip-x,
+.mobile-facets__chip:has(:checked) .mobile-facets__chip-x {
+  display: inline;
+}
+
+.mobile-facets__chip.active .mobile-facets__chip-count,
+.mobile-facets__chip:has(:checked) .mobile-facets__chip-count {
+  display: none;
+}
+
+.mobile-facets__chip:has(:focus-visible) {
+  outline: 2px solid var(--ui-ring);
+  outline-offset: 2px;
+}
+
+/* No products with this value under the other chosen filters */
+.mobile-facets__chip.disabled {
+  border-style: dashed;
+  color: var(--ui-muted);
+  cursor: default;
+}
+
+.mobile-facets__details--more > .mobile-facets__summary {
+  color: var(--ui-blue);
+  font-size: 1.5rem;
+}
+
 .mobile-facets__details[open] > .mobile-facets__summary {
   background-color: #f9fafb;
 }

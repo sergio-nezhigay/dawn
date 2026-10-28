@@ -258,6 +258,7 @@
         "one": "Show {{ count }} product",
         "other": "Show {{ count }} products"
       },
+      "more_values": "{{ count }} more",
       "clear": "Clear",
       "clear_all": "Remove all",
       "from": "From",
