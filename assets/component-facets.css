@@ -13,6 +13,12 @@
   gap: 8px;
 }
 
+/* shared-backgrounds.css keeps the page below the sticky header (z-index 2 vs 10): lift it while the
+   filter drawer is open, so the drawer's title and close button are not hidden under the header */
+main:has(.mobile-facets__disclosure.menu-opening) {
+  z-index: 11;
+}
+
 /* Phones: a slim "Filter and sort" bar: no empty space under it while no filter is chosen, a 44px tap target */
 @media screen and (max-width: 749px) {
   .facets-container {
@@ -1219,19 +1225,15 @@ details.menu-opening .mobile-facets__close .svg-wrapper {
   line-height: 1;
 }
 
-/* :has() shows the choice at once, the class after the re-render */
-.mobile-facets__chip.active,
 .mobile-facets__chip:has(:checked) {
   border-color: var(--ui-blue);
   background: var(--ui-tint);
 }
 
-.mobile-facets__chip.active .mobile-facets__chip-x,
 .mobile-facets__chip:has(:checked) .mobile-facets__chip-x {
   display: inline;
 }
 
-.mobile-facets__chip.active .mobile-facets__chip-count,
 .mobile-facets__chip:has(:checked) .mobile-facets__chip-count {
   display: none;
 }

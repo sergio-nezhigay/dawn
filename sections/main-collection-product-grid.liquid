@@ -279,13 +279,8 @@
             {%- render 'collection-structured-data', collection: collection, products: collection.products -%}
 
             {%- if paginate.pages > 1 -%}
-              {%- liquid
-                assign shown = paginate.current_offset | plus: collection.products.size
-                assign left = paginate.items | minus: shown
-                if left > paginate.page_size
-                  assign left = paginate.page_size
-                endif
-              -%}
+              {%- assign shown = paginate.current_offset | plus: collection.products.size -%}
+              {%- assign left = paginate.items | minus: shown | at_most: paginate.page_size -%}
               <load-more-products class="load-more" data-url="{{ paginate.next.url }}" data-dir="next">
                 {%- if paginate.next -%}
                   <button type="button" class="ui-btn ui-btn--primary load-more__button">

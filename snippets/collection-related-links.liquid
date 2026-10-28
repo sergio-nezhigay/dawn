@@ -1,12 +1,8 @@
 {%- comment -%}
-  Renders a related-collections chip row under a «See also» heading. Self-hides
-  when related_collections is blank -- pairs with a list.collection_reference
-  metafield, not links hand-written into collection.description.
-
-  With 3 or more links, the whole words every title starts with are dropped from
-  the chip label (RAM: «Оперативна пам'ять SODIMM DDR4 8 ГБ для ноутбука» ->
-  «SODIMM DDR4 8 ГБ для ноутбука»); the full title stays in title="". Each label
-  keeps at least one word.
+  "See also" chip row from a list.collection_reference metafield. Self-hides when blank.
+  With 3+ links, the whole words every title starts with are dropped from the labels
+  ("RAM SODIMM DDR4 8 GB" -> "SODIMM DDR4 8 GB"); each label keeps text and the
+  full title goes in title="".
 
   Accepts:
   - related_collections: array of collection objects to link to
@@ -16,38 +12,24 @@
   {%- liquid
     assign prefix_length = 0
     if related_collections.size >= 3
-      assign max_words = 1000
-      for rc in related_collections
-        if forloop.first
-          assign first_title = rc.title
-        endif
-        assign rc_words = rc.title | split: ' '
-        assign rc_limit = rc_words.size | minus: 1
-        if rc_limit < max_words
-          assign max_words = rc_limit
-        endif
+      # .first is empty on a metafield list, so read the first title with a loop
+      for rc in related_collections limit: 1
+        assign first_words = rc.title | split: ' '
       endfor
-
-      assign first_words = first_title | split: ' '
       assign candidate = ''
       for word in first_words
-        if forloop.index > max_words
-          break
-        endif
         assign candidate = candidate | append: word | append: ' '
-        assign shared = true
         for rc in related_collections
           assign rc_head = rc.title | slice: 0, candidate.size
-          if rc_head != candidate
-            assign shared = false
+          if rc_head != candidate or rc.title.size <= candidate.size
+            assign candidate = ''
             break
           endif
         endfor
-        if shared
-          assign prefix_length = candidate.size
-        else
+        if candidate == ''
           break
         endif
+        assign prefix_length = candidate.size
       endfor
     endif
   -%}
@@ -55,7 +37,6 @@
     <h2 class="collection-related-links__heading">{{ 'sections.collection_template.see_also' | t }}</h2>
     <div class="collection-related-links__row">
       {%- for related in related_collections -%}
-        {%- assign related_label = related.title | slice: prefix_length, related.title.size -%}
         <a
           href="{{ related.url }}"
           class="collection-related-links__tag"
@@ -63,7 +44,7 @@
             title="{{ related.title | escape }}"
           {% endif %}
         >
-          {{- related_label -}}
+          {{- related.title | slice: prefix_length, related.title.size -}}
         </a>
       {%- endfor -%}
     </div>
