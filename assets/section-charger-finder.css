@@ -1,4 +1,4 @@
-/* Charger adapters collection: brand buttons and the plug-size guide (sections/charger-adapter-finder.liquid).
+/* Charger adapters collection: more-filter pills and the plug-size guide (brand buttons: component-quick-filters.css) (sections/charger-adapter-finder.liquid).
    The model helper form and the grid help card live in component-help-card.css. Tokens from base.css. */
 .charger-finder {
   margin-bottom: 16px;
@@ -7,73 +7,6 @@
   font-size: 15px;
   line-height: 1.5;
   letter-spacing: normal;
-}
-
-.charger-finder__label {
-  margin: 0 0 12px;
-  font-size: 16px;
-  font-weight: 700;
-}
-
-.charger-finder__chips {
-  position: relative; /* offset parent for charger-finder.js scrolling the chosen chip into view */
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 0;
-}
-
-.charger-finder__chip {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  padding: 0 18px;
-  border: 1.5px solid var(--ui-line);
-  border-radius: 999px;
-  background: #fff;
-  color: var(--ui-navy);
-  font-size: 15px;
-  font-weight: 600;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: border-color var(--ui-dur) var(--ui-ease), background-color var(--ui-dur) var(--ui-ease),
-    color var(--ui-dur) var(--ui-ease);
-}
-
-.charger-finder__chip.is-active {
-  border-color: var(--ui-blue);
-  background: var(--ui-blue);
-  color: #fff;
-}
-
-.charger-finder__chip.is-active::before {
-  content: '\2713';
-  margin-right: 6px;
-  font-weight: 700;
-}
-
-/* Phones: one row that scrolls sideways, running to the screen edges; the fade on the right says "there is more" */
-@media screen and (max-width: 749px) {
-  .charger-finder__chips {
-    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 40px), transparent);
-    mask-image: linear-gradient(to right, #000 calc(100% - 40px), transparent);
-    flex-wrap: nowrap;
-    margin: 0 -1.5rem;
-    padding: 0 1.5rem 4px;
-    overflow-x: auto;
-    scroll-padding-inline: 1.5rem;
-    scroll-snap-type: x proximity;
-    scrollbar-width: none;
-  }
-
-  .charger-finder__chips::-webkit-scrollbar {
-    display: none;
-  }
-
-  .charger-finder__chips li {
-    flex: none;
-    scroll-snap-align: start;
-  }
 }
 
 /* "More filters": shortcuts to the size and power filters (dashed = they open something elsewhere on the page) */
@@ -360,7 +293,6 @@
 }
 
 @media (hover: hover) {
-  .charger-finder__chip:not(.is-active):hover,
   .charger-finder__plug:hover {
     border-color: var(--ui-blue);
   }

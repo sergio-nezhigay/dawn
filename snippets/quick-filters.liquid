@@ -1,0 +1,104 @@
+{%- comment -%}
+  Quick filter buttons: a row of tap buttons for key collection filters, on desktop and phones.
+  Each button is a real filter link (Shopify's url_to_add / url_to_remove, so other active filters stay), wrapped in
+  <facet-remove> so a tap re-renders the grid by AJAX like the sidebar does (assets/facets.js). Value order is the
+  Search & Discovery order unless `order` is given. Renders nothing when no listed filter exists on the collection.
+  Inside #ProductGridContainer the row refreshes with the grid; anywhere else assets/quick-filters.js refetches it.
+
+  Accepts:
+  - params: {String} Comma-separated filter param names, in display order (up to 3 groups)
+  - order: {String} Comma-separated values to show, in this order (one group only); others are dropped. Optional
+  - labels: {String} Comma-separated value:label pairs to rename buttons, e.g. "Apple:Apple MagSafe". Optional
+  - heading: {String} Group label instead of the filter name (one group only). Optional
+
+  Usage:
+  {% render 'quick-filters', params: section.settings.quick_filters %}
+{%- endcomment -%}
+{%- liquid
+  assign param_list = params | split: ','
+  assign label_pairs = labels | split: ','
+  assign groups = 0
+-%}
+{%- capture rows -%}
+  {%- for param in param_list -%}
+    {%- assign param = param | strip -%}
+    {%- for filter in collection.filters -%}
+      {%- if filter.param_name != param or filter.type != 'list' or filter.values.size < 2 or groups >= 3 -%}
+        {%- continue -%}
+      {%- endif -%}
+      {%- liquid
+        assign groups = groups | plus: 1
+        assign group_id = 'QuickFilters-' | append: section.id | append: '-' | append: groups
+        assign group_label = filter.label
+        if heading != blank and param_list.size == 1
+          assign group_label = heading
+        endif
+        if order != blank and param_list.size == 1
+          assign names = order | split: ','
+        else
+          assign names = filter.values | map: 'value'
+        endif
+      -%}
+      <div class="quick-filters__group">
+        <p class="quick-filters__label" id="{{ group_id }}">{{ group_label | escape }}</p>
+        <ul class="quick-filters__chips list-unstyled" aria-labelledby="{{ group_id }}">
+          <li>
+            <facet-remove>
+              <a
+                class="quick-filters__chip{% if filter.active_values.size == 0 %} is-active{% endif %}"
+                href="{{ filter.url_to_remove }}"
+                {% if filter.active_values.size == 0 %}
+                  aria-current="true"
+                {% endif %}
+              >
+                {{- 'sections.quick_filters.all' | t -}}
+              </a>
+            </facet-remove>
+          </li>
+          {%- assign shown = 0 -%}
+          {%- for name in names -%}
+            {%- assign name = name | strip -%}
+            {%- for value in filter.values -%}
+              {%- if value.value != name or shown >= 10 -%}
+                {%- continue -%}
+              {%- endif -%}
+              {%- liquid
+                assign shown = shown | plus: 1
+                assign label = value.label
+                for pair in label_pairs
+                  assign pair_parts = pair | split: ':'
+                  assign pair_value = pair_parts.first | strip
+                  if pair_value == value.value
+                    assign label = pair_parts.last | strip
+                  endif
+                endfor
+              -%}
+              <li>
+                {%- if value.active -%}
+                  <facet-remove>
+                    <a class="quick-filters__chip is-active" href="{{ value.url_to_remove }}" aria-current="true">
+                      {{- label | escape -}}
+                    </a>
+                  </facet-remove>
+                {%- elsif value.count == 0 -%}
+                  <span class="quick-filters__chip is-disabled" aria-disabled="true">{{ label | escape }}</span>
+                {%- else -%}
+                  <facet-remove>
+                    <a class="quick-filters__chip" href="{{ value.url_to_add }}">{{ label | escape }}</a>
+                  </facet-remove>
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endfor -%}
+  {%- endfor -%}
+{%- endcapture -%}
+{%- if groups > 0 -%}
+  {{ 'component-quick-filters.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'quick-filters.js' | asset_url }}" defer="defer"></script>
+  <div class="quick-filters" data-quick-filters data-section-id="{{ section.id }}">
+    {{- rows -}}
+  </div>
+{%- endif -%}

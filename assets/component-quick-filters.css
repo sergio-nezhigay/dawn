@@ -1,0 +1,125 @@
+/* Quick filter buttons (snippets/quick-filters.liquid): key filters as tap buttons above the products.
+   Tokens from base.css. */
+.quick-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+  color: var(--ui-navy);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  letter-spacing: normal;
+}
+
+.quick-filters__label {
+  margin: 0 0 8px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.quick-filters__chips {
+  position: relative; /* offset parent for quick-filters.js scrolling the chosen chip into view */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+}
+
+.quick-filters__chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1.5px solid var(--ui-line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ui-navy);
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: border-color var(--ui-dur) var(--ui-ease), background-color var(--ui-dur) var(--ui-ease),
+    color var(--ui-dur) var(--ui-ease);
+}
+
+.quick-filters__chip.is-active {
+  border-color: var(--ui-blue);
+  background: var(--ui-blue);
+  color: #fff;
+}
+
+.quick-filters__chip.is-active::before {
+  content: '\2713';
+  margin-right: 6px;
+  font-weight: 700;
+}
+
+/* No products with this value under the other chosen filters: visible, not clickable */
+.quick-filters__chip.is-disabled {
+  border-style: dashed;
+  color: var(--ui-muted);
+  cursor: default;
+}
+
+/* The <facet-remove> wrapper (AJAX tap handling) adds no box of its own */
+.quick-filters facet-remove {
+  display: contents;
+}
+
+/* Tablet and desktop: the group label on the same line as its buttons, to keep the row short */
+@media screen and (min-width: 750px) {
+  .quick-filters {
+    gap: 8px;
+  }
+
+  .quick-filters__group {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .quick-filters__label {
+    flex: none;
+    margin: 0;
+  }
+}
+
+/* Phones: each group is one row that scrolls sideways, running to the screen edges; the fade says "there is more" */
+@media screen and (max-width: 749px) {
+  .quick-filters {
+    gap: 8px;
+  }
+
+  .quick-filters__label {
+    margin-bottom: 6px;
+    font-size: 14px;
+  }
+
+  .quick-filters__chips {
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 40px), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - 40px), transparent);
+    flex-wrap: nowrap;
+    margin: 0 -1.5rem;
+    padding: 0 1.5rem 4px;
+    overflow-x: auto;
+    scroll-padding-inline: 1.5rem;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+  }
+
+  .quick-filters__chips::-webkit-scrollbar {
+    display: none;
+  }
+
+  .quick-filters__chips li {
+    flex: none;
+    scroll-snap-align: start;
+  }
+}
+
+@media (hover: hover) {
+  .quick-filters__chip:not(.is-active, .is-disabled):hover {
+    border-color: var(--ui-blue);
+  }
+}

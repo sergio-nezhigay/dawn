@@ -646,10 +646,12 @@
       "view_all": "View all",
       "view_all_mobile": "View all best sellers"
     },
+    "quick_filters": {
+      "all": "All"
+    },
     "charger_finder": {
       "brands_label": "Which laptop?",
       "more_filters": "More filters:",
-      "all": "All",
       "guide_summary": "How to find your plug size",
       "guide_summary_short": "How to find it?",
       "step_label_html": "Check the label on your old charger or the bottom of the laptop: it shows the voltage and often the plug size, e.g. <b>19V ⎓ 3.42A, 5.5×2.5</b>.",

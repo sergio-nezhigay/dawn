@@ -1,7 +1,7 @@
 {%- comment -%}
   Laptop charger adapters collection (template collection.charger-adapters): brand buttons above the grid,
   a "how to find your plug size" guide (plug pictures, brand-to-sizes table) and a "send us the laptop model" helper.
-  Brand buttons and plug pictures come from the Search & Discovery filters on cable.compatible_brands and
+  Brand buttons (snippets/quick-filters.liquid) and plug pictures come from the Search & Discovery filters on cable.compatible_brands and
   specifications.dc_size (filled once, then by hand on new products), so they render nothing until those filters exist.
   "More filters" pills jump to the size and power filters of the product grid.
   The helper is snippets/help-form.liquid (homepage fit-check contract, assets/home-fit-check.js).
@@ -15,65 +15,23 @@
   assign size_param = 'filter.p.m.specifications.dc_size'
   assign power_param = 'filter.p.m.specifications.power_w'
   for filter in collection.filters
-    if filter.param_name == brand_param
-      assign brand_filter = filter
-    elsif filter.param_name == size_param
+    if filter.param_name == size_param
       assign size_filter = filter
     elsif filter.param_name == power_param
       assign power_filter = filter
     endif
   endfor
-  assign brand_order = section.settings.brands | split: ','
+  assign brands_label = 'sections.charger_finder.brands_label' | t
   assign pin_sizes = section.settings.pin_sizes | split: ','
 -%}
-<div class="charger-finder page-width" data-charger-finder data-brand-param="{{ brand_param }}">
-  {%- if brand_filter -%}
-    <p class="charger-finder__label" id="ChargerBrands-{{ section.id }}">{{ 'sections.charger_finder.brands_label' | t }}</p>
-    <ul class="charger-finder__chips list-unstyled" aria-labelledby="ChargerBrands-{{ section.id }}">
-      <li>
-        <a
-          class="charger-finder__chip{% if brand_filter.active_values.size == 0 %} is-active{% endif %}"
-          href="{{ collection.url }}"
-          data-brand=""
-          {% if brand_filter.active_values.size == 0 %}
-            aria-current="true"
-          {% endif %}
-        >
-          {{- 'sections.charger_finder.all' | t -}}
-        </a>
-      </li>
-      {%- for name in brand_order -%}
-        {%- assign name = name | strip -%}
-        {%- for value in brand_filter.values -%}
-          {%- comment -%} Every brand stays visible: a button sets only the brand (drops other filters), so it never leads to 0 results {%- endcomment -%}
-          {%- if value.value == name -%}
-            {%- liquid
-              case value.value
-                when 'Apple'
-                  assign label = 'Apple MagSafe'
-                when 'Microsoft'
-                  assign label = 'Surface'
-                else
-                  assign label = value.label
-              endcase
-            -%}
-            <li>
-              <a
-                class="charger-finder__chip{% if value.active %} is-active{% endif %}"
-                href="{% if value.active %}{{ collection.url }}{% else %}{{ collection.url }}?{{ brand_param }}={{ value.value | url_encode }}{% endif %}"
-                data-brand="{{ value.value | escape }}"
-                {% if value.active %}
-                  aria-current="true"
-                {% endif %}
-              >
-                {{- label | escape -}}
-              </a>
-            </li>
-          {%- endif -%}
-        {%- endfor -%}
-      {%- endfor -%}
-    </ul>
-  {%- endif -%}
+<div class="charger-finder page-width">
+  {%- comment -%} Brand buttons: the shared quick filter row; the guide renames two brands to what buyers call them {%- endcomment -%}
+  {% render 'quick-filters',
+    params: brand_param,
+    order: section.settings.brands,
+    labels: 'Apple:Apple MagSafe,Microsoft:Surface',
+    heading: brands_label
+  %}
 
   {%- comment -%}
     Shortcuts to the size and power filters (the sidebar opens only on wide screens, phones and tablets get the

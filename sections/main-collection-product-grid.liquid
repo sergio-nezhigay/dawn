@@ -171,6 +171,8 @@
           data-cascade
         {% endif %}
       >
+        {%- comment -%} Inside the grid container so the row re-renders with the products (assets/facets.js) {%- endcomment -%}
+        {% render 'quick-filters', params: section.settings.quick_filters %}
         {%- if collection.products.size == 0 -%}
           <div class="collection collection--empty page-width" id="product-grid" data-id="{{ section.id }}">
             <div class="loading-overlay gradient"></div>
@@ -472,6 +474,12 @@
       "id": "open_filters",
       "label": "Filters open on load",
       "info": "Comma-separated filter param names open in the sidebar, e.g. filter.p.m.specifications.dc_size. Empty = only the first"
+    },
+    {
+      "type": "text",
+      "id": "quick_filters",
+      "label": "Quick filter buttons above the products",
+      "info": "Comma-separated filter param names, in order; up to 3 that exist on the collection show as tap buttons. Empty = none"
     },
     {
       "type": "number",
