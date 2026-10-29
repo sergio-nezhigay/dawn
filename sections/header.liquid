@@ -454,7 +454,7 @@
     }
 
     closeMenuDisclosure() {
-      this.disclosures = this.disclosures || this.header.querySelectorAll('header-menu');
+      this.disclosures = this.disclosures || this.header.querySelectorAll('header-dropdown-menu');
       this.disclosures.forEach((disclosure) => disclosure.close());
     }
 
@@ -465,6 +465,49 @@
   }
 
   customElements.define('sticky-header', StickyHeader);
+
+  // Desktop dropdowns: CSS opens them on mouse hover; this adds keyboard and touch (aria-expanded).
+  class HeaderDropdownMenu extends HTMLElement {
+    connectedCallback() {
+      this.buttons = this.querySelectorAll('button[aria-expanded]');
+      this.buttons.forEach((button) =>
+        button.addEventListener('click', (event) => {
+          // a mouse already opened the list by hovering; a click would only fight the hover
+          if (event.pointerType === 'mouse') return;
+          if (button.getAttribute('aria-expanded') === 'true') this.close();
+          else this.open(button);
+        })
+      );
+      this.addEventListener('keydown', (event) => {
+        const open = this.querySelector('[aria-expanded="true"]');
+        if (event.key !== 'Escape' || !open) return;
+        this.close();
+        open.focus();
+      });
+      this.addEventListener('focusout', (event) => {
+        const item = event.target.closest('.header__menu-details');
+        if (item && !item.contains(event.relatedTarget)) this.close();
+      });
+      // the mouse takes over from a keyboard/touch-opened list, so two lists never show at once
+      this.addEventListener('pointerover', (event) => event.pointerType === 'mouse' && this.close());
+      // pointerdown, not click: iOS fires no click for taps on plain text
+      this.onOutsideTap = (event) => !this.contains(event.target) && this.close();
+      document.addEventListener('pointerdown', this.onOutsideTap);
+    }
+
+    disconnectedCallback() {
+      document.removeEventListener('pointerdown', this.onOutsideTap);
+    }
+
+    open(button) {
+      this.buttons.forEach((other) => other.setAttribute('aria-expanded', other === button));
+    }
+
+    close() {
+      this.open(null);
+    }
+  }
+  customElements.define('header-dropdown-menu', HeaderDropdownMenu);
 {% endjavascript %}
 
 <script type="application/ld+json">
