@@ -9,6 +9,7 @@
   --ui-blue-deep: #0058ad;
   --ui-yellow: #ffc220;
   --ui-yellow-deep: #f2ae00;
+  --ui-blue-soft: #eff6ff;
   --ui-tint: #f6f9fd;
   --ui-line: #e5e7eb;
   --ui-muted: #5b6573;
@@ -3585,27 +3586,6 @@ details[open]>.header__icon--menu .icon-hamburger {
   transform: scale(1.07);
 }
 
-.js details>.header__submenu {
-  opacity: 0;
-  transform: translateY(-1.5rem);
-}
-
-details[open]>.header__submenu {
-  animation: animateMenuOpen 0.2s ease-out;
-  animation-fill-mode: forwards;
-  z-index: 1;
-}
-
-@media (prefers-reduced-motion) {
-
-  details[open]>.header__submenu,
-  .header__menu-details:hover>.header__submenu {
-    opacity: 1;
-    transform: translateY(0);
-    animation: none;
-  }
-}
-
 /* Header menu */
 .header__inline-menu {
   margin-left: -1.2rem;
@@ -3671,75 +3651,84 @@ details[open]>.header__submenu {
   padding: 0 1rem;
 }
 
-.header__menu-item {
-  padding: 0.75rem 1.25rem;
-  text-decoration: none;
-  color: #111827;
-  letter-spacing: 0.05rem;
-  font-stretch: condensed;
-  font-size: 1.6rem;
-  font-weight: 700;
-  border-radius: 8px;
-  white-space: nowrap;
-  transition: all 0.2s ease-in-out;
+header-dropdown-menu {
+  display: contents;
 }
 
-/* Chevron icon styling for header menu */
+.header__menu-item {
+  position: relative;
+  padding: 0.75rem 1.25rem;
+  text-decoration: none;
+  color: var(--ui-text);
+  letter-spacing: 0.05rem;
+  font-size: 1.6rem;
+  font-weight: 700;
+  border-radius: var(--ui-radius-sm);
+  white-space: nowrap;
+  transition: color var(--ui-dur) var(--ui-ease), background-color var(--ui-dur) var(--ui-ease);
+}
+
 .header__menu-item .icon-caret {
   width: 15px;
   height: 15px;
   margin-left: 8px;
-  color: #6b7280;
+  color: var(--ui-muted);
   stroke-width: 3px;
-  transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
+  transition: transform var(--ui-dur) var(--ui-ease);
 }
 
 .condensed {
   letter-spacing: 0.03rem;
   font-stretch: condensed;
   font-size: 1.6rem;
-  /*opacity: 0.85;*/
 }
 
-
-
 .header__menu-item:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 -0.2rem rgb(var(--color-foreground));
+  outline: 2px solid var(--ui-ring);
+  outline-offset: 2px;
+  box-shadow: none;
 }
 
 .header__menu-details {
   position: relative;
 }
 
+/* Hovered or opened label */
 .header__menu-item:hover,
-.header__menu-details:hover>.header__menu-item {
-  color: var(--ui-blue);
-  background-color: #eff6ff;
-  text-decoration: none;
+.header__menu-details:hover > .header__menu-item,
+.header__menu-item[aria-expanded='true'] {
+  color: var(--ui-blue-deep);
+  background-color: var(--ui-blue-soft);
 }
 
-.header__menu-item span {
-  transition: none;
-}
-
-.header__menu-item:hover span,
-.header__menu-details:hover>.header__menu-item span {
-  text-decoration: none;
-}
-
-.header__menu-details:hover>.header__menu-item .icon-caret {
-  color: var(--ui-blue);
+.header__menu-details:hover > .header__menu-item .icon-caret,
+.header__menu-item[aria-expanded='true'] .icon-caret {
+  color: currentColor;
   transform: rotate(180deg);
 }
 
-.header__active-menu-item {
-  color: var(--ui-blue);
-  text-decoration: none;
+/* Current section: blue text + an underline (a shape, not only colour).
+   The underline fades out while the label is hovered or open, so its ends never peek out beside the list. */
+.header__menu-item--active {
+  color: var(--ui-blue-deep);
 }
 
-.header__menu-item:hover .header__active-menu-item {
-  text-decoration: none;
+.header__menu-item--active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  border-radius: 2px;
+  background: currentColor;
+  transition: opacity var(--ui-dur) var(--ui-ease);
+}
+
+.header__menu-item--active:hover::after,
+.header__menu-details:hover > .header__menu-item--active::after,
+.header__menu-item--active[aria-expanded='true']::after {
+  opacity: 0;
 }
 
 /* Compact design for tablet screens to prevent menu wrapping */
@@ -3772,128 +3761,103 @@ details[open]>.header__submenu {
   }
 }
 
+/* Dropdown list. Closing waits ~0.2s so a wobbly mouse path does not drop it. */
 .header__submenu {
-  background-color: #ffffff;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  display: block;
   top: calc(100% - 5px);
-  /* Hidden state by default */
+  left: 0;
+  background-color: #ffffff;
   opacity: 0;
   visibility: hidden;
   transform: translateY(0.5rem);
-  pointer-events: none;
-  display: block;
-  /* Always strictly display: block but controlled via opacity/vis */
-  /* Default left alignment */
-  left: 0;
+  transition: opacity 0.15s var(--ui-ease) 0.2s, transform 0.15s var(--ui-ease) 0.2s, visibility 0s linear 0.35s;
 }
 
-
-/* Right-align dropdown for last 3 menu items to prevent viewport overflow */
-.list-menu--inline>li:nth-last-child(-n+3) .header__submenu {
+/* End lists align to their label's right edge so they stay on screen: the last one on desktop, the last three on tablets */
+.list-menu--inline > li:last-child .header__submenu {
   left: auto;
   right: 0;
 }
 
-.header__menu-details:hover>.header__submenu {
-  animation: animateMenuOpen 0.2s ease-out forwards;
-  pointer-events: auto;
-  visibility: visible;
-  /* Redundant with keyframes but good for fallback */
+@media screen and (max-width: 989px) {
+  .list-menu--inline > li:nth-last-child(-n + 3) .header__submenu {
+    left: auto;
+    right: 0;
+  }
+
+  /* Tablet lists keep the fixed 288px width, so long items wrap instead of sticking out */
+  .header__submenu .header__menu-item {
+    white-space: normal;
+  }
+}
+
+.header__menu-details:hover > .header__submenu,
+[aria-expanded='true'] + .header__submenu {
   opacity: 1;
-  transform: translateY(0);
+  visibility: visible;
+  transform: none;
+  transition-delay: 0s;
 }
 
-/* We don't need animateMenuClose on hover leave because CSS transition handles the return naturally?
-   Actually, animations are usually strictly for entrance.
-   When hover is removed, the element returns to default state.
-   The default state has transition.
-   Let's ensure smooth exit.
-*/
-
-.header__submenu {
-  /* Exit transition */
-  transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+/* Moving onto another label switches lists at once */
+.list-menu--inline:has(.header__menu-details:hover) .header__menu-details:not(:hover) > .header__submenu {
+  transition-delay: 0s;
 }
 
-@keyframes animateMenuOpen {
-  0% {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0);
+@media (prefers-reduced-motion) {
+  .header__submenu {
+    transform: none;
   }
 }
 
-/* Desktop dropdown menu item styles - per specification */
+/* Grow past the 288px default so the longest item fits on one line.
+   Desktop only: on tablets a wider list would stick out past the screen edge. */
 @media screen and (min-width: 990px) {
-
-  /* Grow past the 288px default so the longest item fits on one line */
   .header__submenu.list-menu--disclosure {
     width: max-content;
     min-width: 288px;
     max-width: calc(100vw - 4rem);
   }
+}
 
-  /* Override menu items INSIDE dropdowns only */
+@media screen and (min-width: 750px) {
   .header__submenu .header__menu-item {
     font-size: 16px;
     font-weight: 500;
-    color: #374151;
+    letter-spacing: 0;
+    color: var(--ui-text);
     padding: 12px 24px;
     border-radius: 0;
-    transition: all 0.2s ease, padding-left 0.2s ease;
-    position: relative;
   }
 
+  /* Hover accent bar on the left */
   .header__submenu .header__menu-item::before {
     content: '';
     position: absolute;
     left: 0;
-    top: 0;
-    bottom: 0;
-    width: 1px;
-    background: #0066CC;
-    transform: scaleY(0);
-    transition: transform 0.15s;
+    top: 6px;
+    bottom: 6px;
+    width: 3px;
+    border-radius: 0 2px 2px 0;
+    background: var(--ui-blue);
+    opacity: 0;
+    transition: opacity var(--ui-dur) var(--ui-ease);
+  }
+
+  .header__submenu .header__menu-item:hover {
+    color: var(--ui-blue-deep);
   }
 
   .header__submenu .header__menu-item:hover::before {
-    transform: scaleY(1);
+    opacity: 1;
   }
 
-  /* Hover state with 4px slide-right effect */
-  .header__submenu .header__menu-item:hover {
-    color: var(--ui-blue);
-    background-color: #eff6ff;
-    padding-left: 28px;
+  .header__submenu .header__menu-item:focus-visible {
+    outline-offset: -2px;
   }
 
-  /* Active item styling */
   .header__submenu .list-menu__item--active {
-    color: var(--ui-blue);
-  }
-
-  /* Nested dropdown positioning (second-level) */
-  .header__submenu .header__submenu {
-    left: 100%;
-    top: -16px;
-    margin-left: 8px;
-  }
-
-  /* When parent dropdown is right-aligned (last 3 items), position nested dropdown to the left */
-  .list-menu--inline>li:nth-last-child(-n+3) .header__submenu .header__submenu {
-    left: auto;
-    right: 100%;
-    margin-left: 0;
-    margin-right: 8px;
-  }
-
-  /* Nested dropdown icon rotation */
-  .header__submenu .header__menu-item .icon-caret {
-    transform: rotate(-90deg);
+    color: var(--ui-blue-deep);
   }
 }
 
