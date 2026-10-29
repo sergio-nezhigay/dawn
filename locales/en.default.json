@@ -422,6 +422,9 @@
     "header": {
       "announcement": "Announcement",
       "menu": "Menu",
+      "view_all_in": "View all in “{{ title }}”",
+      "all_sections": "All sections",
+      "call": "Call",
       "cart_count": {
         "one": "{{ count }} item",
         "other": "{{ count }} items",
