@@ -100,6 +100,60 @@ details[open].menu-opening > .menu-drawer__submenu {
   padding-top: 8px;
 }
 
+/* Shortcut chips (mobile-shortcuts menu), level 1 only */
+.menu-drawer__shortcuts {
+  display: grid;
+  gap: 8px;
+  padding: 4px 16px 12px;
+  border-bottom: 1px solid var(--ui-line);
+}
+
+/* Level-1 extras the open submenu slides over: hide them from screen readers too */
+.menu-drawer__navigation-container:has(.submenu-open) :is(.menu-drawer__shortcuts, .menu-drawer__utility-links) {
+  visibility: hidden;
+}
+
+.menu-drawer__shortcuts-title {
+  margin: 0;
+  color: var(--ui-muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.menu-drawer__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.menu-drawer__chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: var(--ui-radius-pill);
+  background: var(--ui-blue-soft);
+  color: var(--ui-blue-deep);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+.menu-drawer__chip:hover,
+.menu-drawer__chip:focus-visible {
+  box-shadow: inset 0 0 0 1px var(--ui-blue-deep);
+}
+
+/* Current page: a thicker outline (a shape, not only colour) */
+.menu-drawer__chip[aria-current='page'] {
+  box-shadow: inset 0 0 0 2px var(--ui-blue-deep);
+  font-weight: 700;
+}
+
 .menu-drawer__inner-submenu {
   height: 100%;
   overflow-x: hidden;

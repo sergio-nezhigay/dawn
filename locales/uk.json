@@ -419,6 +419,7 @@
       "menu": "Меню",
       "view_all_in": "Дивитись усе в «{{ title }}»",
       "all_sections": "Усі розділи",
+      "shortcuts": "Часто шукають",
       "call": "Подзвонити",
       "cart_count": {
         "one": "Елемент: {{ count }}",

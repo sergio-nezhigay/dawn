@@ -2,6 +2,8 @@
   Mobile menu drawer contents. Not rendered with the page: sections/header-drawer-menu.liquid
   serves it and HeaderDrawer (assets/global.js) fetches it on the first tap of the menu button.
   Two levels: groups open a submenu of links (a third menu level shows as plain links).
+  The shortcut chips on top come from the `mobile-shortcuts` menu (Admin > Navigation);
+  they are not rendered when that menu is missing or empty.
 
   Accepts:
   - menu: {Object} Link list for the main navigation
@@ -10,6 +12,27 @@
   <div class="menu-drawer__panels">
     <div class="menu-drawer__navigation-container">
       <nav class="menu-drawer__navigation">
+        {%- assign shortcuts = linklists['mobile-shortcuts'].links -%}
+        {%- if shortcuts.size > 0 -%}
+          <div class="menu-drawer__shortcuts">
+            <p id="HeaderDrawer-shortcuts" class="menu-drawer__shortcuts-title">{{ 'sections.header.shortcuts' | t }}</p>
+            <ul class="menu-drawer__chips list-unstyled" role="list" aria-labelledby="HeaderDrawer-shortcuts">
+              {%- for link in shortcuts limit: 6 -%}
+                <li>
+                  <a
+                    href="{{ link.url }}"
+                    class="menu-drawer__chip"
+                    {% if link.current %}
+                      aria-current="page"
+                    {% endif %}
+                  >
+                    {{- link.title | escape -}}
+                  </a>
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endif -%}
         <ul class="menu-drawer__menu has-submenu list-menu" role="list">
           {%- for link in menu.links -%}
             <li>
