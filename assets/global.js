@@ -577,9 +577,9 @@ class HeaderDrawer extends MenuDrawer {
           .querySelector('.menu-drawer__inner-container');
         if (!content) throw new Error('Menu drawer contents missing');
 
-        // The language form was rendered for the ?section_id URL; send the visitor back to this page instead.
-        content.querySelectorAll('input[name="return_to"]').forEach((input) => {
-          input.value = window.location.pathname + window.location.search;
+        // Language links keep the current filters and sorting.
+        content.querySelectorAll('.menu-drawer__language').forEach((link) => {
+          link.search = window.location.search;
         });
 
         content.querySelectorAll('[id^="Details-"] summary').forEach((summary) => {
@@ -589,6 +589,13 @@ class HeaderDrawer extends MenuDrawer {
           summary.addEventListener('click', (event) => {
             event.currentTarget.setAttribute('aria-expanded', !event.currentTarget.closest('details').hasAttribute('open'));
           });
+        });
+        // Leaving through a menu link: undo the menu's history entry first, so Back from the next page is not doubled.
+        content.addEventListener('click', (event) => {
+          const link = event.target.closest('a[href]');
+          if (!link || !this.historyEntry || link.protocol === 'tel:' || event.metaKey || event.ctrlKey || event.shiftKey) return;
+          event.preventDefault();
+          this.dropHistoryEntry(() => window.location.assign(link.href));
         });
         drawer.append(content);
         this.bindEvents(content);
@@ -606,8 +613,7 @@ class HeaderDrawer extends MenuDrawer {
   openMenuDrawer(summaryElement) {
     this.loadMenu();
     this.header = this.header || document.querySelector('.section-header');
-    this.borderOffset =
-      this.borderOffset || this.closest('.header-wrapper').classList.contains('header-wrapper--border-bottom') ? 1 : 0;
+    this.borderOffset ??= this.closest('.header-wrapper').classList.contains('header-wrapper--border-bottom') ? 1 : 0;
     document.documentElement.style.setProperty(
       '--header-bottom-position',
       `${parseInt(this.header.getBoundingClientRect().bottom - this.borderOffset)}px`
@@ -622,6 +628,13 @@ class HeaderDrawer extends MenuDrawer {
     window.addEventListener('resize', this.onResize);
     trapFocus(this.mainDetailsToggle, summaryElement);
     document.body.classList.add(`overflow-hidden-${this.dataset.breakpoint}`);
+
+    // The phone's Back button should close the menu, not leave the page: give it a history entry to undo.
+    if (!this.historyEntry && !this.historyBackPending) {
+      history.pushState({ ...history.state, menuDrawer: true }, ''); // keep the filters' state for facets.js
+      this.historyEntry = true;
+      window.addEventListener('popstate', this.onPopState);
+    }
   }
 
   closeMenuDrawer(event, elementToFocus) {
@@ -629,7 +642,34 @@ class HeaderDrawer extends MenuDrawer {
     super.closeMenuDrawer(event, elementToFocus);
     this.header.classList.remove('menu-open');
     window.removeEventListener('resize', this.onResize);
+    elementToFocus.setAttribute('aria-expanded', false);
+
+    if (!this.historyEntry) return;
+    if (event?.type === 'popstate') {
+      this.historyEntry = false;
+      window.removeEventListener('popstate', this.onPopState);
+    } else {
+      this.dropHistoryEntry();
+    }
   }
+
+  // history.back() is asynchronous; until it lands, opening the menu again must not push a new entry.
+  dropHistoryEntry(onDone) {
+    this.historyEntry = false;
+    this.historyBackPending = true;
+    window.removeEventListener('popstate', this.onPopState);
+    window.addEventListener(
+      'popstate',
+      () => {
+        this.historyBackPending = false;
+        onDone?.();
+      },
+      { once: true }
+    );
+    history.back();
+  }
+
+  onPopState = (event) => this.closeMenuDrawer(event, this.mainDetailsToggle.querySelector('summary'));
 
   onResize = () => {
     this.header &&

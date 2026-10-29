@@ -417,6 +417,9 @@
     "header": {
       "announcement": "Оголошення",
       "menu": "Меню",
+      "view_all_in": "Дивитись усе в «{{ title }}»",
+      "all_sections": "Усі розділи",
+      "call": "Подзвонити",
       "cart_count": {
         "one": "Елемент: {{ count }}",
         "few": "Елементи: {{ count }}",
