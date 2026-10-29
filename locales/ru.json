@@ -419,6 +419,7 @@
       "menu": "Меню",
       "view_all_in": "Смотреть всё в «{{ title }}»",
       "all_sections": "Все разделы",
+      "shortcuts": "Часто ищут",
       "call": "Позвонить",
       "cart_count": {
         "one": "Элементы: {{ count }}",
