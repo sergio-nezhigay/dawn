@@ -22,6 +22,18 @@ python docs/brand/build.py
 
 PNG logos are exported at 4× size so they stay sharp.
 
+## What the theme uses
+
+`build.py` also copies four files into `assets/`, and the theme uses them directly. The Theme Editor's Logo and Favicon settings are no longer used.
+
+| Asset | Used in |
+|---|---|
+| `brand-share.png` | link preview (`snippets/meta-tags.liquid`) on pages without their own photo. Products, and collections and articles that have a photo, keep their photo |
+| `brand-icon-32.png`, `brand-icon-180.png` | browser tab and phone home-screen icon (`layout/theme.liquid`) |
+| `brand-logo.png` | Google Organization logo (`sections/header.liquid`) and footer business data (`sections/footer.liquid`) |
+
+Still set by hand in admin (no API exists): Settings → Brand (logo and square logo), used by the Shop app and Shopify emails.
+
 ## Colours and font
 
 - Blue `#0071DC`: header background

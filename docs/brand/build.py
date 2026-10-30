@@ -11,6 +11,7 @@ Needs: fonttools, brotli, playwright (python) with Chromium.
 
 import base64
 import re
+import shutil
 from pathlib import Path
 
 from fontTools.pens.svgPathPen import SVGPathPen
@@ -44,6 +45,12 @@ CHIP = re.sub(r">\s+<", "><", from_theme("sections/header.liquid", r'class="head
 DESKTOP = dict(icon=40, gap=10, size=28, spacing=0.7)  # 1440 wide
 COMPACT = dict(icon=32, gap=8, size=15, spacing=0.5)  # phones
 TONES = (("on-dark", False), ("on-light", True))
+THEME_COPIES = {
+    "share-1200x628.png": "brand-share.png",
+    "icon-32.png": "brand-icon-32.png",
+    "icon-180.png": "brand-icon-180.png",
+    "logo-on-light.png": "brand-logo.png",
+}
 
 font = TTFont(FONT)
 glyph_set = font.getGlyphSet()
@@ -175,6 +182,10 @@ def main():
             png(browser, files["icon"], OUT / f"icon-{px}.png", dpr=px / 512)
         png(browser, files["share-1200x628"], OUT / "share-1200x628.png")
         browser.close()
+
+    # The theme serves these copies: link preview, tab icons, Google logo.
+    for src, dst in THEME_COPIES.items():
+        shutil.copyfile(OUT / src, ROOT / "assets" / dst)
     print("built", len(files), "svg files into", OUT)
 
 
