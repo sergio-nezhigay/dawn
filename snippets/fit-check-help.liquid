@@ -65,7 +65,7 @@
       <span class="fulfillment-description">
         {{- text_key | t }}:
         <a
-          href="https://t.me/NSergiy?text={{ draft_encoded }}"
+          href="{% render 'messenger-link', channel: 'telegram', draft: draft_encoded %}"
           class="fit-check__link"
           target="_blank"
           rel="noopener"
@@ -74,7 +74,7 @@
         ><span class="fit-check__viber">
           &#183;
           <a
-            href="viber://chat?number=+380507025777&draft={{ draft_encoded }}"
+            href="{% render 'messenger-link', channel: 'viber', draft: draft_encoded %}"
             class="fit-check__link"
             data-fit-check="viber"
             >Viber</a

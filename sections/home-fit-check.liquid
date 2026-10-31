@@ -68,8 +68,8 @@
 
       <div class="home-fit__alt">
         {{ 'sections.home_fit_check.manager' | t }}
-        <a href="https://t.me/NSergiy?text=" target="_blank" rel="noopener" data-channel="telegram">Telegram</a>
-        <a href="viber://chat?number=+380507025777&amp;draft=" class="home-fit__viber" data-channel="viber">Viber</a>
+        <a href="{% render 'messenger-link', channel: 'telegram', draft: '' %}" target="_blank" rel="noopener" data-channel="telegram">Telegram</a>
+        <a href="{% render 'messenger-link', channel: 'viber', draft: '' %}" class="home-fit__viber" data-channel="viber">Viber</a>
         <a href="{{ phone_href }}" data-channel="phone">{{ phone }}</a>
       </div>
 

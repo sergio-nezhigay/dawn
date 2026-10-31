@@ -379,15 +379,31 @@
     },
     "contact": {
       "form": {
-        "title": "Contact form",
         "name": "Name",
         "email": "Email",
         "phone": "Phone number",
-        "comment": "Comment",
+        "comment": "Message",
         "send": "Send",
         "post_success": "Thanks for contacting us. We'll get back to you as soon as possible.",
-        "error_heading": "Please adjust the following:"
-      }
+        "error_heading": "Please adjust the following:",
+        "heading": "Write to us",
+        "order": "Order number",
+        "optional": "(optional)"
+      },
+      "lead": "Call us, write in a messenger or use the form. We reply within 1 working day.",
+      "connect_heading": "Get in touch",
+      "copy": "Copy",
+      "copied": "Copied",
+      "open_now": "Open now",
+      "closed_now": "Closed now · open Mon–Fri from 10:00",
+      "weekend": "Saturday, Sunday — closed",
+      "pickup_note": "Pickup by prior arrangement only — please call before you come.",
+      "quick_heading": "Quick answers",
+      "quick_lead": "The answer may already be here:",
+      "quick_shipping_hint": "Dispatch within 1–2 working days",
+      "quick_refund_hint": "14 days to return",
+      "quick_orders": "Order status",
+      "quick_orders_hint": "Sign in with the email from your order"
     }
   },
   "sections": {

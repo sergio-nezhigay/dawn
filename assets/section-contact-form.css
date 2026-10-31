@@ -1,145 +1,335 @@
-.contact img {
-  max-width: 100%;
+/*
+  Contact page (sections/contact-form.liquid): contacts card + quick answers on the left, form on the right;
+  one column on phones. Same width, cards and blue labels as the shipping/refund sheet
+  (assets/section-main-policy.css). Levels: card heading > small label > value.
+*/
+/* .page-width--contact: the page title (sections/main-page.liquid) in the same column, right above the lead */
+.contact-page,
+.page-width.page-width--contact {
+  max-width: 104rem;
+  margin: 0 auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  --ui-heading-gap: 0.8rem;
 }
 
-.contact .form__message {
-  align-items: flex-start;
+.contact-page {
+  color: var(--ui-navy);
+  font-size: 1.5rem;
+  line-height: 1.5;
 }
 
-.contact .icon-success {
+.contact-page__lead {
+  margin: 0 0 2.4rem;
+  color: var(--ui-muted);
+}
+
+.contact-page__cols {
+  display: grid;
+  gap: 2.4rem;
+  align-items: start;
+}
+
+.contact-page__side {
+  display: grid;
+  gap: 2.4rem;
+  min-width: 0;
+}
+
+@media screen and (min-width: 750px) {
+  .contact-page__cols {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  }
+}
+
+.contact-card {
+  display: grid;
+  gap: 1.2rem;
+  align-content: start;
+  min-width: 0;
+  padding: 2rem;
+  background: #fff;
+  border: 1px solid var(--ui-line);
+  border-radius: var(--ui-radius-md);
+}
+
+.contact-card__heading {
+  margin: 0;
+  font: 700 1.8rem/1.2 'Chakra Petch', 'Tektur', sans-serif;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--ui-navy);
+}
+
+.contact-card__lead {
+  margin: -0.4rem 0 0;
+  font-size: 1.4rem;
+  color: var(--ui-muted);
+}
+
+.contact-label {
+  font: 600 1.3rem/1.3 'Chakra Petch', 'Tektur', sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ui-blue);
+}
+
+.contact-card__phone,
+.contact-row dd {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 1.2rem;
+}
+
+.contact-card__phone {
+  margin-top: -0.8rem;
+}
+
+.contact-card__number {
+  display: inline-flex;
+  align-items: center;
+  min-height: 4.4rem;
+  font: 700 2.6rem/1 'Chakra Petch', 'Tektur', sans-serif;
+  color: var(--ui-navy);
+  text-decoration: none;
+}
+
+.contact-copy {
+  min-height: 3.6rem;
+  padding: 0 1.2rem;
+  font: 600 1.3rem/1 var(--font-body-family);
+  color: var(--ui-blue);
+  background: #fff;
+  border: 1px solid var(--ui-line);
+  border-radius: var(--ui-radius-sm);
+  cursor: pointer;
+}
+
+.contact-status {
+  visibility: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: fit-content;
+  margin: 0;
+  padding: 0.3rem 1rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--ui-blue);
+  background: var(--ui-blue-soft);
+  border-radius: var(--ui-radius-pill);
+}
+
+.contact-status--ready {
+  visibility: visible;
+}
+
+.contact-status::before {
+  content: '';
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* Closed: grey ring instead of a blue dot, so shape and text tell it apart, not color alone */
+.contact-status--closed {
+  color: var(--ui-muted);
+  background: var(--ui-tint);
+}
+
+.contact-status--closed::before {
+  background: transparent;
+  border: 2px solid currentColor;
+}
+
+.contact-card__messengers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.contact-msg {
+  flex: 1;
+  min-width: 13rem;
+}
+
+.contact-msg svg {
+  width: 2rem;
+  height: 2rem;
+}
+
+.contact-msg--telegram {
+  background: var(--ui-blue);
+  color: #fff;
+}
+
+.contact-msg--viber {
+  display: none;
+  background: #fff;
+  color: var(--ui-navy);
+  border: 1px solid var(--ui-line);
+}
+
+/* viber:// does nothing on desktops without the app */
+@media (hover: none) and (pointer: coarse) {
+  .contact-msg--viber {
+    display: inline-flex;
+  }
+}
+
+.contact-rows {
+  margin: 0;
+}
+
+.contact-row {
+  display: grid;
+  gap: 0.2rem;
+  padding-top: 1.4rem;
+  margin-top: 1.4rem;
+  border-top: 1px solid var(--ui-line);
+}
+
+.contact-row:first-child {
   margin-top: 0.2rem;
 }
 
-.contact .field {
-  margin-bottom: 1rem;
+.contact-row dd {
+  margin: 0;
 }
 
-@media screen and (min-width: 750px) {
-  .contact .field {
-    margin-bottom: 1.2rem;
-  }
-}
-
-.contact__button {
-  margin-top: 1.5rem;
-}
-
-@media screen and (min-width: 750px) {
-  .contact__button {
-    margin-top: 2rem;
-  }
-}
-
-@media screen and (min-width: 750px) {
-  .contact__fields {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-column-gap: 2rem;
-  }
-}
-
-.contact .field__input,
-.contact .text-area {
-  background-color: white;
-}
-
-/* Contact Information Section */
-.contact-info {
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-  margin-top: 1.5rem;
-  margin-bottom: 2rem;
-  padding: 2rem;
-  background-color: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-}
-
-.contact-info-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 1.2rem;
-}
-
-.contact-info-icon {
-  flex-shrink: 0;
-  width: 4rem;
-  height: 4rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: transparent;
-  border: 2px solid #e5e7eb;
-  border-radius: 8px;
-  transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
-}
-
-.contact-info-icon svg {
-  width: 2rem;
-  height: 2rem;
-  color: #6b7280;
-  stroke-width: 1.5;
-}
-
-.contact-info-item:hover .contact-info-icon {
-  transform: scale(1.05);
-  border-color: #bfdbfe;
-  /*background-color: #eff6ff;*/
-}
-
-/*.contact-info-item:hover .contact-info-icon svg {
-  color: #bfdbfe;
-}*/
-
-.contact-info-text {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  flex: 1;
-}
-
-.contact-info-label {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #6b7280;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.contact-info-value {
-  font-size: 1.5rem;
-  font-weight: 500;
-  color: #111827;
+.contact-row a {
+  display: inline-block;
+  padding: 0.6rem 0;
+  color: var(--ui-blue);
   text-decoration: none;
-  transition: color 0.2s ease;
 }
 
-.contact-info-value:hover {
-  color: #0071dc;
+.contact-note {
+  flex-basis: 100%;
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: var(--ui-muted);
 }
 
-a.contact-info-value:hover {
-  text-decoration: underline;
-  text-underline-offset: 4px;
+.contact-quick {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.contact-info-note {
+.contact-quick li + li {
+  border-top: 1px solid var(--ui-line);
+}
+
+.contact-quick a {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 0;
+  font-weight: 500;
+  color: var(--ui-navy);
+  text-decoration: none;
+}
+
+.contact-quick a::after {
+  content: '→';
+  order: 2;
+  color: var(--ui-blue);
+}
+
+.contact-quick small {
+  order: 3;
+  flex-basis: 100%;
   font-size: 1.3rem;
   font-weight: 400;
-  color: #6b7280;
-  font-style: italic;
-  margin-top: 0.4rem;
-  display: block;
+  color: var(--ui-muted);
 }
 
-@media screen and (min-width: 750px) {
-  .contact-info {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-    padding: 2.5rem;
+@media (hover: hover) {
+  .contact-row a:hover,
+  .contact-quick a:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.3rem;
+  }
+
+  .contact-copy:hover {
+    background: var(--ui-tint);
   }
 }
 
+/* Form */
+.contact-form form {
+  display: grid;
+  gap: 1.2rem;
+}
+
+.contact-form__grid {
+  display: grid;
+  gap: 1.2rem;
+}
+
+@media screen and (min-width: 990px) {
+  .contact-form__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.contact-form__field {
+  display: grid;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.contact-form__field label {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.contact-form__optional {
+  font-weight: 400;
+  color: var(--ui-muted);
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 1.1rem 1.2rem;
+  font: inherit;
+  font-size: 1.6rem;
+  color: var(--ui-navy);
+  background: #fff;
+  border: 1px solid #cfd5dd;
+  border-radius: var(--ui-radius-sm);
+}
+
+.contact-form textarea {
+  min-height: 11rem;
+  resize: vertical;
+}
+
+.contact-form input:focus-visible,
+.contact-form textarea:focus-visible {
+  outline: 2px solid var(--ui-ring);
+  outline-offset: 1px;
+}
+
+.contact-form__error {
+  font-size: 1.3rem;
+}
+
+.contact-form__status {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  margin: 0;
+  font-weight: 600;
+}
+
+.contact-form__status svg {
+  flex: none;
+  width: 2rem;
+  height: 2rem;
+}

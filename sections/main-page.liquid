@@ -14,13 +14,16 @@
   }
 {%- endstyle -%}
 
-<div class="page-width page-width--narrow section-{{ section.id }}-padding">
-  <h1 class="section-title h0{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+{%- comment -%} The contact page lays out wider (assets/section-contact-form.css); its title follows {%- endcomment -%}
+<div class="page-width {% if page.template_suffix == 'contact' %}page-width--contact{% else %}page-width--narrow{% endif %} section-{{ section.id }}-padding">
+  <h1 class="ui-heading ui-heading--h1{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
     {{ page.title | escape }}
   </h1>
-  <div class="rte{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-    {{ page.content }}
-  </div>
+  {%- if page.content != blank -%}
+    <div class="rte{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      {{ page.content }}
+    </div>
+  {%- endif -%}
 </div>
 
 {% schema %}
