@@ -1,0 +1,24 @@
+{%- doc -%}
+  Renders the href of the store's Telegram or Viber chat: the one place that holds the Telegram username and the
+  Viber number. Viber links do nothing on desktops without the app, so callers show them on touch devices only.
+
+  @param {string} channel - 'telegram' or 'viber'
+  @param {string} [draft] - URL-encoded pre-typed message; pass '' to end the link with an empty text parameter
+    that JS fills in (assets/home-fit-check.js), leave it out for a plain chat link
+
+  @example
+  <a href="{% render 'messenger-link', channel: 'telegram' %}">Telegram</a>
+{%- enddoc -%}
+{%- liquid
+  if channel == 'viber'
+    echo 'viber://chat?number=+380507025777'
+    if draft != nil
+      echo '&draft=' | append: draft
+    endif
+  else
+    echo 'https://t.me/NSergiy'
+    if draft != nil
+      echo '?text=' | append: draft
+    endif
+  endif
+-%}

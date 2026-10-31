@@ -45,8 +45,8 @@
   <div data-fit-installed hidden><input type="hidden" name="installed" value=""></div>
   <p class="help-form__alt">
     <span class="home-fit__ai">{{ 'sections.home_fit_check.manager' | t }}</span>
-    <a href="https://t.me/NSergiy?text=" target="_blank" rel="noopener" data-channel="telegram">Telegram</a>
-    <a href="viber://chat?number=+380507025777&amp;draft=" class="help-form__viber" data-channel="viber">Viber</a>
+    <a href="{% render 'messenger-link', channel: 'telegram', draft: '' %}" target="_blank" rel="noopener" data-channel="telegram">Telegram</a>
+    <a href="{% render 'messenger-link', channel: 'viber', draft: '' %}" class="help-form__viber" data-channel="viber">Viber</a>
     <a href="{{ phone_href }}" data-channel="phone">{{ phone }}</a>
   </p>
   <script type="application/json" data-fit-strings>

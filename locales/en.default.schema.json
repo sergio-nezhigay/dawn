@@ -673,12 +673,6 @@
       "name": "Contact Form",
       "presets": {
         "name": "Contact form"
-      },
-      "settings": {
-        "title": {
-          "default": "Contact form",
-          "label": "Heading"
-        }
       }
     },
     "custom-liquid": {

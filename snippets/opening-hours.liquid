@@ -1,0 +1,15 @@
+{%- doc -%}
+  Store opening hours as numbers, for the contact page open/closed badge and the Organization JSON-LD.
+  The same hours as text live in the locale keys sections.footer.working_hours_value and
+  templates.contact.closed_now; change them together.
+
+  @param {string} part - 'days' (ISO weekdays, 1 = Monday), 'from' or 'to' (hour, Kyiv time)
+{%- enddoc -%}
+{%- case part -%}
+  {%- when 'days' -%}
+    1,2,3,4,5
+  {%- when 'from' -%}
+    10
+  {%- when 'to' -%}
+    18
+{%- endcase -%}

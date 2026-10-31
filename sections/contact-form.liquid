@@ -1,3 +1,9 @@
+{%- comment -%}
+  Contact page (templates/page.contact.json, after main-page which prints the H1). Every fact has one source:
+  phone = shop.phone (snippets/phone-number), email = shop.email, Telegram/Viber = snippets/messenger-link,
+  hours and address = sections.footer.* (shared with the footer); the open/closed badge takes the hours as
+  numbers from snippets/opening-hours (Kyiv time).
+{%- endcomment -%}
 {{ 'section-contact-form.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
@@ -14,180 +20,249 @@
   }
 {%- endstyle -%}
 
-<div class="color-{{ section.settings.color_scheme }} gradient">
-  <div class="contact page-width page-width--narrow section-{{ section.id }}-padding">
-    {%- if section.settings.heading != blank -%}
-      <h2 class="title title-wrapper--no-top-margin inline-richtext {{ section.settings.heading_size }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-        {{ section.settings.heading }}
-      </h2>
-    {%- else -%}
-      <h2 class="visually-hidden">{{ 'templates.contact.form.title' | t }}</h2>
-    {%- endif -%}
+{%- liquid
+  capture phone
+    render 'phone-number', format: 'display'
+  endcapture
+  capture phone_href
+    render 'phone-number', format: 'href'
+  endcapture
+-%}
 
-    {%- comment -%} Contact Information Section {%- endcomment -%}
-    <div class="contact-info{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-      <div class="contact-info-item">
-        <div class="contact-info-icon">
-          <span class="svg-wrapper">
-            {{- 'icon-phone.svg' | inline_asset_content -}}
-          </span>
+<div class="color-{{ section.settings.color_scheme }} gradient" id="Contact-{{ section.id }}">
+  <div class="contact-page section-{{ section.id }}-padding">
+    <p class="contact-page__lead">{{ 'templates.contact.lead' | t }}</p>
+
+    <div class="contact-page__cols">
+      <div class="contact-page__side">
+        <div class="contact-card">
+          <h2 class="contact-card__heading">{{ 'templates.contact.connect_heading' | t }}</h2>
+          <span class="contact-label">{{ 'sections.footer.phone_label' | t }}</span>
+          <div class="contact-card__phone">
+            <a class="contact-card__number" href="tel:{{ phone_href }}">{{ phone }}</a>
+            <button type="button" class="contact-copy" data-copy="{{ phone_href }}">
+              {{- 'templates.contact.copy' | t -}}
+            </button>
+          </div>
+          <p
+            class="contact-status"
+            data-open-days="{% render 'opening-hours', part: 'days' %}"
+            data-open-from="{% render 'opening-hours', part: 'from' %}"
+            data-open-to="{% render 'opening-hours', part: 'to' %}"
+            data-closed-text="{{ 'templates.contact.closed_now' | t | escape }}"
+          >
+            {{ 'templates.contact.open_now' | t }}
+          </p>
+          <div class="contact-card__messengers">
+            <a
+              class="ui-btn contact-msg contact-msg--telegram"
+              href="{% render 'messenger-link', channel: 'telegram' %}"
+              target="_blank"
+              rel="noopener"
+            >
+              <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M21.4 4.2 2.9 11.3c-1.3.5-1.2 1.2-.2 1.5l4.7 1.5 1.8 5.6c.2.6.4.8.9.8.4 0 .6-.2.9-.4l2.3-2.2 4.8 3.5c.9.5 1.5.2 1.7-.8l3.1-14.8c.3-1.3-.5-1.9-1.5-1.8zM9.6 14.6l-.4 3.9-1.5-4.7L18 7.5l-8.4 7.1z"/>
+              </svg>
+              Telegram
+            </a>
+            <a class="ui-btn contact-msg contact-msg--viber" href="{% render 'messenger-link', channel: 'viber' %}">
+              <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M12 2.5c5 0 8.5 2.4 8.5 8.3s-3.5 8.2-8.5 8.2c-.9 0-1.8-.1-2.6-.3L6 21v-3.1C4 16.5 3.5 14 3.5 10.8 3.5 4.9 7 2.5 12 2.5z"/>
+                <path d="M9 8.2c.3 2.8 2.4 5.2 5.6 6l.9-1.1-1.6-1-.8.6c-1-.4-1.9-1.3-2.4-2.4l.6-.8-1-1.6z" fill="currentColor" stroke="none"/>
+              </svg>
+              Viber
+            </a>
+          </div>
+          <dl class="contact-rows">
+            <div class="contact-row">
+              <dt class="contact-label">{{ 'sections.footer.working_hours_label' | t }}</dt>
+              <dd>
+                {{ 'sections.footer.working_hours_value' | t }}
+                <span class="contact-note">{{ 'templates.contact.weekend' | t }}</span>
+              </dd>
+            </div>
+            <div class="contact-row">
+              <dt class="contact-label">{{ 'sections.footer.email_label' | t }}</dt>
+              <dd>
+                <a href="mailto:{{ shop.email }}">{{ shop.email }}</a>
+                <button type="button" class="contact-copy" data-copy="{{ shop.email }}">
+                  {{- 'templates.contact.copy' | t -}}
+                </button>
+              </dd>
+            </div>
+            <div class="contact-row">
+              <dt class="contact-label">{{ 'sections.footer.address_label' | t }}</dt>
+              <dd>
+                {{ 'sections.footer.address_street' | t }}, {{ 'sections.footer.address_city' | t }}
+                <span class="contact-note">{{ 'templates.contact.pickup_note' | t }}</span>
+              </dd>
+            </div>
+          </dl>
         </div>
-        <div class="contact-info-text">
-          <span class="contact-info-label">{{ 'sections.footer.phone_label' | t }}</span>
-          <a href="tel:{% render 'phone-number', format: 'href' %}" class="contact-info-value"> {%- render 'phone-number', format: 'display' -%} </a>
-        </div>
+
+        <nav class="contact-card" aria-labelledby="ContactQuick-{{ section.id }}">
+          <h2 class="contact-card__heading" id="ContactQuick-{{ section.id }}">
+            {{- 'templates.contact.quick_heading' | t -}}
+          </h2>
+          <p class="contact-card__lead">{{ 'templates.contact.quick_lead' | t }}</p>
+          <ul class="contact-quick" role="list">
+            <li>
+              <a href="{{ shop.shipping_policy.url }}">
+                {{ 'sections.main_policy.shipping_policy_title' | t }}
+                <small>{{ 'templates.contact.quick_shipping_hint' | t }}</small>
+              </a>
+            </li>
+            <li>
+              <a href="{{ shop.refund_policy.url }}">
+                {{ 'sections.main_policy.refund_policy_title' | t }}
+                <small>{{ 'templates.contact.quick_refund_hint' | t }}</small>
+              </a>
+            </li>
+            <li>
+              <a href="{{ routes.account_url }}">
+                {{ 'templates.contact.quick_orders' | t }}
+                <small>{{ 'templates.contact.quick_orders_hint' | t }}</small>
+              </a>
+            </li>
+          </ul>
+        </nav>
       </div>
 
-      <div class="contact-info-item">
-        <div class="contact-info-icon">
-          <span class="svg-wrapper">
-            {{- 'icon-clock.svg' | inline_asset_content -}}
-          </span>
-        </div>
-        <div class="contact-info-text">
-          <span class="contact-info-label">{{ 'sections.footer.working_hours_label' | t }}</span>
-          <span class="contact-info-value">{{ 'sections.footer.working_hours_value' | t }}</span>
-        </div>
-      </div>
-
-      <div class="contact-info-item">
-        <div class="contact-info-icon">
-          <span class="svg-wrapper">
-            {{- 'icon-email.svg' | inline_asset_content -}}
-          </span>
-        </div>
-        <div class="contact-info-text">
-          <span class="contact-info-label">{{ 'sections.footer.email_label' | t }}</span>
-          <a href="mailto:info@informatica.com.ua" class="contact-info-value"> info@informatica.com.ua </a>
-        </div>
-      </div>
-
-      <div class="contact-info-item">
-        <div class="contact-info-icon">
-          <span class="svg-wrapper">
-            {{- 'icon-map-pin.svg' | inline_asset_content -}}
-          </span>
-        </div>
-        <div class="contact-info-text">
-          <span class="contact-info-label">{{ 'sections.footer.address_label' | t }}</span>
-          <span class="contact-info-value">
-            {{ 'sections.footer.address_street' | t }}, {{ 'sections.footer.address_city' | t }}
-          </span>
-          <span class="contact-info-note"> (Про можливість самовивозу просимо домовлятись заздалегідь) </span>
-        </div>
+      <div class="contact-card contact-form">
+        <h2 class="contact-card__heading">{{ 'templates.contact.form.heading' | t }}</h2>
+        {%- form 'contact', id: 'ContactForm', class: 'isolate' -%}
+          {%- if form.posted_successfully? -%}
+            <p class="contact-form__status" role="status" tabindex="-1" autofocus>
+              {{- 'icon-success.svg' | inline_asset_content -}}
+              {{ 'templates.contact.form.post_success' | t }}
+            </p>
+          {%- elsif form.errors -%}
+            <p class="contact-form__status" role="alert" tabindex="-1" autofocus>
+              {{- 'icon-error.svg' | inline_asset_content -}}
+              {{ 'templates.contact.form.error_heading' | t }}
+            </p>
+          {%- endif -%}
+          <div class="contact-form__grid">
+            <div class="contact-form__field">
+              <label for="ContactForm-name">{{ 'templates.contact.form.name' | t }}</label>
+              <input
+                type="text"
+                id="ContactForm-name"
+                autocomplete="name"
+                name="contact[{{ 'templates.contact.form.name' | t }}]"
+                value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+              >
+            </div>
+            <div class="contact-form__field">
+              <label for="ContactForm-email">{{ 'templates.contact.form.email' | t }} <span aria-hidden="true">*</span></label>
+              <input
+                type="email"
+                id="ContactForm-email"
+                autocomplete="email"
+                name="contact[email]"
+                spellcheck="false"
+                autocapitalize="off"
+                required
+                value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+                {% if form.errors contains 'email' %}
+                  aria-invalid="true"
+                  aria-describedby="ContactForm-email-error"
+                {% endif %}
+              >
+              {%- if form.errors contains 'email' -%}
+                <small class="contact-form__error" id="ContactForm-email-error">
+                  {{- form.errors.translated_fields.email | capitalize }}
+                  {{ form.errors.messages.email -}}
+                </small>
+              {%- endif -%}
+            </div>
+            <div class="contact-form__field">
+              <label for="ContactForm-phone">
+                {{- 'templates.contact.form.phone' | t }} <span class="contact-form__optional">{{ 'templates.contact.form.optional' | t }}</span>
+              </label>
+              <input
+                type="tel"
+                id="ContactForm-phone"
+                autocomplete="tel"
+                name="contact[{{ 'templates.contact.form.phone' | t }}]"
+                placeholder="+380"
+                value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+              >
+            </div>
+            <div class="contact-form__field">
+              <label for="ContactForm-order">
+                {{- 'templates.contact.form.order' | t }} <span class="contact-form__optional">{{ 'templates.contact.form.optional' | t }}</span>
+              </label>
+              <input
+                type="text"
+                id="ContactForm-order"
+                autocomplete="off"
+                name="contact[{{ 'templates.contact.form.order' | t }}]"
+              >
+            </div>
+          </div>
+          <div class="contact-form__field">
+            <label for="ContactForm-body">{{ 'templates.contact.form.comment' | t }}</label>
+            <textarea
+              rows="4"
+              id="ContactForm-body"
+              name="contact[{{ 'templates.contact.form.comment' | t }}]"
+            >
+              {{- form.body -}}
+            </textarea>
+          </div>
+          <div>
+            <button type="submit" class="ui-btn ui-btn--primary">
+              {{ 'templates.contact.form.send' | t }}
+            </button>
+          </div>
+        {%- endform -%}
       </div>
     </div>
-    {%- liquid
-      assign contact_form_class = 'isolate'
-      if settings.animations_reveal_on_scroll
-        assign contact_form_class = 'isolate scroll-trigger animate--slide-in'
-      endif
-    -%}
-    {%- form 'contact', id: 'ContactForm', class: contact_form_class -%}
-      {%- if form.posted_successfully? -%}
-        <h2 class="form-status form-status-list form__message" tabindex="-1" autofocus>
-          {{- 'icon-success.svg' | inline_asset_content -}}
-          {{ 'templates.contact.form.post_success' | t }}
-        </h2>
-      {%- elsif form.errors -%}
-        <div class="form__message">
-          <h2 class="form-status caption-large text-body" role="alert" tabindex="-1" autofocus>
-            {{- 'icon-error.svg' | inline_asset_content -}}
-            {{ 'templates.contact.form.error_heading' | t }}
-          </h2>
-        </div>
-        <ul class="form-status-list caption-large" role="list">
-          <li>
-            <a href="#ContactForm-email" class="link">
-              {{ form.errors.translated_fields.email | capitalize }}
-              {{ form.errors.messages.email }}
-            </a>
-          </li>
-        </ul>
-      {%- endif -%}
-      <div class="contact__fields">
-        <div class="field">
-          <input
-            class="field__input"
-            autocomplete="name"
-            type="text"
-            id="ContactForm-name"
-            name="contact[{{ 'templates.contact.form.name' | t }}]"
-            value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
-            placeholder="{{ 'templates.contact.form.name' | t }}"
-          >
-          <label class="field__label" for="ContactForm-name">{{ 'templates.contact.form.name' | t }}</label>
-        </div>
-        <div class="field field--with-error">
-          <input
-            autocomplete="email"
-            type="email"
-            id="ContactForm-email"
-            class="field__input"
-            name="contact[email]"
-            spellcheck="false"
-            autocapitalize="off"
-            value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
-            aria-required="true"
-            {% if form.errors contains 'email' %}
-              aria-invalid="true"
-              aria-describedby="ContactForm-email-error"
-            {% endif %}
-            placeholder="{{ 'templates.contact.form.email' | t }}"
-          >
-          <label class="field__label" for="ContactForm-email">
-            {{- 'templates.contact.form.email' | t }}
-            <span aria-hidden="true">*</span></label
-          >
-          {%- if form.errors contains 'email' -%}
-            <small class="contact__field-error" id="ContactForm-email-error">
-              <span class="visually-hidden">{{ 'accessibility.error' | t }}</span>
-              <span class="form__message">
-                <span class="svg-wrapper">
-                  {{- 'icon-error.svg' | inline_asset_content -}}
-                </span>
-                {{- form.errors.translated_fields.email | capitalize }}
-                {{ form.errors.messages.email -}}
-              </span>
-            </small>
-          {%- endif -%}
-        </div>
-      </div>
-      <div class="field">
-        <input
-          type="tel"
-          id="ContactForm-phone"
-          class="field__input"
-          autocomplete="tel"
-          name="contact[{{ 'templates.contact.form.phone' | t }}]"
-          pattern="[0-9\-]*"
-          value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
-          placeholder="{{ 'templates.contact.form.phone' | t }}"
-        >
-        <label class="field__label" for="ContactForm-phone">{{ 'templates.contact.form.phone' | t }}</label>
-      </div>
-      <div class="field">
-        <textarea
-          rows="10"
-          id="ContactForm-body"
-          class="text-area field__input"
-          name="contact[{{ 'templates.contact.form.comment' | t }}]"
-          placeholder="{{ 'templates.contact.form.comment' | t }}"
-        >
-          {{- form.body -}}
-        </textarea>
-        <label class="form__label field__label" for="ContactForm-body">
-          {{- 'templates.contact.form.comment' | t -}}
-        </label>
-      </div>
-      <div class="contact__button">
-        <button type="submit" class="ui-btn ui-btn--primary">
-          {{ 'templates.contact.form.send' | t }}
-        </button>
-      </div>
-    {%- endform -%}
   </div>
 </div>
+
+<script>
+  (() => {
+    const root = document.getElementById('Contact-{{ section.id }}');
+
+    // Open/closed badge in Kyiv time (the Europe/Kiev name works in older browsers too); its space is kept (visibility) so nothing jumps when it appears
+    const status = root.querySelector('.contact-status');
+    try {
+      const parts = Object.fromEntries(
+        new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Kiev', weekday: 'short', hour: 'numeric', hourCycle: 'h23' })
+          .formatToParts(new Date())
+          .map((p) => [p.type, p.value])
+      );
+      const day = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].indexOf(parts.weekday) + 1;
+      const hour = Number(parts.hour);
+      const open =
+        status.dataset.openDays.split(',').map(Number).includes(day) &&
+        hour >= Number(status.dataset.openFrom) &&
+        hour < Number(status.dataset.openTo);
+      if (!open) {
+        status.textContent = status.dataset.closedText;
+        status.classList.add('contact-status--closed');
+      }
+      status.classList.add('contact-status--ready');
+    } catch (e) {
+      // No time zone support: the badge stays invisible
+    }
+
+    root.querySelectorAll('[data-copy]').forEach((button) => {
+      const label = button.textContent;
+      button.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(button.dataset.copy);
+        } catch (e) {
+          return; // clipboard blocked: the number and address stay selectable
+        }
+        button.textContent = {{ 'templates.contact.copied' | t | json }};
+        setTimeout(() => (button.textContent = label), 2000);
+      });
+    });
+  })();
+</script>
 
 {% schema %}
 {
@@ -198,40 +273,6 @@
     "groups": ["header", "footer"]
   },
   "settings": [
-    {
-      "type": "inline_richtext",
-      "id": "heading",
-      "default": "t:sections.contact-form.settings.title.default",
-      "label": "t:sections.contact-form.settings.title.label"
-    },
-    {
-      "type": "select",
-      "id": "heading_size",
-      "options": [
-        {
-          "value": "h2",
-          "label": "t:sections.all.heading_size.options__1.label"
-        },
-        {
-          "value": "h1",
-          "label": "t:sections.all.heading_size.options__2.label"
-        },
-        {
-          "value": "h0",
-          "label": "t:sections.all.heading_size.options__3.label"
-        },
-        {
-          "value": "hxl",
-          "label": "t:sections.all.heading_size.options__4.label"
-        },
-        {
-          "value": "hxxl",
-          "label": "t:sections.all.heading_size.options__5.label"
-        }
-      ],
-      "default": "h1",
-      "label": "t:sections.all.heading_size.label"
-    },
     {
       "type": "color_scheme",
       "id": "color_scheme",

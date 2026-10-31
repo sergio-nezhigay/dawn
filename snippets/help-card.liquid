@@ -49,7 +49,7 @@
       -%}
       <a
         class="help-card__btn"
-        href="https://t.me/NSergiy?text={{ draft }}"
+        href="{% render 'messenger-link', channel: 'telegram', draft: draft %}"
         target="_blank"
         rel="noopener"
         data-fit-open="{{ dialog_id }}"
@@ -57,7 +57,7 @@
         {{- 'sections.help_card.button' | t -}}
       </a>
     {%- endif -%}
-    <a class="help-card__tg" href="https://t.me/NSergiy" target="_blank" rel="noopener">
+    <a class="help-card__tg" href="{% render 'messenger-link', channel: 'telegram' %}" target="_blank" rel="noopener">
       {{- 'sections.help_card.telegram' | t -}}
     </a>
   </div>

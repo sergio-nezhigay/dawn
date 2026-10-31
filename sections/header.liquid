@@ -510,13 +510,52 @@
   customElements.define('header-dropdown-menu', HeaderDropdownMenu);
 {% endjavascript %}
 
+{%- liquid
+  capture ld_phone
+    render 'phone-number', format: 'href'
+  endcapture
+  capture ld_days
+    render 'opening-hours', part: 'days'
+  endcapture
+  capture ld_from
+    render 'opening-hours', part: 'from'
+  endcapture
+  capture ld_to
+    render 'opening-hours', part: 'to'
+  endcapture
+  assign day_names = 'Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday' | split: ','
+  assign ld_day_names = ''
+  assign ld_day_list = ld_days | split: ','
+  for day in ld_day_list
+    assign day_index = day | minus: 1
+    assign ld_day_names = ld_day_names | append: ',' | append: day_names[day_index]
+  endfor
+  assign ld_day_names = ld_day_names | remove_first: ',' | split: ','
+  assign ld_opens = ld_from | prepend: '0' | slice: -2, 2 | append: ':00'
+  assign ld_closes = ld_to | prepend: '0' | slice: -2, 2 | append: ':00'
+-%}
 <script type="application/ld+json">
   {
     "@context": "http://schema.org",
     "@type": "Organization",
     "name": {{ shop.name | json }},
     "logo": {{ 'brand-logo.png' | asset_url | prepend: "https:" | json }},
-    "url": {{ request.origin | append: page.url | json }}
+    "url": {{ request.origin | append: page.url | json }},
+    "telephone": {{ ld_phone | json }},
+    "email": {{ shop.email | json }},
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer service",
+      "telephone": {{ ld_phone | json }},
+      "email": {{ shop.email | json }},
+      "availableLanguage": ["uk", "ru", "en"],
+      "hoursAvailable": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": {{ ld_day_names | json }},
+        "opens": {{ ld_opens | json }},
+        "closes": {{ ld_closes | json }}
+      }
+    }
   }
 </script>
 
