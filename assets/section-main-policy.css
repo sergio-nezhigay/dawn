@@ -1,189 +1,185 @@
-/* Policy Page Section */
+/*
+  Policy pages: sections/main-policy.liquid prints the title; the text is the admin policy
+  (.shopify-policy__body .rte). Shipping and refund (.policy-head--sheet) are styled as one sheet
+  like the homepage conditions block. Their admin markup: a first <ul> of key facts
+  (<li><strong>Label</strong> value</li>), then one <h2> + one <p>/<ul>/<ol> per topic.
+  Phone: labels above text; desktop: label column.
+*/
+.policy-head,
 .shopify-policy__container {
-  max-width: 1200px;
+  max-width: 104rem;
   margin: 0 auto;
   padding: 0 1.5rem;
 }
 
-.shopify-policy__title h1,
-.shopify-policy__title h2 {
-    text-align: center;
-    margin-bottom: 2rem;
+.policy-head {
+  padding-top: 3.2rem;
 }
 
-/* Shopify's own policy title (inside content_for_layout, which also carries
-   .shopify-policy__body) duplicates the title already shown by this section
-   above — keep only the one heading. */
-.shopify-policy__container:has(.shopify-policy__body) .shopify-policy__title {
-    display: none;
+.shopify-policy__container {
+  padding-bottom: 5.6rem;
 }
 
-/* Card-based layout for shipping and payment */
-.policy-cards-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    margin: 2rem 0;
+/* Other policies (privacy, terms, …): plain text at a readable width */
+.shopify-policy__body .rte {
+  max-width: 76rem;
+}
+
+/* Shopify's own title; the section above prints ours */
+.shopify-policy__title {
+  display: none;
+}
+
+/* ---- Sheet (shipping, refund) ---- */
+:has(> .policy-head--sheet) + .shopify-policy__container .rte {
+  max-width: none;
+  display: grid;
+  background: #fff;
+  border: 1px solid var(--ui-line);
+  border-radius: var(--ui-radius-md);
+  overflow: hidden;
+  font-size: 1.6rem;
+  line-height: 1.6;
+}
+
+:has(> .policy-head--sheet) + .shopify-policy__container .rte > * {
+  margin: 0;
+  padding: 0 2rem 1.6rem;
+}
+
+:has(> .policy-head--sheet) + .shopify-policy__container .rte > :last-child {
+  padding-bottom: 2rem;
+}
+
+/* Topic labels and key-fact labels */
+:has(> .policy-head--sheet) + .shopify-policy__container .rte > h2,
+:has(> .policy-head--sheet) + .shopify-policy__container .rte > ul:first-child strong {
+  font: 600 1.3rem/1.6 'Chakra Petch', 'Tektur', sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ui-blue);
+}
+
+:has(> .policy-head--sheet) + .shopify-policy__container .rte > h2 {
+  padding-top: 1.8rem;
+  padding-bottom: 0.8rem;
+}
+
+/* Divider between topics (not above the first one) */
+:has(> .policy-head--sheet) + .shopify-policy__container .rte > h2 ~ h2 {
+  border-top: 1px solid var(--ui-line);
+}
+
+:has(> .policy-head--sheet) + .shopify-policy__container .rte p {
+  text-wrap: pretty;
+}
+
+:has(> .policy-head--sheet) + .shopify-policy__container .rte a {
+  color: var(--ui-blue);
+}
+
+:has(> .policy-head--sheet) + .shopify-policy__container .rte strong {
+  color: var(--ui-navy);
+}
+
+:has(> .policy-head--sheet) + .shopify-policy__container .rte ul,
+:has(> .policy-head--sheet) + .shopify-policy__container .rte ol {
+  list-style: none;
+  display: grid;
+  gap: 1rem;
+}
+
+:has(> .policy-head--sheet) + .shopify-policy__container .rte li {
+  position: relative;
+  margin: 0;
+  padding-left: 1.8rem;
+}
+
+:has(> .policy-head--sheet) + .shopify-policy__container .rte > ul:not(:first-child) li::before {
+  content: '';
+  position: absolute;
+  left: 0.2rem;
+  top: 0.65em;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: var(--ui-blue);
+}
+
+/* Numbered steps */
+:has(> .policy-head--sheet) + .shopify-policy__container .rte ol {
+  counter-reset: policy-step;
+}
+
+:has(> .policy-head--sheet) + .shopify-policy__container .rte ol li {
+  counter-increment: policy-step;
+  min-height: 2.8rem;
+  padding-left: 4rem;
+}
+
+:has(> .policy-head--sheet) + .shopify-policy__container .rte ol li::before {
+  content: counter(policy-step);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2.8rem;
+  height: 2.8rem;
+  border-radius: 50%;
+  background: var(--ui-navy);
+  color: #fff;
+  font: 600 1.4rem/2.8rem 'Chakra Petch', 'Tektur', sans-serif;
+  text-align: center;
+}
+
+/* Key facts: the first list */
+:has(> .policy-head--sheet) + .shopify-policy__container .rte > ul:first-child {
+  padding: 1.6rem 2rem;
+  background: var(--ui-tint);
+  border-bottom: 1px solid var(--ui-line);
+}
+
+:has(> .policy-head--sheet) + .shopify-policy__container .rte > ul:first-child li {
+  display: grid;
+  gap: 0.2rem;
+  align-content: start;
+  padding-left: 0;
+  color: var(--ui-navy);
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+:has(> .policy-head--sheet) + .shopify-policy__container .rte > ul:first-child strong {
+  line-height: 1.2;
 }
 
 @media screen and (min-width: 750px) {
-    .policy-cards-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 2rem;
-    }
+  :has(> .policy-head--sheet) + .shopify-policy__container .rte {
+    grid-template-columns: 23rem 1fr;
+  }
 
-    /* Featured card (e.g. warranty) spans the full row so it stands out
-       at the top instead of sharing a row half-width. */
-    .policy-card--featured {
-        grid-column: 1 / -1;
-    }
-}
+  :has(> .policy-head--sheet) + .shopify-policy__container .rte > ul:first-child {
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 2.4rem;
+  }
 
-.policy-card {
-    background-color: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
-    padding: 2.5rem;
-    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    transition: border-color 0.2s ease;
-}
+  :has(> .policy-head--sheet) + .shopify-policy__container .rte > h2 {
+    grid-column: 1;
+    padding: 2.4rem 1.6rem 2rem 2rem;
+  }
 
-.policy-card:hover {
-    border-color: #bfdbfe;
-    /*box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-    transform: translateY(-2px);*/
-}
+  :has(> .policy-head--sheet) + .shopify-policy__container .rte > h2 + * {
+    grid-column: 2;
+    padding: 2rem 2.4rem;
+  }
 
-.policy-card__header {
-    display: flex;
-    align-items: center;
-    gap: 1.2rem;
-}
+  /* A second paragraph or list under the same topic */
+  :has(> .policy-head--sheet) + .shopify-policy__container .rte > :not(h2, :first-child, h2 + *) {
+    grid-column: 2;
+    padding: 0 2.4rem 2rem;
+  }
 
-.contact-info-icon {
-    flex-shrink: 0;
-    width: 4rem;
-    height: 4rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: transparent;
-    border: 2px solid #e5e7eb;
-    border-radius: 8px;
-    transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
-}
-
-.contact-info-icon svg {
-    width: 2rem;
-    height: 2rem;
-    color: #6b7280;
-    stroke-width: 1.5;
-}
-
-.policy-card .contact-info-icon {
-    margin-right: 0;
-}
-
-.policy-card:hover .contact-info-icon {
-    transform: scale(1.05);
-    border-color: #bfdbfe;
-}
-
-/*.policy-card:hover .contact-info-icon svg {
-    color: #bfdbfe;
-}*/
-
-.policy-card__title {
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: #111827;
-    margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-.policy-card__content {
-    font-size: 1.5rem;
-    line-height: 1.6;
-    color: #374151;
-}
-
-.policy-card__content p {
-    margin: 0.5rem 0;
-}
-
-.policy-card__content strong {
-    color: #111827;
-}
-
-.policy-card__list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
-}
-
-.policy-card__item {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-}
-
-.policy-card__item-title {
-    font-weight: 600;
-    color: #111827;
-}
-
-.policy-card__item-desc {
-    font-size: 1.4rem;
-    color: #6b7280;
-}
-
-.policy-card__footer {
-    font-size: 1.3rem;
-    font-style: italic;
-    color: #6b7280;
-    border-top: 1px solid #f3f4f6;
-    padding-top: 1rem;
-    margin-top: auto;
-}
-
-/* Real policy text (Shopify Admin content) below the cards */
-.shopify-policy__body .rte {
-    max-width: 760px;
-    margin: 0 auto;
-}
-
-.shopify-policy__body .rte .section {
-    padding: 1.5rem 0;
-    border-top: 1px solid #f3f4f6;
-}
-
-.shopify-policy__body .rte .section:first-child {
-    border-top: none;
-    padding-top: 0;
-}
-
-.shopify-policy__body .rte .section h2 {
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: #111827;
-    margin: 0 0 1rem;
-}
-
-.shopify-policy__body .rte .section p {
-    font-size: 1.5rem;
-    line-height: 1.6;
-    color: #374151;
-    margin: 0 0 1rem;
-}
-
-.shopify-policy__body .rte .section p:last-child {
-    margin-bottom: 0;
+  :has(> .policy-head--sheet) + .shopify-policy__container .rte > h2 ~ h2 + * {
+    border-top: 1px solid var(--ui-line);
+  }
 }

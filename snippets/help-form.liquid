@@ -10,8 +10,13 @@
   @param {string} intro - Translated first line of the pre-typed message (says which catalog it came from)
 {%- enddoc -%}
 {%- liquid
-  assign phone = '(099) 381-5288'
-  assign phone_href = 'tel:+380993815288'
+  capture phone
+    render 'phone-number', format: 'display'
+  endcapture
+  capture phone_href
+    echo 'tel:'
+    render 'phone-number', format: 'href'
+  endcapture
   assign model_id = 'HelpModel-' | append: id
   assign error_id = 'HelpError-' | append: id
   assign label_key = 'sections.home_fit_check.label_' | append: goal | append: '_html'

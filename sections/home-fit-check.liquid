@@ -4,8 +4,13 @@
 
 {%- liquid
   assign goals = 'memory,charger,adapter' | split: ','
-  assign phone = '(099) 381-5288'
-  assign phone_href = 'tel:+380993815288'
+  capture phone
+    render 'phone-number', format: 'display'
+  endcapture
+  capture phone_href
+    echo 'tel:'
+    render 'phone-number', format: 'href'
+  endcapture
   assign model_id = 'FitModel-' | append: section.id
   assign error_id = 'FitError-' | append: section.id
   assign installed_id = 'FitInstalled-' | append: section.id
