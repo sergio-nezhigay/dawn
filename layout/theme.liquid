@@ -50,7 +50,7 @@
     {%- elsif template contains 'collection' -%}
       <meta name="description" content="{{ 'general.meta.collection_description_fallback' | t: title: collection.title | escape }}">
     {%- elsif request.page_type == 'policy' and content_for_layout != blank -%}
-      <meta name="description" content="{{ content_for_layout | strip_html | truncate: 155 | escape }}">
+      <meta name="description" content="{{ content_for_layout | strip_html | replace: '&nbsp;', ' ' | split: ' ' | join: ' ' | truncate: 155 | escape }}">
     {%- elsif template contains 'page' and page.content != blank -%}
       <meta name="description" content="{{ page.content | strip_html | truncate: 155 | escape }}">
     {%- else -%}

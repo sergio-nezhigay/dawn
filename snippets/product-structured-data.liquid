@@ -7,7 +7,7 @@
   - barcode holds the manufacturer part number on most products, which the filter emits
     as "gtin" (Google: "Invalid GTIN"). Alphanumeric barcodes become "mpn"; short numeric
     internal codes are dropped; valid 8/12/13/14-digit barcodes stay "gtin".
-  - every Offer gets shippingDetails (UA, 1-2 days) and hasMerchantReturnPolicy (14 days).
+  - every Offer gets shippingDetails (UA, dispatch 1-2 + transit 1-3 days) and hasMerchantReturnPolicy (14 days).
 
   Products with every variant priced 0 (legacy sold-out items) get no Product markup:
   a 0 price reads as "free", and Product markup without an offer is flagged by Google.
@@ -44,8 +44,8 @@
     echo '"shippingDetails":{"@type":"OfferShippingDetails",'
     echo '"shippingDestination":{"@type":"DefinedRegion","addressCountry":"UA"},'
     echo '"deliveryTime":{"@type":"ShippingDeliveryTime",'
-    echo '"handlingTime":{"@type":"QuantitativeValue","minValue":0,"maxValue":1,"unitCode":"DAY"},'
-    echo '"transitTime":{"@type":"QuantitativeValue","minValue":1,"maxValue":1,"unitCode":"DAY"}}},'
+    echo '"handlingTime":{"@type":"QuantitativeValue","minValue":1,"maxValue":2,"unitCode":"DAY"},'
+    echo '"transitTime":{"@type":"QuantitativeValue","minValue":1,"maxValue":3,"unitCode":"DAY"}}},'
     echo '"hasMerchantReturnPolicy":{"@type":"MerchantReturnPolicy","applicableCountry":"UA",'
     echo '"returnPolicyCategory":"https://schema.org/MerchantReturnFiniteReturnWindow",'
     echo '"merchantReturnDays":14,"returnMethod":"https://schema.org/ReturnByMail"},'
