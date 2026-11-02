@@ -4,43 +4,37 @@ if (!customElements.get('product-modal')) {
     class ProductModal extends ModalDialog {
       constructor() {
         super();
-        this._mediaItems = [];
-        this._currentIndex = 0;
-        this._currentScale = 1;
-        this._translateX = 0;
-        this._translateY = 0;
-        this._touchStartX = 0;
-        this._touchStartY = 0;
-        this._lastTouchX = 0;
-        this._lastTouchY = 0;
-        this._touchStartTime = 0;
-        this._touchStartDist = 0;
-        this._touchStartScale = 1;
-        this._pinching = false;
-        this._lastTapTime = 0;
-        this._isFullscreen = false;
-        this._onTouchStart = this._onTouchStart.bind(this);
-        this._onTouchMove = this._onTouchMove.bind(this);
-        this._onTouchEnd = this._onTouchEnd.bind(this);
-        this._onPrevClick = (e) => { e.stopPropagation(); this._navigate(-1); };
-        this._onNextClick = (e) => { e.stopPropagation(); this._navigate(1); };
-        this._stopPointerUp = (e) => e.stopPropagation();
-      }
-
-      hide() {
-        super.hide();
-        if (this._isFullscreen) this._teardown();
+        this._items = [];
+        this._index = 0;
+        this._scale = 1;
+        this._tx = 0;
+        this._ty = 0;
+        this._gesture = null;
+        this._lastTap = null;
+        // Back to a page restored from the back/forward cache with the viewer still open: close it.
+        window.addEventListener('pageshow', (e) => {
+          if (e.persisted && this.hasAttribute('open')) this.hide();
+        });
       }
 
       show(opener) {
+        // Phones, also when held sideways (wider than 750px): the layout follows this attribute, not a media query.
+        const fullscreen =
+          this.dataset.mobileStyle === 'fullscreen' &&
+          (window.innerWidth < 750 || (matchMedia('(pointer: coarse)').matches && window.innerHeight < 750));
+        this.toggleAttribute('data-fullscreen', fullscreen);
+        if (fullscreen) this._setupFullscreen(opener);
         super.show(opener);
-        this._isFullscreen =
-          this.dataset.mobileStyle === 'fullscreen' && window.innerWidth < 750;
-        if (this._isFullscreen) {
-          this._setupFullscreen(opener);
-        } else {
-          this._showActiveMedia(opener);
+        if (!fullscreen) this._showActiveMedia(opener);
+      }
+
+      hide() {
+        if (this.hasAttribute('data-fullscreen')) {
+          this._syncPageGallery();
+          this._teardown();
+          if (this._historyEntry) this._dropHistoryEntry();
         }
+        super.hide();
       }
 
       _showActiveMedia(opener) {
@@ -62,170 +56,271 @@ if (!customElements.get('product-modal')) {
           activeMedia.loadContent();
       }
 
-      // kept for compatibility with external callers
-      showActiveMedia() {
-        if (this.openedBy) this._showActiveMedia(this.openedBy);
-      }
-
       _setupFullscreen(opener) {
-        const openedId = opener.getAttribute('data-media-id');
-        this._mediaItems = Array.from(this.querySelectorAll('[data-media-id]'));
-        const idx = this._mediaItems.findIndex(
-          (el) => el.getAttribute('data-media-id') === openedId
-        );
-        this._currentIndex = idx >= 0 ? idx : 0;
-        this._currentScale = 1;
-        this._translateX = 0;
-        this._translateY = 0;
-
-        this._updateSlide(false);
-        this._updateCounter();
+        this._content = this.querySelector('[role="document"]');
+        this._items = Array.from(this._content.children);
+        const idx = this._items.findIndex((el) => el.dataset.mediaId === opener.dataset.mediaId);
+        this._reusePagePhotos();
+        this._goTo(Math.max(idx, 0), false);
 
         // Touch listeners on dialog — it always covers the full viewport regardless
         // of where the content strip is translated to. Listening on the content element
         // itself breaks for images 2+ because translateX moves it out of the hit area.
+        this._listeners = new AbortController();
+        const signal = this._listeners.signal;
         const dialog = this.querySelector('.product-media-modal__dialog');
-        dialog.addEventListener('touchstart', this._onTouchStart, { passive: true });
-        dialog.addEventListener('touchmove', this._onTouchMove, { passive: false });
-        dialog.addEventListener('touchend', this._onTouchEnd, { passive: true });
-        dialog.addEventListener('pointerup', this._stopPointerUp);
-
-        this.querySelector('.product-media-modal__prev')?.addEventListener('click', this._onPrevClick);
-        this.querySelector('.product-media-modal__next')?.addEventListener('click', this._onNextClick);
+        const arrow = (selector, step) =>
+          this.querySelector(selector).addEventListener(
+            'click',
+            (e) => {
+              e.stopPropagation();
+              this._goTo(this._index + step, true);
+            },
+            { signal }
+          );
+        dialog.addEventListener('touchstart', (e) => this._onTouchStart(e), { passive: true, signal });
+        dialog.addEventListener('touchmove', (e) => this._onTouchMove(e), { passive: false, signal });
+        dialog.addEventListener('touchend', (e) => this._onTouchEnd(e), { passive: true, signal });
+        dialog.addEventListener('pointerup', (e) => e.stopPropagation(), { signal });
+        // Rotation: same photo, re-laid out for the new width. Height-only changes (URL bar) keep the zoom.
+        window.addEventListener('resize', () => window.innerWidth !== this._width && this._goTo(this._index, false), {
+          signal,
+        });
+        arrow('.product-media-modal__prev', -1);
+        arrow('.product-media-modal__next', 1);
+        this._pushHistoryEntry();
       }
 
       _teardown() {
-        const dialog = this.querySelector('.product-media-modal__dialog');
-        if (dialog) {
-          dialog.removeEventListener('touchstart', this._onTouchStart);
-          dialog.removeEventListener('touchmove', this._onTouchMove);
-          dialog.removeEventListener('touchend', this._onTouchEnd);
-          dialog.removeEventListener('pointerup', this._stopPointerUp);
-        }
-        this.querySelector('.product-media-modal__prev')?.removeEventListener('click', this._onPrevClick);
-        this.querySelector('.product-media-modal__next')?.removeEventListener('click', this._onNextClick);
-
-        const content = this.querySelector('[role="document"]');
-        if (content) content.style.cssText = '';
-        this._mediaItems.forEach((el) => (el.style.transform = ''));
-        this._isFullscreen = false;
+        this._listeners.abort();
+        this._content.style.cssText = '';
+        this._items.forEach((el) => (el.style.cssText = ''));
+        this.removeAttribute('data-fullscreen');
+        this.removeAttribute('data-zoomed');
       }
 
-      _navigate(dir) {
-        const next = this._currentIndex + dir;
-        if (next < 0 || next >= this._mediaItems.length) return;
-        this._currentIndex = next;
-        this._currentScale = 1;
-        this._translateX = 0;
-        this._translateY = 0;
-        this._updateSlide(true);
-        this._updateCounter();
+      // The phone's Back button should close the viewer, not leave the page (same pattern as HeaderDrawer in global.js).
+      _pushHistoryEntry() {
+        if (this._historyEntry || this._historyBackPending) return;
+        history.pushState({ ...history.state, productModal: true }, '');
+        this._historyEntry = true;
+        window.addEventListener('popstate', this._onPopState);
       }
 
-      _updateSlide(animated) {
-        const content = this.querySelector('[role="document"]');
-        if (!content) return;
-        content.style.transition = animated ? 'transform 0.28s ease' : 'none';
-        content.style.transform = `translateX(${-this._currentIndex * window.innerWidth}px)`;
-        this._mediaItems.forEach((el) => (el.style.transform = ''));
-        this._setNavVisibility(true);
+      _onPopState = () => {
+        this._historyEntry = false;
+        window.removeEventListener('popstate', this._onPopState);
+        this.hide();
+      };
+
+      // history.back() is asynchronous; a viewer reopened before it lands gets its entry once it does.
+      _dropHistoryEntry() {
+        this._historyEntry = false;
+        this._historyBackPending = true;
+        window.removeEventListener('popstate', this._onPopState);
+        window.addEventListener(
+          'popstate',
+          () => {
+            this._historyBackPending = false;
+            if (this.hasAttribute('data-fullscreen')) this._pushHistoryEntry();
+          },
+          { once: true }
+        );
+        history.back();
       }
 
-      _updateCounter() {
-        const indexEl = this.querySelector('.product-media-modal__index');
-        if (indexEl) indexEl.textContent = this._currentIndex + 1;
+      // Show the photo last viewed here in the page gallery too, without scrolling the page.
+      _syncPageGallery() {
+        const id = this._items[this._index]?.dataset.mediaId;
+        const slide = document.querySelector(`media-gallery [data-media-id="${this.dataset.section}-${id}"]`);
+        if (!slide) return;
+        slide.parentElement.scrollTo({ left: slide.offsetLeft, behavior: 'instant' });
+        this.openedBy = slide.querySelector('.product__media-toggle') || this.openedBy;
+      }
+
+      // A page photo that is already as sharp as the screen needs is shown as is: no second download.
+      // (naturalWidth of a srcset image is density-corrected, so the width comes from the URL.)
+      _reusePagePhotos() {
+        const needed = window.innerWidth * window.devicePixelRatio * 0.9;
+        this._items.forEach((item) => {
+          if (item.tagName !== 'IMG' || item.dataset.reused) return;
+          const pageImg = document.querySelector(
+            `media-gallery [data-media-id="${this.dataset.section}-${item.dataset.mediaId}"] img`
+          );
+          const original = Number(item.dataset.originalWidth);
+          const width = Math.min(Number(pageImg?.currentSrc.match(/[?&]width=(\d+)/)?.[1] || original), original);
+          if (!pageImg?.complete || width < Math.min(needed, original)) return;
+          item.removeAttribute('srcset');
+          item.src = pageImg.currentSrc;
+          item.dataset.reused = true;
+          if (width >= original) delete item.dataset.zoomSrc; // already the full photo
+        });
+      }
+
+      // Zoom shows the original photo; until it arrives the screen-sized one stays.
+      _loadOriginal(item) {
+        const url = item.dataset.zoomSrc;
+        if (!url || item.currentSrc === url || item.dataset.zoomLoading) return;
+        item.dataset.zoomLoading = true;
+        const original = new Image();
+        original.onload = () => {
+          item.removeAttribute('srcset');
+          item.src = url;
+        };
+        original.src = url;
+      }
+
+      _goTo(index, animated) {
+        this._index = Math.min(Math.max(index, 0), this._items.length - 1);
+        this._width = window.innerWidth;
+        this._resetZoom();
+        this._slideTo(0, animated);
+        this.querySelector('.product-media-modal__index').textContent = this._index + 1;
+      }
+
+      _slideTo(offset, animated) {
+        this._content.style.transition = animated ? 'transform 0.28s ease' : 'none';
+        this._content.style.transform = `translateX(${offset - this._index * window.innerWidth}px)`;
+      }
+
+      _resetZoom() {
+        this._items.forEach((el) => (el.style.transform = ''));
+        this._scale = 1;
+        this._tx = 0;
+        this._ty = 0;
+        this.removeAttribute('data-zoomed');
+      }
+
+      // Zoom to `scale`, keeping the photo point under (x, y) where it is.
+      _zoomTo(scale, x, y, animated) {
+        const item = this._items[this._index];
+        if (item.tagName !== 'IMG') return;
+        const { cx, cy } = this._center(item);
+        const k = scale / this._scale;
+        this._tx = x - cx - (x - cx - this._tx) * k;
+        this._ty = y - cy - (y - cy - this._ty) * k;
+        this._scale = scale;
+        if (scale > 1) this._loadOriginal(item);
+        this._applyZoom(animated);
+      }
+
+      // Centre of the current photo before zoom and pan (the rendered box minus the rendered pan).
+      _center(item) {
+        const r = item.getBoundingClientRect();
+        const m = new DOMMatrix(getComputedStyle(item).transform);
+        return { cx: r.left + r.width / 2 - m.e, cy: r.top + r.height / 2 - m.f };
+      }
+
+      // Pan stops at the photo's edges: never a blank screen. object-fit: contain letterboxes the photo inside the box.
+      _applyZoom(animated) {
+        const item = this._items[this._index];
+        const { cx, cy } = this._center(item);
+        const w = item.naturalWidth || item.offsetWidth;
+        const h = item.naturalHeight || item.offsetHeight;
+        const size = Math.min(item.offsetWidth / w, item.offsetHeight / h) * this._scale;
+        const clamp = (t, c, length, view) =>
+          length <= view ? 0 : Math.min(length / 2 - c, Math.max(view - c - length / 2, t));
+        this._tx = clamp(this._tx, cx, w * size, window.innerWidth);
+        this._ty = clamp(this._ty, cy, h * size, window.innerHeight);
+        item.style.transition = animated ? 'transform 0.25s ease' : 'none';
+        item.style.transform = `translate(${this._tx}px, ${this._ty}px) scale(${this._scale})`;
+        // hide nav arrows while zoomed so user pans instead of navigates
+        this.toggleAttribute('data-zoomed', this._scale > 1);
       }
 
       _onTouchStart(e) {
-        if (e.touches.length === 2) {
-          this._touchStartDist = this._pinchDist(e);
-          this._touchStartScale = this._currentScale;
-          this._pinching = true;
+        const [a, b] = e.touches;
+        if (b) {
+          this._gesture = { type: 'pinch', dist: this._dist(a, b) };
           return;
         }
-        this._pinching = false;
-        this._touchStartX = e.touches[0].clientX;
-        this._touchStartY = e.touches[0].clientY;
-        this._lastTouchX = e.touches[0].clientX;
-        this._lastTouchY = e.touches[0].clientY;
-        this._touchStartTime = Date.now();
+        const time = Date.now();
+        this._gesture = { type: null, x: a.clientX, y: a.clientY, lastX: a.clientX, lastY: a.clientY, time, trail: [[a.clientX, time]] };
       }
 
       _onTouchMove(e) {
-        if (e.touches.length === 2 && this._pinching) {
-          e.preventDefault();
-          const dist = this._pinchDist(e);
-          this._currentScale = Math.min(
-            4,
-            Math.max(1, this._touchStartScale * (dist / this._touchStartDist))
-          );
-          this._applyZoom();
+        const g = this._gesture;
+        if (!g) return;
+        const [a, b] = e.touches;
+        e.preventDefault();
+
+        if (g.type === 'pinch') {
+          if (!b) return;
+          const dist = this._dist(a, b);
+          const scale = Math.min(4, Math.max(1, this._scale * (dist / g.dist)));
+          g.dist = dist;
+          this._zoomTo(scale, (a.clientX + b.clientX) / 2, (a.clientY + b.clientY) / 2, false);
           return;
         }
-        if (e.touches.length === 1 && this._currentScale > 1) {
-          e.preventDefault();
-          this._translateX += e.touches[0].clientX - this._lastTouchX;
-          this._translateY += e.touches[0].clientY - this._lastTouchY;
-          this._lastTouchX = e.touches[0].clientX;
-          this._lastTouchY = e.touches[0].clientY;
-          this._applyZoom();
+
+        if (this._scale > 1) {
+          this._tx += a.clientX - g.lastX;
+          this._ty += a.clientY - g.lastY;
+          g.lastX = a.clientX;
+          g.lastY = a.clientY;
+          this._applyZoom(false);
+          return;
         }
+        if (g.type === 'idle') return;
+
+        const dx = a.clientX - g.x;
+        const dy = a.clientY - g.y;
+        if (!g.type && Math.max(Math.abs(dx), Math.abs(dy)) > 8) g.type = Math.abs(dx) > Math.abs(dy) ? 'swipe' : 'scroll';
+        if (g.type !== 'swipe') return;
+        const now = Date.now();
+        g.trail.push([a.clientX, now]);
+        while (now - g.trail[0][1] > 100) g.trail.shift(); // only the last 100 ms decides a flick
+        // the photo follows the finger; past the first or last photo it resists
+        const atEdge = (dx > 0 && this._index === 0) || (dx < 0 && this._index === this._items.length - 1);
+        this._slideTo(atEdge ? dx * 0.35 : dx, false);
       }
 
       _onTouchEnd(e) {
-        this._pinching = false;
-        if (this._currentScale > 1) return;
+        const g = this._gesture;
+        if (!g) return;
+        const [a] = e.touches;
+        // One finger lifted mid-pinch: the other one may pan, but never counts as a tap or a swipe.
+        if (a) {
+          this._gesture = { type: 'idle', lastX: a.clientX, lastY: a.clientY };
+          return;
+        }
+        this._gesture = null;
+        if (g.type === 'pinch' || g.type === 'idle') {
+          if (this._scale < 1.05) this._resetZoom();
+          return;
+        }
 
         const touch = e.changedTouches[0];
-        const deltaX = touch.clientX - this._touchStartX;
-        const deltaY = touch.clientY - this._touchStartY;
-        const elapsed = Date.now() - this._touchStartTime;
+        const dx = touch.clientX - g.x;
+        const dy = touch.clientY - g.y;
+        const elapsed = Date.now() - g.time;
 
-        // double-tap → toggle 2.5× zoom
-        if (elapsed < 250 && Math.abs(deltaX) < 12 && Math.abs(deltaY) < 12) {
+        if (g.type === 'swipe') {
+          // a flick: finger speed over its last 100 ms, in the swipe's direction
           const now = Date.now();
-          if (now - this._lastTapTime < 350) {
-            this._currentScale = this._currentScale > 1 ? 1 : 2.5;
-            this._translateX = 0;
-            this._translateY = 0;
-            this._applyZoom();
-            this._lastTapTime = 0;
-            return;
-          }
-          this._lastTapTime = now;
+          const [x0, t0] = g.trail.find(([, t]) => now - t <= 100) || [touch.clientX, now];
+          const v = (touch.clientX - x0) / Math.max(now - t0, 1);
+          const flick = Math.abs(dx) > window.innerWidth * 0.2 || (Math.abs(v) > 0.4 && v * dx > 0);
+          const next = this._index + (dx < 0 ? 1 : -1);
+          if (flick && next >= 0 && next < this._items.length) this._goTo(next, true);
+          else this._slideTo(0, true);
+          return;
         }
 
-        // horizontal swipe
-        if (Math.abs(deltaX) > 48 && Math.abs(deltaX) > Math.abs(deltaY) * 1.5) {
-          this._navigate(deltaX < 0 ? 1 : -1);
+        // double-tap → toggle 2.5× zoom at the tapped point
+        if (g.type || elapsed > 250 || Math.hypot(dx, dy) > 12) return;
+        const now = Date.now();
+        const last = this._lastTap;
+        if (last && now - last.time < 350 && Math.hypot(touch.clientX - last.x, touch.clientY - last.y) < 40) {
+          this._lastTap = null;
+          this._zoomTo(this._scale > 1 ? 1 : 2.5, touch.clientX, touch.clientY, true);
+          return;
         }
+        this._lastTap = { time: now, x: touch.clientX, y: touch.clientY };
       }
 
-      _applyZoom() {
-        const item = this._mediaItems[this._currentIndex];
-        if (!item) return;
-        item.style.transition = 'transform 0.08s';
-        item.style.transformOrigin = 'center center';
-        item.style.transform = `scale(${this._currentScale}) translate(${
-          this._translateX / this._currentScale
-        }px, ${this._translateY / this._currentScale}px)`;
-        // hide nav arrows while zoomed so user pans instead of navigates
-        this._setNavVisibility(this._currentScale <= 1);
-      }
-
-      _setNavVisibility(visible) {
-        const prev = this.querySelector('.product-media-modal__prev');
-        const next = this.querySelector('.product-media-modal__next');
-        const opacity = visible ? '' : '0';
-        const pointerEvents = visible ? '' : 'none';
-        if (prev) { prev.style.opacity = opacity; prev.style.pointerEvents = pointerEvents; }
-        if (next) { next.style.opacity = opacity; next.style.pointerEvents = pointerEvents; }
-      }
-
-      _pinchDist(e) {
-        const dx = e.touches[0].clientX - e.touches[1].clientX;
-        const dy = e.touches[0].clientY - e.touches[1].clientY;
-        return Math.sqrt(dx * dx + dy * dy);
+      _dist(a, b) {
+        return Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
       }
     }
   );
