@@ -95,18 +95,6 @@
             {{- 'icon-caret.svg' | inline_asset_content -}}
           </span>
         </button>
-        <div class="slider-counter slider-counter--dots">
-          {%- for i in (1..media_count) -%}
-            <button
-              type="button"
-              class="slider-counter__link slider-counter__link--dots link"
-              aria-label="{{ 'sections.slideshow.load_slide' | t }} {{ forloop.index }} {{ 'general.slider.of' | t }} {{ media_count }}"
-              aria-controls="Slider-Gallery-{{ section.id }}"
-            >
-              <span class="dot"></span>
-            </button>
-          {%- endfor -%}
-        </div>
         <button
           type="button"
           class="slider-button slider-button--next"
@@ -117,6 +105,20 @@
             {{- 'icon-caret.svg' | inline_asset_content -}}
           </span>
         </button>
+      </div>
+    {%- endif -%}
+    {%- comment -%} Phones: one chip on the photo says "opens bigger" and "photo N of M"; SliderComponent updates the numbers {%- endcomment -%}
+    {%- if media_count > 1 or product.media.first.media_type == 'image' -%}
+      <div class="product__media-counter quick-add-hidden">
+        <span class="svg-wrapper" aria-hidden="true">{{- 'icon-expand.svg' | inline_asset_content -}}</span>
+        {%- if media_count > 1 -%}
+          <span>
+            <span class="slider-counter--current">1</span>
+            <span aria-hidden="true">/</span>
+            <span class="visually-hidden">{{ 'general.slider.of' | t }}</span>
+            <span class="slider-counter--total">{{ media_count }}</span>
+          </span>
+        {%- endif -%}
       </div>
     {%- endif -%}
   </slider-component>
