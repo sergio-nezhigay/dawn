@@ -1758,11 +1758,18 @@ a.product__text {
   object-fit: contain;
   width: 100%;
   height: auto;
-  border: none;
-  border-radius: 0;
   background: none; /* the slide is screen-wide: no white bars beside the photo when the phone is sideways */
   pointer-events: none;
   user-select: none;
+}
+
+.product-media-modal[data-fullscreen] .global-media-settings,
+.product-media-modal[data-fullscreen] .global-media-settings video,
+.product-media-modal[data-fullscreen] .global-media-settings model-viewer,
+.product-media-modal[data-fullscreen] .global-media-settings iframe,
+.product-media-modal[data-fullscreen] .global-media-settings img {
+  border: none;
+  border-radius: 0;
 }
 
 .product-media-modal[data-fullscreen] .product-media-modal__prev,

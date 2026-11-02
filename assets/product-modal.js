@@ -81,6 +81,11 @@ if (!customElements.get('product-modal')) {
         dialog.addEventListener('touchstart', (e) => this._onTouchStart(e), { passive: true, signal });
         dialog.addEventListener('touchmove', (e) => this._onTouchMove(e), { passive: false, signal });
         dialog.addEventListener('touchend', (e) => this._onTouchEnd(e), { passive: true, signal });
+        // the system took the touch (call, edge-back gesture): settle on the current photo
+        dialog.addEventListener('touchcancel', () => {
+          this._gesture = null;
+          this._slideTo(0, true);
+        }, { passive: true, signal });
         dialog.addEventListener('pointerup', (e) => e.stopPropagation(), { signal });
         // Rotation: same photo, re-laid out for the new width. Height-only changes (URL bar) keep the zoom.
         window.addEventListener('resize', () => window.innerWidth !== this._width && this._goTo(this._index, false), {
@@ -167,6 +172,7 @@ if (!customElements.get('product-modal')) {
           item.removeAttribute('srcset');
           item.src = url;
         };
+        original.onerror = () => delete item.dataset.zoomLoading; // try again on the next zoom
         original.src = url;
       }
 
@@ -229,8 +235,14 @@ if (!customElements.get('product-modal')) {
       }
 
       _onTouchStart(e) {
+        // taps on the arrows and the close button are clicks, not swipes or double-taps
+        if (e.target.closest('button')) {
+          this._gesture = null;
+          return;
+        }
         const [a, b] = e.touches;
         if (b) {
+          if (this._gesture?.type === 'swipe') this._slideTo(0, true); // a second finger turns a swipe into a pinch
           this._gesture = { type: 'pinch', dist: this._dist(a, b) };
           return;
         }
