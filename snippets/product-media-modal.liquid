@@ -30,11 +30,11 @@
       {{ 'icon-close.svg' | inline_asset_content }}
     </button>
 
-      <button class="product-media-modal__prev" type="button" aria-label="Previous image">&#8249;</button>
-      <button class="product-media-modal__next" type="button" aria-label="Next image">&#8250;</button>
-      <div class="product-media-modal__counter" aria-live="polite" aria-atomic="true">
-        <span class="product-media-modal__index">1</span>&thinsp;/&thinsp;<span class="product-media-modal__total">{{ product.media.size }}</span>
-      </div>
+    <button class="product-media-modal__prev" type="button" aria-label="{{ 'general.slider.previous_slide' | t }}">&#8249;</button>
+    <button class="product-media-modal__next" type="button" aria-label="{{ 'general.slider.next_slide' | t }}">&#8250;</button>
+    <div class="product-media-modal__counter" aria-live="polite" aria-atomic="true">
+      <span class="product-media-modal__index">1</span>&thinsp;/&thinsp;<span class="product-media-modal__total">{{ product.media.size }}</span>
+    </div>
 
     <div
       class="product-media-modal__content color-scheme-1 gradient"
