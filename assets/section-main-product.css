@@ -248,12 +248,13 @@ product-info {
     height: 1.4rem;
     width: 1.4rem;
   }
+}
 
-  /* Normalize image height for consistent button positioning */
-  .product__media-list .product-media-container {
-    --aspect-ratio: 1 !important;
-    --ratio-percent: 100% !important;
-  }
+/* Same square frame for every photo on all screens: no height jumps between slides or products,
+   and the slider buttons stay in one place */
+.product__media-list .product-media-container {
+  --aspect-ratio: 1 !important;
+  --ratio-percent: 100% !important;
 }
 
 /* Desktop only: hover-to-reveal gating (mouse-only interaction, not viable on touch) */
@@ -619,12 +620,6 @@ a.product__text {
     margin: 0 0 0.8rem;
   }
 
-  /* Same square frame for every photo (as on desktop): no height jumps between slides or products */
-  .product__media-list .product-media-container {
-    --aspect-ratio: 1 !important;
-    --ratio-percent: 100% !important;
-  }
-
   /*
     Anchor corner overlays to the photo frame, not the gallery. The slide is the gallery width minus a 4px
     gutter; on short screens the frame shrinks to the theme's constrained height and is centred.
@@ -872,10 +867,6 @@ a.product__text {
   top: 1.2rem;
   z-index: 1;
   transition: color var(--duration-short) ease, opacity var(--duration-short) ease;
-}
-
-.product__media-video .product__media-icon {
-  opacity: 1;
 }
 
 .product__modal-opener--image .product__media-toggle:hover {
@@ -1413,11 +1404,6 @@ a.product__text {
 
 .image-magnify-hover {
   cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26' viewBox='0 0 36 36'%3E%3Ccircle cx='14' cy='14' r='11' fill='white' stroke='white' stroke-width='4'/%3E%3Cline x1='9' y1='14' x2='19' y2='14' stroke='white' stroke-width='4.5' stroke-linecap='round'/%3E%3Cline x1='14' y1='9' x2='14' y2='19' stroke='white' stroke-width='4.5' stroke-linecap='round'/%3E%3Cline x1='22' y1='22' x2='30' y2='30' stroke='white' stroke-width='5.5' stroke-linecap='round'/%3E%3Ccircle cx='14' cy='14' r='11' fill='white' stroke='black' stroke-width='2'/%3E%3Cline x1='9' y1='14' x2='19' y2='14' stroke='black' stroke-width='2.5' stroke-linecap='round'/%3E%3Cline x1='14' y1='9' x2='14' y2='19' stroke='black' stroke-width='2.5' stroke-linecap='round'/%3E%3Cline x1='22' y1='22' x2='30' y2='30' stroke='black' stroke-width='3.5' stroke-linecap='round'/%3E%3C/svg%3E") 10 10, zoom-in;
-}
-
-.product__modal-opener--image .product__media-zoom-none,
-.product__media-icon--none {
-  display: none;
 }
 
 .product__modal-opener > .loading__spinner {

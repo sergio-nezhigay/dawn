@@ -20,8 +20,7 @@ if (!customElements.get('product-modal')) {
       show(opener) {
         // Phones, also when held sideways (wider than 750px): the layout follows this attribute, not a media query.
         const fullscreen =
-          this.dataset.mobileStyle === 'fullscreen' &&
-          (window.innerWidth < 750 || (matchMedia('(pointer: coarse)').matches && window.innerHeight < 750));
+          window.innerWidth < 750 || (matchMedia('(pointer: coarse)').matches && window.innerHeight < 750);
         this.toggleAttribute('data-fullscreen', fullscreen);
         if (fullscreen) this._setupFullscreen(opener);
         super.show(opener);

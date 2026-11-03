@@ -18,7 +18,7 @@ if (!customElements.get('media-gallery')) {
             .querySelector('button')
             .addEventListener('click', this.setActiveMedia.bind(this, mediaToSwitch.dataset.target, false));
         });
-        if (this.dataset.desktopLayout.includes('thumbnail') && this.mql.matches) this.removeListSemantic();
+        if (this.mql.matches) this.removeListSemantic();
 
         this.initButtonNav();
         this.initKeyboardNav();
@@ -117,10 +117,6 @@ if (!customElements.get('media-gallery')) {
         const activeThumbnail = this.elements.thumbnails.querySelector(`[data-target="${mediaId}"]`);
         this.setActiveThumbnail(activeThumbnail);
         this.announceLiveRegion(activeMedia, activeThumbnail.dataset.mediaPosition);
-
-        if (this.mql.matches) {
-          this.updateButtonVisibility();
-        }
       }
 
       setActiveThumbnail(thumbnail) {
