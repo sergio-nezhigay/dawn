@@ -22,7 +22,6 @@
   role="region"
   class="product__column-sticky"
   aria-label="{{ 'products.product.media.gallery_viewer' | t }}"
-  data-desktop-layout="thumbnail_slider"
 >
   <div id="GalleryStatus-{{ section.id }}" class="visually-hidden" role="status"></div>
   {%- if corner_html != blank -%}
@@ -47,7 +46,6 @@
           {%- assign media_position = 1 -%}
           {% render 'product-thumbnail',
             media: featured_media,
-            media_count: media_count,
             position: media_position,
             modal_id: section.id,
             xr_button: true,
@@ -72,7 +70,6 @@
             -%}
             {% render 'product-thumbnail',
               media: media,
-              media_count: media_count,
               position: media_position,
               modal_id: section.id,
               xr_button: true,
