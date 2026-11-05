@@ -28,10 +28,6 @@
     assign lazy = 'lazy'
   endunless
 
-  if media.media_type == 'image'
-    assign image_class = 'image-magnify-' | append: 'hover'
-  endif
-
   assign thumbnail_alt = media.alt | default: product.title
 -%}
 
@@ -72,7 +68,6 @@
         media.preview_image
         | image_url: width: 1946
         | image_tag:
-          class: image_class,
           alt: thumbnail_alt,
           loading: lazy,
           fetchpriority: fetch_priority,

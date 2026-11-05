@@ -21,15 +21,22 @@ if (!customElements.get('product-modal')) {
         // Phones, also when held sideways (wider than 750px): the layout follows this attribute, not a media query.
         const fullscreen =
           window.innerWidth < 750 || (matchMedia('(pointer: coarse)').matches && window.innerHeight < 750);
+        // Computers with a mouse: one large photo at a time instead of Dawn's stacked list.
+        const viewer =
+          !fullscreen && matchMedia('(hover: hover) and (pointer: fine)').matches && window.innerWidth >= 750;
         this.toggleAttribute('data-fullscreen', fullscreen);
+        this.toggleAttribute('data-viewer', viewer);
         if (fullscreen) this._setupFullscreen(opener);
+        if (viewer) this._setupViewer(opener);
         super.show(opener);
-        if (!fullscreen) this._showActiveMedia(opener);
+        if (!fullscreen && !viewer) this._showActiveMedia(opener);
       }
 
       hide() {
-        if (this.hasAttribute('data-fullscreen')) {
+        if (this.hasAttribute('data-fullscreen') || this.hasAttribute('data-viewer')) {
           this._syncPageGallery();
+          if (this.hasAttribute('data-viewer'))
+            this._items.forEach((el, i) => el.tagName === 'IMG' && (el.sizes = this._sizes[i]));
           this._teardown();
           if (this._historyEntry) this._dropHistoryEntry();
         }
@@ -95,11 +102,102 @@ if (!customElements.get('product-modal')) {
         this._pushHistoryEntry();
       }
 
+      _setupViewer(opener) {
+        this._content = this.querySelector('[role="document"]');
+        this._items = Array.from(this._content.children);
+        this._sizes = this._items.map((el) => el.sizes);
+        const idx = this._items.findIndex((el) => el.dataset.mediaId === opener.dataset.mediaId);
+        this._fitViewer();
+        this._reusePagePhotos();
+        this._goTo(Math.max(idx, 0), false);
+
+        this._listeners = new AbortController();
+        const signal = this._listeners.signal;
+        const dialog = this.querySelector('.product-media-modal__dialog');
+        const arrow = (selector, step) =>
+          this.querySelector(selector).addEventListener('click', () => this._goTo(this._index + step, true), { signal });
+        arrow('.product-media-modal__prev', -1);
+        arrow('.product-media-modal__next', 1);
+        // ModalDialog closes a media modal on any mouse pointerup; here only a click beside the photo closes it.
+        dialog.addEventListener(
+          'pointerup',
+          (e) => {
+            e.stopPropagation();
+            if (e.button !== 0 || e.target.closest('button, deferred-media, product-model')) return;
+            const item = this._items[this._index];
+            const r = item.getBoundingClientRect();
+            const onPhoto = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+            if (!onPhoto) this.hide();
+            else if (item.tagName === 'IMG') this._toggleViewerZoom(item, e.clientX, e.clientY);
+          },
+          { signal }
+        );
+        dialog.addEventListener('mousemove', (e) => this._scale > 1 && this._followMouse(e.clientX, e.clientY, false), {
+          signal,
+        });
+        this.addEventListener(
+          'keydown',
+          (e) => {
+            if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+            e.preventDefault();
+            this._goTo(this._index + (e.key === 'ArrowRight' ? 1 : -1), true);
+          },
+          { signal }
+        );
+        window.addEventListener(
+          'resize',
+          () => {
+            this._fitViewer();
+            this._goTo(this._index, false);
+          },
+          { signal }
+        );
+        this._pushHistoryEntry();
+      }
+
+      // As large as the window allows beside the arrows, never bigger than the original photo.
+      _fitViewer() {
+        const boxW = window.innerWidth - 176;
+        const boxH = window.innerHeight - 112;
+        this._items.forEach((item) => {
+          if (item.tagName !== 'IMG') return;
+          const w = Number(item.dataset.originalWidth);
+          const h = (w * item.getAttribute('height')) / item.getAttribute('width');
+          const fit = Math.min(boxW / w, boxH / h, 1);
+          item.style.width = `${Math.round(w * fit)}px`;
+          item.style.height = `${Math.round(h * fit)}px`;
+          item.style.marginInline = `${(window.innerWidth - Math.round(w * fit)) / 2}px`; // the slide stays one window wide
+          if (!item.dataset.reused) item.sizes = `${Math.round(w * fit)}px`;
+          // a click shows the photo's real pixels, so it only zooms when there is more to see
+          item.classList.toggle('is-zoomable', fit < 0.95);
+        });
+      }
+
+      _toggleViewerZoom(item, x, y) {
+        if (this._scale > 1) return this._goTo(this._index, false);
+        if (!item.classList.contains('is-zoomable')) return;
+        this._scale = Math.min(4, Number(item.dataset.originalWidth) / item.offsetWidth);
+        this._loadOriginal(item);
+        this._followMouse(x, y, true);
+      }
+
+      // The zoomed photo follows the mouse: at the window's left edge you see the photo's left edge, and so on.
+      _followMouse(x, y, animated) {
+        const item = this._items[this._index];
+        const { cx, cy } = this._center(item);
+        const w = item.offsetWidth * this._scale;
+        const h = item.offsetHeight * this._scale;
+        this._tx = w / 2 - cx - ((w - window.innerWidth) * x) / window.innerWidth;
+        this._ty = h / 2 - cy - ((h - window.innerHeight) * y) / window.innerHeight;
+        this._applyZoom(animated);
+      }
+
       _teardown() {
         this._listeners.abort();
         this._content.style.cssText = '';
         this._items.forEach((el) => (el.style.cssText = ''));
         this.removeAttribute('data-fullscreen');
+        this.removeAttribute('data-viewer');
         this.removeAttribute('data-zoomed');
       }
 
@@ -126,7 +224,7 @@ if (!customElements.get('product-modal')) {
           'popstate',
           () => {
             this._historyBackPending = false;
-            if (this.hasAttribute('data-fullscreen')) this._pushHistoryEntry();
+            if (this.hasAttribute('data-fullscreen') || this.hasAttribute('data-viewer')) this._pushHistoryEntry();
           },
           { once: true }
         );
@@ -140,6 +238,13 @@ if (!customElements.get('product-modal')) {
         if (!slide) return;
         slide.parentElement.scrollTo({ left: slide.offsetLeft, behavior: 'instant' });
         this.openedBy = slide.querySelector('.product__media-toggle') || this.openedBy;
+        if (!this.hasAttribute('data-viewer')) return;
+        // Computers: the main photo and its thumbnail follow too (media-gallery's setActiveMedia could scroll the page).
+        slide.parentElement.querySelectorAll('.is-active').forEach((el) => el.classList.remove('is-active'));
+        slide.classList.add('is-active');
+        const gallery = slide.closest('media-gallery');
+        const thumbnail = gallery?.elements.thumbnails?.querySelector(`[data-target="${this.dataset.section}-${id}"]`);
+        if (thumbnail) gallery.setActiveThumbnail(thumbnail);
       }
 
       // A page photo that is already as sharp as the screen needs is shown as is: no second download.
@@ -148,12 +253,13 @@ if (!customElements.get('product-modal')) {
         const needed = window.innerWidth * window.devicePixelRatio * 0.9;
         this._items.forEach((item) => {
           if (item.tagName !== 'IMG' || item.dataset.reused) return;
+          const need = this.hasAttribute('data-viewer') ? parseFloat(item.style.width) * window.devicePixelRatio : needed;
           const pageImg = document.querySelector(
             `media-gallery [data-media-id="${this.dataset.section}-${item.dataset.mediaId}"] img`
           );
           const original = Number(item.dataset.originalWidth);
           const width = Math.min(Number(pageImg?.currentSrc.match(/[?&]width=(\d+)/)?.[1] || original), original);
-          if (!pageImg?.complete || width < Math.min(needed, original)) return;
+          if (!pageImg?.complete || width < Math.min(need, original)) return;
           item.removeAttribute('srcset');
           item.src = pageImg.currentSrc;
           item.dataset.reused = true;
