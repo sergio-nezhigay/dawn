@@ -35,10 +35,6 @@ if (!customElements.get('product-modal')) {
       hide() {
         if (this.hasAttribute('data-fullscreen') || this.hasAttribute('data-viewer')) {
           this._syncPageGallery();
-          if (this.hasAttribute('data-viewer')) {
-            this._items.forEach((el, i) => el.tagName === 'IMG' && (el.sizes = this._sizes[i]));
-            this._updateArrows(true);
-          }
           this._teardown();
           if (this._historyEntry) this._dropHistoryEntry();
         }
@@ -107,7 +103,8 @@ if (!customElements.get('product-modal')) {
       _setupViewer(opener) {
         this._content = this.querySelector('[role="document"]');
         this._items = Array.from(this._content.children);
-        this._sizes = this._items.map((el) => el.sizes);
+        // what _fitViewer changes and closing gives back: the photos' srcset sizes, Dawn's own video sizing
+        this._saved = this._items.map((el) => (el.tagName === 'IMG' ? el.sizes : el.style.cssText));
         const idx = this._items.findIndex((el) => el.dataset.mediaId === opener.dataset.mediaId);
         this._fitViewer();
         this._reusePagePhotos();
@@ -125,11 +122,10 @@ if (!customElements.get('product-modal')) {
           'pointerup',
           (e) => {
             e.stopPropagation();
-            if (e.button !== 0 || e.target.closest('button, deferred-media, product-model')) return;
+            // controls, the counter and a playing video or 3D model keep their own clicks
+            if (e.button !== 0 || e.target.closest('button, .product-media-modal__counter, video, model-viewer')) return;
             const item = this._items[this._index];
-            const r = item.getBoundingClientRect();
-            const onPhoto = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
-            if (!onPhoto) this.hide();
+            if (!item.contains(e.target)) this.hide(); // the side margins belong to the strip, not the photo
             else if (item.tagName === 'IMG') this._toggleViewerZoom(item, e.clientX, e.clientY);
           },
           { signal }
@@ -146,11 +142,16 @@ if (!customElements.get('product-modal')) {
           },
           { signal }
         );
+        // dragging the window edge fires many resizes: re-lay out once per frame
+        let frame;
         window.addEventListener(
           'resize',
           () => {
-            this._fitViewer();
-            this._goTo(this._index, false);
+            cancelAnimationFrame(frame);
+            frame = requestAnimationFrame(() => {
+              this._fitViewer();
+              this._goTo(this._index, false);
+            });
           },
           { signal }
         );
@@ -161,22 +162,31 @@ if (!customElements.get('product-modal')) {
       _fitViewer() {
         const boxW = window.innerWidth - 176;
         const boxH = window.innerHeight - 112;
+        const place = (item, width, height) => {
+          item.style.width = `${width}px`;
+          item.style.height = `${height}px`;
+          item.style.marginInline = `${(window.innerWidth - width) / 2}px`; // the slide stays one window wide
+        };
         this._items.forEach((item) => {
-          if (item.tagName !== 'IMG') return;
+          if (item.tagName !== 'IMG') {
+            // video / 3D model: as large as the box allows at its own shape
+            const ratio = Number(item.dataset.aspectRatio) || 16 / 9;
+            const width = Math.round(Math.min(boxW, boxH * ratio));
+            item.style.paddingTop = '0';
+            return place(item, width, Math.round(width / ratio));
+          }
           const w = Number(item.dataset.originalWidth);
           const h = (w * item.getAttribute('height')) / item.getAttribute('width');
           const fit = Math.min(boxW / w, boxH / h, 1);
-          item.style.width = `${Math.round(w * fit)}px`;
-          item.style.height = `${Math.round(h * fit)}px`;
-          item.style.marginInline = `${(window.innerWidth - Math.round(w * fit)) / 2}px`; // the slide stays one window wide
-          if (!item.dataset.reused) item.sizes = `${Math.round(w * fit)}px`;
+          place(item, Math.round(w * fit), Math.round(h * fit));
+          item.sizes = `${Math.round(w * fit)}px`;
           // a click shows the photo's real pixels, so it only zooms when there is more to see
           item.classList.toggle('is-zoomable', fit < 0.95);
         });
       }
 
       _toggleViewerZoom(item, x, y) {
-        if (this._scale > 1) return this._goTo(this._index, false);
+        if (this._scale > 1) return this._resetZoom();
         if (!item.classList.contains('is-zoomable')) return;
         this._scale = Math.min(4, Number(item.dataset.originalWidth) / item.offsetWidth);
         this._loadOriginal(item);
@@ -198,6 +208,13 @@ if (!customElements.get('product-modal')) {
         this._listeners.abort();
         this._content.style.cssText = '';
         this._items.forEach((el) => (el.style.cssText = ''));
+        if (this.hasAttribute('data-viewer')) {
+          this._items.forEach((el, i) => (el.tagName === 'IMG' ? (el.sizes = this._saved[i]) : (el.style.cssText = this._saved[i])));
+          this.querySelectorAll('[aria-disabled]').forEach((button) => {
+            button.removeAttribute('aria-disabled');
+            button.removeAttribute('tabindex');
+          });
+        }
         this.removeAttribute('data-fullscreen');
         this.removeAttribute('data-viewer');
         this.removeAttribute('data-zoomed');
@@ -252,16 +269,17 @@ if (!customElements.get('product-modal')) {
       // A page photo that is already as sharp as the screen needs is shown as is: no second download.
       // (naturalWidth of a srcset image is density-corrected, so the width comes from the URL.)
       _reusePagePhotos() {
-        const needed = window.innerWidth * window.devicePixelRatio * 0.9;
+        const viewer = this.hasAttribute('data-viewer');
         this._items.forEach((item) => {
           if (item.tagName !== 'IMG' || item.dataset.reused) return;
-          const need = this.hasAttribute('data-viewer') ? parseFloat(item.style.width) * window.devicePixelRatio : needed;
+          // phones: the screen width; computers: the size _fitViewer gave the photo
+          const needed = (viewer ? parseFloat(item.style.width) : window.innerWidth * 0.9) * window.devicePixelRatio;
           const pageImg = document.querySelector(
             `media-gallery [data-media-id="${this.dataset.section}-${item.dataset.mediaId}"] img`
           );
           const original = Number(item.dataset.originalWidth);
           const width = Math.min(Number(pageImg?.currentSrc.match(/[?&]width=(\d+)/)?.[1] || original), original);
-          if (!pageImg?.complete || width < Math.min(need, original)) return;
+          if (!pageImg?.complete || width < Math.min(needed, original)) return;
           item.removeAttribute('srcset');
           item.src = pageImg.currentSrc;
           item.dataset.reused = true;
@@ -284,26 +302,33 @@ if (!customElements.get('product-modal')) {
       }
 
       _goTo(index, animated) {
+        const previous = this._index;
         this._index = Math.min(Math.max(index, 0), this._items.length - 1);
         this._width = window.innerWidth;
         this._resetZoom();
         this._slideTo(0, animated);
         this.querySelector('.product-media-modal__index').textContent = this._index + 1;
-        if (this.hasAttribute('data-viewer')) this._updateArrows();
+        if (this.hasAttribute('data-viewer')) {
+          if (this._index !== previous) window.pauseAllMedia(); // a video left behind stops playing
+          // a page photo reused for a smaller window is too soft after the window grew: load the original
+          const item = this._items[this._index];
+          if (item.dataset.reused && item.naturalWidth < parseFloat(item.style.width) * window.devicePixelRatio)
+            this._loadOriginal(item);
+          this._updateArrows();
+        }
       }
 
-      // Computers: no arrow at the first or last photo (nothing there to click).
-      _updateArrows(clear = false) {
-        const dialog = this.querySelector('[role="dialog"]');
+      // Computers: the arrow at the first or last photo goes invisible but stays in place,
+      // so a repeated click there does nothing instead of closing the viewer.
+      _updateArrows() {
         [
           ['.product-media-modal__prev', this._index === 0],
           ['.product-media-modal__next', this._index === this._items.length - 1],
-        ].forEach(([selector, atEnd]) => {
+        ].forEach(([selector, off]) => {
           const button = this.querySelector(selector);
-          const off = atEnd && !clear;
-          if (off && document.activeElement === button) dialog.focus(); // keep ←/→ and Escape working
-          if (off) button.setAttribute('aria-disabled', 'true');
-          else button.removeAttribute('aria-disabled');
+          if (off && document.activeElement === button) this.querySelector('[role="dialog"]').focus(); // keep ←/→ and Escape working
+          button.setAttribute('aria-disabled', off);
+          button.tabIndex = off ? -1 : 0;
         });
       }
 

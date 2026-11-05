@@ -1419,10 +1419,6 @@ a.product__text {
 }
 
 @media screen and (max-width: 749px) {
-  .product__media-zoom-hover {
-    display: flex;
-  }
-
   /* Phones: the counter chip (.product__media-counter) carries the "opens bigger" cue, so the corner stays clear */
   .product__media-icon--hover {
     display: none;
@@ -1820,11 +1816,10 @@ a.product__text {
   background: transparent;
 }
 
+/* width, height and side margins come from product-modal.js (_fitViewer): each slide is one window wide */
 .product-media-modal[open][data-viewer] .product-media-modal__content > * {
   display: flex !important;
-  flex: 0 0 100vw;
-  width: 100vw;
-  margin: 0;
+  flex: 0 0 auto;
   align-items: center;
   justify-content: center;
   max-height: 100vh;
@@ -1832,9 +1827,20 @@ a.product__text {
   transform-origin: center center;
 }
 
-/* width, height and side margins come from product-modal.js (_fitViewer) */
+/* YouTube's preview picture is 4:3 with black bands: fill the 16:9 box instead of sitting on its left */
+.product-media-modal[data-viewer] .deferred-media__poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* a 3D model fills its sized box instead of Dawn's padding-top square */
+.product-media-modal[data-viewer] .product-media-modal__model product-model {
+  height: 100%;
+  padding-top: 0 !important;
+}
+
 .product-media-modal[open][data-viewer] .product-media-modal__content > img {
-  flex: 0 0 auto;
   max-width: none;
   object-fit: contain;
   user-select: none;
@@ -1888,10 +1894,12 @@ a.product__text {
   background: rgba(var(--color-foreground), 0.12);
 }
 
-/* first / last photo: that arrow goes away (product-modal.js _updateArrows) */
+/* first / last photo: that arrow goes invisible but stays in place, so a repeated click there does nothing
+   (product-modal.js _updateArrows) */
 .product-media-modal[data-viewer] .product-media-modal__prev[aria-disabled='true'],
 .product-media-modal[data-viewer] .product-media-modal__next[aria-disabled='true'] {
-  visibility: hidden;
+  opacity: 0;
+  cursor: default;
 }
 
 .product-media-modal[data-viewer] .product-media-modal__prev {
