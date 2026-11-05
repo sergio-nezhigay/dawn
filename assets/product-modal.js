@@ -35,8 +35,10 @@ if (!customElements.get('product-modal')) {
       hide() {
         if (this.hasAttribute('data-fullscreen') || this.hasAttribute('data-viewer')) {
           this._syncPageGallery();
-          if (this.hasAttribute('data-viewer'))
+          if (this.hasAttribute('data-viewer')) {
             this._items.forEach((el, i) => el.tagName === 'IMG' && (el.sizes = this._sizes[i]));
+            this._updateArrows(true);
+          }
           this._teardown();
           if (this._historyEntry) this._dropHistoryEntry();
         }
@@ -287,6 +289,22 @@ if (!customElements.get('product-modal')) {
         this._resetZoom();
         this._slideTo(0, animated);
         this.querySelector('.product-media-modal__index').textContent = this._index + 1;
+        if (this.hasAttribute('data-viewer')) this._updateArrows();
+      }
+
+      // Computers: no arrow at the first or last photo (nothing there to click).
+      _updateArrows(clear = false) {
+        const dialog = this.querySelector('[role="dialog"]');
+        [
+          ['.product-media-modal__prev', this._index === 0],
+          ['.product-media-modal__next', this._index === this._items.length - 1],
+        ].forEach(([selector, atEnd]) => {
+          const button = this.querySelector(selector);
+          const off = atEnd && !clear;
+          if (off && document.activeElement === button) dialog.focus(); // keep ←/→ and Escape working
+          if (off) button.setAttribute('aria-disabled', 'true');
+          else button.removeAttribute('aria-disabled');
+        });
       }
 
       _slideTo(offset, animated) {

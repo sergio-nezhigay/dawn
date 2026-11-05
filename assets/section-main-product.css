@@ -1888,6 +1888,12 @@ a.product__text {
   background: rgba(var(--color-foreground), 0.12);
 }
 
+/* first / last photo: that arrow goes away (product-modal.js _updateArrows) */
+.product-media-modal[data-viewer] .product-media-modal__prev[aria-disabled='true'],
+.product-media-modal[data-viewer] .product-media-modal__next[aria-disabled='true'] {
+  visibility: hidden;
+}
+
 .product-media-modal[data-viewer] .product-media-modal__prev {
   left: 2.4rem;
 }
