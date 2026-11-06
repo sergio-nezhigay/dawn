@@ -1017,6 +1017,11 @@ a.product__text {
   z-index: 101;
 }
 
+/* A closed viewer takes up no space, so its lazy photos wait until it opens (computers loaded ~3 for nothing). */
+.product-media-modal:not([open]) .product-media-modal__content > * {
+  display: none;
+}
+
 .product-media-modal__dialog {
   display: flex;
   align-items: center;
