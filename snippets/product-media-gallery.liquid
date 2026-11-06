@@ -104,7 +104,7 @@
         </button>
       </div>
     {%- endif -%}
-    {%- comment -%} Phones: one chip on the photo says "opens bigger" and "photo N of M"; SliderComponent updates the numbers {%- endcomment -%}
+    {%- comment -%} One chip on the photo (phones and computers) says "opens bigger" and "photo N of M"; SliderComponent updates the numbers {%- endcomment -%}
     {%- if media_count > 1 or product.media.first.media_type == 'image' -%}
       <div class="product__media-counter quick-add-hidden">
         <span class="svg-wrapper" aria-hidden="true">{{- 'icon-expand.svg' | inline_asset_content -}}</span>
