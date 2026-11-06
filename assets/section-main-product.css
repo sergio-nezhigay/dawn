@@ -682,13 +682,20 @@ a.product__text {
 
 @media screen and (min-width: 750px) {
   /*
-    Top-left of the photo: on short laptop windows the photo runs past the fold, so a bottom corner is unseen.
+    Bottom-right of the photo. On short laptop windows the photo runs past the fold, so the chip is sticky:
+    it rides 1.2rem above the screen edge until the photo's real corner scrolls into view.
+    It sits in flow after the list, so the negative top margin pulls it onto the photo (past the list's shadow
+    padding) and the bottom margin gives the space back: the thumbnails and the buy button don't move.
     The square photo can be narrower than the slide and centred
     (.product-media-container.constrain-height: 500px min, 100vh - 170px), so inset by half the spare width.
   */
   .product__media-counter {
-    top: 1.2rem;
-    left: calc((100% - min(max(500px, 100vh - 170px), 100%)) / 2 + 1.2rem);
+    --shadow-pad: calc(var(--media-shadow-vertical-offset) * var(--media-shadow-visible));
+    position: sticky;
+    bottom: 1.2rem;
+    width: fit-content;
+    margin: calc(-3.6rem - var(--shadow-pad)) calc((100% - min(max(500px, 100vh - 170px), 100%)) / 2 + 1.2rem)
+      calc(1.2rem + var(--shadow-pad)) auto;
   }
 
   .product__info-wrapper {
