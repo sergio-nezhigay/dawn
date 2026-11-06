@@ -108,6 +108,7 @@ if (!customElements.get('product-modal')) {
         const idx = this._items.findIndex((el) => el.dataset.mediaId === opener.dataset.mediaId);
         this._fitViewer();
         this._reusePagePhotos();
+        this._standIn(this._items[Math.max(idx, 0)]);
         this._goTo(Math.max(idx, 0), false);
 
         this._listeners = new AbortController();
@@ -285,6 +286,23 @@ if (!customElements.get('product-modal')) {
           item.dataset.reused = true;
           if (width >= original) delete item.dataset.zoomSrc; // already the full photo
         });
+      }
+
+      // Computers: the viewer's photos load only when it opens, so the opened photo shows the page photo at once
+      // (a little soft) until its sharp size arrives.
+      _standIn(item) {
+        if (item?.tagName !== 'IMG' || item.dataset.reused || item.complete) return;
+        const pageImg = document.querySelector(
+          `media-gallery [data-media-id="${this.dataset.section}-${item.dataset.mediaId}"] img`
+        );
+        if (!pageImg?.complete || !pageImg.currentSrc) return;
+        const sharp = new Image();
+        sharp.sizes = item.sizes;
+        sharp.srcset = item.srcset;
+        item.removeAttribute('srcset');
+        item.src = pageImg.currentSrc;
+        // back to the photo's own sizes, unless zoom already put the original in
+        sharp.onload = () => item.src === pageImg.currentSrc && (item.srcset = sharp.srcset);
       }
 
       // Zoom shows the original photo; until it arrives the screen-sized one stays.
