@@ -641,33 +641,12 @@ a.product__text {
   }
 
   .product__media-counter {
-    position: absolute;
     right: var(--frame-right);
     /* 1.2rem inset + the slide's bottom shadow padding (component-slider.css, .slider--mobile .slider__slide) */
     bottom: calc(
       1.2rem +
         max(0.5rem, (var(--media-shadow-vertical-offset) + var(--media-shadow-blur-radius)) * var(--media-shadow-visible))
     );
-    z-index: 3; /* above the full-image zoom overlay */
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    height: 2.4rem;
-    padding: 0 0.9rem;
-    border-radius: 1.2rem;
-    background: rgba(var(--color-foreground), 0.75);
-    color: rgb(var(--color-background));
-    font-size: 1.3rem;
-    font-weight: 600;
-    line-height: 1;
-    font-variant-numeric: tabular-nums;
-    pointer-events: none;
-  }
-
-  .product__media-counter .svg-wrapper,
-  .product__media-counter .icon {
-    width: 1.4rem;
-    height: 1.4rem;
   }
 
   /* Only the chip remains on phones; the dots row is gone */
@@ -676,13 +655,42 @@ a.product__text {
   }
 }
 
-@media screen and (min-width: 750px) {
-  .product__media-counter {
-    display: none;
-  }
+/* "⤢ N / M" chip on the main photo, phones and computers alike: it says "opens bigger" and "more photos" */
+.product__media-counter {
+  position: absolute;
+  z-index: 3; /* above the full-image zoom overlay */
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  height: 2.4rem;
+  padding: 0 0.9rem;
+  border-radius: 1.2rem;
+  background: rgba(var(--color-foreground), 0.75);
+  color: rgb(var(--color-background));
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+
+.product__media-counter .svg-wrapper,
+.product__media-counter .icon {
+  width: 1.4rem;
+  height: 1.4rem;
 }
 
 @media screen and (min-width: 750px) {
+  /*
+    Bottom-right of the photo. On short windows the square photo is narrower than the slide and centred
+    (.product-media-container.constrain-height: 500px min, 100vh - 170px), so inset by half the spare width.
+    The list's bottom padding holds the photo shadow (.product--thumbnail_slider .product__media-list).
+  */
+  .product__media-counter {
+    right: calc((100% - min(max(500px, 100vh - 170px), 100%)) / 2 + 1.2rem);
+    bottom: calc(1.2rem + var(--media-shadow-vertical-offset) * var(--media-shadow-visible));
+  }
+
   .product__info-wrapper {
     padding: 0 0 0 3rem;
   }
@@ -812,6 +820,8 @@ a.product__text {
 
   .product--thumbnail_slider .product__media-list {
     flex-wrap: nowrap;
+    /* Slides are 100% wide; a gap makes SliderComponent count one page too many (the chip read "1 / 8" for 7 photos) */
+    column-gap: 0;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
