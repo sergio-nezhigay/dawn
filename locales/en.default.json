@@ -1017,7 +1017,7 @@
         "email_label": "Email",
         "email_placeholder": "Email (for order confirmation)",
         "phone_label": "Phone number",
-        "phone_placeholder": "Phone (our manager will call)"
+        "phone_placeholder": "Phone (for delivery and contact)"
       },
       "thank_you": {
         "location_title": "Location",
