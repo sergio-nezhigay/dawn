@@ -325,10 +325,6 @@ quick-add-modal .product__column-sticky {
     max-width: 100%;
     width: 100%;
   }
-
-  quick-add-modal .thumbnail-slider .thumbnail-list.slider--tablet-up {
-    display: none;
-  }
 }
 
 quick-add-modal .page-width {

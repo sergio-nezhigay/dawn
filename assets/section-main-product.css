@@ -805,7 +805,7 @@ a.product__text {
     width: calc(100% + 4rem);
   }
 
-  .product__media-wrapper slider-component:not(.thumbnail-slider--no-slide) {
+  .product__media-wrapper slider-component {
     margin-left: -1.5rem;
     margin-right: -1.5rem;
   }
@@ -1298,34 +1298,20 @@ a.product__text {
   overflow: hidden;
 }
 
-.thumbnail-list {
-  flex-wrap: wrap;
-  grid-gap: 1rem;
-}
-
-/* Fix to show some space at the end of our sliders in all browsers to be applied on thumbnails */
-.slider--mobile.thumbnail-list:after {
-  content: none;
-}
-
+/*
+  Thumbnails show every photo, with no scrolling and no arrows: 8 per row, more photos wrap onto another row.
+  The row is capped at the square photo's width (.constrain-height: 500px min, 100vh - 170px),
+  so on short laptop windows it does not stick out past the photo. Phones hide the thumbnails (small-hide).
+*/
 @media screen and (min-width: 750px) {
-
   .thumbnail-list {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(8, 1fr);
+    gap: 1rem;
+    max-width: max(500px, 100vh - 170px);
+    margin: 0 auto;
+    padding: 0.5rem;
   }
-}
-
-
-@media screen and (min-width: 990px) {
-  .thumbnail-list {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  .product--medium .thumbnail-list {
-    grid-template-columns: repeat(5, 1fr);
-  }
-
 }
 
 @media screen and (max-width: 749px) {
@@ -1337,57 +1323,16 @@ a.product__text {
   .product__modal-opener {
     width: 100%;
   }
-
-  .thumbnail-slider {
-    display: flex;
-    align-items: center;
-  }
-
-  .thumbnail-slider .thumbnail-list.slider {
-    display: flex;
-    padding: 0.5rem;
-    flex: 1;
-    scroll-padding-left: 0.5rem;
-  }
-
-  .thumbnail-list__item.slider__slide {
-    width: calc(33% - 0.6rem);
-  }
 }
 
+/* Main photo arrows */
 @media screen and (min-width: 750px) {
-  .product--thumbnail_slider .thumbnail-slider {
-    display: flex;
-    align-items: center;
-  }
-
-  .thumbnail-slider .thumbnail-list.slider--tablet-up {
-    display: flex;
-    padding: 0.5rem;
-    flex: 1;
-    scroll-padding-left: 0.5rem;
-  }
-
   .product__media-wrapper .slider-mobile-gutter .slider-button {
     display: none;
   }
 
-  .thumbnail-list.slider--tablet-up .thumbnail-list__item.slider__slide {
-    width: calc(25% - 0.8rem);
-  }
-
   .product--thumbnail_slider .slider-mobile-gutter .slider-button {
     display: flex;
-  }
-}
-
-@media screen and (min-width: 900px) {
-  .product--small .thumbnail-list.slider--tablet-up .thumbnail-list__item.slider__slide {
-    width: calc(15% - 0.8rem);
-  }
-
-  .thumbnail-list.slider--tablet-up .thumbnail-list__item.slider__slide {
-    width: calc(10% - 0.8rem);
   }
 }
 
