@@ -1783,6 +1783,7 @@ a.product__text {
   max-height: 100vh;
   overflow: hidden;
   transform-origin: center center;
+  margin-block: auto; /* Dawn's gap between stacked photos pinned photos 2+ to the top */
 }
 
 /* YouTube's preview picture is 4:3 with black bands: fill the 16:9 box instead of sitting on its left */
