@@ -103,13 +103,8 @@ product-info {
   }
 }
 
-.product__wide-description-card h2 {
-  margin: 0 0 1.4rem;
-  font-size: 2rem;
-  line-height: 1.2;
-}
-
-.product__wide-description-card p {
+/* Sticky sidebar text (the description itself uses .description__text in base.css) */
+.product__wide-desc-sidebar p {
   margin: 0;
   max-width: 100%;
   font-size: 1.5rem;
@@ -117,7 +112,7 @@ product-info {
   color: rgba(var(--color-foreground), 0.78);
 }
 
-.product__wide-description-card p + p {
+.product__wide-desc-sidebar p + p {
   margin-top: 1.2rem;
 }
 
@@ -144,6 +139,96 @@ product-info {
 
 .product__wide-description-toggle {
   margin-top: 1.4rem;
+}
+
+/* One description look for both layouts (inline block and wide card). Spec lines read as rows
+   with a grey label whatever the markup: <li>Label: value</li> (label span added in Liquid),
+   <p><i>Label</i>: value</p>. Rich supplier HTML (.description--rich: own styles or tables)
+   keeps its markup and only takes the shop font; Waveshare's .ws-desc gets quieter headings. */
+.description__text {
+  margin-top: 0.8rem;
+  font-size: 1.5rem;
+  line-height: 1.6;
+  color: var(--ui-navy);
+}
+
+.description__text:not(.description--rich) p {
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  margin: 0 0 1rem;
+}
+
+.description__text:not(.description--rich) :is(h2, h3, h4, h5) {
+  font-family: inherit;
+  font-size: 1.6rem;
+  font-weight: 700;
+  font-style: normal;
+  opacity: 1;
+  color: var(--ui-navy);
+  text-transform: none;
+  letter-spacing: 0;
+  margin: 2rem 0 0.6rem;
+  padding: 0;
+}
+
+.description__text:not(.description--rich) > :first-child {
+  margin-top: 0;
+}
+
+.description__text:not(.description--rich) ul {
+  margin: 0 0 1.2rem;
+  padding: 0;
+}
+
+/* Nested lists keep their indent; numbered lists keep their numbers */
+.description__text:not(.description--rich) li :is(ul, ol) {
+  margin: 0.7rem 0 0;
+  padding-left: 2rem;
+}
+
+.description__text:not(.description--rich) ol > li {
+  list-style: decimal inside;
+}
+
+.description__text:not(.description--rich) li,
+.description__text:not(.description--rich) p:has(> :is(i, em):first-child) {
+  list-style: none;
+  margin: 0;
+  padding: 0.7rem 0;
+  border-bottom: 0.1rem solid var(--ui-line);
+}
+
+.description__text:not(.description--rich) :is(i, em) {
+  font-style: normal;
+}
+
+.description__text strong {
+  font-weight: 600;
+}
+
+.description__label,
+.description__text:not(.description--rich) p > :is(i, em):first-child {
+  color: var(--ui-muted);
+}
+
+.description__text .ws-desc {
+  font-family: inherit;
+  font-size: 1.5rem;
+  color: var(--ui-navy);
+}
+
+.description__text .ws-desc :is(h2, h3, h4) {
+  font-size: 1.8rem;
+  color: var(--ui-navy);
+  margin: 2.4rem 0 0.8rem;
+}
+
+/* Part number line under the text (supplier code circle on the right) */
+.description__partno {
+  margin-top: 1.6rem;
+  font-size: 1.3rem;
+  color: var(--ui-muted);
 }
 
 @media screen and (min-width: 990px) {
