@@ -72,12 +72,57 @@
     {%- assign show_wide_description = true -%}
   {%- endif -%}
 
+  {%- liquid
+    # One tidied description for both layouts (inline block and wide card).
+    # Rich supplier HTML (own styles, tables) keeps its markup; only the font is aligned.
+    assign description_html = product.description
+    assign description_rich = false
+    if description_html contains '<style' or description_html contains '<table' or description_html contains 'ws-desc'
+      assign description_rich = true
+    endif
+
+    # Drop a first heading that repeats the product title: at least half of its words (3+ letters) are in the title.
+    assign description_start = description_html | strip | slice: 0, 3
+    if description_start == '<h1' or description_start == '<h2' or description_start == '<h3' or description_start == '<h4'
+      assign first_heading = description_html | strip | split: '</h' | first
+      assign heading_words = first_heading | strip_html | downcase | replace: '&nbsp;', ' ' | replace: ',', ' ' | replace: '(', ' ' | replace: ')', ' ' | split: ' '
+      assign title_lower = product.title | downcase
+      assign word_count = 0
+      assign word_hits = 0
+      for word in heading_words
+        if word.size > 2
+          assign word_count = word_count | plus: 1
+          if title_lower contains word
+            assign word_hits = word_hits | plus: 1
+          endif
+        endif
+      endfor
+      assign word_hits_doubled = word_hits | times: 2
+      if word_count > 0 and word_hits_doubled >= word_count
+        assign heading_level = description_start | slice: 2
+        assign first_heading_html = first_heading | append: '</h' | append: heading_level | append: '>'
+        assign description_html = description_html | remove_first: first_heading_html
+      endif
+    endif
+
+    if description_rich == false and description_html contains '<li>'
+      capture description_html
+        render 'description-spec-labels', html: description_html
+      endcapture
+    endif
+
+    # Part number is left out when the text already shows it (any letter case).
+    assign partno = product.selected_or_first_available_variant.barcode
+    assign partno_upcase = partno | upcase
+    assign description_upcase = product.description | upcase
+  -%}
+
   {%- capture product_barcode_supplier_info -%}
-    <div class="flex justify-between items-center" style="margin-top: 2rem;">
+    <div class="description__partno flex-between">
       <span>
-        {{- 'products.product.barcode_label' | t }}:<span class="uppercase">
-          {{ product.selected_or_first_available_variant.barcode -}}
-        </span>
+        {%- unless description_upcase contains partno_upcase -%}
+          {{- 'products.product.barcode_label' | t }}: <span class="uppercase">{{ partno }}</span>
+        {%- endunless -%}
       </span>
       <span class="opacity-30 border rounded-full p-1 text-base">
         {{ product.selected_or_first_available_variant.sku | split: '^' | last -}}
@@ -265,8 +310,8 @@
                       class="product__description-container product__description-disclosure"
                       id="ProductDescription-{{ section.id }}"
                     >
-                      <div class="description__text product__description-content">
-                        {{ product.description }}
+                      <div class="description__text product__description-content{% if description_rich %} description--rich{% endif %}">
+                        {{ description_html }}
                         {{ product_barcode_supplier_info }}
                       </div>
                       <button
@@ -322,10 +367,10 @@
 
           {%- comment %} LEFT: description text {%- endcomment %}
           <div class="product__wide-desc-content rte">
-            <h2>{{ 'products.product.description' | t }}</h2>
+            <h2 class="description__headings">{{ 'products.product.description' | t }}</h2>
             <product-description-toggle class="product__description-disclosure">
-              <div class="product__wide-description-body" id="WideDescription-{{ section.id }}">
-                {{ product.description }}
+              <div class="product__wide-description-body description__text{% if description_rich %} description--rich{% endif %}" id="WideDescription-{{ section.id }}">
+                {{ description_html }}
                 {{ product_barcode_supplier_info }}
               </div>
               <button

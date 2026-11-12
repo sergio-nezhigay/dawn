@@ -1,0 +1,31 @@
+{%- comment -%}
+  Wraps the label of each "<li>Label: value</li>" spec line in <span class="description__label">
+  so the label shows grey and the value normal. Only plain <li> (no attributes) whose label is
+  1-40 characters with no tags inside; anything else passes through unchanged.
+
+  Accepts:
+  - html {String}: description HTML
+
+  Usage:
+  {% render 'description-spec-labels', html: product.description %}
+{%- endcomment -%}
+{%- liquid
+  assign pieces = html | split: '<li>'
+  for piece in pieces
+    if forloop.first
+      echo piece
+      continue
+    endif
+    echo '<li>'
+    assign line = piece | split: '</li>' | first
+    assign label = line | split: ': ' | first
+    if line contains ': ' and label != blank and label.size <= 40
+      unless label contains '<'
+        echo '<span class="description__label">' | append: label | append: ':</span> '
+        echo piece | remove_first: label | remove_first: ': '
+        continue
+      endunless
+    endif
+    echo piece
+  endfor
+-%}
