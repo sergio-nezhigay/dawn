@@ -67,10 +67,6 @@
   {%- endif -%}
 
   {%- assign description_text = product.description | strip_html | replace: '&nbsp;', ' ' | strip_newlines | strip -%}
-  {%- assign show_wide_description = false -%}
-  {%- if description_text.size >= 900 -%}
-    {%- assign show_wide_description = true -%}
-  {%- endif -%}
 
   {%- liquid
     # One tidied description for both layouts (inline block and wide card).
@@ -79,6 +75,13 @@
     assign description_rich = false
     if description_html contains '<style' or description_html contains '<table' or description_html contains 'ws-desc'
       assign description_rich = true
+    endif
+
+    # Desktop wide card (with side Buy) only for rich texts: images, tables, Waveshare markup, or very long text.
+    # Not description_rich: supplier <style> alone does not need the wide card. Phone always shows the inline block.
+    assign show_wide_description = false
+    if description_html contains '<img' or description_html contains '<table' or description_html contains 'ws-desc' or description_text.size >= 1800
+      assign show_wide_description = true
     endif
 
     # Drop a first heading that repeats the product title: at least half of its words (3+ letters) are in the title.
