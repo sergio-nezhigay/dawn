@@ -4580,11 +4580,6 @@ header-dropdown-menu {
   /* Firefox */
 }
 
-.product__description ul {
-  margin: 0;
-  padding: 0;
-}
-
 h4+p {
   margin-top: 2rem;
 }
@@ -4616,8 +4611,8 @@ h4+p {
 }
 
 .product__description ul {
-  padding-top: 8px;
-  padding-bottom: 8px;
+  margin: 0;
+  padding: 8px 0;
 }
 
 .product__description li {
@@ -4627,7 +4622,6 @@ h4+p {
 
 .product__description strong {
   font-weight: 600;
-  opacity: 80;
 }
 
 .product__description h2~h2 {
