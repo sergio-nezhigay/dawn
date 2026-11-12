@@ -23,9 +23,8 @@ product-info {
   display: none;
 }
 
-.product-description img,
-.product__wide-description img
- {
+/* Supplier HTML class (a few product texts carry class="product-description"). */
+.product-description img {
   max-width: 600px !important;
   margin: 0 auto;
 }
@@ -713,10 +712,6 @@ a.product__text {
   .product__info-container > *:first-child {
     margin-top: 0;
   }
-}
-
-.product__description-title {
-  font-weight: 600;
 }
 
 .product--no-media .product__title,
@@ -1887,6 +1882,7 @@ a.product__text {
 .product__wide-description img {
   max-width: 100% !important;
   height: auto;
+  margin: 0 auto;
 }
 
 .product__wide-description [class*="grid"] > *,
