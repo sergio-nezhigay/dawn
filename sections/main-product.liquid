@@ -195,13 +195,10 @@
                 {%- endif -%}
               {%- when 'title' -%}
                 <div class="product__title " {{ block.shopify_attributes }}>
-                  <h1 class="ui-heading ui-heading--h1">
+                  {%- comment -%} Supplier code (SKU after ^) for staff: drawn by CSS only in browsers switched on with ?staff=1 (layout/theme.liquid) {%- endcomment -%}
+                  {%- assign sku = product.selected_or_first_available_variant.sku -%}
+                  <h1 class="ui-heading ui-heading--h1"{% if sku contains '^' %} data-supplier="{{ sku | split: '^' | last | escape }}"{% endif %}>
                     {{- product.title | escape -}}
-                    {%- comment -%} Supplier code (SKU after ^): only for customers tagged "staff" {%- endcomment -%}
-                    {%- if customer and customer.tags contains 'staff' -%}
-                      {%- assign supplier_code = product.selected_or_first_available_variant.sku | split: '^' | last -%}
-                      {%- if supplier_code != blank %} <span class="product__staff-code">{{ supplier_code }}</span>{% endif -%}
-                    {%- endif -%}
                   </h1>
                   <a href="{{ product.url }}" class="product__title">
                     <div class="h1 ">
