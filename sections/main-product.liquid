@@ -121,16 +121,14 @@
   -%}
 
   {%- capture product_barcode_supplier_info -%}
-    <div class="description__partno flex-between">
-      <span>
-        {%- unless description_upcase contains partno_upcase -%}
-          {{- 'products.product.barcode_label' | t }}: <span class="uppercase">{{ partno }}</span>
-        {%- endunless -%}
-      </span>
-      <span class="opacity-30 border rounded-full p-1 text-base">
-        {{ product.selected_or_first_available_variant.sku | split: '^' | last -}}
-      </span>
-    </div>
+    {%- assign supplier_code = product.selected_or_first_available_variant.sku | split: '^' | last -%}
+    <p class="description__partno">
+      {%- unless description_upcase contains partno_upcase -%}
+        {{- 'products.product.barcode_label' | t }}: <span class="uppercase">{{ partno }}</span>
+        {%- if supplier_code != blank %} &middot; {% endif -%}
+      {%- endunless -%}
+      <span class="description__supplier">{{ supplier_code }}</span>
+    </p>
   {%- endcapture -%}
 
   <div class="page-width-narrow">

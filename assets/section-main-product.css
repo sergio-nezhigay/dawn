@@ -219,11 +219,15 @@ product-info {
   margin: 2.4rem 0 0.8rem;
 }
 
-/* Part number line under the text (supplier code circle on the right) */
+/* Part number line under the text, supplier code (SKU after ^) at its end */
 .description__partno {
-  margin-top: 1.6rem;
+  margin: 1.6rem 0 0;
   font-size: 1.3rem;
   color: var(--ui-muted);
+}
+
+.description__supplier {
+  opacity: 0.6;
 }
 
 @media screen and (min-width: 990px) {
