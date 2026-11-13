@@ -22,39 +22,48 @@
  * The read-more / read-less labels come from data-label-more / data-label-less
  * on the button so no locale strings live in this file.
  */
-class ProductDescriptionToggle extends HTMLElement {
-  connectedCallback() {
-    if (!this.content) {
-      this.content =
-        this.querySelector('.product__description-content') ||
-        this.querySelector('.product__wide-description-body') ||
-        this.querySelector('.js-collapse-content');
-      this.button = this.querySelector('.product__description-toggle') || this.querySelector('.js-collapse-toggle');
-      if (!this.content || !this.button) return;
+// Show the button only if expanding would reveal at least this much more,
+// relative to the clamped height (scales with whichever clamp is in effect).
+const REVEAL_THRESHOLD = 0.5;
 
-      // Progressive enhancement: the collection clamp only exists with this class.
-      this.content.classList.add('is-collapsible');
-      // Show the button only if expanding would reveal at least this much more,
-      // relative to the clamped height (scales with whichever clamp is in effect).
-      this.revealThreshold = 0.5;
-      this.labelMore = this.button.dataset.labelMore || this.button.textContent.trim();
-      this.labelLess = this.button.dataset.labelLess || this.button.textContent.trim();
-      this.onClick = this.onClick.bind(this);
-      this.scheduleFitCheck = this.scheduleFitCheck.bind(this);
-      this.onLoad = () => this.fitCheck(true);
-    }
+class ProductDescriptionToggle extends HTMLElement {
+  constructor() {
+    super();
+    this.onClick = () => this.toggle();
+    this.scheduleFitCheck = () => {
+      if (this.userToggled || !this.isConnected) return;
+      cancelAnimationFrame(this.fitFrame);
+      this.fitFrame = requestAnimationFrame(() => this.fitCheck());
+    };
+  }
+
+  connectedCallback() {
+    if (!this.content) this.setup();
     if (!this.content || !this.button) return;
 
     this.button.addEventListener('click', this.onClick);
     if (this.userToggled) return;
 
-    this.fitCheck(document.readyState === 'complete');
+    this.fitCheck();
     // A clamped box keeps its size when the text inside it changes (font swap,
     // images), so watch the children as well as the box itself.
     this.resizeObserver = new ResizeObserver(this.scheduleFitCheck);
     for (const el of [this.content, ...this.content.children]) this.resizeObserver.observe(el);
     if (document.fonts) document.fonts.ready.then(this.scheduleFitCheck);
-    if (document.readyState !== 'complete') window.addEventListener('load', this.onLoad, { once: true });
+    if (document.readyState !== 'complete') window.addEventListener('load', this.scheduleFitCheck, { once: true });
+  }
+
+  setup() {
+    this.content =
+      this.querySelector('.product__description-content') ||
+      this.querySelector('.product__wide-description-body') ||
+      this.querySelector('.js-collapse-content');
+    this.button = this.querySelector('.product__description-toggle') || this.querySelector('.js-collapse-toggle');
+    if (!this.content || !this.button) return;
+    // Progressive enhancement: the collection clamp only exists with this class.
+    this.content.classList.add('is-collapsible');
+    this.labelMore = this.button.dataset.labelMore || this.button.textContent.trim();
+    this.labelLess = this.button.dataset.labelLess || this.button.textContent.trim();
   }
 
   disconnectedCallback() {
@@ -67,7 +76,7 @@ class ProductDescriptionToggle extends HTMLElement {
     if (this.resizeObserver) this.resizeObserver.disconnect();
     this.resizeObserver = null;
     cancelAnimationFrame(this.fitFrame);
-    window.removeEventListener('load', this.onLoad);
+    window.removeEventListener('load', this.scheduleFitCheck);
   }
 
   // Heading sits just before the element; prefer it as the scroll target so the
@@ -85,23 +94,25 @@ class ProductDescriptionToggle extends HTMLElement {
     return Number.isFinite(parsed) ? parsed : 160;
   }
 
-  scheduleFitCheck() {
-    cancelAnimationFrame(this.fitFrame);
-    this.fitFrame = requestAnimationFrame(() => this.fitCheck(document.readyState === 'complete'));
-  }
-
   // Decide "fits" against the clamp. Measures with the clamp on and sets the
   // final state in the same task, so nothing paints in between and an unchanged
   // decision leaves every size as it was (no ResizeObserver loop). Skipped while
   // hidden (the below-990px copy of the wide card): sizes would all be 0.
   // Before window load, a short text with images still loading stays clamped and
   // unmeasured: un-clamping now could jump back once the images arrive.
-  fitCheck(final) {
+  fitCheck() {
     if (this.userToggled || !this.content.offsetParent) return;
+    const loaded = document.readyState === 'complete';
     const content = this.content;
-    content.classList.remove('is-expanded');
-    const fits = content.scrollHeight <= content.clientHeight * (1 + this.revealThreshold);
-    if (fits && !final && [...content.querySelectorAll('img')].some((img) => !img.complete)) return;
+    // Measure against the clamp; only flip the class when un-clamped, so a long
+    // clamped text costs one read, not a class flip + forced re-layout.
+    const wasFit = content.classList.contains('is-expanded');
+    if (wasFit) content.classList.remove('is-expanded');
+    const fits = content.scrollHeight <= content.clientHeight * (1 + REVEAL_THRESHOLD);
+    if (fits && !loaded && [...content.querySelectorAll('img')].some((img) => !img.complete)) {
+      content.classList.toggle('is-expanded', wasFit);
+      return;
+    }
 
     content.classList.toggle('is-expanded', fits);
     this.button.hidden = fits;
@@ -109,11 +120,9 @@ class ProductDescriptionToggle extends HTMLElement {
     this.dataset.measured = 'true';
   }
 
-  onClick() {
-    if (!this.userToggled) {
-      this.userToggled = true;
-      this.stopWatching();
-    }
+  toggle() {
+    this.userToggled = true;
+    this.stopWatching();
     if (this.button.getAttribute('aria-expanded') === 'true') {
       this.collapse();
     } else {
