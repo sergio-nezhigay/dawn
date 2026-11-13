@@ -43,12 +43,6 @@
   mask-image: linear-gradient(to bottom, rgb(0 0 0) calc(100% - 2.5rem), transparent);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .collection-description__body.is-collapsible {
-    transition: max-height 0.45s cubic-bezier(0.33, 1, 0.68, 1);
-  }
-}
-
 .collection-description__toggle {
   margin-top: 1.4rem;
 }

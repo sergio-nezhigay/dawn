@@ -4746,6 +4746,12 @@ h4+p {
   display: block;
 }
 
+/* Until the script has measured whether the text fits, the toggle keeps its
+   space but is not painted, so a short text never flashes "read more". */
+product-description-toggle:not([data-measured]) :is(.product__description-toggle, .js-collapse-toggle) {
+  visibility: hidden;
+}
+
 /* Scroll target when a collapse pulls the description start back into view:
    clear the sticky header so the heading is not hidden behind it. Static 17rem
    matches the wide-description sticky sidebar offset and sidesteps the sticky
@@ -4759,12 +4765,6 @@ h4+p {
   max-height: 32rem;
   -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 4rem), transparent);
   mask-image: linear-gradient(to bottom, #000 calc(100% - 4rem), transparent);
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .product__description-content {
-    transition: max-height 0.45s cubic-bezier(0.33, 1, 0.68, 1);
-  }
 }
 
 .product__description-content.is-expanded {
