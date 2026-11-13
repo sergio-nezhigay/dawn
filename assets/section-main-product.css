@@ -226,8 +226,9 @@ product-info {
   color: var(--ui-muted);
 }
 
-/* Supplier code after the product title, only for signed-in staff */
-.product__staff-code {
+/* Supplier code after the product title, only in browsers switched on with ?staff=1 */
+.is-staff .product__title h1[data-supplier]::after {
+  content: attr(data-supplier);
   display: inline-block;
   margin-left: 0.6rem;
   padding: 0 0.6rem;

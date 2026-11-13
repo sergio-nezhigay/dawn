@@ -2,6 +2,15 @@
 <html class="js" lang="{{ request.locale.iso_code }}" style="color-scheme: only light;">
   <head>
     <meta charset="utf-8">
+    <script>
+      // Staff switch: ?staff=1 once per browser shows the supplier code after product titles, ?staff=0 turns it off.
+      try {
+        var staffParam = new URLSearchParams(location.search).get('staff');
+        if (staffParam === '1') localStorage.setItem('staff', '1');
+        if (staffParam === '0') localStorage.removeItem('staff');
+        if (localStorage.getItem('staff') === '1') document.documentElement.classList.add('is-staff');
+      } catch (e) {}
+    </script>
     {%- if template.name == 'product' %}
       <script>
         // Review-email data (#judgeme_product_reviews&name=...&email=...) leaves the address bar before
