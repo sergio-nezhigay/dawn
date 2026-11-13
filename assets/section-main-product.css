@@ -219,15 +219,26 @@ product-info {
   margin: 2.4rem 0 0.8rem;
 }
 
-/* Part number line under the text, supplier code (SKU after ^) at its end */
+/* Part number line under the description text */
 .description__partno {
   margin: 1.6rem 0 0;
   font-size: 1.3rem;
   color: var(--ui-muted);
 }
 
-.description__supplier {
-  opacity: 0.6;
+/* Supplier code after the product title, only for signed-in staff */
+.product__staff-code {
+  display: inline-block;
+  margin-left: 0.6rem;
+  padding: 0 0.6rem;
+  border: 1px solid #c2610c;
+  border-radius: 0.4rem;
+  color: #9a4a08;
+  font-size: 1.3rem;
+  font-weight: 400;
+  line-height: 1.6;
+  vertical-align: middle;
+  white-space: nowrap;
 }
 
 @media screen and (min-width: 990px) {
