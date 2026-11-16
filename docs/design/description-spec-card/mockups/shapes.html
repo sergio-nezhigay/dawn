@@ -1,0 +1,52 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>
+:root{--ui-navy:#001e3c;--ui-blue:#0071dc;--ui-line:#e5e7eb;--ui-muted:#5b6573;--ui-tint:#f6f9fd}
+html{font-size:62.5%}
+body{margin:0;background:#eef0f3;font-family:"Assistant",Arial,sans-serif;font-size:1.5rem;letter-spacing:.06rem;line-height:1.8;color:var(--ui-navy)}
+.wrap{display:flex;flex-wrap:wrap;gap:20px;padding:16px;align-items:flex-start}
+.col{background:#fff;padding:16px;width:var(--w);box-sizing:content-box}
+.tag{font:600 12px/1.3 monospace;background:#001e3c;color:#fff;padding:5px 8px;display:inline-block;margin-bottom:10px;letter-spacing:0;max-width:100%}
+.visually-hidden{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+h2.description__headings{font-family:'Chakra Petch','Tektur',sans-serif;font-weight:600;margin:0 0 1.6rem;text-transform:uppercase;font-size:24px;letter-spacing:.03em;line-height:1.1;border-bottom:.1rem solid var(--ui-line);padding-bottom:.8rem}
+.description__text{margin-top:.8rem;font-size:1.5rem;line-height:1.6}
+.description__text p{margin:0 0 1rem}
+.description__text :is(h2,h3,h4){font-size:1.6rem;font-weight:700;margin:2rem 0 .6rem}
+.description__text>:first-child{margin-top:0}
+.description__text ul{margin:0 0 1.2rem;padding:0}
+.description__text strong{font-weight:600}
+.description__text li{list-style:none;margin:0}
+/* ---------- C: spec rows ---------- */
+.description__text .spec{display:grid;grid-template-columns:minmax(0,19rem) 1fr;gap:2rem;margin:0;padding:.9rem 1.4rem;
+  border:solid var(--ui-line);border-width:0 1px;letter-spacing:.02rem}
+.description__text .spec:nth-child(odd of .spec){background:var(--ui-tint)}
+.description__text .spec:not(.spec + .spec){border-top-width:1px;border-radius:12px 12px 0 0}
+.description__text .spec:not(:has(+ .spec)){border-bottom-width:1px;border-radius:0 0 12px 12px;margin-bottom:1.2rem}
+.description__text .spec:not(.spec + .spec):not(:has(+ .spec)){border-radius:12px}
+.description__text .spec .k{color:var(--ui-muted)}
+.description__text .spec .v{font-weight:600;min-width:0;overflow-wrap:anywhere}
+/* unlabelled bullets */
+.description__text li:not(.spec){position:relative;padding:.3rem 0 .3rem 1.8rem}
+.description__text li:not(.spec)::before{content:"";position:absolute;left:.3rem;top:1.15rem;width:.6rem;height:.6rem;border-radius:50%;background:var(--ui-blue)}
+.narrow .description__text .spec{grid-template-columns:minmax(0,42%) 1fr;gap:1.2rem;padding:.9rem 1.2rem}
+</style></head><body><div class="wrap" id="wrap"></div>
+<script>
+const S={
+"1 · RAM: <p><i>Мітка</i>: значення":`<p><i>Виробник</i>: Hynix</p>\n<p><i>Модель</i>: Hynix DDR3L 1600 SO-DIMM 8Gb</p>\n<p><i>Артикул</i>: HMT41GS6BFR8A-PB</p>\n<p><i>Опис</i>: DDR3L 1600 (PC 12800) SODIMM 204 pin, 1x8 Гб, 1.35 В, CL 11</p>\n<p><i>Тип пам'яті</i>: DDR3</p>\n<p><i>Тактова частота</i>: 1600 МГц</p>\n<p><i>Пропускна здатність</i>: 1600Mhz 12800 Mb/s</p>\n<p><i>Обсяг</i>: 8 Гб</p>\n<p><i>Напруга живлення</i>: 1.35 В або 1,5 В (універсальна)</p>\n<p><i>Тип</i>: Для ноутбуків</p>`,
+"2 · Процесор/мишка: <p><strong>Мітка:</strong> (зараз без рядків!)":`<p><strong>Тип гнізда:</strong> Socket 1150</p>\n<p><strong>Покоління процесора:</strong> Haswell</p>\n<p><strong>Кількість ядер:</strong> 4</p>\n<p><strong>Інтегрована графіка:</strong> Intel HD Graphics 4600</p>\n<p><strong>Тип упаковки:</strong> OEM</p>\n<p><strong>Внутрішня тактова частота:</strong> 3.2 - 3.6 ГГц</p>\n<p><strong>Розблокований множник:</strong> Без розблокованого множника</p>\n<p><strong>Об'єм кеш пам'яті 3 рівня:</strong> 6 МБ</p>\n<p><strong>Потужність TDP:</strong> 84 Вт</p>`,
+"3 · БЖ: вступ + h2 + <li><strong>Мітка:</strong> + Комплектація":`<p>Блок живлення Vinga ACER 65W 19V 3.42A - надійне джерело живлення для ноутбуків Acer, що забезпечує стабільну роботу вашого пристрою.</p>\n<h2>Характеристики</h2>\n<ul>\n<li>\n<strong>Виробник:</strong> Vinga</li>\n<li>\n<strong>Модель:</strong> VPA-1934-AC5517-101</li>\n<li>\n<strong>Тип роз'єму:</strong> 5.5 x 1.7 мм</li>\n<li>\n<strong>Вихідна потужність:</strong> 65 Вт</li>\n<li>\n<strong>Захист:</strong> від короткого замикання, грозозахист, ESD захист</li>\n<li>\n<strong>Пульсації під максимальним навантаженням:</strong> 0,0025 В (менше ніж 0.013%)</li>\n</ul>\n<h3>Комплектація</h3>\n<ul>\n<li>Блок живлення Vinga ACER 65W</li>\n<li>Кабель живлення</li>\n</ul>`,
+"4 · LED: змішаний список (пункт без мітки + мітки)":`<p>Безконтактний інфрачервоний вимикач для LED-стрічок дозволяє зручно керувати освітленням без фізичного контакту.</p>\n<h2>Характеристики</h2>\n<ul>\n<li>Сенсорний модуль сканування рук</li>\n<li>Вхідна напруга: 5 В-24 В постійного струму</li>\n<li>Індукційна відстань: 30-80 мм</li>\n<li>Час затримки: немає (прокрутка та вмикання/вимикання)</li>\n<li>Струм навантаження: резистивний 3A</li>\n<li>Розмір: 42*12*7,9 мм</li>\n</ul>\n<h2>Комплектація</h2>\n<ul>\n<li>Інфрачервоний датчик наближення для LED-стрічок</li>\n</ul>`,
+"5 · USB-COM: мітки, потім звичайний текст":`<p><i>Виробник</i>: EXTRADIGITAL</p>\n<p><i>Артикул</i>: KBU1654</p>\n<p><i>Найменування</i>: Перехідник USB до COM EXTRADIGITAL (KBU1654) USB 2.0 Тип A, RS232, 1 м</p>\n<p><i>Чип</i>: HL-340</p>\n<p>Перехідник USB до COM EXTRADIGITAL (KBU1654) забезпечує надійне з'єднання між USB-портом вашого комп'ютера та пристроями, що використовують RS232.</p>\n<p>Легкий у використанні, просто підключіть адаптер до USB-порту і ви готові до роботи.</p>`,
+"6 · Зарядка: жирний рядок як заголовок + <li>Мітка: значення":`<p><strong>Зарядний пристрій для Asus Transformer</strong></p>\n<p>Сумісний з моделями ASUS VivoTab RT TF600T, VivoTab Smart ME400, VivoTab TF600, TF701, TF810.</p>\n<p> </p>\n<ul>\n<li>Вхід: 100-240В, 50/60Гц</li>\n<li>Вихід: 15В 1.2A</li>\n<li>Довжина кабелю: 1 м</li>\n</ul>\n<p> </p>`,
+"7 · Розгалужувач: тільки пункти без міток":`<p>Розгалужувач Cablexpert HDMI v. 1.4 на 2 порти - це ідеальне рішення для тих, хто хоче підключити кілька пристроїв до одного HDMI виходу.</p>\n<ul>\n<li>Розгалужувач HDMI сигналу</li>\n<li>Розгалужує цифровий HDMI відеоаудіо сигнал на 2 монітори, телевізори або плазмові екрани</li>\n<li>Цифровий широкосмуговий підсилювач збільшує дальність розповсюдження сигналу</li>\n<li>Підтримка 3D-відео</li>\n</ul>`,
+"8 · Кишеня: «Мітка:» без значення + довгий список":`<p>Адаптер Optibay HDD CADDY 12.7 мм від Tishric - це ідеальне рішення для розширення пам'яті вашого ноутбука.</p>\n<p><strong>Сумісність з моделями ноутбуків:</strong></p>\n<ul>\n<li>Acer Aspire 5532, 5553G, 5738z, 4736G, 4740G, 5714G</li>\n<li>Acer Extensa 5235, 5635, 5635Z, 5635G</li>\n<li>Asus K50BA (перевіряти товщину DVD приводу)</li>\n<li>Dell Latitude E5410, E5420, E5420m, E5510</li>\n</ul>`
+};
+// mirror of the planned Liquid: a line is a spec row only if it is "Label: value" with a non-empty value
+function specify(html){
+  const re=/<(p|li)>\s*(?:<(i|em|strong|b)>\s*([^<]{1,40}?)\s*:?\s*<\/\2>\s*:?|([^<:]{1,40}):)\s*([\s\S]*?)<\/\1>/g;
+  return html.replace(re,(m,tag,w,l1,l2,val)=>{const k=(l1||l2).trim();if(!val.trim()||/^\s*$/.test(val.replace(/&nbsp;/g,'')))return m;
+    return `<${tag} class="spec"><span class="k">${k}<span class="visually-hidden">:</span></span><span class="v">${val.trim()}</span></${tag}>`});
+}
+const q=new URLSearchParams(location.search);const w=q.get('w')||'652';const narrow=+w<500?' narrow':'';
+for(const [t,h] of Object.entries(S)) document.getElementById('wrap').insertAdjacentHTML('beforeend',
+ `<div class="col${narrow}" style="--w:${w}px"><div class="tag">${t.replace(/</g,'&lt;')}</div><h2 class="description__headings">Опис</h2><div class="description__text">${specify(h)}</div></div>`);
+</script></body></html>
