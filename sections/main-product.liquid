@@ -108,7 +108,8 @@
       endif
     endif
 
-    if description_rich == false
+    # Every spec line has a colon: skip the snippet when there is none
+    if description_rich == false and description_html contains ':'
       capture description_html
         render 'description-spec-labels', html: description_html
       endcapture

@@ -35,3 +35,11 @@ These are docs only, not theme files. Delete this folder before merging if it sh
 3. **Weak card frame.** The PR builds the frame from per-row side borders and first/last-row radii, not
    from one wrapper with `overflow: hidden`. With the gaps from point 1, the frame falls apart.
 4. **Stripes barely visible** compared with the mockup.
+
+## Fixed (2026-11-16, checked on the dev theme at 1440 and 390 on all 6 test pages)
+1. Gaps: confirmed. The reset rule now skips spec rows (`p:not(.description__spec)`), so `<p>` rows sit flush (measured gap 0).
+2. Bold: on Windows 600 already looked semibold, but the mockup font (Arial) has no 600 face, so the approved image is 700. Values now use 700, and supplier `<b>`/`<strong>` inside a value inherit that weight.
+3. Frame: whole once the gaps were gone. Corner radii are now set per corner, so the extra single-row rule was dropped.
+4. Stripes: even rows were transparent over the #fafafa dotted page. Rows are now white, with odd rows `--ui-tint`.
+Columns already matched (190px desktop, 42% phone). The Waveshare rich description computes identically before and after.
+Known limits: stripe order counts across a whole container, so a second spec group in the same block may start white. A short bold lead-in with a colon in prose becomes a one-row card.

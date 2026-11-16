@@ -34,7 +34,6 @@
           endif
 
           assign line = piece | split: close | first
-          assign rest = piece | remove_first: line
           assign trimmed = line | strip
           assign label = ''
           assign value = ''
@@ -53,8 +52,7 @@
               assign label_last = label | slice: -1
               if label_last == ':'
                 assign has_colon = true
-                assign label_cut = label.size | minus: 1
-                assign label = label | slice: 0, label_cut | strip
+                assign label = label | remove_last: ':' | strip
               endif
               assign value_first = value | slice: 0
               if value_first == ':'
@@ -80,6 +78,7 @@
           if is_spec
             echo '<' | append: tag | append: ' class="description__spec"><span class="description__label">'
             echo label | append: '<span class="visually-hidden">:</span></span> <span class="description__value">'
+            assign rest = piece | remove_first: line
             echo value | append: '</span>' | append: rest
           else
             echo open | append: piece

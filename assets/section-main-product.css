@@ -147,7 +147,7 @@ product-info {
   color: var(--ui-navy);
 }
 
-.description__text:not(.description--rich) p {
+.description__text:not(.description--rich) p:not(.description__spec) {
   font-size: inherit;
   line-height: inherit;
   color: inherit;
@@ -212,12 +212,13 @@ product-info {
    aligned columns. A run of consecutive rows forms one card. */
 .description__text .description__spec {
   display: grid;
-  grid-template-columns: minmax(0, min(19rem, 42%)) 1fr;
+  grid-template-columns: min(19rem, 42%) minmax(0, 1fr);
   gap: 2rem;
   margin: 0;
   padding: 0.9rem 1.4rem;
   border: solid var(--ui-line);
   border-width: 0 0.1rem;
+  background: #fff;
   letter-spacing: 0.02rem;
 }
 
@@ -227,12 +228,14 @@ product-info {
 
 .description__text .description__spec:not(.description__spec + .description__spec) {
   border-top-width: 0.1rem;
-  border-radius: var(--ui-radius-md) var(--ui-radius-md) 0 0;
+  border-top-left-radius: var(--ui-radius-md);
+  border-top-right-radius: var(--ui-radius-md);
 }
 
 .description__text .description__spec:not(:has(+ .description__spec)) {
   border-bottom-width: 0.1rem;
-  border-radius: 0 0 var(--ui-radius-md) var(--ui-radius-md);
+  border-bottom-left-radius: var(--ui-radius-md);
+  border-bottom-right-radius: var(--ui-radius-md);
 }
 
 /* A <ul> card already has its own bottom margin; a run of <p> rows needs one */
@@ -240,24 +243,24 @@ product-info {
   margin-bottom: 1.2rem;
 }
 
-.description__text .description__spec:not(.description__spec + .description__spec):not(:has(+ .description__spec)) {
-  border-radius: var(--ui-radius-md);
-}
-
 .description__label {
   color: var(--ui-muted);
 }
 
 .description__value {
-  min-width: 0;
-  font-weight: 600;
+  font-weight: 700;
   overflow-wrap: break-word;
+}
+
+/* Supplier <b>/<strong> bits inside a value ("8 <b>Гб</b>") keep the value's weight */
+.description__text .description__value :is(b, strong) {
+  font-weight: inherit;
 }
 
 @media screen and (max-width: 749px) {
   .description__text .description__spec {
     gap: 1.2rem;
-    padding: 0.9rem 1.2rem;
+    padding-inline: 1.2rem;
   }
 }
 
