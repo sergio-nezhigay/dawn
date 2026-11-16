@@ -108,7 +108,7 @@
       endif
     endif
 
-    if description_rich == false and description_html contains '<li>'
+    if description_rich == false
       capture description_html
         render 'description-spec-labels', html: description_html
       endcapture

@@ -136,9 +136,9 @@ product-info {
   margin-top: 1.4rem;
 }
 
-/* One description look for both layouts (inline block and wide card). Spec lines read as rows
-   with a grey label whatever the markup: <li>Label: value</li> (label span added in Liquid),
-   <p><i>Label</i>: value</p>. Rich supplier HTML (.description--rich: own styles or tables)
+/* One description look for both layouts (inline block and wide card). Spec lines ("Label: value"
+   in <li> or <p>, marked up in snippets/description-spec-labels.liquid) form a striped card;
+   other list items are plain dot bullets. Rich supplier HTML (.description--rich: own styles or tables)
    keeps its markup and only takes the shop font; Waveshare's .ws-desc gets quieter headings. */
 .description__text {
   margin-top: 0.8rem;
@@ -186,12 +186,79 @@ product-info {
   list-style: decimal inside;
 }
 
-.description__text:not(.description--rich) li,
-.description__text:not(.description--rich) p:has(> :is(i, em):first-child) {
+.description__text:not(.description--rich) li {
   list-style: none;
   margin: 0;
-  padding: 0.7rem 0;
-  border-bottom: 0.1rem solid var(--ui-line);
+}
+
+/* Plain bullets (lines with no "Label:"): a small blue dot */
+.description__text:not(.description--rich) ul > li:not(.description__spec) {
+  position: relative;
+  padding: 0.3rem 0 0.3rem 1.8rem;
+}
+
+.description__text:not(.description--rich) ul > li:not(.description__spec)::before {
+  content: '';
+  position: absolute;
+  left: 0.3rem;
+  top: 1.1rem;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: var(--ui-blue);
+}
+
+/* Spec rows (snippets/description-spec-labels.liquid): a striped card, label and value in
+   aligned columns. A run of consecutive rows forms one card. */
+.description__text .description__spec {
+  display: grid;
+  grid-template-columns: minmax(0, min(19rem, 42%)) 1fr;
+  gap: 2rem;
+  margin: 0;
+  padding: 0.9rem 1.4rem;
+  border: solid var(--ui-line);
+  border-width: 0 0.1rem;
+  letter-spacing: 0.02rem;
+}
+
+.description__text .description__spec:nth-child(odd of .description__spec) {
+  background: var(--ui-tint);
+}
+
+.description__text .description__spec:not(.description__spec + .description__spec) {
+  border-top-width: 0.1rem;
+  border-radius: var(--ui-radius-md) var(--ui-radius-md) 0 0;
+}
+
+.description__text .description__spec:not(:has(+ .description__spec)) {
+  border-bottom-width: 0.1rem;
+  border-radius: 0 0 var(--ui-radius-md) var(--ui-radius-md);
+}
+
+/* A <ul> card already has its own bottom margin; a run of <p> rows needs one */
+.description__text p.description__spec:not(:has(+ .description__spec)) {
+  margin-bottom: 1.2rem;
+}
+
+.description__text .description__spec:not(.description__spec + .description__spec):not(:has(+ .description__spec)) {
+  border-radius: var(--ui-radius-md);
+}
+
+.description__label {
+  color: var(--ui-muted);
+}
+
+.description__value {
+  min-width: 0;
+  font-weight: 600;
+  overflow-wrap: break-word;
+}
+
+@media screen and (max-width: 749px) {
+  .description__text .description__spec {
+    gap: 1.2rem;
+    padding: 0.9rem 1.2rem;
+  }
 }
 
 .description__text:not(.description--rich) :is(i, em) {
@@ -200,11 +267,6 @@ product-info {
 
 .description__text strong {
   font-weight: 600;
-}
-
-.description__label,
-.description__text:not(.description--rich) p > :is(i, em):first-child {
-  color: var(--ui-muted);
 }
 
 .description__text .ws-desc {
