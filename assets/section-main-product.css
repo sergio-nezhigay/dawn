@@ -136,9 +136,9 @@ product-info {
   margin-top: 1.4rem;
 }
 
-/* One description look for both layouts (inline block and wide card). Spec lines read as rows
-   with a grey label whatever the markup: <li>Label: value</li> (label span added in Liquid),
-   <p><i>Label</i>: value</p>. Rich supplier HTML (.description--rich: own styles or tables)
+/* One description look for both layouts (inline block and wide card). Spec lines ("Label: value"
+   in <li> or <p>, marked up in snippets/description-spec-labels.liquid) form a card when 3+ run
+   together; other list items are plain dot bullets. Rich supplier HTML (.description--rich: own styles or tables)
    keeps its markup and only takes the shop font; Waveshare's .ws-desc gets quieter headings. */
 .description__text {
   margin-top: 0.8rem;
@@ -147,7 +147,7 @@ product-info {
   color: var(--ui-navy);
 }
 
-.description__text:not(.description--rich) p {
+.description__text:not(.description--rich) p:not(.description__spec) {
   font-size: inherit;
   line-height: inherit;
   color: inherit;
@@ -186,12 +186,107 @@ product-info {
   list-style: decimal inside;
 }
 
-.description__text:not(.description--rich) li,
-.description__text:not(.description--rich) p:has(> :is(i, em):first-child) {
+.description__text:not(.description--rich) li {
   list-style: none;
   margin: 0;
-  padding: 0.7rem 0;
-  border-bottom: 0.1rem solid var(--ui-line);
+}
+
+/* Bullets, and spec rows outside a card: a small blue dot */
+.description__text:not(.description--rich) ul > li {
+  position: relative;
+  padding: 0.3rem 0 0.3rem 1.8rem;
+}
+
+.description__text:not(.description--rich) ul > li::before {
+  content: var(--spec-dot, '');
+  position: absolute;
+  left: 0.3rem;
+  top: 1.1rem;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: var(--ui-blue);
+}
+
+/* Spec rows (snippets/description-spec-labels.liquid). A run of 3+ consecutive rows is a
+   card: white, one rounded border, hairlines between rows, label and value in two columns.
+   A row outside such a run reads as a plain "Label: value" line (a bullet inside a list).
+   The card sets the --spec-* properties its rows' labels and markers read. */
+.description__text {
+  --spec-gap: 2rem;
+  --spec-pad-x: 1.4rem;
+}
+
+.description__text .description__spec {
+  margin: 0;
+  padding: 0.3rem 0;
+}
+
+.description__text .description__spec .description__label {
+  color: var(--spec-label-color, inherit);
+  font-weight: var(--spec-label-weight, 600);
+}
+
+.description__text .description__spec .description__label::after {
+  content: var(--spec-colon, ':');
+}
+
+/* Screen readers already get the hidden colon in the markup */
+@supports (content: ':' / '') {
+  .description__text .description__spec .description__label::after {
+    content: var(--spec-colon, ':' / '');
+  }
+}
+
+.description__text .description__spec:is(
+    :has(+ .description__spec + .description__spec),
+    .description__spec + .description__spec:has(+ .description__spec),
+    .description__spec + .description__spec + .description__spec
+  ) {
+  --spec-label-color: var(--ui-muted);
+  --spec-label-weight: normal;
+  --spec-colon: none;
+  --spec-dot: none;
+  display: grid;
+  grid-template-columns: min(19rem, 42%) minmax(0, 1fr);
+  gap: var(--spec-gap);
+  padding: 0.9rem var(--spec-pad-x);
+  border: solid var(--ui-line);
+  border-width: 0.1rem 0.1rem 0;
+  background: #fff;
+}
+
+/* First and last row of a card */
+.description__text .description__spec:not(.description__spec + .description__spec):has(+ .description__spec + .description__spec) {
+  border-top-left-radius: var(--ui-radius-md);
+  border-top-right-radius: var(--ui-radius-md);
+}
+
+.description__text .description__spec + .description__spec + .description__spec:not(:has(+ .description__spec)) {
+  border-bottom-width: 0.1rem;
+  border-bottom-left-radius: var(--ui-radius-md);
+  border-bottom-right-radius: var(--ui-radius-md);
+}
+
+/* A <ul> card already has its own bottom margin; a run of <p> rows needs one */
+.description__text p.description__spec:not(:has(+ .description__spec)) {
+  margin-bottom: 1.2rem;
+}
+
+.description__value {
+  overflow-wrap: break-word;
+}
+
+/* Supplier <b>/<strong> bits inside a value ("8 <b>Гб</b>") keep the value's weight */
+.description__text .description__value :is(b, strong) {
+  font-weight: inherit;
+}
+
+@media screen and (max-width: 749px) {
+  .description__text {
+    --spec-gap: 1.2rem;
+    --spec-pad-x: 1.2rem;
+  }
 }
 
 .description__text:not(.description--rich) :is(i, em) {
@@ -200,11 +295,6 @@ product-info {
 
 .description__text strong {
   font-weight: 600;
-}
-
-.description__label,
-.description__text:not(.description--rich) p > :is(i, em):first-child {
-  color: var(--ui-muted);
 }
 
 .description__text .ws-desc {
