@@ -198,7 +198,7 @@ product-info {
 }
 
 .description__text:not(.description--rich) ul > li::before {
-  content: '';
+  content: var(--spec-dot, '');
   position: absolute;
   left: 0.3rem;
   top: 1.1rem;
@@ -210,19 +210,25 @@ product-info {
 
 /* Spec rows (snippets/description-spec-labels.liquid). A run of 3+ consecutive rows is a
    card: white, one rounded border, hairlines between rows, label and value in two columns.
-   A row outside such a run reads as a plain "Label: value" line. */
+   A row outside such a run reads as a plain "Label: value" line (a bullet inside a list).
+   The card sets the --spec-* properties its rows' labels and markers read. */
+.description__text {
+  --spec-gap: 2rem;
+  --spec-pad-x: 1.4rem;
+}
+
 .description__text .description__spec {
   margin: 0;
   padding: 0.3rem 0;
 }
 
 .description__text .description__spec .description__label {
-  font-weight: 600;
+  color: var(--spec-label-color, inherit);
+  font-weight: var(--spec-label-weight, 600);
 }
 
 .description__text .description__spec .description__label::after {
-  content: ':';
-  content: ':' / '';
+  content: var(--spec-colon, ':' / '');
 }
 
 .description__text .description__spec:is(
@@ -230,51 +236,26 @@ product-info {
     .description__spec + .description__spec:has(+ .description__spec),
     .description__spec + .description__spec + .description__spec
   ) {
+  --spec-label-color: var(--ui-muted);
+  --spec-label-weight: normal;
+  --spec-colon: none;
+  --spec-dot: none;
   display: grid;
   grid-template-columns: min(19rem, 42%) minmax(0, 1fr);
-  gap: 2rem;
-  padding: 0.9rem 1.4rem;
+  gap: var(--spec-gap);
+  padding: 0.9rem var(--spec-pad-x);
   border: solid var(--ui-line);
   border-width: 0.1rem 0.1rem 0;
   background: #fff;
 }
 
-.description__text .description__spec:is(
-    :has(+ .description__spec + .description__spec),
-    .description__spec + .description__spec:has(+ .description__spec),
-    .description__spec + .description__spec + .description__spec
-  ) .description__label {
-  color: var(--ui-muted);
-  font-weight: inherit;
-}
-
-.description__text .description__spec:is(
-    :has(+ .description__spec + .description__spec),
-    .description__spec + .description__spec:has(+ .description__spec),
-    .description__spec + .description__spec + .description__spec
-  ) .description__label::after,
-.description__text .description__spec:is(
-    :has(+ .description__spec + .description__spec),
-    .description__spec + .description__spec:has(+ .description__spec),
-    .description__spec + .description__spec + .description__spec
-  )::before {
-  content: none;
-}
-
-.description__text .description__spec:is(
-    :has(+ .description__spec + .description__spec),
-    .description__spec + .description__spec:has(+ .description__spec),
-    .description__spec + .description__spec + .description__spec
-  ):not(.description__spec + .description__spec) {
+/* First and last row of a card */
+.description__text .description__spec:not(.description__spec + .description__spec):has(+ .description__spec + .description__spec) {
   border-top-left-radius: var(--ui-radius-md);
   border-top-right-radius: var(--ui-radius-md);
 }
 
-.description__text .description__spec:is(
-    :has(+ .description__spec + .description__spec),
-    .description__spec + .description__spec:has(+ .description__spec),
-    .description__spec + .description__spec + .description__spec
-  ):not(:has(+ .description__spec)) {
+.description__text .description__spec + .description__spec + .description__spec:not(:has(+ .description__spec)) {
   border-bottom-width: 0.1rem;
   border-bottom-left-radius: var(--ui-radius-md);
   border-bottom-right-radius: var(--ui-radius-md);
@@ -295,13 +276,9 @@ product-info {
 }
 
 @media screen and (max-width: 749px) {
-  .description__text .description__spec:is(
-      :has(+ .description__spec + .description__spec),
-      .description__spec + .description__spec:has(+ .description__spec),
-      .description__spec + .description__spec + .description__spec
-    ) {
-    gap: 1.2rem;
-    padding-inline: 1.2rem;
+  .description__text {
+    --spec-gap: 1.2rem;
+    --spec-pad-x: 1.2rem;
   }
 }
 

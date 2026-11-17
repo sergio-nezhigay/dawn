@@ -68,12 +68,14 @@
             assign has_colon = true
           endif
 
-          assign value_text = value | strip_html | replace: '&nbsp;', ' ' | strip
           assign is_spec = false
-          if has_colon and label != blank and label.size <= 40 and value_text != blank and value_text.size <= 90
-            assign is_spec = true
-            if label contains '<' or value contains '<ul' or value contains '<ol'
-              assign is_spec = false
+          if has_colon and label != blank and label.size <= 40
+            assign value_text = value | strip_html | replace: '&nbsp;', ' ' | strip
+            if value_text != blank and value_text.size <= 90
+              assign is_spec = true
+              if label contains '<' or value contains '<ul' or value contains '<ol'
+                assign is_spec = false
+              endif
             endif
           endif
 
