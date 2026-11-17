@@ -137,8 +137,8 @@ product-info {
 }
 
 /* One description look for both layouts (inline block and wide card). Spec lines ("Label: value"
-   in <li> or <p>, marked up in snippets/description-spec-labels.liquid) form a striped card;
-   other list items are plain dot bullets. Rich supplier HTML (.description--rich: own styles or tables)
+   in <li> or <p>, marked up in snippets/description-spec-labels.liquid) form a card when 3+ run
+   together; other list items are plain dot bullets. Rich supplier HTML (.description--rich: own styles or tables)
    keeps its markup and only takes the shop font; Waveshare's .ws-desc gets quieter headings. */
 .description__text {
   margin-top: 0.8rem;
@@ -228,7 +228,14 @@ product-info {
 }
 
 .description__text .description__spec .description__label::after {
-  content: var(--spec-colon, ':' / '');
+  content: var(--spec-colon, ':');
+}
+
+/* Screen readers already get the hidden colon in the markup */
+@supports (content: ':' / '') {
+  .description__text .description__spec .description__label::after {
+    content: var(--spec-colon, ':' / '');
+  }
 }
 
 .description__text .description__spec:is(

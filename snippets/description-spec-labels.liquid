@@ -9,7 +9,7 @@
     inside or right after it: <p><i>Label</i>: value</p>, <p><strong>Label:</strong> value</p>
   Only plain <li>/<p> (no attributes); the label is 1-40 characters with no tags; the value is
   not empty, at most 90 characters (longer is a sentence, not a spec) and holds no nested
-  list. Anything else (bullets, prose, a bold line with nothing after it) passes through
+  list or line break. Anything else (bullets, prose, a bold line with nothing after it) passes through
   unchanged. The hidden colon is for screen readers.
 
   Accepts:
@@ -73,7 +73,7 @@
             assign value_text = value | strip_html | replace: '&nbsp;', ' ' | strip
             if value_text != blank and value_text.size <= 90
               assign is_spec = true
-              if label contains '<' or value contains '<ul' or value contains '<ol'
+              if label contains '<' or value contains '<ul' or value contains '<ol' or value contains '<br'
                 assign is_spec = false
               endif
             endif
