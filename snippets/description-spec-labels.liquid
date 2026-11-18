@@ -11,9 +11,8 @@
   not empty, at most 90 characters (longer is a sentence, not a spec) and holds no nested
   list or line break. Anything else (bullets, prose, a bold line with nothing after it) passes through
   unchanged. The hidden colon is for screen readers.
-  Advantages stay bullets: in a list whose heading (the text right before it) says Переваги /
-  Преимущества / Достоинства, a <li> with a bold or italic start is not a spec row. Plain
-  "Label: value" rows there still are; «Особливості» lists are left alone (they often hold real specs).
+  Advantages stay bullets: in a list right after a Переваги / Преимущества / Достоинства heading, a
+  <li> with a bold or italic start is not a spec row («Особливості» lists often hold real specs).
 
   Accepts:
   - html {String}: description HTML
@@ -25,7 +24,7 @@
   assign out = html
   assign tags = 'li,p' | split: ','
   assign wrappers = 'i,em,strong,b' | split: ','
-  assign advantage_words = 'Переваг,переваг,Преимуществ,преимуществ,Достоинств,достоинств' | split: ','
+  assign advantage_words = 'переваг,преимуществ,достоинств' | split: ','
 
   for tag in tags
     assign open = '<' | append: tag | append: '>'
@@ -37,9 +36,9 @@
       capture out
         for piece in pieces
           if tag == 'li'
-            assign after_list = prev_rest | split: '</ul>' | last | split: '</ol>' | last
-            if after_list contains '<ul' or after_list contains '<ol'
-              assign list_head = after_list | split: '<ul' | first | split: '<ol' | first | strip_html | strip | slice: -60, 60
+            if prev_rest contains '<ul' or prev_rest contains '<ol'
+              assign after_list = prev_rest | split: '</ul>' | last | split: '</ol>' | last
+              assign list_head = after_list | split: '<ul' | first | split: '<ol' | first | strip_html | strip | downcase | slice: -60, 60
               assign in_advantages = false
               for word in advantage_words
                 if list_head contains word
@@ -47,8 +46,6 @@
                   break
                 endif
               endfor
-            elsif prev_rest contains '</ul>' or prev_rest contains '</ol>'
-              assign in_advantages = false
             endif
           endif
 
