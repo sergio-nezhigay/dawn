@@ -309,15 +309,16 @@ product-info {
   margin: 2.4rem 0 0.8rem;
 }
 
-/* Supplier tables (wrapped in main-product.liquid) swipe sideways when wider than the screen;
-   long links wrap instead of running past the edge. */
+/* Supplier tables fit the screen: long words in cells and long links break onto the next line.
+   The wrapper (main-product.liquid) swipes sideways only if a table still cannot fit. */
 .description__table {
   max-width: 100%;
   overflow-x: auto;
 }
 
-.description__text a {
+.description__text :is(td, th, a) {
   overflow-wrap: anywhere;
+  hyphens: auto;
 }
 
 /* Warning / note lines, marked in snippets/description-spec-labels.liquid */
