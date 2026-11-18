@@ -41,7 +41,10 @@
           if tag == 'li'
             if prev_rest contains '<ul' or prev_rest contains '<ol'
               assign after_list = prev_rest | split: '</ul>' | last | split: '</ol>' | last
-              assign list_head = after_list | split: '<ul' | first | split: '<ol' | first | strip_html | strip | downcase | slice: -60, 60
+              assign list_head = after_list | split: '<ul' | first | split: '<ol' | first | strip_html | strip | downcase
+              if list_head.size > 60
+                assign list_head = list_head | slice: -60, 60
+              endif
               assign in_advantages = false
               for word in advantage_words
                 if list_head contains word
