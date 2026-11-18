@@ -11,6 +11,9 @@
   not empty, at most 90 characters (longer is a sentence, not a spec) and holds no nested
   list or line break. Anything else (bullets, prose, a bold line with nothing after it) passes through
   unchanged. The hidden colon is for screen readers.
+  Advantages stay bullets: in a list whose heading (the text right before it) says Переваги /
+  Преимущества / Достоинства, a <li> with a bold or italic start is not a spec row. Plain
+  "Label: value" rows there still are; «Особливості» lists are left alone (they often hold real specs).
 
   Accepts:
   - html {String}: description HTML
@@ -22,16 +25,36 @@
   assign out = html
   assign tags = 'li,p' | split: ','
   assign wrappers = 'i,em,strong,b' | split: ','
+  assign advantage_words = 'Переваг,переваг,Преимуществ,преимуществ,Достоинств,достоинств' | split: ','
 
   for tag in tags
     assign open = '<' | append: tag | append: '>'
     assign close = '</' | append: tag | append: '>'
     if out contains open
       assign pieces = out | split: open
+      assign in_advantages = false
+      assign prev_rest = ''
       capture out
         for piece in pieces
+          if tag == 'li'
+            assign after_list = prev_rest | split: '</ul>' | last | split: '</ol>' | last
+            if after_list contains '<ul' or after_list contains '<ol'
+              assign list_head = after_list | split: '<ul' | first | split: '<ol' | first | strip_html | strip | slice: -60, 60
+              assign in_advantages = false
+              for word in advantage_words
+                if list_head contains word
+                  assign in_advantages = true
+                  break
+                endif
+              endfor
+            elsif prev_rest contains '</ul>' or prev_rest contains '</ol>'
+              assign in_advantages = false
+            endif
+          endif
+
           if forloop.first
             echo piece
+            assign prev_rest = piece
             continue
           endif
 
@@ -44,7 +67,7 @@
           assign first_char = trimmed | slice: 0
           if first_char == '<'
             assign wrap = trimmed | slice: 1, 6 | split: '>' | first
-            if wrappers contains wrap
+            if wrappers contains wrap and in_advantages == false
               assign wrap_open = '<' | append: wrap | append: '>'
               assign wrap_close = '</' | append: wrap | append: '>'
               assign after_open = trimmed | remove_first: wrap_open
@@ -79,11 +102,11 @@
             endif
           endif
 
+          assign prev_rest = piece | remove_first: line
           if is_spec
             echo '<' | append: tag | append: ' class="description__spec"><span class="description__label">'
             echo label | append: '<span class="visually-hidden">:</span></span> <span class="description__value">'
-            assign rest = piece | remove_first: line
-            echo value | append: '</span>' | append: rest
+            echo value | append: '</span>' | append: prev_rest
           else
             echo open | append: piece
           endif
