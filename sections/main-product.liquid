@@ -115,6 +115,11 @@
       endcapture
     endif
 
+    # Supplier tables wider than a phone swipe inside their own box instead of being cut off.
+    if description_html contains '<table'
+      assign description_html = description_html | replace: '<table', '<div class="description__table"><table' | replace: '</table>', '</table></div>'
+    endif
+
     # Part number is left out when the text already shows it (any letter case).
     assign partno = product.selected_or_first_available_variant.barcode
     assign partno_upcase = partno | upcase

@@ -147,7 +147,7 @@ product-info {
   color: var(--ui-navy);
 }
 
-.description__text:not(.description--rich) p:not(.description__spec) {
+.description__text:not(.description--rich) p:not(.description__spec, .description__note, .description__partno) {
   font-size: inherit;
   line-height: inherit;
   color: inherit;
@@ -309,9 +309,32 @@ product-info {
   margin: 2.4rem 0 0.8rem;
 }
 
+/* Supplier tables fit the screen: long words in cells and long links break onto the next line.
+   The wrapper (main-product.liquid) swipes sideways only if a table still cannot fit. */
+.description__table {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.description__text :is(td, th, a) {
+  overflow-wrap: anywhere;
+  hyphens: auto;
+}
+
+/* Warning / note lines, marked in snippets/description-spec-labels.liquid */
+.description__note {
+  margin: 1.6rem 0;
+  padding: 1.2rem 1.6rem;
+  border-left: 0.4rem solid var(--ui-blue);
+  border-radius: var(--ui-radius-sm);
+  background: var(--ui-blue-soft);
+}
+
 /* Part number line under the description text */
 .description__partno {
-  margin: 1.6rem 0 0;
+  margin: 2rem 0 0;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--ui-line);
   font-size: 1.3rem;
   color: var(--ui-muted);
 }

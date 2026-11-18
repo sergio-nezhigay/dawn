@@ -13,6 +13,8 @@
   unchanged. The hidden colon is for screen readers.
   Advantages stay bullets: in a list right after a Переваги / Преимущества / Достоинства heading, a
   <li> with a bold or italic start is not a spec row («Особливості» lists often hold real specs).
+  Notes: a <p> whose text starts with Увага / Важливо / Примітка / Зверніть увагу (RU: Внимание / Важно /
+  Примечание / Обратите внимание) becomes <p class="description__note"> instead of a spec row.
 
   Accepts:
   - html {String}: description HTML
@@ -25,6 +27,7 @@
   assign tags = 'li,p' | split: ','
   assign wrappers = 'i,em,strong,b' | split: ','
   assign advantage_words = 'переваг,преимуществ,достоинств' | split: ','
+  assign note_words = 'увага,важливо,примітка,зверніть увагу,внимание,важно,примечание,обратите внимание' | split: ','
 
   for tag in tags
     assign open = '<' | append: tag | append: '>'
@@ -60,6 +63,15 @@
           assign label = ''
           assign value = ''
           assign has_colon = false
+
+          assign is_note = false
+          if tag == 'p'
+            assign line_words = trimmed | strip_html | slice: 0, 40 | downcase | replace: '&nbsp;', ' ' | replace: ':', ' ' | replace: '!', ' ' | replace: ',', ' ' | replace: '.', ' ' | replace: '-', ' ' | replace: '–', ' ' | replace: '—', ' ' | split: ' '
+            assign two_words = line_words[0] | append: ' ' | append: line_words[1]
+            if note_words contains line_words[0] or note_words contains two_words
+              assign is_note = true
+            endif
+          endif
 
           assign first_char = trimmed | slice: 0
           if first_char == '<'
@@ -100,7 +112,9 @@
           endif
 
           assign prev_rest = piece | remove_first: line
-          if is_spec
+          if is_note
+            echo '<p class="description__note">' | append: piece
+          elsif is_spec
             echo '<' | append: tag | append: ' class="description__spec"><span class="description__label">'
             echo label | append: '<span class="visually-hidden">:</span></span> <span class="description__value">'
             echo value | append: '</span>' | append: prev_rest
