@@ -630,6 +630,21 @@ media-gallery {
   margin: 2.5rem 0;
 }
 
+/* The description sits in a white card, same look as the «Відгуки» summary card
+   (the desktop wide layout has its own .product__wide-description-card). */
+.product__info-container .product__description {
+  padding: 20px 16px;
+  border: 1px solid var(--ui-line);
+  border-radius: var(--ui-radius-md);
+  background: #fff;
+}
+
+@media screen and (max-width: 989px) {
+  .product__info-container .product__description {
+    margin-inline: -7px;
+  }
+}
+
 .product__text {
   margin-bottom: 0;
 }

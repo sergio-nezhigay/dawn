@@ -255,7 +255,7 @@
 
 @media screen and (max-width: 749px) {
   .product__description-content.description--kit:not(.is-expanded) {
-    max-height: 640px;
+    max-height: 680px;
   }
 
   .description__text.description--kit .pd-highlights > li {
