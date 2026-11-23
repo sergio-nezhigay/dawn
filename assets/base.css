@@ -21,10 +21,7 @@
   --ui-ease: ease;
   --ui-ring: var(--ui-blue);
   --ui-ok: #14833b;
-  --ui-ok-soft: #effaf2;
   --ui-bad: #c0362c;
-  --ui-bad-soft: #fdf1f0;
-  --ui-font-display: 'Chakra Petch', 'Tektur', sans-serif;
 }
 
 /* Dual Font System: Chakra Petch (Latin) + Tektur (Cyrillic) */
