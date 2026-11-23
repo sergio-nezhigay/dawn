@@ -3,7 +3,18 @@
    The two-class prefix keeps the same specificity as the base list rules it overrides
    (.description__text.description--kit ul > li), so keep it when adding rules. */
 .product__description-content.description--kit:not(.is-expanded) {
-  max-height: 440px;
+  max-height: 480px;
+}
+
+/* Spacing scale: 28 between sections, 10 under a heading, 8 between items, 16 around a note */
+.description__text.description--kit :is(h2, h3, h4, h5) {
+  font-size: 18px;
+  line-height: 1.3;
+  margin: 28px 0 10px;
+}
+
+.description__text.description--kit > :is(h2, h3, h4, h5):first-child {
+  margin-top: 0;
 }
 
 .description__text.description--kit :is(.pd-highlights, .pd-fit, .pd-steps, .pd-box, .pd-specs) {
@@ -25,16 +36,17 @@
 }
 
 .description__text.description--kit p.pd-lead {
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1.6;
   color: var(--ui-navy);
-  margin: 0 0 14px;
+  margin: 0 0 12px;
 }
 
 .description__text.description--kit .pd-highlights {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
+  margin-bottom: 0;
 }
 
 .description__text.description--kit .pd-highlights > li {
@@ -48,35 +60,44 @@
 }
 
 .description__text.description--kit .pd-highlights strong {
-  font-family: var(--ui-font-display);
-  font-weight: 600;
-  font-size: 16px;
+  font-weight: 700;
+  font-size: 15px;
   line-height: 1.25;
   color: var(--ui-blue-deep);
 }
 
 .description__text.description--kit .pd-highlights span {
-  font-size: 13.5px;
+  font-size: 13px;
   line-height: 1.4;
   color: var(--ui-muted);
 }
 
 .description__text.description--kit .pd-fit {
   display: grid;
-  gap: 6px;
+}
+
+/* Fit check and spec card share one white card with hairlines between rows */
+.description__text.description--kit :is(.pd-fit, .pd-specs) {
+  border: 1px solid var(--ui-line);
+  border-radius: var(--ui-radius-sm);
+  background: #fff;
+  overflow: hidden;
+}
+
+.description__text.description--kit :is(.pd-fit, .pd-specs) > li + li {
+  border-top: 1px solid var(--ui-line);
 }
 
 .description__text.description--kit .pd-fit > li {
   position: relative;
-  padding: 8px 12px 8px 40px;
-  border-radius: var(--ui-radius-sm);
+  padding: 10px 14px 10px 42px;
   line-height: 1.45;
 }
 
 .description__text.description--kit .pd-fit > li::before {
   position: absolute;
-  left: 10px;
-  top: 9px;
+  left: 12px;
+  top: 11px;
   width: 20px;
   height: 20px;
   border-radius: 50%;
@@ -89,19 +110,11 @@
   margin: 0;
 }
 
-.description__text.description--kit .pd-fit--yes > li {
-  background: var(--ui-ok-soft);
-}
-
 .description__text.description--kit .pd-fit--yes > li::before {
   /* Plain fallback first: browsers without alt-text support drop the whole second line */
   content: '✓';
   content: '✓' / 'Підійде: ';
   background: var(--ui-ok);
-}
-
-.description__text.description--kit .pd-fit--no > li {
-  background: var(--ui-bad-soft);
 }
 
 .description__text.description--kit .pd-fit--no > li::before {
@@ -161,29 +174,18 @@
 .description__text.description--kit .pd-box > li {
   border: 1px solid var(--ui-line);
   background: #fff;
-  border-radius: 999px;
-  padding: 5px 14px;
-  font-size: 13.5px;
-}
-
-/* Spec card: label and value in two columns, hairlines between rows */
-.description__text.description--kit .pd-specs {
-  border: 1px solid var(--ui-line);
   border-radius: var(--ui-radius-sm);
-  background: #fff;
-  overflow: hidden;
+  padding: 5px 14px;
+  font-size: 14px;
 }
 
+/* Spec card: label and value in two columns */
 .description__text.description--kit .pd-specs > li {
   display: grid;
   grid-template-columns: min(190px, 42%) minmax(0, 1fr);
   gap: 20px;
   padding: 9px 14px;
   line-height: 1.45;
-}
-
-.description__text.description--kit .pd-specs > li + li {
-  border-top: 1px solid var(--ui-line);
 }
 
 .description__text.description--kit .pd-specs > li > :first-child {
@@ -196,7 +198,7 @@
   border-left: 3px solid var(--ui-blue);
   border-radius: var(--ui-radius-sm);
   padding: 10px 14px;
-  margin: 12px 0;
+  margin: 16px 0;
 }
 
 .description__text.description--kit .pd-faq {
@@ -242,7 +244,7 @@
 
 .description__text.description--kit .pd-faq p {
   margin: 0 0 12px;
-  color: #374151;
+  color: var(--ui-text);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -252,16 +254,12 @@
 }
 
 @media screen and (max-width: 749px) {
+  .product__description-content.description--kit:not(.is-expanded) {
+    max-height: 640px;
+  }
+
   .description__text.description--kit .pd-highlights > li {
     padding: 9px 11px;
-  }
-
-  .description__text.description--kit .pd-highlights strong {
-    font-size: 15px;
-  }
-
-  .description__text.description--kit .pd-highlights span {
-    font-size: 13px;
   }
 
   .description__text.description--kit .pd-specs > li {
