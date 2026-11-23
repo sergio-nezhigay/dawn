@@ -1,14 +1,20 @@
 {%- comment -%}
-  Turns spec lines of a product description into label / value rows (the striped spec card
-  in section-main-product.css). A line becomes
+  Turns spec lines of a product description into label / value rows. In
+  section-main-product.css a run of 3+ rows is a spec card; a shorter run reads as plain
+  "Label: value" lines. A line becomes
   <li|p class="description__spec"><span class="description__label">Label</span> <span class="description__value">value</span>
   when it is one of:
   - <li>Label: value</li>
   - <li> or <p> starting with <i>, <em>, <strong> or <b> holding the label, with a colon
     inside or right after it: <p><i>Label</i>: value</p>, <p><strong>Label:</strong> value</p>
   Only plain <li>/<p> (no attributes); the label is 1-40 characters with no tags; the value is
-  not empty and holds no nested list. Anything else (bullets, prose, a bold line with nothing
-  after it) passes through unchanged. The colon stays for screen readers only.
+  not empty, at most 90 characters (longer is a sentence, not a spec) and holds no nested
+  list or line break. Anything else (bullets, prose, a bold line with nothing after it) passes through
+  unchanged. The hidden colon is for screen readers.
+  Advantages stay bullets: in a list right after a Переваги / Преимущества / Достоинства heading, a
+  <li> with a bold or italic start is not a spec row («Особливості» lists often hold real specs).
+  Notes: a <p> whose text starts with Увага / Важливо / Примітка / Зверніть увагу (RU: Внимание / Важно /
+  Примечание / Обратите внимание) becomes <p class="description__note"> instead of a spec row.
 
   Accepts:
   - html {String}: description HTML
@@ -20,30 +26,60 @@
   assign out = html
   assign tags = 'li,p' | split: ','
   assign wrappers = 'i,em,strong,b' | split: ','
+  assign advantage_words = 'переваг,преимуществ,достоинств' | split: ','
+  assign note_words = 'увага,важливо,примітка,зверніть увагу,внимание,важно,примечание,обратите внимание' | split: ','
 
   for tag in tags
     assign open = '<' | append: tag | append: '>'
     assign close = '</' | append: tag | append: '>'
     if out contains open
       assign pieces = out | split: open
+      assign in_advantages = false
+      assign prev_rest = ''
       capture out
         for piece in pieces
+          if tag == 'li'
+            if prev_rest contains '<ul' or prev_rest contains '<ol'
+              assign after_list = prev_rest | split: '</ul>' | last | split: '</ol>' | last
+              assign list_head = after_list | split: '<ul' | first | split: '<ol' | first | strip_html | strip | downcase
+              if list_head.size > 60
+                assign list_head = list_head | slice: -60, 60
+              endif
+              assign in_advantages = false
+              for word in advantage_words
+                if list_head contains word
+                  assign in_advantages = true
+                  break
+                endif
+              endfor
+            endif
+          endif
+
           if forloop.first
             echo piece
+            assign prev_rest = piece
             continue
           endif
 
           assign line = piece | split: close | first
-          assign rest = piece | remove_first: line
           assign trimmed = line | strip
           assign label = ''
           assign value = ''
           assign has_colon = false
 
+          assign is_note = false
+          if tag == 'p'
+            assign line_words = trimmed | strip_html | slice: 0, 40 | downcase | replace: '&nbsp;', ' ' | replace: ':', ' ' | replace: '!', ' ' | replace: ',', ' ' | replace: '.', ' ' | replace: '-', ' ' | replace: '–', ' ' | replace: '—', ' ' | split: ' '
+            assign two_words = line_words[0] | append: ' ' | append: line_words[1]
+            if note_words contains line_words[0] or note_words contains two_words
+              assign is_note = true
+            endif
+          endif
+
           assign first_char = trimmed | slice: 0
           if first_char == '<'
             assign wrap = trimmed | slice: 1, 6 | split: '>' | first
-            if wrappers contains wrap
+            if wrappers contains wrap and in_advantages == false
               assign wrap_open = '<' | append: wrap | append: '>'
               assign wrap_close = '</' | append: wrap | append: '>'
               assign after_open = trimmed | remove_first: wrap_open
@@ -53,8 +89,7 @@
               assign label_last = label | slice: -1
               if label_last == ':'
                 assign has_colon = true
-                assign label_cut = label.size | minus: 1
-                assign label = label | slice: 0, label_cut | strip
+                assign label = label | remove_last: ':' | strip
               endif
               assign value_first = value | slice: 0
               if value_first == ':'
@@ -68,19 +103,24 @@
             assign has_colon = true
           endif
 
-          assign value_text = value | strip_html | replace: '&nbsp;', ' ' | strip
           assign is_spec = false
-          if has_colon and label != blank and label.size <= 40 and value_text != blank
-            assign is_spec = true
-            if label contains '<' or value contains '<ul' or value contains '<ol'
-              assign is_spec = false
+          if has_colon and label != blank and label.size <= 40
+            assign value_text = value | strip_html | replace: '&nbsp;', ' ' | strip
+            if value_text != blank and value_text.size <= 90
+              assign is_spec = true
+              if label contains '<' or value contains '<ul' or value contains '<ol' or value contains '<br'
+                assign is_spec = false
+              endif
             endif
           endif
 
-          if is_spec
+          assign prev_rest = piece | remove_first: line
+          if is_note
+            echo '<p class="description__note">' | append: piece
+          elsif is_spec
             echo '<' | append: tag | append: ' class="description__spec"><span class="description__label">'
             echo label | append: '<span class="visually-hidden">:</span></span> <span class="description__value">'
-            echo value | append: '</span>' | append: rest
+            echo value | append: '</span>' | append: prev_rest
           else
             echo open | append: piece
           endif

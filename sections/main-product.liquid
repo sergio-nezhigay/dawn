@@ -108,10 +108,16 @@
       endif
     endif
 
-    if description_rich == false
+    # Every spec line has a colon: skip the snippet when there is none
+    if description_rich == false and description_html contains ':'
       capture description_html
         render 'description-spec-labels', html: description_html
       endcapture
+    endif
+
+    # Supplier tables wider than a phone swipe inside their own box instead of being cut off.
+    if description_html contains '<table'
+      assign description_html = description_html | replace: '<table', '<div class="description__table"><table' | replace: '</table>', '</table></div>'
     endif
 
     # Part number is left out when the text already shows it (any letter case).

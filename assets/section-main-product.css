@@ -137,8 +137,8 @@ product-info {
 }
 
 /* One description look for both layouts (inline block and wide card). Spec lines ("Label: value"
-   in <li> or <p>, marked up in snippets/description-spec-labels.liquid) form a striped card;
-   other list items are plain dot bullets. Rich supplier HTML (.description--rich: own styles or tables)
+   in <li> or <p>, marked up in snippets/description-spec-labels.liquid) form a card when 3+ run
+   together; other list items are plain dot bullets. Rich supplier HTML (.description--rich: own styles or tables)
    keeps its markup and only takes the shop font; Waveshare's .ws-desc gets quieter headings. */
 .description__text {
   margin-top: 0.8rem;
@@ -147,7 +147,7 @@ product-info {
   color: var(--ui-navy);
 }
 
-.description__text:not(.description--rich) p {
+.description__text:not(.description--rich) p:not(.description__spec, .description__note, .description__partno) {
   font-size: inherit;
   line-height: inherit;
   color: inherit;
@@ -191,14 +191,14 @@ product-info {
   margin: 0;
 }
 
-/* Plain bullets (lines with no "Label:"): a small blue dot */
-.description__text:not(.description--rich) ul > li:not(.description__spec) {
+/* Bullets, and spec rows outside a card: a small blue dot */
+.description__text:not(.description--rich) ul > li {
   position: relative;
   padding: 0.3rem 0 0.3rem 1.8rem;
 }
 
-.description__text:not(.description--rich) ul > li:not(.description__spec)::before {
-  content: '';
+.description__text:not(.description--rich) ul > li::before {
+  content: var(--spec-dot, '');
   position: absolute;
   left: 0.3rem;
   top: 1.1rem;
@@ -208,31 +208,64 @@ product-info {
   background: var(--ui-blue);
 }
 
-/* Spec rows (snippets/description-spec-labels.liquid): a striped card, label and value in
-   aligned columns. A run of consecutive rows forms one card. */
+/* Spec rows (snippets/description-spec-labels.liquid). A run of 3+ consecutive rows is a
+   card: white, one rounded border, hairlines between rows, label and value in two columns.
+   A row outside such a run reads as a plain "Label: value" line (a bullet inside a list).
+   The card sets the --spec-* properties its rows' labels and markers read. */
+.description__text {
+  --spec-gap: 2rem;
+  --spec-pad-x: 1.4rem;
+}
+
 .description__text .description__spec {
-  display: grid;
-  grid-template-columns: minmax(0, min(19rem, 42%)) 1fr;
-  gap: 2rem;
   margin: 0;
-  padding: 0.9rem 1.4rem;
+  padding: 0.3rem 0;
+}
+
+.description__text .description__spec .description__label {
+  color: var(--spec-label-color, inherit);
+  font-weight: var(--spec-label-weight, 600);
+}
+
+.description__text .description__spec .description__label::after {
+  content: var(--spec-colon, ':');
+}
+
+/* Screen readers already get the hidden colon in the markup */
+@supports (content: ':' / '') {
+  .description__text .description__spec .description__label::after {
+    content: var(--spec-colon, ':' / '');
+  }
+}
+
+.description__text .description__spec:is(
+    :has(+ .description__spec + .description__spec),
+    .description__spec + .description__spec:has(+ .description__spec),
+    .description__spec + .description__spec + .description__spec
+  ) {
+  --spec-label-color: var(--ui-muted);
+  --spec-label-weight: normal;
+  --spec-colon: none;
+  --spec-dot: none;
+  display: grid;
+  grid-template-columns: min(19rem, 42%) minmax(0, 1fr);
+  gap: var(--spec-gap);
+  padding: 0.9rem var(--spec-pad-x);
   border: solid var(--ui-line);
-  border-width: 0 0.1rem;
-  letter-spacing: 0.02rem;
+  border-width: 0.1rem 0.1rem 0;
+  background: #fff;
 }
 
-.description__text .description__spec:nth-child(odd of .description__spec) {
-  background: var(--ui-tint);
+/* First and last row of a card */
+.description__text .description__spec:not(.description__spec + .description__spec):has(+ .description__spec + .description__spec) {
+  border-top-left-radius: var(--ui-radius-md);
+  border-top-right-radius: var(--ui-radius-md);
 }
 
-.description__text .description__spec:not(.description__spec + .description__spec) {
-  border-top-width: 0.1rem;
-  border-radius: var(--ui-radius-md) var(--ui-radius-md) 0 0;
-}
-
-.description__text .description__spec:not(:has(+ .description__spec)) {
+.description__text .description__spec + .description__spec + .description__spec:not(:has(+ .description__spec)) {
   border-bottom-width: 0.1rem;
-  border-radius: 0 0 var(--ui-radius-md) var(--ui-radius-md);
+  border-bottom-left-radius: var(--ui-radius-md);
+  border-bottom-right-radius: var(--ui-radius-md);
 }
 
 /* A <ul> card already has its own bottom margin; a run of <p> rows needs one */
@@ -240,24 +273,19 @@ product-info {
   margin-bottom: 1.2rem;
 }
 
-.description__text .description__spec:not(.description__spec + .description__spec):not(:has(+ .description__spec)) {
-  border-radius: var(--ui-radius-md);
-}
-
-.description__label {
-  color: var(--ui-muted);
-}
-
 .description__value {
-  min-width: 0;
-  font-weight: 600;
   overflow-wrap: break-word;
 }
 
+/* Supplier <b>/<strong> bits inside a value ("8 <b>Гб</b>") keep the value's weight */
+.description__text .description__value :is(b, strong) {
+  font-weight: inherit;
+}
+
 @media screen and (max-width: 749px) {
-  .description__text .description__spec {
-    gap: 1.2rem;
-    padding: 0.9rem 1.2rem;
+  .description__text {
+    --spec-gap: 1.2rem;
+    --spec-pad-x: 1.2rem;
   }
 }
 
@@ -281,9 +309,32 @@ product-info {
   margin: 2.4rem 0 0.8rem;
 }
 
+/* Supplier tables fit the screen: long words in cells and long links break onto the next line.
+   The wrapper (main-product.liquid) swipes sideways only if a table still cannot fit. */
+.description__table {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.description__text :is(td, th, a) {
+  overflow-wrap: anywhere;
+  hyphens: auto;
+}
+
+/* Warning / note lines, marked in snippets/description-spec-labels.liquid */
+.description__note {
+  margin: 1.6rem 0;
+  padding: 1.2rem 1.6rem;
+  border-left: 0.4rem solid var(--ui-blue);
+  border-radius: var(--ui-radius-sm);
+  background: var(--ui-blue-soft);
+}
+
 /* Part number line under the description text */
 .description__partno {
-  margin: 1.6rem 0 0;
+  margin: 2rem 0 0;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--ui-line);
   font-size: 1.3rem;
   color: var(--ui-muted);
 }
