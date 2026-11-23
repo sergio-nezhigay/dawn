@@ -76,6 +76,13 @@
       assign description_rich = true
     endif
 
+    # Description kit (pd- classes): its own stylesheet and the description--kit class, only on products that use it.
+    assign description_kit = false
+    if product.description contains 'class="pd-'
+      assign description_kit = true
+      echo 'description-kit.css' | asset_url | stylesheet_tag
+    endif
+
     # Desktop wide card (with side Buy) only for rich texts: images, tables, Waveshare markup, or very long text.
     # Not description_rich: supplier <style> alone does not need the wide card. Phone always shows the inline block.
     assign show_wide_description = false
@@ -278,7 +285,7 @@
                       class="product__description-container product__description-disclosure"
                       id="ProductDescription-{{ section.id }}"
                     >
-                      <div class="description__text product__description-content{% if description_rich %} description--rich{% endif %}">
+                      <div class="description__text product__description-content{% if description_rich %} description--rich{% endif %}{% if description_kit %} description--kit{% endif %}">
                         {{ product.description }}
                         {{ product_barcode_supplier_info }}
                       </div>
@@ -337,7 +344,7 @@
           <div class="product__wide-desc-content rte">
             <h2 class="description__headings">{{ 'products.product.description' | t }}</h2>
             <product-description-toggle class="product__description-disclosure">
-              <div class="product__wide-description-body description__text{% if description_rich %} description--rich{% endif %}" id="WideDescription-{{ section.id }}">
+              <div class="product__wide-description-body description__text{% if description_rich %} description--rich{% endif %}{% if description_kit %} description--kit{% endif %}" id="WideDescription-{{ section.id }}">
                 {{ product.description }}
                 {{ product_barcode_supplier_info }}
               </div>
