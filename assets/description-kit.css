@@ -13,6 +13,10 @@
   margin: 28px 0 10px;
 }
 
+.description__text.description--kit > :is(h2, h3, h4, h5):first-child {
+  margin-top: 0;
+}
+
 .description__text.description--kit :is(.pd-highlights, .pd-fit, .pd-steps, .pd-box, .pd-specs) {
   list-style: none;
   padding: 0;
