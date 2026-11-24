@@ -207,7 +207,6 @@
       "sold_out_contact_html": "Товар тимчасово відсутній. Телефонуйте {{ phone }} — підкажемо, коли надійде, або підберемо аналог.",
       "inventory_out_of_stock_continue_selling": "В наявності",
       "sku": "Артикул",
-      "barcode_label": "Парт-номер",
       "volume_pricing": {
         "title": "Оптова ціна",
         "note": "Доступні оптові ціни",

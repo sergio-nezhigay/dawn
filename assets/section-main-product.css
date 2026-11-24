@@ -146,7 +146,7 @@ product-info {
   color: var(--ui-navy);
 }
 
-.description__text:not(.description--rich) p:not(.description__partno) {
+.description__text:not(.description--rich) p {
   font-size: inherit;
   line-height: inherit;
   color: inherit;
@@ -243,15 +243,6 @@ product-info {
 .description__text :is(td, th, a) {
   overflow-wrap: anywhere;
   hyphens: auto;
-}
-
-/* Part number line under the description text */
-.description__partno {
-  margin: 2rem 0 0;
-  padding-top: 1.2rem;
-  border-top: 1px solid var(--ui-line);
-  font-size: 1.3rem;
-  color: var(--ui-muted);
 }
 
 /* Supplier code after the product title, only in browsers switched on with ?staff=1 */

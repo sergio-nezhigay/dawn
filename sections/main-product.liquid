@@ -89,17 +89,7 @@
     if product.description contains '<img' or product.description contains '<table' or product.description contains 'ws-desc' or description_text.size >= 1800
       assign show_wide_description = true
     endif
-
-    assign partno = product.selected_or_first_available_variant.barcode
   -%}
-
-  {%- capture product_barcode_supplier_info -%}
-    {%- if partno != blank -%}
-      <p class="description__partno">
-        {{- 'products.product.barcode_label' | t }}: <span class="uppercase">{{ partno }}</span>
-      </p>
-    {%- endif -%}
-  {%- endcapture -%}
 
   <div class="page-width-narrow">
     {% render 'breadcrumbs' %}
@@ -168,9 +158,30 @@
                 {%- endif -%}
               {%- when 'title' -%}
                 <div class="product__title " {{ block.shopify_attributes }}>
-                  {%- comment -%} Supplier code (SKU after ^) for staff: drawn by CSS only in browsers switched on with ?staff=1 (layout/theme.liquid) {%- endcomment -%}
-                  {%- assign sku = product.selected_or_first_available_variant.sku -%}
-                  <h1 class="ui-heading ui-heading--h1"{% if sku contains '^' %} data-supplier="{{ sku | split: '^' | last | escape }}"{% endif %}>
+                  {%- comment -%}
+                    Staff badge: supplier code (SKU after ^) and the barcode when the title doesn't already show it.
+                    Drawn by CSS only in browsers switched on with ?staff=1 (layout/theme.liquid).
+                  {%- endcomment -%}
+                  {%- liquid
+                    assign staff_variant = product.selected_or_first_available_variant
+                    assign staff_codes = ''
+                    if staff_variant.sku contains '^'
+                      assign staff_codes = staff_variant.sku | split: '^' | last
+                    endif
+                    assign staff_barcode = staff_variant.barcode | strip
+                    if staff_barcode != blank
+                      # Compare without separators so "MZ-77Q8" in the title matches barcode "MZ77Q8"
+                      assign title_lower = product.title | downcase | remove: '-' | remove: ' ' | remove: '.' | remove: '/'
+                      assign barcode_lower = staff_barcode | downcase | remove: '-' | remove: ' ' | remove: '.' | remove: '/'
+                      unless title_lower contains barcode_lower
+                        if staff_codes != blank
+                          assign staff_codes = staff_codes | append: ' / '
+                        endif
+                        assign staff_codes = staff_codes | append: staff_barcode
+                      endunless
+                    endif
+                  -%}
+                  <h1 class="ui-heading ui-heading--h1"{% if staff_codes != blank %} data-supplier="{{ staff_codes | escape }}"{% endif %}>
                     {{- product.title | escape -}}
                   </h1>
                   <a href="{{ product.url }}" class="product__title">
@@ -287,7 +298,6 @@
                     >
                       <div class="description__text product__description-content{% if description_rich %} description--rich{% endif %}{% if description_kit %} description--kit{% endif %}">
                         {{ product.description }}
-                        {{ product_barcode_supplier_info }}
                       </div>
                       <button
                         type="button"
@@ -346,7 +356,6 @@
             <product-description-toggle class="product__description-disclosure">
               <div class="product__wide-description-body description__text{% if description_rich %} description--rich{% endif %}{% if description_kit %} description--kit{% endif %}" id="WideDescription-{{ section.id }}">
                 {{ product.description }}
-                {{ product_barcode_supplier_info }}
               </div>
               <button
                 type="button"
