@@ -1006,9 +1006,15 @@
       },
       "shipping": {
         "free": "По тарифам перевозчика",
-        "free_shipping_discount": "По тарифам перевозчика"
+        "free_shipping_discount": "По тарифам перевозчика",
+        "address_map_marker": "Адрес доставки"
       },
-      "contact_information": "Контактная информация"
+      "contact_information": "Контактная информация",
+      "subtotal": "Итого",
+      "returns": {
+        "return_and_refund_modal_header": "Гарантия и возврат товара"
+      },
+      "log_in": "Войти в кабинет"
     },
     "orders": {
       "order_list": {
@@ -1059,6 +1065,9 @@
         "errors": {
           "generic": "Возникла проблема с PayPal. Попробуйте снова или воспользуйтесь другим способом оплаты."
         }
+      },
+      "edit_payment_method": {
+        "billing_address": "Плательщик"
       }
     }
   }
