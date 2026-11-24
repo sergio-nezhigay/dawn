@@ -874,10 +874,7 @@
     },
     "checkout": {
       "payment": {
-        "card_fields_unavailable_html": {
-          "few": "Credit and debit card payments are currently unavailable.<br><a href=\"%{current_url}\">Refresh this page</a> or try another payment method.",
-          "many": "Credit and debit card payments are currently unavailable.<br><a href=\"%{current_url}\">Refresh this page</a> or try another payment method."
-        },
+        "card_fields_unavailable_html": "Credit and debit card payments are currently unavailable.<br> <a href=\"%{current_url}\">Refresh the page</a> or try again later.",
         "crypto_payment_method": {
           "cashback_descriptor": {
             "few": "You will receive cashback in %{count} days",
@@ -1440,6 +1437,12 @@
             "few": "send separately",
             "many": "send separately"
           }
+        },
+        "bundle_removal_modal": {
+          "message": {
+            "few": "The items “{{items}}” are part of the “{{bundle}}” bundle. The remaining items in the bundle will also be deleted.",
+            "many": "The items “{{items}}” are part of the “{{bundle}}” bundle. The remaining items in the bundle will also be deleted."
+          }
         }
       },
       "split_delivery": {
@@ -1482,6 +1485,16 @@
         "ship_items_count": {
           "few": "Deliver from: %{count}",
           "many": "Deliver from: %{count}"
+        },
+        "delivery_updated_toast": {
+          "shipping": {
+            "few": "{{count}} items switched to delivery.",
+            "many": "{{count}} items switched to delivery."
+          },
+          "removal": {
+            "few": "{{count}} items deleted.",
+            "many": "{{count}} items deleted."
+          }
         }
       },
       "open_graph_meta_tag": {
@@ -1743,6 +1756,30 @@
         "tracking_number": {
           "few": "Tracking numbers",
           "many": "Tracking numbers"
+        }
+      },
+      "buy_again_review": {
+        "unavailable_in_market": {
+          "body": {
+            "few": "These items were not added to your cart because they are not available in your country or region.",
+            "many": "These items were not added to your cart because they are not available in your country or region."
+          },
+          "none_body": {
+            "few": "These products are not available in your country or region.",
+            "many": "These products are not available in your country or region."
+          },
+          "heading": {
+            "few": "Products are unavailable",
+            "many": "Products are unavailable"
+          }
+        },
+        "quantity_added": {
+          "few": "Added units: {{added}} out of {{count}}",
+          "many": "Added units: {{added}} out of {{count}}"
+        },
+        "item_count": {
+          "few": "{{count}} units",
+          "many": "{{count}} units"
         }
       }
     },
