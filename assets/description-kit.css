@@ -6,11 +6,18 @@
   max-height: 480px;
 }
 
-/* Spacing scale: 28 between sections, 10 under a heading, 8 between items, 16 around a note */
+/* Quiet look: the description card is the only box. Inside it hairlines and plain glyphs, no tiles,
+   filled circles or framed lists; colour only on the ✓/✕ marks and step numbers.
+   Spacing scale: 26 between sections, 8 under a heading, 6–12 between items, 16 around a note */
 .description__text.description--kit :is(h2, h3, h4, h5) {
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1.3;
-  margin: 28px 0 10px;
+  margin: 26px 0 8px;
+}
+
+/* Base description links hyphenate (for supplier tables); kit links should not break mid-word */
+.description__text.description--kit a {
+  hyphens: manual;
 }
 
 .description__text.description--kit > :is(h2, h3, h4, h5):first-child {
@@ -23,14 +30,15 @@
   margin: 0 0 8px;
 }
 
-/* Beats the theme's ul > li padding/dot and ol > li decimal numbers */
-.description__text.description--kit :is(.pd-highlights, .pd-fit, .pd-steps, .pd-box, .pd-specs) > li {
+/* Beats the theme's ul > li padding/dot and ol > li decimal numbers.
+   .pd-box (Комплектація) keeps the theme's blue-dot list, one item per line. */
+.description__text.description--kit :is(.pd-highlights, .pd-fit, .pd-steps, .pd-specs) > li {
   list-style: none;
   padding-left: 0;
   margin: 0;
 }
 
-.description__text.description--kit :is(.pd-highlights, .pd-box, .pd-specs) > li::before {
+.description__text.description--kit :is(.pd-highlights, .pd-specs) > li::before {
   content: none;
   display: none;
 }
@@ -39,31 +47,25 @@
   font-size: 15px;
   line-height: 1.6;
   color: var(--ui-navy);
-  margin: 0 0 12px;
+  margin: 0 0 14px;
 }
 
 .description__text.description--kit .pd-highlights {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
+  gap: 12px 24px;
   margin-bottom: 0;
 }
 
 .description__text.description--kit .pd-highlights > li {
-  background: var(--ui-tint);
-  border: 1px solid var(--ui-line);
-  border-radius: var(--ui-radius-sm);
-  padding: 10px 14px;
   display: grid;
   gap: 2px;
   align-content: start;
 }
 
 .description__text.description--kit .pd-highlights strong {
-  font-weight: 700;
   font-size: 15px;
   line-height: 1.25;
-  color: var(--ui-blue-deep);
 }
 
 .description__text.description--kit .pd-highlights span {
@@ -76,37 +78,30 @@
   display: grid;
 }
 
-/* Fit check and spec card share one white card with hairlines between rows */
-.description__text.description--kit :is(.pd-fit, .pd-specs) {
-  border: 1px solid var(--ui-line);
-  border-radius: var(--ui-radius-sm);
-  background: #fff;
-  overflow: hidden;
-}
-
-.description__text.description--kit :is(.pd-fit, .pd-specs) > li + li {
-  border-top: 1px solid var(--ui-line);
+.description__text.description--kit .pd-fit--no {
+  margin-top: 2px;
 }
 
 .description__text.description--kit .pd-fit > li {
   position: relative;
-  padding: 10px 14px 10px 42px;
+  padding: 5px 0 5px 26px;
   line-height: 1.45;
 }
 
+/* ✓/✕ as plain coloured glyphs: the shape carries the meaning, colour only supports it */
 .description__text.description--kit .pd-fit > li::before {
   position: absolute;
-  left: 12px;
-  top: 11px;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
+  left: 0;
+  top: 5px;
+  width: 18px;
+  height: 22px;
+  border-radius: 0;
+  background: none;
   display: grid;
   place-items: center;
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 700;
   line-height: 1;
-  color: #fff;
   margin: 0;
 }
 
@@ -114,13 +109,13 @@
   /* Plain fallback first: browsers without alt-text support drop the whole second line */
   content: '✓';
   content: '✓' / 'Підійде: ';
-  background: var(--ui-ok);
+  color: var(--ui-ok);
 }
 
 .description__text.description--kit .pd-fit--no > li::before {
   content: '✕';
   content: '✕' / 'Не підійде: ';
-  background: var(--ui-bad);
+  color: var(--ui-bad);
 }
 
 :lang(ru) .description__text.description--kit .pd-fit--yes > li::before {
@@ -140,51 +135,40 @@
 .description__text.description--kit .pd-steps {
   counter-reset: pd-step;
   display: grid;
-  gap: 8px;
+  gap: 6px;
 }
 
 .description__text.description--kit .pd-steps > li {
   counter-increment: pd-step;
   display: grid;
-  grid-template-columns: 26px 1fr;
-  gap: 10px;
+  grid-template-columns: 22px 1fr;
+  gap: 8px;
   align-items: start;
   line-height: 1.45;
 }
 
 .description__text.description--kit .pd-steps > li::before {
-  content: counter(pd-step);
+  content: counter(pd-step) '.';
   position: static;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background: var(--ui-blue);
-  color: #fff;
-  font: 700 13px/26px 'Chakra Petch', sans-serif;
-  text-align: center;
+  color: var(--ui-blue-deep);
+  font-weight: 600;
   margin: 0;
 }
 
-.description__text.description--kit .pd-box {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+/* Spec list: label and value in two columns, hairlines between rows */
+.description__text.description--kit .pd-specs {
+  border-block: 1px solid var(--ui-line);
 }
 
-.description__text.description--kit .pd-box > li {
-  border: 1px solid var(--ui-line);
-  background: #fff;
-  border-radius: var(--ui-radius-sm);
-  padding: 5px 14px;
-  font-size: 14px;
+.description__text.description--kit .pd-specs > li + li {
+  border-top: 1px solid var(--ui-line);
 }
 
-/* Spec card: label and value in two columns */
 .description__text.description--kit .pd-specs > li {
   display: grid;
   grid-template-columns: min(190px, 42%) minmax(0, 1fr);
   gap: 20px;
-  padding: 9px 14px;
+  padding: 7px 0;
   line-height: 1.45;
 }
 
@@ -194,10 +178,9 @@
 
 /* Note box («Важливо: …») */
 .description__text.description--kit p.pd-note {
-  background: var(--ui-blue-soft);
-  border-left: 3px solid var(--ui-blue);
+  background: var(--ui-tint);
   border-radius: var(--ui-radius-sm);
-  padding: 10px 14px;
+  padding: 10px 12px;
   margin: 16px 0;
 }
 
@@ -256,10 +239,6 @@
 @media screen and (max-width: 749px) {
   .product__description-content.description--kit:not(.is-expanded) {
     max-height: 680px;
-  }
-
-  .description__text.description--kit .pd-highlights > li {
-    padding: 9px 11px;
   }
 
   .description__text.description--kit .pd-specs > li {
